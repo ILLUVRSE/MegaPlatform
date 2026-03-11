@@ -1,0 +1,7 @@
+{
+  "maxPreferenceSkew": 0.55,
+  "minimumDiversityScore": 0.35,
+  "maxManipulationRisk": 0.25,
+  "blockSensitiveTargeting": true,
+  "protectedAttributes": ["health", "politics", "religion", "financial_status"]
+}

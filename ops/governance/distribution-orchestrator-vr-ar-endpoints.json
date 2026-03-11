@@ -1,0 +1,11 @@
+{
+  "maxRolloutPercentWithoutCertification": 10,
+  "maxRolloutPercentWithCertification": 100,
+  "allowEndpointClasses": [
+    "vr",
+    "ar",
+    "mixed"
+  ],
+  "requireRegionalCompliance": true,
+  "requireFallbackPlan": true
+}

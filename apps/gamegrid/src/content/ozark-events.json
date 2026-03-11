@@ -1,0 +1,74 @@
+[
+  {
+    "id": "bass-frenzy",
+    "name": "Bass Frenzy",
+    "description": "Bass activity surges all week.",
+    "fishBoosts": { "largemouth-bass": 1.3, "smallmouth-bass": 1.24, "spotted-bass": 1.22 },
+    "biteRateMultiplier": 1.08,
+    "rarityOddsMultiplier": 1,
+    "zoneBoosts": { "weed_bed": 1.1 }
+  },
+  {
+    "id": "catfish-nights",
+    "name": "Catfish Nights",
+    "description": "Night catfish bite intensifies with rain-heavy windows.",
+    "fishBoosts": { "channel-catfish": 1.28, "blue-catfish": 1.2, "flathead-catfish": 1.2 },
+    "biteRateMultiplier": 1.06,
+    "rarityOddsMultiplier": 1,
+    "nightMultiplier": 1.14,
+    "weatherOverrides": { "sunny": 0.2, "overcast": 0.42, "light_rain": 0.38 }
+  },
+  {
+    "id": "panfish-parade",
+    "name": "Panfish Parade",
+    "description": "Bluegill and crappie schools stack shallow and mid-depth.",
+    "fishBoosts": { "bluegill": 1.3, "black-crappie": 1.26, "white-crappie": 1.24, "redear-sunfish": 1.2 },
+    "biteRateMultiplier": 1.1,
+    "rarityOddsMultiplier": 0.98
+  },
+  {
+    "id": "storm-bite",
+    "name": "Storm Bite",
+    "description": "Rain windows produce volatile but rewarding strikes.",
+    "fishBoosts": {},
+    "biteRateMultiplier": 1.14,
+    "rarityOddsMultiplier": 1.08,
+    "weatherRequired": "light_rain"
+  },
+  {
+    "id": "deep-drop-legends",
+    "name": "Deep Drop Legends",
+    "description": "Deep-water rare species are more active.",
+    "fishBoosts": { "walleye": 1.16, "blue-catfish": 1.14, "ozark-muskie": 1.18 },
+    "biteRateMultiplier": 1.05,
+    "rarityOddsMultiplier": 1.1,
+    "zoneBoosts": { "deep_dropoff": 1.16 }
+  },
+  {
+    "id": "weed-bed-jackpot",
+    "name": "Weed Bed Jackpot",
+    "description": "Weed bed zone receives concentrated feeding pressure.",
+    "fishBoosts": { "largemouth-bass": 1.14, "chain-pickerel": 1.12 },
+    "biteRateMultiplier": 1.07,
+    "rarityOddsMultiplier": 1,
+    "zoneBoosts": { "weed_bed": 1.2 }
+  },
+  {
+    "id": "trophy-hunt",
+    "name": "Trophy Hunt",
+    "description": "Big catches score better this week.",
+    "fishBoosts": { "ozark-muskie": 1.14, "paddlefish": 1.12 },
+    "biteRateMultiplier": 1.03,
+    "rarityOddsMultiplier": 1.05,
+    "scoring": { "bigCatchBonus": 1.18, "derbyWeightBonus": 1.06 }
+  },
+  {
+    "id": "speed-derby",
+    "name": "Speed Derby",
+    "description": "Shorter derby format with higher scoring pace.",
+    "fishBoosts": {},
+    "biteRateMultiplier": 1.11,
+    "rarityOddsMultiplier": 1,
+    "scoring": { "derbyWeightBonus": 1.12, "durationSecOverride": 180 }
+  }
+]

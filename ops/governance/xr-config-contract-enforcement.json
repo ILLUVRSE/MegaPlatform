@@ -1,0 +1,6 @@
+{
+  "requiredKeys": ["XR_RUNTIME", "XR_RENDER_SCALE", "XR_SESSION_TIMEOUT_MS"],
+  "allowedRuntimeValues": ["openxr", "webxr"],
+  "minRenderScale": 0.5,
+  "maxRenderScale": 2
+}

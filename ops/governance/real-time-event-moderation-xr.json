@@ -1,0 +1,5 @@
+{
+  "maxModerationLatencyMs": 180,
+  "requireAuditRecord": true,
+  "requirePolicyBinding": true
+}

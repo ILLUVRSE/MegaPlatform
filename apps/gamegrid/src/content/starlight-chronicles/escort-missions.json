@@ -1,0 +1,31 @@
+{
+  "escortMissions": [
+    {
+      "id": "esc-relief-convoy",
+      "name": "Relief Convoy",
+      "description": "Defend medical haulers through a contested lane.",
+      "baseConvoyHp": 60,
+      "microWaves": 2,
+      "timeLimitMs": 32000,
+      "reward": { "credits": 110, "materials": 9, "faction": "concordium", "standing": 2 }
+    },
+    {
+      "id": "esc-vip-passage",
+      "name": "VIP Passage",
+      "description": "Escort a diplomatic envoy under threat.",
+      "baseConvoyHp": 54,
+      "microWaves": 3,
+      "timeLimitMs": 36000,
+      "reward": { "credits": 130, "materials": 8, "faction": "astral", "standing": 2 }
+    },
+    {
+      "id": "esc-freighter-column",
+      "name": "Freighter Column",
+      "description": "Protect trade freighters from raiders.",
+      "baseConvoyHp": 68,
+      "microWaves": 3,
+      "timeLimitMs": 40000,
+      "reward": { "credits": 145, "materials": 10, "faction": "freebelt", "standing": 2 }
+    }
+  ]
+}

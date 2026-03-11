@@ -1,0 +1,5 @@
+{
+  "maxOriginDriftMeters": 0.25,
+  "maxReconnectRecoveryMs": 1500,
+  "minimumContinuityScore": 0.9
+}

@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-parchment text-ink antialiased transition-colors duration-200 dark:bg-slate dark:text-white;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(45, 91, 128, 0.08), transparent 40%),
+    radial-gradient(circle at 85% 0%, rgba(154, 106, 58, 0.12), transparent 30%);
+}
+
+html.dark body {
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(45, 91, 128, 0.16), transparent 40%),
+    radial-gradient(circle at 85% 0%, rgba(154, 106, 58, 0.16), transparent 30%);
+}
+
+main {
+  @apply min-h-screen;
+}
+
+::selection {
+  @apply bg-river text-white;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+}

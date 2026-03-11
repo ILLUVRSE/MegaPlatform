@@ -1,0 +1,47 @@
+[
+  {
+    "id": "postgres-primary",
+    "name": "Primary Postgres",
+    "kind": "database",
+    "criticality": "critical",
+    "blastRadius": "watch, party, studio, feed, admin",
+    "check": "db_query",
+    "envKeys": ["DATABASE_URL"]
+  },
+  {
+    "id": "redis-cache",
+    "name": "Redis Cache + Queue Broker",
+    "kind": "cache",
+    "criticality": "critical",
+    "blastRadius": "queue processing, sessions, realtime fanout",
+    "check": "env_present",
+    "envKeys": ["REDIS_URL"]
+  },
+  {
+    "id": "s3-storage",
+    "name": "Object Storage",
+    "kind": "storage",
+    "criticality": "high",
+    "blastRadius": "studio upload, render outputs, thumbnails",
+    "check": "env_present",
+    "envKeys": ["S3_ENDPOINT", "S3_BUCKET", "S3_ACCESS_KEY", "S3_SECRET_KEY"]
+  },
+  {
+    "id": "livekit-realtime",
+    "name": "LiveKit Realtime",
+    "kind": "realtime",
+    "criticality": "high",
+    "blastRadius": "party voice and low-latency collaboration",
+    "check": "env_present",
+    "envKeys": ["LIVEKIT_API_KEY", "LIVEKIT_API_SECRET"]
+  },
+  {
+    "id": "agent-worker-queue",
+    "name": "Agent/Worker Queue",
+    "kind": "queue",
+    "criticality": "high",
+    "blastRadius": "studio async jobs and automation loops",
+    "check": "env_present",
+    "envKeys": ["REDIS_URL"]
+  }
+]

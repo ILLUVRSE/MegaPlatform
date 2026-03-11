@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-a: #f8fafc;
+  --bg-b: #e2e8f0;
+}
+
+body {
+  background: radial-gradient(circle at top left, var(--bg-a), var(--bg-b));
+  color: #0f172a;
+  font-family: 'IBM Plex Sans', sans-serif;
+}

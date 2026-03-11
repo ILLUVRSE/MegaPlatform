@@ -1,0 +1,7 @@
+{
+  "allowRawBiometricStorage": false,
+  "requireEncryptionAtRest": true,
+  "maxRetentionHours": 24,
+  "requirePurposeBinding": true,
+  "requireAuditEvidencePath": true
+}

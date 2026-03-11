@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/human-in-the-loop-experience-console.json",
+  "highImpactActions": ["ranking_override", "exposure_suppression", "friction_force"],
+  "requireApprovalForHighImpact": true,
+  "maxOpenActions": 500
+}

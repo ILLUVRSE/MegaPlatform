@@ -1,0 +1,5 @@
+{
+  "requiredChecks": ["manifest_valid", "route_prefix", "https_launch_url", "category_allowed"],
+  "allowedCategories": ["Media", "Games", "Culture"],
+  "allowHttpLocalhost": true
+}

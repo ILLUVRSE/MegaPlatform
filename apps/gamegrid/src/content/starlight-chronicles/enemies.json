@@ -1,0 +1,29 @@
+{
+  "enemies": [
+    { "id": "scout-drone", "name": "Scout Drone", "hp": 18, "speed": 150, "touchDamage": 10, "score": 90, "size": 22, "shootCooldownMs": 1300, "bulletSpeed": 230, "bulletPattern": "aimed", "isBoss": false },
+    { "id": "raider-wing", "name": "Raider Wing", "hp": 26, "speed": 130, "touchDamage": 14, "score": 120, "size": 26, "shootCooldownMs": 1200, "bulletSpeed": 240, "bulletPattern": "burst", "isBoss": false },
+    { "id": "phase-sentry", "name": "Phase Sentry", "hp": 34, "speed": 115, "touchDamage": 16, "score": 160, "size": 30, "shootCooldownMs": 1000, "bulletSpeed": 250, "bulletPattern": "wave", "isBoss": false },
+    { "id": "mine-layer", "name": "Mine Layer", "hp": 42, "speed": 90, "touchDamage": 20, "score": 180, "size": 32, "shootCooldownMs": 1400, "bulletSpeed": 180, "bulletPattern": "mines", "isBoss": false },
+    { "id": "beam-frigate", "name": "Beam Frigate", "hp": 55, "speed": 85, "touchDamage": 24, "score": 230, "size": 36, "shootCooldownMs": 1700, "bulletSpeed": 260, "bulletPattern": "sweeping-beam", "isBoss": false },
+    { "id": "spiral-probe", "name": "Spiral Probe", "hp": 30, "speed": 120, "touchDamage": 15, "score": 150, "size": 28, "shootCooldownMs": 900, "bulletSpeed": 220, "bulletPattern": "spiral", "isBoss": false },
+    { "id": "choir-wisp", "name": "Choir Wisp", "hp": 24, "speed": 165, "touchDamage": 13, "score": 130, "size": 24, "shootCooldownMs": 1100, "bulletSpeed": 245, "bulletPattern": "wave", "isBoss": false },
+    { "id": "freighter-husk", "name": "Freighter Husk", "hp": 70, "speed": 70, "touchDamage": 26, "score": 240, "size": 40, "shootCooldownMs": 1600, "bulletSpeed": 205, "bulletPattern": "burst", "isBoss": false },
+    { "id": "gate-warden", "name": "Gate Warden", "hp": 95, "speed": 65, "touchDamage": 30, "score": 320, "size": 46, "shootCooldownMs": 1000, "bulletSpeed": 270, "bulletPattern": "aimed", "isBoss": false },
+    { "id": "choir-anchor", "name": "Choir Anchor", "hp": 110, "speed": 58, "touchDamage": 32, "score": 360, "size": 50, "shootCooldownMs": 900, "bulletSpeed": 280, "bulletPattern": "spiral", "isBoss": false },
+    { "id": "umbra-warden", "name": "Umbra Warden", "hp": 340, "speed": 52, "touchDamage": 34, "score": 2200, "size": 74, "shootCooldownMs": 700, "bulletSpeed": 290, "bulletPattern": "sweeping-beam", "isBoss": true,
+      "bossPhases": [
+        { "id": "phase-1", "hpThreshold": 0.7, "pattern": "aimed", "telegraphMs": 650 },
+        { "id": "phase-2", "hpThreshold": 0.35, "pattern": "burst", "telegraphMs": 520 },
+        { "id": "phase-3", "hpThreshold": 0, "pattern": "spiral", "telegraphMs": 430 }
+      ]
+    },
+    { "id": "cathedral-core", "name": "Cathedral Core", "hp": 420, "speed": 44, "touchDamage": 36, "score": 2800, "size": 82, "shootCooldownMs": 620, "bulletSpeed": 300, "bulletPattern": "spiral", "isBoss": true,
+      "bossPhases": [
+        { "id": "core-1", "hpThreshold": 0.75, "pattern": "wave", "telegraphMs": 700 },
+        { "id": "core-2", "hpThreshold": 0.5, "pattern": "sweeping-beam", "telegraphMs": 600 },
+        { "id": "core-3", "hpThreshold": 0.25, "pattern": "mines", "telegraphMs": 500 },
+        { "id": "core-4", "hpThreshold": 0, "pattern": "burst", "telegraphMs": 420 }
+      ]
+    }
+  ]
+}

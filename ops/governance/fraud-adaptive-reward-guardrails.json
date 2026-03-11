@@ -1,0 +1,6 @@
+{
+  "warningFraudIndex": 0.5,
+  "criticalFraudIndex": 0.75,
+  "throttleFactor": 0.4,
+  "haltWhenCritical": true
+}

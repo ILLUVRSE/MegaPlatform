@@ -1,0 +1,7 @@
+{
+  "allowCustodialHolderMismatch": true,
+  "maxConcurrentOwnershipClaims": 1,
+  "requireTransferLock": true,
+  "requireStateVersionMonotonicity": true,
+  "minimumStateVersion": 1
+}

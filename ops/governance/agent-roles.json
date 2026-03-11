@@ -1,0 +1,5 @@
+[
+  {"id":"director","name":"Director","scope":"Sensing, prioritization, task creation","allowedActions":["create_task","update_signals","record_decision"],"escalation":"Escalate to human for destructive/deploy/policy edits"},
+  {"id":"quality_analytics","name":"Quality/Analytics","scope":"Quality gates and failure triage","allowedActions":["run_shipcheck_quick","update_task","record_memory"],"escalation":"Escalate if shipcheck failures require architectural changes"},
+  {"id":"ops_sre","name":"Ops/SRE","scope":"Queue health, incident runbooks, reliability operations","allowedActions":["update_runbook","update_task","record_memory"],"escalation":"Escalate when incident severity >= SEV-2"}
+]

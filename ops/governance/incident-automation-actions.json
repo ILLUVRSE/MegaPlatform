@@ -1,0 +1,23 @@
+[
+  {
+    "id": "pause-risky-retries",
+    "name": "Pause Risky Retries",
+    "severity": "SEV-2",
+    "safe": true,
+    "steps": ["Pause affected retry workers", "Confirm queue growth has stopped", "Capture queue snapshot for audit"]
+  },
+  {
+    "id": "degrade-live-features",
+    "name": "Degrade Live Feature Toggles",
+    "severity": "SEV-1",
+    "safe": true,
+    "steps": ["Disable optional realtime overlays", "Keep playback path active", "Verify channel health warnings render"]
+  },
+  {
+    "id": "freeze-publish",
+    "name": "Freeze Studio Publish",
+    "severity": "SEV-1",
+    "safe": true,
+    "steps": ["Block new publish transitions", "Allow in-flight finalization only", "Notify ops queue owners"]
+  }
+]

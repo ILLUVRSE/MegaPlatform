@@ -1,0 +1,8 @@
+[
+  {
+    "partnerId": "partner-alpha",
+    "allowedModules": ["news", "artAtlas"],
+    "requiresDataSharingAgreement": true,
+    "status": "active"
+  }
+]

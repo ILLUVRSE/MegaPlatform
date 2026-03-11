@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ILLUVRSE Ops Orchestrator every 10 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=10min
+Unit=illuvrse-ops.service
+
+[Install]
+WantedBy=timers.target

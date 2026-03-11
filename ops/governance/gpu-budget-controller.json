@@ -1,0 +1,5 @@
+{
+  "maxGpuFrameTimeMs": 8.5,
+  "requiredMitigations": ["shadow_quality_drop", "particle_density_cap"],
+  "requireDeterministicMitigationOrder": true
+}

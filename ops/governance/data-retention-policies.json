@@ -1,0 +1,23 @@
+[
+  {
+    "id": "retention-platform-events",
+    "dataClass": "PlatformEvent",
+    "retentionDays": 180,
+    "deletionMode": "anonymize",
+    "evidencePath": "docs/compliance/evidence/data-retention-runs.json"
+  },
+  {
+    "id": "retention-admin-audit",
+    "dataClass": "AdminAudit",
+    "retentionDays": 365,
+    "deletionMode": "delete",
+    "evidencePath": "docs/compliance/evidence/data-retention-runs.json"
+  },
+  {
+    "id": "retention-feed-reports",
+    "dataClass": "FeedReport",
+    "retentionDays": 365,
+    "deletionMode": "anonymize",
+    "evidencePath": "docs/compliance/evidence/data-retention-runs.json"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "requiredCapabilities": ["stereo_render", "pose_tracking"],
+  "featureRequirements": {
+    "hand_tracking": ["hands"],
+    "scene_mesh": ["scene_understanding"],
+    "passthrough": ["camera_passthrough"]
+  },
+  "fallbackByFeature": {
+    "hand_tracking": "controller_input",
+    "scene_mesh": "bounded-play-area",
+    "passthrough": "virtual-skybox"
+  }
+}

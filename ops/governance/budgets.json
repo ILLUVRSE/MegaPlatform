@@ -1,0 +1,26 @@
+[
+  {
+    "id": "monthly-render",
+    "name": "Monthly Render Budget",
+    "category": "RENDER",
+    "monthlyLimitCents": 100000,
+    "warnAtRatio": 0.8,
+    "errorAtRatio": 1
+  },
+  {
+    "id": "monthly-storage",
+    "name": "Monthly Storage Budget",
+    "category": "STORAGE",
+    "monthlyLimitCents": 30000,
+    "warnAtRatio": 0.8,
+    "errorAtRatio": 1
+  },
+  {
+    "id": "monthly-ops-automation",
+    "name": "Monthly Ops Automation Budget",
+    "category": "OPS_AUTOMATION",
+    "monthlyLimitCents": 20000,
+    "warnAtRatio": 0.85,
+    "errorAtRatio": 1
+  }
+]

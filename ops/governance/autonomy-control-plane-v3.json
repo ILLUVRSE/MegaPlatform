@@ -1,0 +1,15 @@
+{
+  "requiredChecks": [
+    "constraint",
+    "temporal",
+    "budget",
+    "blast_radius"
+  ],
+  "blockOn": [
+    "constraint:deny",
+    "temporal:deny",
+    "budget:blocked",
+    "blast_radius:block"
+  ],
+  "maxRecommendedActions": 5
+}

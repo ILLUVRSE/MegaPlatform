@@ -1,0 +1,6 @@
+{
+  "requiredClipFields": ["clipId", "durationMs", "frameRate"],
+  "requiredStateFields": ["stateId", "clipId", "loop"],
+  "maxFrameRate": 240,
+  "maxClipDurationMs": 600000
+}

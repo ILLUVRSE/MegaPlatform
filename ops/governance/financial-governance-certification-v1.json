@@ -1,0 +1,5 @@
+{
+  "requiredChecks": ["budget_controls", "roi_controls", "fraud_controls", "audit_evidence"],
+  "minimumPassRatio": 1,
+  "evidenceOutputPath": "ops/logs/financial-governance-certification-v1.json"
+}

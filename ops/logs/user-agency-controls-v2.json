@@ -1,0 +1,13 @@
+{
+  "profiles": [
+    {
+      "userId": "user-142",
+      "autonomyMode": "balanced",
+      "topicOptOuts": [
+        "gambling"
+      ],
+      "maxPersonalizationIntensity": 0.6,
+      "allowCrossSurfaceContinuity": true
+    }
+  ]
+}

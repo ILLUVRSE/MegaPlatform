@@ -1,0 +1,9 @@
+{
+  "supportedDevices": ["controller", "hand", "gaze", "voice"],
+  "intentMap": {
+    "trigger": "select",
+    "pinch": "select",
+    "look_dwell": "focus",
+    "voice_confirm": "confirm"
+  }
+}

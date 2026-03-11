@@ -1,0 +1,5 @@
+{
+  "outputPath": "ops/logs/evidence-graph-for-audits.json",
+  "maxNodes": 500,
+  "maxEdges": 2000
+}

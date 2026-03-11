@@ -1,0 +1,7 @@
+{
+  "throttleRiskThreshold": 0.7,
+  "haltRiskThreshold": 0.9,
+  "maxTransactionsPerMinute": 6,
+  "requireDeviceTrustCheck": true,
+  "requireIdentityConfidenceFloor": 0.75
+}

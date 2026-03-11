@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/creator-governance-council.json",
+  "quorum": 2,
+  "approvalThreshold": 0.6,
+  "maxOpenProposals": 200
+}

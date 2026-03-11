@@ -1,0 +1,7 @@
+{
+  "healthThresholds": {
+    "healthy": 0.8,
+    "degraded": 0.55
+  },
+  "momentumWindowHours": 24
+}

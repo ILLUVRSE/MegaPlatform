@@ -1,0 +1,5 @@
+{
+  "minimumFidelityScore": 0.82,
+  "maxGpuFrameCostMs": 7.5,
+  "maxCpuFrameCostMs": 5.5
+}

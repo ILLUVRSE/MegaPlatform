@@ -1,0 +1,86 @@
+{
+  "captain": {
+    "story": [
+      "{CAPTAIN}: Open channels. We settle this with words before weapons.",
+      "{CAPTAIN}: Keep it measured. {FACTION} hears every tone.",
+      "{CAPTAIN}: Another chapter marker at {NODE}. Everyone stay sharp."
+    ],
+    "explore": [
+      "{CAPTAIN}: Slow drift into {NODE}. Science has point.",
+      "{CAPTAIN}: Unknown signatures ahead. Keep me informed.",
+      "{CAPTAIN}: If this is a trap, we walk in with eyes open."
+    ],
+    "combat": [
+      "{CAPTAIN}: Battle stations. Hold formation and breathe.",
+      "{CAPTAIN}: Commit on my mark. Tactical has lead.",
+      "{CAPTAIN}: We hit hard, then we leave clean."
+    ],
+    "shop": [
+      "{CAPTAIN}: Dock discipline. Buy what keeps us flying.",
+      "{CAPTAIN}: Quartermaster sweep, then fast launch.",
+      "{CAPTAIN}: {FACTION} port means leverage if we stay polite."
+    ],
+    "boss": [
+      "{CAPTAIN}: Final approach. No wasted motion.",
+      "{CAPTAIN}: This decides the run. Steady hands.",
+      "{CAPTAIN}: Log this moment. We finish it here."
+    ]
+  },
+  "science": {
+    "explore": [
+      "Science: Sensor harmonics favor a careful scan.",
+      "Science: Probability cone is narrow. Commit now.",
+      "Science: I can map this anomaly before it maps us."
+    ],
+    "story": [
+      "Science: Their claim is inconsistent with prior logs.",
+      "Science: Offer data first. It shifts negotiations.",
+      "Science: {FACTION} doctrine values proof over theater."
+    ]
+  },
+  "engineer": {
+    "shop": [
+      "Engineer: I can stretch these credits if we buy smart.",
+      "Engineer: Hull's holding, systems need attention.",
+      "Engineer: Give me ten minutes and a clean parts bin."
+    ],
+    "combat": [
+      "Engineer: Keep them off our aft quarter.",
+      "Engineer: Routing power around damaged relays.",
+      "Engineer: Engines are touchy, but they'll answer."
+    ]
+  },
+  "tactical": {
+    "combat": [
+      "Tactical: Target priority uplinked. Follow the queue.",
+      "Tactical: Their pattern breaks on the third pass.",
+      "Tactical: If they push centerline, punish it."
+    ],
+    "story": [
+      "Tactical: Keep your ask simple. Complexity invites stalling.",
+      "Tactical: They respect confidence more than apology.",
+      "Tactical: {FACTION} negotiators test weakness first."
+    ]
+  },
+  "factionBias": {
+    "concordium": [
+      "Bridge: Concordium patrols are within relay distance.",
+      "Bridge: Concordium channels are clear and formal."
+    ],
+    "freebelt": [
+      "Bridge: Freebelt chatter is loud tonight.",
+      "Bridge: Freebelt brokers will smell hesitation."
+    ],
+    "astral": [
+      "Bridge: Astral hymns are bleeding into sensor noise.",
+      "Bridge: Astral signals suggest ritual traffic nearby."
+    ]
+  },
+  "traitBias": {
+    "empathetic": ["Bridge: Crew mood is stable. Keep empathy forward."],
+    "curious": ["Bridge: Curiosity is high. We're likely to investigate."],
+    "improviser": ["Bridge: We can patch around surprises if needed."],
+    "aggressive": ["Bridge: Aggression trend rising. Keep command tight."],
+    "steady": ["Bridge: Systems teams report calm execution."]
+  }
+}

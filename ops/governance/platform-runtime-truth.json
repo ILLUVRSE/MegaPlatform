@@ -1,0 +1,25 @@
+{
+  "phases": [301, 302, 303, 304, 305, 306, 307, 308, 309, 310],
+  "requiredDocs": [
+    "docs/platform-session-graph.md",
+    "docs/universal-identity-presence-layer.md",
+    "docs/cross-app-inbox-task-queue.md",
+    "docs/unified-search-discovery-spine.md",
+    "docs/megaplatform-command-palette.md",
+    "docs/social-graph-squad-runtime.md",
+    "docs/economy-spine-entitlement-ledger-v2.md",
+    "docs/cross-surface-recommendation-runtime.md",
+    "docs/home-surface-orchestrated-control-deck.md",
+    "docs/platform-runtime-truth-readiness-gate.md"
+  ],
+  "requiredApis": [
+    "/api/platform/session",
+    "/api/platform/presence",
+    "/api/inbox",
+    "/api/platform/search",
+    "/api/platform/commands",
+    "/api/social/squads",
+    "/api/economy/summary",
+    "/api/admin/platform/runtime-readiness"
+  ]
+}

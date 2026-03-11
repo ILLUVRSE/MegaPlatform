@@ -1,0 +1,5 @@
+{
+  "maxGoals": 3,
+  "blockedWhenActionLimit": ["halted"],
+  "preferredDomains": ["reliability", "governance", "growth"]
+}

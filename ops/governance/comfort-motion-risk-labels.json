@@ -1,0 +1,8 @@
+{
+  "mediumRiskMotionIntensity": 0.45,
+  "highRiskMotionIntensity": 0.75,
+  "mediumRiskAccelerationPeaksPerMinute": 12,
+  "highRiskAccelerationPeaksPerMinute": 20,
+  "incidentWeight": 0.08,
+  "comfortAidCredit": 0.12
+}

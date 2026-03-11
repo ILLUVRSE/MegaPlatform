@@ -1,0 +1,30 @@
+{
+  "name": "@illuvrse/news",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "api",
+    "workers",
+    "web"
+  ],
+  "scripts": {
+    "build": "npm run build -w api && npm run build -w workers && npm run build -w web",
+    "dev": "concurrently \"npm run dev -w api\" \"npm run dev -w workers\" \"npm run dev -w web\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "npm run lint -w api && npm run lint -w workers && npm run lint -w web",
+    "prisma:generate": "npm run prisma:generate -w api",
+    "prisma:migrate": "npm run prisma:migrate -w api",
+    "prisma:seed": "npm run prisma:seed -w api"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/supertest": "^6.0.3",
+    "concurrently": "^9.1.2",
+    "fast-xml-parser": "^4.5.3",
+    "supertest": "^7.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

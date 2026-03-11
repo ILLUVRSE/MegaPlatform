@@ -1,0 +1,50 @@
+[
+  {
+    "id": "catch_count_spot",
+    "name": "Spot Haul",
+    "description": "Catch fish in a target spot.",
+    "kind": "catch_count_spot",
+    "targets": [3, 5, 7],
+    "xpReward": [80, 120, 170]
+  },
+  {
+    "id": "catch_rare_time",
+    "name": "Rare Window",
+    "description": "Catch a Rare or Legendary fish at target time.",
+    "kind": "catch_rare_time",
+    "targets": [1, 1, 2],
+    "xpReward": [100, 130, 200]
+  },
+  {
+    "id": "land_runner_clean",
+    "name": "Runner Control",
+    "description": "Land runner-style fish without snapping line.",
+    "kind": "land_runner_clean",
+    "targets": [2, 3, 4],
+    "xpReward": [90, 130, 190]
+  },
+  {
+    "id": "catch_total_weight",
+    "name": "Weight Grind",
+    "description": "Reach cumulative landed weight.",
+    "kind": "catch_total_weight",
+    "targets": [12, 18, 24],
+    "xpReward": [90, 140, 210]
+  },
+  {
+    "id": "spot_variety",
+    "name": "Spot Variety",
+    "description": "Catch fish across distinct spots in one day.",
+    "kind": "spot_variety",
+    "targets": [2, 3, 4],
+    "xpReward": [80, 120, 180]
+  },
+  {
+    "id": "land_trophy_weight",
+    "name": "Trophy Weight",
+    "description": "Land fish above target weight threshold.",
+    "kind": "land_trophy_weight",
+    "targets": [8, 12, 16],
+    "xpReward": [100, 160, 230]
+  }
+]

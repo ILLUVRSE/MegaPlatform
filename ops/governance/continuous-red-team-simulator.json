@@ -1,0 +1,11 @@
+{
+  "maxScenariosPerRun": 10,
+  "severityThreshold": "medium",
+  "scenarioCatalog": [
+    "prompt_injection",
+    "policy_bypass",
+    "tool_misuse",
+    "data_exfiltration"
+  ],
+  "autoBlockSeverities": ["high", "critical"]
+}

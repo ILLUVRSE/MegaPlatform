@@ -1,0 +1,5 @@
+{
+  "supportedRuntimes": ["openxr", "webxr"],
+  "requiredCoreCapabilities": ["pose_tracking", "frame_loop", "input_intents"],
+  "coreRoutes": ["/xr/session/start", "/xr/session/state", "/xr/input/dispatch"]
+}

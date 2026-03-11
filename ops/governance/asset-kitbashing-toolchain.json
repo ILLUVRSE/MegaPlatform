@@ -1,0 +1,5 @@
+{
+  "maxSourceAssetCount": 50,
+  "requireProvenance": true,
+  "requireCompatibilityChecks": true
+}

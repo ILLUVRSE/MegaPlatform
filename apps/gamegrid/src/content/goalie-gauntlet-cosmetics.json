@@ -1,0 +1,43 @@
+[
+  { "id": "mask-starter-white", "type": "mask", "name": "Starter White", "price": 0, "unlockRule": "default", "preview": { "primaryColor": "#f2f7ff" } },
+  { "id": "mask-glacier", "type": "mask", "name": "Glacier", "price": 240, "unlockRule": "store", "preview": { "primaryColor": "#9fdfff" } },
+  { "id": "mask-sunset", "type": "mask", "name": "Sunset", "price": 280, "unlockRule": "store", "preview": { "primaryColor": "#ffb38f" } },
+  { "id": "mask-onyx", "type": "mask", "name": "Onyx", "price": 340, "unlockRule": "store", "preview": { "primaryColor": "#6a748c" } },
+  { "id": "mask-neon", "type": "mask", "name": "Neon Pulse", "price": 420, "unlockRule": "store", "preview": { "primaryColor": "#72ffc9" } },
+
+  { "id": "pads-classic", "type": "pads", "name": "Classic Pads", "price": 0, "unlockRule": "default", "preview": { "primaryColor": "#d5e4f5" } },
+  { "id": "pads-redline", "type": "pads", "name": "Redline", "price": 260, "unlockRule": "store", "preview": { "primaryColor": "#ff8f8f" } },
+  { "id": "pads-arctic", "type": "pads", "name": "Arctic", "price": 260, "unlockRule": "store", "preview": { "primaryColor": "#b6f0ff" } },
+  { "id": "pads-carbon", "type": "pads", "name": "Carbon", "price": 320, "unlockRule": "store", "preview": { "primaryColor": "#8a95aa" } },
+  { "id": "pads-goldtrim", "type": "pads", "name": "Gold Trim", "price": 400, "unlockRule": "store", "preview": { "primaryColor": "#ffd888" } },
+
+  { "id": "glove-basic", "type": "glove", "name": "Basic Glove", "price": 0, "unlockRule": "default", "preview": { "primaryColor": "#dcecff" } },
+  { "id": "glove-laser", "type": "glove", "name": "Laser Grip", "price": 210, "unlockRule": "store", "preview": { "primaryColor": "#ff9ecf" } },
+  { "id": "glove-aurora", "type": "glove", "name": "Aurora", "price": 250, "unlockRule": "store", "preview": { "primaryColor": "#88ffc4" } },
+  { "id": "glove-frost", "type": "glove", "name": "Frostbite", "price": 290, "unlockRule": "store", "preview": { "primaryColor": "#ace6ff" } },
+  { "id": "glove-titan", "type": "glove", "name": "Titan", "price": 360, "unlockRule": "store", "preview": { "primaryColor": "#a4afc2" } },
+
+  { "id": "stick-tape-white", "type": "stick_tape", "name": "White Tape", "price": 0, "unlockRule": "default", "preview": { "primaryColor": "#f3f5f7" } },
+  { "id": "stick-tape-blue", "type": "stick_tape", "name": "Blue Tape", "price": 150, "unlockRule": "store", "preview": { "primaryColor": "#88bbff" } },
+  { "id": "stick-tape-red", "type": "stick_tape", "name": "Red Tape", "price": 150, "unlockRule": "store", "preview": { "primaryColor": "#ff9e9e" } },
+  { "id": "stick-tape-carbon", "type": "stick_tape", "name": "Carbon Tape", "price": 220, "unlockRule": "store", "preview": { "primaryColor": "#9ca6bb" } },
+  { "id": "stick-tape-gold", "type": "stick_tape", "name": "Gold Tape", "price": 260, "unlockRule": "store", "preview": { "primaryColor": "#ffd683" } },
+
+  { "id": "horn-classic", "type": "goal_horn", "name": "Classic Horn", "price": 0, "unlockRule": "default", "preview": { "label": "classic" } },
+  { "id": "horn-arena", "type": "goal_horn", "name": "Arena Blast", "price": 220, "unlockRule": "store", "preview": { "label": "arena" } },
+  { "id": "horn-steel", "type": "goal_horn", "name": "Steel Echo", "price": 240, "unlockRule": "store", "preview": { "label": "steel" } },
+  { "id": "horn-hype", "type": "goal_horn", "name": "Hype Horn", "price": 300, "unlockRule": "store", "preview": { "label": "hype" } },
+  { "id": "horn-legend", "type": "goal_horn", "name": "Legend Horn", "price": 420, "unlockRule": "store", "preview": { "label": "legend" } },
+
+  { "id": "trail-ice", "type": "ice_trail", "name": "Ice Mist", "price": 0, "unlockRule": "default", "preview": { "primaryColor": "#dcf7ff" } },
+  { "id": "trail-ember", "type": "ice_trail", "name": "Ember Trail", "price": 200, "unlockRule": "store", "preview": { "primaryColor": "#ffbe9b" } },
+  { "id": "trail-volt", "type": "ice_trail", "name": "Volt Trail", "price": 260, "unlockRule": "store", "preview": { "primaryColor": "#b0ff9c" } },
+  { "id": "trail-neon", "type": "ice_trail", "name": "Neon Trail", "price": 320, "unlockRule": "store", "preview": { "primaryColor": "#9dffe7" } },
+  { "id": "trail-spectral", "type": "ice_trail", "name": "Spectral Trail", "price": 420, "unlockRule": "store", "preview": { "primaryColor": "#d9b7ff" } },
+
+  { "id": "chant-standard", "type": "crowd_chant", "name": "Standard Crowd", "price": 0, "unlockRule": "default", "preview": { "label": "standard" } },
+  { "id": "chant-drumline", "type": "crowd_chant", "name": "Drumline", "price": 190, "unlockRule": "store", "preview": { "label": "drum" } },
+  { "id": "chant-storm", "type": "crowd_chant", "name": "Storm Wave", "price": 230, "unlockRule": "store", "preview": { "label": "storm" } },
+  { "id": "chant-howl", "type": "crowd_chant", "name": "Howl Pack", "price": 280, "unlockRule": "store", "preview": { "label": "howl" } },
+  { "id": "chant-legend", "type": "crowd_chant", "name": "Legend Chorus", "price": 380, "unlockRule": "store", "preview": { "label": "legend" } }
+]

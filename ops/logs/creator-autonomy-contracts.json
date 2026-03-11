@@ -1,0 +1,15 @@
+{
+  "contracts": [
+    {
+      "creatorId": "creator-151",
+      "allowedActions": [
+        "publish",
+        "schedule"
+      ],
+      "deniedActions": [
+        "schedule"
+      ],
+      "status": "active"
+    }
+  ]
+}

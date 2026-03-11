@@ -1,0 +1,10 @@
+{
+  "loopWeights": {
+    "safety": 1.5,
+    "reliability": 1.2,
+    "growth": 0.9,
+    "economy": 1.0
+  },
+  "maxSelected": 5,
+  "blockedDecisions": ["deny"]
+}

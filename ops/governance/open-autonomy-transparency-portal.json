@@ -1,0 +1,4 @@
+{
+  "requiredMetrics": ["autonomy_success_rate", "policy_breach_rate"],
+  "requireEvidenceLinks": true
+}

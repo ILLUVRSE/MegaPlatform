@@ -1,0 +1,45 @@
+[
+  { "name": "color.bg.canvas", "category": "color", "value": "#f4f5f8" },
+  { "name": "color.bg.surface", "category": "color", "value": "#ffffff" },
+  { "name": "color.bg.surface-alt", "category": "color", "value": "#eef1f7" },
+  { "name": "color.border.default", "category": "color", "value": "#d6dbe6" },
+  { "name": "color.text.default", "category": "color", "value": "#101828" },
+  { "name": "color.text.muted", "category": "color", "value": "#475467" },
+  { "name": "color.brand.primary", "category": "color", "value": "#0f766e" },
+  { "name": "color.brand.accent", "category": "color", "value": "#f59e0b" },
+  { "name": "color.feedback.danger", "category": "color", "value": "#dc2626" },
+  { "name": "color.feedback.success", "category": "color", "value": "#16a34a" },
+
+  { "name": "type.size.xs", "category": "type", "value": "0.75rem" },
+  { "name": "type.size.sm", "category": "type", "value": "0.875rem" },
+  { "name": "type.size.base", "category": "type", "value": "1rem" },
+  { "name": "type.size.lg", "category": "type", "value": "1.125rem" },
+  { "name": "type.size.xl", "category": "type", "value": "1.25rem" },
+  { "name": "type.size.2xl", "category": "type", "value": "1.5rem" },
+  { "name": "type.size.3xl", "category": "type", "value": "1.875rem" },
+  { "name": "type.weight.regular", "category": "type", "value": "400" },
+  { "name": "type.weight.medium", "category": "type", "value": "500" },
+  { "name": "type.weight.semibold", "category": "type", "value": "600" },
+  { "name": "type.weight.bold", "category": "type", "value": "700" },
+
+  { "name": "space.1", "category": "spacing", "value": "0.25rem" },
+  { "name": "space.2", "category": "spacing", "value": "0.5rem" },
+  { "name": "space.3", "category": "spacing", "value": "0.75rem" },
+  { "name": "space.4", "category": "spacing", "value": "1rem" },
+  { "name": "space.6", "category": "spacing", "value": "1.5rem" },
+  { "name": "space.8", "category": "spacing", "value": "2rem" },
+  { "name": "space.10", "category": "spacing", "value": "2.5rem" },
+  { "name": "space.12", "category": "spacing", "value": "3rem" },
+
+  { "name": "radius.input", "category": "radius", "value": "1rem" },
+  { "name": "radius.card", "category": "radius", "value": "1.5rem" },
+  { "name": "radius.pill", "category": "radius", "value": "999px" },
+
+  { "name": "depth.card", "category": "depth", "value": "0 14px 40px rgba(17, 25, 40, 0.12)" },
+  { "name": "depth.modal", "category": "depth", "value": "0 24px 60px rgba(17, 25, 40, 0.20)" },
+
+  { "name": "motion.fast", "category": "motion", "value": "120ms" },
+  { "name": "motion.base", "category": "motion", "value": "220ms" },
+  { "name": "motion.slow", "category": "motion", "value": "360ms" },
+  { "name": "motion.ease.standard", "category": "motion", "value": "cubic-bezier(0.22, 0.61, 0.36, 1)" }
+]

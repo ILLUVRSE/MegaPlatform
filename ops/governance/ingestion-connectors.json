@@ -1,0 +1,8 @@
+[
+  {
+    "id": "partner-news-catalog",
+    "name": "Partner News Catalog",
+    "source": "partner-news",
+    "enabled": true
+  }
+]

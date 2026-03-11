@@ -1,0 +1,16 @@
+{
+  "shocks": [
+    { "id": "ore-shortage", "name": "Ore Shortage", "targetCategories": ["ore"], "multiplier": 1.2 },
+    { "id": "ore-glut", "name": "Ore Glut", "targetCategories": ["ore"], "multiplier": 0.84 },
+    { "id": "food-surplus", "name": "Food Surplus", "targetCategories": ["food"], "multiplier": 0.82 },
+    { "id": "ration-crisis", "name": "Ration Crisis", "targetCategories": ["food"], "multiplier": 1.22 },
+    { "id": "med-relief", "name": "Medical Relief Convoy", "targetCategories": ["medicine"], "multiplier": 0.86 },
+    { "id": "plague-wave", "name": "Plague Wave", "targetCategories": ["medicine"], "multiplier": 1.24 },
+    { "id": "chip-fab-failure", "name": "Chip Fab Failure", "targetCategories": ["tech", "data"], "multiplier": 1.18 },
+    { "id": "festival-demand", "name": "Festival Demand", "targetCategories": ["luxury"], "multiplier": 1.16 },
+    { "id": "relic-auction", "name": "Relic Auction Rush", "targetCategories": ["relic"], "multiplier": 1.28 },
+    { "id": "arms-crackdown", "name": "Arms Crackdown", "targetCategories": ["weapon"], "multiplier": 1.26 },
+    { "id": "fuel-rationing", "name": "Fuel Rationing", "targetCategories": ["fuel"], "multiplier": 1.2 },
+    { "id": "smuggler-flood", "name": "Smuggler Flood", "targetCategories": ["weapon", "data", "relic"], "multiplier": 0.88 }
+  ]
+}

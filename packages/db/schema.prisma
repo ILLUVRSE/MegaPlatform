@@ -1,0 +1,2361 @@
+// Prisma schema for ILLUVRSE Admin Dashboard
+// Datasource and generator are intentionally simple for local development.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String                   @id @default(cuid())
+  email              String                   @unique
+  name               String?
+  role               String                   @default("user")
+  disabled           Boolean                  @default(false)
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+  accounts           Account[]
+  sessions           Session[]
+  adminAudits        AdminAudit[]             @relation("AdminActor")
+  studioProjects     StudioProject[]
+  shortPosts         ShortPost[]
+  profiles           Profile[]
+  userGames          UserGame[]
+  contentItems       ContentItem[]            @relation("ContentCreator")
+  contentTransitions ContentStateTransition[] @relation("ContentTransitionActor")
+  creatorProfile     CreatorProfile?
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  permissions Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Show {
+  id                String     @id @default(cuid())
+  title             String
+  slug              String     @unique
+  description       String?
+  posterUrl         String?
+  heroUrl           String?
+  featured          Boolean    @default(false)
+  trending          Boolean    @default(false)
+  newRelease        Boolean    @default(false)
+  heroPriority      Int?
+  featuredRail      String?
+  featuredRailOrder Int?
+  watchOrder        Int?
+  maturityRating    String?
+  isPremium         Boolean    @default(false)
+  price             Int?
+  genres            String[]   @default([])
+  tags              String[]   @default([])
+  cast              String[]   @default([])
+  seasons           Season[]
+  feedPosts         FeedPost[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Season {
+  id        String    @id @default(cuid())
+  showId    String
+  number    Int
+  title     String
+  show      Show      @relation(fields: [showId], references: [id])
+  episodes  Episode[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Episode {
+  id            String          @id @default(cuid())
+  seasonId      String
+  title         String
+  description   String?
+  lengthSeconds Int
+  assetUrl      String
+  season        Season          @relation(fields: [seasonId], references: [id])
+  playlistItems PlaylistItem[]
+  livePrograms  LiveProgram[]
+  watchProgress WatchProgress[]
+  feedPosts     FeedPost[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Party {
+  id            String         @id @default(cuid())
+  code          String         @unique
+  name          String
+  isPublic      Boolean        @default(true)
+  hostId        String
+  currentIndex  Int            @default(0)
+  playbackState String         @default("idle")
+  seats         Seat[]
+  playlist      PlaylistItem[]
+  participants  Participant[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Seat {
+  id         String   @id @default(cuid())
+  partyId    String
+  seatIndex  Int
+  locked     Boolean  @default(false)
+  occupantId String?
+  party      Party    @relation(fields: [partyId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([partyId, seatIndex])
+}
+
+model PlaylistItem {
+  id        String   @id @default(cuid())
+  partyId   String
+  episodeId String?
+  assetUrl  String
+  order     Int
+  party     Party    @relation(fields: [partyId], references: [id])
+  episode   Episode? @relation(fields: [episodeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum StudioProjectType {
+  SHORT
+  MEME
+  REMIX
+  SHOW
+  GAME
+  PARTY_GAME
+}
+
+enum StudioProjectStatus {
+  DRAFT
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+  PUBLISHED
+}
+
+enum AgentJobType {
+  SHORT_SCRIPT
+  SHORT_SCENES
+  SHORT_RENDER
+  MEME_CAPTIONS
+  MEME_RENDER
+  VIDEO_CLIP_EXTRACT
+  VIDEO_TRANSCODE
+  THUMBNAIL_GENERATE
+}
+
+enum AgentJobStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum StudioAssetKind {
+  SHORT_MP4
+  MEME_PNG
+  IMAGE_UPLOAD
+  AUDIO_UPLOAD
+  VIDEO_UPLOAD
+  THUMBNAIL
+  TEXT
+  HLS_MANIFEST
+}
+
+enum StudioTemplateKind {
+  SHORT
+  MEME
+  GAME
+}
+
+enum AssetOriginType {
+  UPLOAD
+  GENERATED
+  REMIX
+  TEMPLATE
+  IMPORTED
+}
+
+enum AssetRightsStatus {
+  UNVERIFIED
+  LICENSED
+  OWNED
+  RESTRICTED
+}
+
+enum ContentQaStatus {
+  PASS
+  FAIL
+}
+
+enum RemixJobStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+  BLOCKED
+}
+
+enum DistributionActionStatus {
+  SCHEDULED
+  EXECUTED
+  SKIPPED
+  FAILED
+}
+
+enum PlatformNotificationStatus {
+  UNREAD
+  READ
+  ARCHIVED
+  ACTED
+}
+
+enum SquadInviteStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  REVOKED
+}
+
+enum EntitlementStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+enum ShortMediaType {
+  VIDEO
+  IMAGE
+}
+
+enum FeedPostType {
+  SHORT
+  MEME
+  WATCH_EPISODE
+  WATCH_SHOW
+  LIVE_CHANNEL
+  GAME
+  LINK
+  UPLOAD
+  TEXT
+  SHARE
+}
+
+enum ContentState {
+  DRAFT
+  PROCESSING
+  REVIEW
+  PUBLISHED
+  REJECTED
+  ARCHIVED
+}
+
+enum ContentAssetKind {
+  VIDEO
+  THUMBNAIL
+  AUDIO
+}
+
+enum UserGameStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model UserGame {
+  id           String            @id @default(cuid())
+  ownerId      String?
+  ownerKey     String?
+  title        String
+  description  String?
+  status       UserGameStatus    @default(DRAFT)
+  version      Int               @default(1)
+  seed         String
+  templateId   String
+  specJson     Json
+  thumbnailUrl String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  publishedAt  DateTime?
+  owner        User?             @relation(fields: [ownerId], references: [id])
+  versions     UserGameVersion[]
+
+  @@index([ownerId])
+  @@index([ownerKey])
+  @@index([status, publishedAt])
+}
+
+model UserGameVersion {
+  id         String   @id @default(cuid())
+  userGameId String
+  version    Int
+  specJson   Json
+  createdAt  DateTime @default(now())
+  userGame   UserGame @relation(fields: [userGameId], references: [id])
+
+  @@index([userGameId, version])
+}
+
+model StudioProject {
+  id               String              @id @default(cuid())
+  type             StudioProjectType
+  title            String
+  description      String?
+  status           StudioProjectStatus @default(DRAFT)
+  createdById      String?
+  creatorProfileId String?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  jobs             AgentJob[]
+  assets           StudioAsset[]
+  posts            ShortPost[]
+  createdBy        User?               @relation(fields: [createdById], references: [id])
+  creatorProfile   CreatorProfile?     @relation(fields: [creatorProfileId], references: [id])
+  qaResults        ContentQaResult[]
+  remixJobs        RemixJob[]
+  assetLineages    AssetLineage[]
+}
+
+model CreatorProfile {
+  id                  String                 @id @default(cuid())
+  userId              String                 @unique
+  handle              String                 @unique
+  displayName         String
+  reputationScore     Int                    @default(0)
+  level               Int                    @default(1)
+  badges              String[]               @default([])
+  metadataJson        Json?
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+  user                User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects            StudioProject[]
+  templates           StudioTemplate[]
+  revenueAttributions RevenueAttribution[]
+  progression         CreatorProgression?
+  progressionEvents   CreatorProgressEvent[]
+}
+
+model StudioTemplate {
+  id               String                  @id @default(cuid())
+  creatorProfileId String
+  title            String
+  description      String?
+  kind             StudioTemplateKind
+  isPublished      Boolean                 @default(false)
+  latestVersion    Int                     @default(1)
+  tags             String[]                @default([])
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  creatorProfile   CreatorProfile          @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+  versions         StudioTemplateVersion[]
+
+  @@index([creatorProfileId, createdAt])
+  @@index([kind, isPublished, createdAt])
+}
+
+model StudioTemplateVersion {
+  id          String         @id @default(cuid())
+  templateId  String
+  version     Int
+  title       String
+  description String?
+  schemaJson  Json
+  createdAt   DateTime       @default(now())
+  template    StudioTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([templateId, version])
+  @@index([templateId, createdAt])
+}
+
+model ContentItem {
+  id          String                   @id @default(cuid())
+  type        String
+  title       String
+  description String?
+  state       ContentState             @default(DRAFT)
+  creatorId   String?
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+  creator     User?                    @relation("ContentCreator", fields: [creatorId], references: [id])
+  assets      ContentAsset[]
+  transitions ContentStateTransition[]
+
+  @@index([state, createdAt])
+  @@index([creatorId, createdAt])
+}
+
+model ContentAsset {
+  id         String           @id @default(cuid())
+  contentId  String
+  kind       ContentAssetKind
+  storageKey String?
+  url        String
+  metadata   Json?
+  createdAt  DateTime         @default(now())
+  content    ContentItem      @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@index([contentId, createdAt])
+}
+
+model ContentStateTransition {
+  id        String       @id @default(cuid())
+  contentId String
+  fromState ContentState
+  toState   ContentState
+  actorId   String?
+  reason    String?
+  createdAt DateTime     @default(now())
+  content   ContentItem  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  actor     User?        @relation("ContentTransitionActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([contentId, createdAt])
+  @@index([actorId, createdAt])
+}
+
+model AgentJob {
+  id         String         @id @default(cuid())
+  projectId  String
+  type       AgentJobType
+  status     AgentJobStatus @default(QUEUED)
+  inputJson  Json
+  outputJson Json?
+  error      String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  project    StudioProject  @relation(fields: [projectId], references: [id])
+}
+
+model StudioAsset {
+  id            String          @id @default(cuid())
+  projectId     String
+  kind          StudioAssetKind
+  url           String
+  storageKey    String?
+  contentType   String?
+  sizeBytes     Int?
+  temporary     Boolean         @default(false)
+  isSafe        Boolean         @default(false)
+  isFlagged     Boolean         @default(false)
+  isQuarantined Boolean         @default(false)
+  metaJson      Json?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  project       StudioProject   @relation(fields: [projectId], references: [id])
+  lineage       AssetLineage?
+
+  @@index([kind, createdAt])
+  @@index([temporary, createdAt])
+}
+
+model AssetLineage {
+  id             String            @id @default(cuid())
+  projectId      String
+  studioAssetId  String            @unique
+  rootAssetId    String?
+  parentAssetId  String?
+  originType     AssetOriginType
+  rightsStatus   AssetRightsStatus @default(UNVERIFIED)
+  provenanceJson Json?
+  createdAt      DateTime          @default(now())
+  project        StudioProject     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  studioAsset    StudioAsset       @relation(fields: [studioAssetId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
+}
+
+model ContentQaResult {
+  id             String          @id @default(cuid())
+  projectId      String
+  status         ContentQaStatus
+  technicalScore Int
+  policyScore    Int
+  issuesJson     Json?
+  checkedBy      String          @default("qa-agent-v1")
+  createdAt      DateTime        @default(now())
+  project        StudioProject   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
+}
+
+model RevenueAttribution {
+  id               String         @id @default(cuid())
+  creatorProfileId String
+  shortPostId      String?
+  projectId        String?
+  actionType       String
+  eventSource      String
+  revenueCents     Int            @default(0)
+  occurredAt       DateTime       @default(now())
+  metadataJson     Json?
+  creatorProfile   CreatorProfile @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+
+  @@index([creatorProfileId, occurredAt])
+  @@index([actionType, occurredAt])
+}
+
+model CreatorProgression {
+  id               String         @id @default(cuid())
+  creatorProfileId String         @unique
+  level            Int            @default(1)
+  xp               Int            @default(0)
+  tier             String         @default("RISING")
+  rewardsEarned    Int            @default(0)
+  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime       @default(now())
+  creatorProfile   CreatorProfile @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+}
+
+model CreatorProgressEvent {
+  id               String         @id @default(cuid())
+  creatorProfileId String
+  source           String
+  points           Int
+  metadataJson     Json?
+  createdAt        DateTime       @default(now())
+  creatorProfile   CreatorProfile @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+
+  @@index([creatorProfileId, createdAt])
+}
+
+model RemixJob {
+  id            String         @id @default(cuid())
+  projectId     String
+  sourceAssetId String
+  requestedById String
+  status        RemixJobStatus @default(QUEUED)
+  blockedReason String?
+  prompt        String?
+  metadataJson  Json?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  project       StudioProject  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
+  @@index([status, createdAt])
+}
+
+model DistributionAction {
+  id           String                   @id @default(cuid())
+  module       String
+  targetType   String
+  targetId     String
+  actionType   String
+  priority     Int                      @default(0)
+  status       DistributionActionStatus @default(SCHEDULED)
+  scheduledFor DateTime
+  createdById  String?
+  metadataJson Json?
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@index([status, scheduledFor])
+  @@index([module, createdAt])
+}
+
+model ShortPost {
+  id          String          @id @default(cuid())
+  projectId   String?         @unique
+  title       String
+  caption     String
+  mediaUrl    String
+  mediaType   ShortMediaType
+  isPremium   Boolean         @default(false)
+  price       Int?
+  createdById String?
+  createdAt   DateTime        @default(now())
+  publishedAt DateTime        @default(now())
+  project     StudioProject?  @relation(fields: [projectId], references: [id])
+  createdBy   User?           @relation(fields: [createdById], references: [id])
+  purchases   ShortPurchase[]
+  feedPosts   FeedPost[]
+
+  @@index([createdById, publishedAt])
+  @@index([mediaType, publishedAt])
+}
+
+model ShortPurchase {
+  id          String    @id @default(cuid())
+  shortPostId String
+  buyerId     String?
+  buyerAnonId String?
+  createdAt   DateTime  @default(now())
+  shortPost   ShortPost @relation(fields: [shortPostId], references: [id])
+
+  @@index([shortPostId])
+  @@index([buyerId])
+  @@index([buyerAnonId])
+}
+
+model Profile {
+  id        String          @id @default(cuid())
+  userId    String
+  name      String
+  avatarUrl String?
+  isKids    Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listItems MyListItem[]
+  progress  WatchProgress[]
+}
+
+model MyListItem {
+  id        String   @id @default(cuid())
+  profileId String
+  mediaType String
+  showId    String?
+  createdAt DateTime @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, mediaType, showId])
+  @@index([profileId])
+}
+
+model WatchProgress {
+  id          String   @id @default(cuid())
+  profileId   String
+  episodeId   String
+  positionSec Int      @default(0)
+  durationSec Int      @default(0)
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, episodeId])
+  @@index([profileId, updatedAt])
+}
+
+model LiveChannel {
+  id                        String        @id @default(cuid())
+  slug                      String        @unique
+  name                      String
+  description               String?
+  logoUrl                   String?
+  heroUrl                   String?
+  category                  String?
+  streamUrl                 String?
+  isVirtual                 Boolean       @default(false)
+  defaultProgramDurationMin Int?
+  scheduleLocked            Boolean       @default(false)
+  lastCheckedAt             DateTime?
+  lastHealthyAt             DateTime?
+  lastError                 String?
+  isActive                  Boolean       @default(true)
+  programs                  LiveProgram[]
+  feedPosts                 FeedPost[]
+  createdAt                 DateTime      @default(now())
+  updatedAt                 DateTime      @updatedAt
+}
+
+model LiveProgram {
+  id          String      @id @default(cuid())
+  channelId   String
+  title       String
+  description String?
+  startsAt    DateTime
+  endsAt      DateTime
+  episodeId   String?
+  streamUrl   String?
+  order       Int?
+  channel     LiveChannel @relation(fields: [channelId], references: [id])
+  episode     Episode?    @relation(fields: [episodeId], references: [id])
+
+  @@index([channelId, startsAt])
+}
+
+model FeedPost {
+  id             String         @id @default(cuid())
+  type           FeedPostType
+  authorId       String?
+  authorProfile  String?
+  caption        String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  shortPostId    String?
+  showId         String?
+  episodeId      String?
+  liveChannelId  String?
+  gameKey        String?
+  linkUrl        String?
+  uploadUrl      String?
+  shareOfId      String?
+  isHidden       Boolean        @default(false)
+  isShadowbanned Boolean        @default(false)
+  isPinned       Boolean        @default(false)
+  isFeatured     Boolean        @default(false)
+  featuredRank   Int            @default(0)
+  likeCount      Int            @default(0)
+  commentCount   Int            @default(0)
+  shareCount     Int            @default(0)
+  shareOf        FeedPost?      @relation("FeedShare", fields: [shareOfId], references: [id])
+  shares         FeedPost[]     @relation("FeedShare")
+  reactions      FeedReaction[]
+  comments       FeedComment[]
+  reports        FeedReport[]
+  shortPost      ShortPost?     @relation(fields: [shortPostId], references: [id])
+  show           Show?          @relation(fields: [showId], references: [id])
+  episode        Episode?       @relation(fields: [episodeId], references: [id])
+  liveChannel    LiveChannel?   @relation(fields: [liveChannelId], references: [id])
+
+  @@index([createdAt])
+  @@index([isPinned, featuredRank])
+  @@index([type, createdAt])
+}
+
+model FeedReaction {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String?
+  anonId    String?
+  type      String
+  createdAt DateTime @default(now())
+  post      FeedPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId, anonId, type])
+  @@index([postId])
+}
+
+model FeedComment {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String?
+  anonId    String?
+  body      String
+  createdAt DateTime @default(now())
+  post      FeedPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+}
+
+model FeedReport {
+  id         String    @id @default(cuid())
+  postId     String
+  reporterId String?
+  anonId     String?
+  reason     String
+  details    String?
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+  post       FeedPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+  @@index([postId, resolvedAt])
+  @@index([reporterId, createdAt])
+  @@index([resolvedAt, createdAt])
+}
+
+model SchedulerRun {
+  id              String    @id @default(cuid())
+  scope           String    @default("LIVE")
+  startedAt       DateTime  @default(now())
+  completedAt     DateTime?
+  status          String    @default("RUNNING")
+  programsCreated Int       @default(0)
+  channelsTouched Int       @default(0)
+  errors          Int       @default(0)
+  summary         String?
+  triggeredById   String?
+}
+
+model Participant {
+  id          String   @id @default(cuid())
+  partyId     String
+  userId      String
+  displayName String?
+  joinedAt    DateTime @default(now())
+  party       Party    @relation(fields: [partyId], references: [id])
+
+  @@unique([partyId, userId])
+  @@index([partyId, joinedAt])
+  @@index([userId, joinedAt])
+}
+
+model AdminAudit {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  details   String
+  createdAt DateTime @default(now())
+  admin     User     @relation("AdminActor", fields: [adminId], references: [id])
+
+  @@index([adminId, createdAt])
+  @@index([action, createdAt])
+}
+
+model PlatformEvent {
+  id        String   @id @default(cuid())
+  event     String
+  module    String
+  href      String
+  surface   String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([event, createdAt])
+  @@index([module, createdAt])
+  @@index([surface, createdAt])
+}
+
+model PlatformSessionGraph {
+  id               String   @id @default(cuid())
+  sessionKey       String   @unique
+  userId           String?
+  anonId           String?
+  profileId        String?
+  creatorProfileId String?
+  currentModule    String
+  sourceModule     String?
+  sourceHref       String?
+  activeTask       String?
+  partyCode        String?
+  squadId          String?
+  stateJson        Json?
+  trailJson        Json?
+  lastActionAt     DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId, updatedAt])
+  @@index([anonId, updatedAt])
+  @@index([creatorProfileId, updatedAt])
+  @@index([currentModule, updatedAt])
+}
+
+model PlatformPresence {
+  id               String   @id @default(cuid())
+  sessionKey       String
+  userId           String?
+  anonId           String?
+  profileId        String?
+  creatorProfileId String?
+  module           String
+  status           String
+  deviceLabel      String?
+  metadataJson     Json?
+  lastSeenAt       DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([sessionKey, module])
+  @@index([userId, lastSeenAt])
+  @@index([creatorProfileId, lastSeenAt])
+  @@index([module, lastSeenAt])
+}
+
+model PlatformNotification {
+  id               String                     @id @default(cuid())
+  userId           String?
+  anonId           String?
+  creatorProfileId String?
+  kind             String
+  title            String
+  body             String?
+  href             String
+  source           String
+  status           PlatformNotificationStatus @default(UNREAD)
+  actionLabel      String?
+  payloadJson      Json?
+  actedAt          DateTime?
+  createdAt        DateTime                   @default(now())
+  updatedAt        DateTime                   @updatedAt
+
+  @@index([userId, status, createdAt])
+  @@index([anonId, status, createdAt])
+  @@index([creatorProfileId, status, createdAt])
+  @@index([source, createdAt])
+}
+
+model Squad {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  ownerId     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  members     SquadMember[]
+  invites     SquadInvite[]
+
+  @@index([ownerId, createdAt])
+}
+
+model SquadMember {
+  id          String   @id @default(cuid())
+  squadId     String
+  userId      String?
+  anonId      String?
+  displayName String
+  role        String   @default("member")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  squad       Squad    @relation(fields: [squadId], references: [id], onDelete: Cascade)
+
+  @@index([squadId, createdAt])
+  @@index([userId, createdAt])
+  @@unique([squadId, userId, anonId])
+}
+
+model SquadInvite {
+  id             String            @id @default(cuid())
+  squadId        String
+  inviterUserId  String?
+  inviteeUserId  String?
+  inviteeAnonId  String?
+  inviteeLabel   String
+  status         SquadInviteStatus @default(PENDING)
+  targetModule   String?
+  targetHref     String?
+  message        String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  respondedAt    DateTime?
+  squad          Squad             @relation(fields: [squadId], references: [id], onDelete: Cascade)
+
+  @@index([squadId, createdAt])
+  @@index([inviteeUserId, status, createdAt])
+  @@index([inviteeAnonId, status, createdAt])
+}
+
+model PlatformEntitlement {
+  id               String            @id @default(cuid())
+  userId           String?
+  anonId           String?
+  creatorProfileId String?
+  entitlementKey   String
+  source           String
+  status           EntitlementStatus @default(ACTIVE)
+  expiresAt        DateTime?
+  metadataJson     Json?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([userId, status, updatedAt])
+  @@index([anonId, status, updatedAt])
+  @@index([creatorProfileId, status, updatedAt])
+  @@index([entitlementKey, status, updatedAt])
+}
+
+model PlatformLedgerEntry {
+  id               String   @id @default(cuid())
+  userId           String?
+  anonId           String?
+  creatorProfileId String?
+  entryType        String
+  direction        String
+  amount           Int      @default(0)
+  currency         String   @default("USD_CENTS")
+  entitlementKey   String?
+  referenceType    String?
+  referenceId      String?
+  metadataJson     Json?
+  createdAt        DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([creatorProfileId, createdAt])
+  @@index([entryType, createdAt])
+  @@index([referenceType, referenceId, createdAt])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum MediaCorpPortfolioTier {
+  KILL
+  TEST
+  INCUBATE
+  SCALE
+  FLAGSHIP
+}
+
+enum MediaCorpRunStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+  BLOCKED
+}
+
+enum MediaCorpDivision {
+  BOARD
+  RESEARCH
+  IP_FOUNDRY
+  CONTENT_STUDIO
+  QUALITY
+  PUBLISHING
+  FRANCHISE_DEVELOPMENT
+}
+
+enum MediaCorpFormat {
+  IMAGE
+  ARTWORK
+  MEME
+  WALL_POST
+  VIDEO_SHORT
+  MUSIC_CONCEPT
+  PODCAST_CONCEPT
+  GAME_CONCEPT
+  MOVIE_CONCEPT
+}
+
+enum MediaCorpArtifactType {
+  IMAGE_CONCEPT
+  GENERATED_IMAGE
+  MEME_VARIANT
+  WALL_POST_COPY
+  SHORTS_PACKAGE
+  PODCAST_PACKAGE
+  MUSIC_CONCEPT_PACK
+  GAME_CONCEPT_PACK
+  TRAILER_PACKAGE
+  DISTRIBUTION_PACKAGE
+}
+
+enum MediaCorpArtifactStatus {
+  DRAFT
+  GENERATED
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  RELEASE_CANDIDATE
+  PUBLISHED
+}
+
+enum MediaCorpGenerationJobType {
+  GENERATE_IMAGE
+  GENERATE_MEME_SET
+  GENERATE_WALL_POST
+  GENERATE_SHORTS_PACKAGE
+  GENERATE_PODCAST_PACKAGE
+  GENERATE_MUSIC_CONCEPT
+  GENERATE_GAME_CONCEPT_PACK
+  GENERATE_TRAILER_PACKAGE
+}
+
+enum MediaCorpGenerationJobStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  RETRYABLE_FAILURE
+}
+
+enum MediaCorpReviewDecision {
+  APPROVE
+  REJECT
+  REVISE
+}
+
+enum MediaCorpReleaseCandidateStatus {
+  DRAFT
+  READY
+  SCHEDULED
+  PUBLISHED
+}
+
+enum MediaCorpChannelType {
+  WALL_POSTS
+  SHORTS_FEED
+  FEATURED_CARDS
+  HOME_FEED_MODULE
+  NEWSLETTER_DIGEST
+  PODCAST_FEED
+  FRANCHISE_LANDING_PAGE
+  GAME_DISCOVERY_SHELF
+  SANDBOX_DEMO
+}
+
+enum MediaCorpPublishAttemptStatus {
+  QUEUED
+  SCHEDULED
+  IMMEDIATE
+  DRY_RUN
+  SANDBOX
+  FAILED
+  CANCELLED
+  PUBLISHED
+  PARTIALLY_PUBLISHED
+}
+
+enum MediaCorpCampaignType {
+  FRANCHISE_LAUNCH
+  SEASONAL_DROP
+  CHARACTER_INTRODUCTION
+  MEME_BURST
+  SHORTS_BURST
+  PODCAST_PROMO_RUN
+  TRAILER_PUSH
+  GAME_CONCEPT_TEST_WAVE
+}
+
+enum MediaCorpExperimentStatus {
+  DRAFT
+  RUNNING
+  COMPLETED
+}
+
+enum MediaCorpRecommendationType {
+  INCREASE_FRANCHISE_MOMENTUM
+  DECREASE_FRANCHISE_MOMENTUM
+  PROMOTE_TIER
+  SUPPRESS_FORMAT
+  PRIORITIZE_CHANNEL
+  RECOMMEND_SEQUEL
+  RECOMMEND_SPINOFF
+  RECOMMEND_CAMPAIGN
+  RECOMMEND_REWORK
+}
+
+enum MediaCorpGoalType {
+  AUDIENCE_GROWTH
+  ENGAGEMENT_GROWTH
+  FRANCHISE_INCUBATION
+  FRANCHISE_SCALING
+  CREATOR_CONTENT_VOLUME
+  CHANNEL_EXPANSION
+  EXPERIMENT_THROUGHPUT
+  COST_EFFICIENCY
+  ORIGINALITY_IMPROVEMENT
+  CONTENT_QUALITY_IMPROVEMENT
+  SAFE_PUBLISHING
+}
+
+enum MediaCorpConstraintMode {
+  HARD
+  SOFT
+}
+
+enum MediaCorpBudgetScope {
+  GENERATION_JOBS
+  CAMPAIGN_VOLUME
+  CHANNEL_SLOTS
+  EXPERIMENT_SLOTS
+  FRANCHISE_INVESTMENT
+  COMPUTE_TOKENS
+  HUMAN_REVIEW_CAPACITY
+  PUBLISHING_CADENCE
+}
+
+enum MediaCorpBudgetInterval {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  CAMPAIGN
+}
+
+enum MediaCorpResourcePoolKind {
+  BUDGET
+  CAPACITY
+  SLOT
+  QUEUE
+  REVIEW_BANDWIDTH
+  TOKEN_QUOTA
+}
+
+enum MediaCorpExecutivePlanStatus {
+  DRAFT
+  ACTIVE
+  SUPERSEDED
+  COMPLETED
+  CANCELLED
+}
+
+enum MediaCorpExecutiveCycleType {
+  DAILY_OPERATING_REVIEW
+  WEEKLY_PORTFOLIO_REVIEW
+  CAMPAIGN_LAUNCH_CYCLE
+  EXPERIMENT_REVIEW_CYCLE
+  MONTHLY_FRANCHISE_INVESTMENT_REVIEW
+  BUDGET_REBALANCE_CYCLE
+}
+
+enum MediaCorpDirectiveActionType {
+  INCREASE_FORMAT_OUTPUT
+  DECREASE_FORMAT_OUTPUT
+  LAUNCH_CAMPAIGN
+  PAUSE_CHANNEL_MIX
+  REQUEST_SEQUEL_ASSETS
+  QUEUE_TREND_BRIEF
+  SEED_FRANCHISE
+  PRODUCE_BUNDLE
+  CHANGE_REVIEW_PRIORITY
+  SCHEDULE_PUBLISH_WAVE
+  CREATE_EXPERIMENT
+  TRIGGER_REWORK
+  ARCHIVE_CONCEPT
+  PROMOTE_FRANCHISE
+  PAUSE_FRANCHISE
+  SUNSET_FRANCHISE
+  REBALANCE_BUDGET
+}
+
+enum MediaCorpPlanAssignmentStatus {
+  PLANNED
+  QUEUED
+  AWAITING_APPROVAL
+  RUNNING
+  COMPLETED
+  BLOCKED
+  CANCELLED
+}
+
+enum MediaCorpAutonomyMode {
+  MANUAL_ONLY
+  ADVISORY
+  SEMI_AUTONOMOUS
+  FULLY_AUTONOMOUS_SANDBOX
+  FULLY_AUTONOMOUS_CONSTRAINED
+}
+
+enum MediaCorpPolicySeverity {
+  INFO
+  WARNING
+  BLOCK
+}
+
+enum MediaCorpApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum MediaCorpOverrideStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+enum MediaCorpForecastMetric {
+  CONTENT_OUTPUT
+  CAMPAIGN_REACH
+  BUDGET_BURN
+  ENGAGEMENT_UPLIFT
+  FRANCHISE_MOMENTUM
+  REVIEW_QUEUE_LOAD
+}
+
+model MediaTrendBrief {
+  id               String   @id @default(cuid())
+  externalId       String   @unique
+  title            String
+  opportunityScore Int
+  payload          Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([createdAt])
+}
+
+model MediaFranchiseSeed {
+  id                  String                 @id @default(cuid())
+  slug                String                 @unique
+  name                String
+  status              MediaCorpPortfolioTier @default(TEST)
+  trendBriefExternalId String?
+  payload             Json
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model MediaFranchise {
+  id        String                 @id @default(cuid())
+  slug      String                 @unique
+  name      String
+  tier      MediaCorpPortfolioTier @default(TEST)
+  status    MediaCorpPortfolioTier @default(TEST)
+  payload   Json
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+
+  @@index([tier, updatedAt])
+}
+
+model MediaCanonRecord {
+  id                 String   @id @default(cuid())
+  franchiseExternalId String
+  version            Int      @default(1)
+  payload            Json
+  createdAt          DateTime @default(now())
+
+  @@index([franchiseExternalId, version])
+}
+
+model MediaContentPlan {
+  id                 String          @id @default(cuid())
+  externalId         String          @unique
+  franchiseExternalId String
+  seedExternalId     String
+  format             MediaCorpFormat
+  title              String
+  status             String          @default("planned")
+  payload            Json
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@index([franchiseExternalId, format, createdAt])
+  @@index([status, updatedAt])
+}
+
+model MediaQualityScorecard {
+  id                  String                 @id @default(cuid())
+  externalId          String
+  franchiseExternalId String
+  seedExternalId      String
+  decision            MediaCorpPortfolioTier
+  overall             Int
+  payload             Json
+  createdAt           DateTime               @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([decision, createdAt])
+}
+
+model MediaPublishPlan {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  franchiseExternalId  String
+  contentPlanExternalId String
+  status               String   @default("draft")
+  scheduledFor         DateTime
+  payload              Json
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([status, scheduledFor])
+}
+
+model MediaPerformanceReport {
+  id                   String   @id @default(cuid())
+  externalId           String
+  franchiseExternalId  String
+  contentPlanExternalId String?
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+}
+
+model MediaAgentTask {
+  id         String            @id @default(cuid())
+  externalId String            @unique
+  agentId    String
+  division   MediaCorpDivision
+  workflowId String
+  stageId    String
+  status     MediaCorpRunStatus
+  priority   Int               @default(3)
+  payload    Json
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  @@index([status, updatedAt])
+  @@index([division, createdAt])
+}
+
+model MediaAgentRun {
+  id          String             @id @default(cuid())
+  externalId  String
+  taskExternalId String
+  agentId     String
+  workflowId  String
+  status      MediaCorpRunStatus
+  summary     String
+  startedAt   DateTime
+  endedAt     DateTime?
+  payload     Json
+  createdAt   DateTime           @default(now())
+
+  @@index([agentId, startedAt])
+  @@index([status, startedAt])
+}
+
+model MediaMemoryEntry {
+  id                  String   @id @default(cuid())
+  externalId          String
+  franchiseExternalId String?
+  agentId             String?
+  kind                String
+  key                 String   @unique
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([agentId, createdAt])
+}
+
+model MediaWorldStateSnapshot {
+  id          String   @id @default(cuid())
+  generatedAt DateTime
+  payload     Json
+  createdAt   DateTime @default(now())
+
+  @@index([generatedAt])
+}
+
+model MediaPromptTemplate {
+  id        String      @id @default(cuid())
+  externalId String
+  version   Int
+  medium    MediaCorpFormat
+  purpose   String
+  payload   Json
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([externalId, version])
+  @@index([medium, updatedAt])
+}
+
+model MediaPromptRun {
+  id                 String   @id @default(cuid())
+  externalId         String   @unique
+  templateExternalId String
+  templateVersion    Int
+  franchiseExternalId String
+  artifactBundleExternalId String
+  generationJobExternalId String
+  payload            Json
+  createdAt          DateTime @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([artifactBundleExternalId, createdAt])
+}
+
+model MediaGenerationJob {
+  id                   String                       @id @default(cuid())
+  externalId           String                       @unique
+  franchiseExternalId  String
+  seedExternalId       String
+  contentPlanExternalId String
+  artifactBundleExternalId String
+  jobType              MediaCorpGenerationJobType
+  status               MediaCorpGenerationJobStatus
+  provider             String
+  model                String
+  promptTemplateExternalId String
+  payload              Json
+  createdAt            DateTime                     @default(now())
+  updatedAt            DateTime                     @updatedAt
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([status, updatedAt])
+}
+
+model MediaArtifactBundle {
+  id                  String                  @id @default(cuid())
+  externalId          String                  @unique
+  franchiseExternalId String
+  seedExternalId      String
+  contentPlanExternalId String
+  title               String
+  medium              MediaCorpFormat
+  status              MediaCorpArtifactStatus
+  reviewStatus        String
+  qualityScore        Int
+  payload             Json
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([reviewStatus, updatedAt])
+}
+
+model MediaArtifact {
+  id                  String                  @id @default(cuid())
+  externalId          String                  @unique
+  franchiseExternalId String
+  seedExternalId      String
+  contentPlanExternalId String
+  artifactBundleExternalId String
+  artifactType        MediaCorpArtifactType
+  title               String
+  status              MediaCorpArtifactStatus
+  reviewStatus        String
+  qualityScore        Int
+  rightsSimilarityRisk Int
+  payload             Json
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([artifactBundleExternalId, updatedAt])
+}
+
+model MediaArtifactVersion {
+  id                 String   @id @default(cuid())
+  externalId         String   @unique
+  artifactExternalId String
+  version            Int
+  payload            Json
+  createdAt          DateTime @default(now())
+
+  @@index([artifactExternalId, version])
+}
+
+model MediaArtifactReviewScorecard {
+  id                  String   @id @default(cuid())
+  externalId          String   @unique
+  franchiseExternalId String
+  artifactBundleExternalId String
+  overall             Int
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([artifactBundleExternalId, createdAt])
+}
+
+model MediaReviewDecision {
+  id                  String                  @id @default(cuid())
+  externalId          String                  @unique
+  franchiseExternalId String
+  artifactBundleExternalId String
+  decision            MediaCorpReviewDecision
+  reviewer            String
+  payload             Json
+  createdAt           DateTime                @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([artifactBundleExternalId, createdAt])
+}
+
+model MediaReleaseCandidate {
+  id                  String                           @id @default(cuid())
+  externalId          String                           @unique
+  franchiseExternalId String
+  artifactBundleExternalId String
+  channel             String
+  status              MediaCorpReleaseCandidateStatus
+  payload             Json
+  createdAt           DateTime                         @default(now())
+  updatedAt           DateTime                         @updatedAt
+
+  @@index([franchiseExternalId, createdAt])
+  @@index([status, updatedAt])
+}
+
+model MediaDistributionPackage {
+  id                      String   @id @default(cuid())
+  externalId              String   @unique
+  releaseCandidateExternalId String
+  channel                 String
+  payload                 Json
+  createdAt               DateTime @default(now())
+
+  @@index([releaseCandidateExternalId, createdAt])
+}
+
+model MediaDistributionChannel {
+  id        String               @id @default(cuid())
+  externalId String              @unique
+  slug      String               @unique
+  name      String
+  type      MediaCorpChannelType
+  status    String
+  payload   Json
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+
+  @@index([type, updatedAt])
+}
+
+model MediaPublishTarget {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  channelExternalId String
+  surface           String
+  payload           Json
+  createdAt         DateTime @default(now())
+
+  @@index([channelExternalId, createdAt])
+}
+
+model MediaPublishWindow {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  channelExternalId String
+  label             String
+  payload           Json
+  createdAt         DateTime @default(now())
+
+  @@index([channelExternalId, createdAt])
+}
+
+model MediaPublishResult {
+  id               String                       @id @default(cuid())
+  externalId       String                       @unique
+  publishAttemptExternalId String
+  status           MediaCorpPublishAttemptStatus
+  payload          Json
+  createdAt        DateTime                     @default(now())
+
+  @@index([publishAttemptExternalId, createdAt])
+}
+
+model MediaPublishAttempt {
+  id                    String                       @id @default(cuid())
+  externalId            String                       @unique
+  releaseCandidateExternalId String
+  distributionPackageExternalId String
+  channelExternalId     String
+  publishTargetExternalId String
+  publishWindowExternalId String?
+  status                MediaCorpPublishAttemptStatus
+  mode                  String
+  adapterKey            String
+  payload               Json
+  createdAt             DateTime                     @default(now())
+  updatedAt             DateTime                     @updatedAt
+
+  @@index([channelExternalId, updatedAt])
+  @@index([status, updatedAt])
+}
+
+model MediaAudienceSegment {
+  id        String   @id @default(cuid())
+  externalId String  @unique
+  name      String
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model MediaCampaign {
+  id                  String                @id @default(cuid())
+  externalId          String                @unique
+  type                MediaCorpCampaignType
+  franchiseExternalId String
+  title               String
+  payload             Json
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@index([franchiseExternalId, updatedAt])
+}
+
+model MediaCampaignItem {
+  id                  String   @id @default(cuid())
+  externalId          String   @unique
+  campaignExternalId  String
+  releaseCandidateExternalId String
+  channelExternalId   String
+  publishAttemptExternalId String?
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([campaignExternalId, createdAt])
+}
+
+model MediaExperimentAssignment {
+  id                  String                    @id @default(cuid())
+  externalId          String                    @unique
+  experimentId        String
+  releaseCandidateExternalId String
+  channelExternalId   String
+  status              MediaCorpExperimentStatus
+  payload             Json
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+
+  @@index([releaseCandidateExternalId, updatedAt])
+}
+
+model MediaPerformanceEvent {
+  id                  String   @id @default(cuid())
+  externalId          String   @unique
+  publishAttemptExternalId String
+  releaseCandidateExternalId String
+  franchiseExternalId String
+  channelExternalId   String
+  artifactBundleExternalId String
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([publishAttemptExternalId, createdAt])
+  @@index([franchiseExternalId, createdAt])
+}
+
+model MediaPerformanceSnapshot {
+  id                  String   @id @default(cuid())
+  externalId          String   @unique
+  publishAttemptExternalId String
+  releaseCandidateExternalId String
+  franchiseExternalId String
+  channelExternalId   String
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([publishAttemptExternalId, createdAt])
+  @@index([channelExternalId, createdAt])
+}
+
+model MediaContentMetricsRollup {
+  id                  String   @id @default(cuid())
+  externalId          String   @unique
+  artifactBundleExternalId String
+  releaseCandidateExternalId String
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([artifactBundleExternalId, createdAt])
+}
+
+model MediaChannelMetricsRollup {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  channelExternalId String
+  payload           Json
+  createdAt         DateTime @default(now())
+
+  @@index([channelExternalId, createdAt])
+}
+
+model MediaFranchiseMetricsRollup {
+  id                  String   @id @default(cuid())
+  externalId          String   @unique
+  franchiseExternalId String
+  payload             Json
+  createdAt           DateTime @default(now())
+
+  @@index([franchiseExternalId, createdAt])
+}
+
+model MediaPromptPerformanceRollup {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  promptTemplateExternalId String
+  promptRunExternalId String?
+  payload           Json
+  createdAt         DateTime @default(now())
+
+  @@index([promptTemplateExternalId, createdAt])
+}
+
+model MediaAgentPerformanceRollup {
+  id        String   @id @default(cuid())
+  externalId String  @unique
+  agentId   String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@index([agentId, createdAt])
+}
+
+model MediaStrategyRecommendation {
+  id                  String                       @id @default(cuid())
+  externalId          String                       @unique
+  recommendationType  MediaCorpRecommendationType
+  franchiseExternalId String?
+  channelExternalId   String?
+  payload             Json
+  createdAt           DateTime                     @default(now())
+
+  @@index([recommendationType, createdAt])
+  @@index([franchiseExternalId, createdAt])
+}
+
+model MediaStrategicGoal {
+  id                  String                  @id @default(cuid())
+  externalId          String                  @unique
+  goalType            MediaCorpGoalType
+  title               String
+  priorityWeight      Int
+  constraintMode      MediaCorpConstraintMode
+  franchiseExternalId String?
+  channelExternalId   String?
+  payload             Json
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  @@index([goalType, updatedAt])
+  @@index([franchiseExternalId, updatedAt])
+}
+
+model MediaGoalTarget {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  goalExternalId    String
+  metric            String
+  targetValue       Float?
+  minValue          Float?
+  maxValue          Float?
+  unit              String
+  payload           Json
+  createdAt         DateTime @default(now())
+
+  @@index([goalExternalId, createdAt])
+  @@index([metric, createdAt])
+}
+
+model MediaGoalWindow {
+  id             String   @id @default(cuid())
+  externalId     String   @unique
+  goalExternalId String   @unique
+  startAt        DateTime
+  endAt          DateTime
+  cadence        String
+  payload        Json
+  createdAt      DateTime @default(now())
+
+  @@index([startAt, endAt])
+}
+
+model MediaGoalProgress {
+  id             String   @id @default(cuid())
+  externalId     String   @unique
+  goalExternalId String
+  status         String
+  attainmentPct  Float
+  payload        Json
+  measuredAt     DateTime
+  createdAt      DateTime @default(now())
+
+  @@index([goalExternalId, measuredAt])
+  @@index([status, measuredAt])
+}
+
+model MediaGoalConflict {
+  id                        String   @id @default(cuid())
+  externalId                String   @unique
+  goalExternalId            String
+  conflictingGoalExternalId String
+  conflictType              String
+  severity                  Int
+  payload                   Json
+  createdAt                 DateTime @default(now())
+
+  @@index([goalExternalId, createdAt])
+  @@index([conflictingGoalExternalId, createdAt])
+}
+
+model MediaGoalEvaluation {
+  id             String   @id @default(cuid())
+  externalId     String   @unique
+  goalExternalId String
+  score          Int
+  status         String
+  payload        Json
+  measuredAt     DateTime
+  createdAt      DateTime @default(now())
+
+  @@index([goalExternalId, measuredAt])
+  @@index([status, measuredAt])
+}
+
+model MediaGoalPriorityProfile {
+  id             String   @id @default(cuid())
+  externalId     String   @unique
+  goalExternalId String   @unique
+  weight         Int
+  urgency        Int
+  expectedLeverage Int
+  payload        Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([weight, updatedAt])
+}
+
+model MediaBudget {
+  id                  String                  @id @default(cuid())
+  externalId          String                  @unique
+  name                String
+  scope               MediaCorpBudgetScope
+  interval            MediaCorpBudgetInterval
+  allocatedAmount     Float
+  consumedAmount      Float
+  reservedAmount      Float
+  remainingAmount     Float
+  currencyOrUnit      String
+  franchiseExternalId String?
+  channelExternalId   String?
+  payload             Json
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  @@index([scope, updatedAt])
+  @@index([franchiseExternalId, updatedAt])
+}
+
+model MediaBudgetAllocation {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  budgetExternalId  String
+  targetType        String
+  targetExternalId  String
+  amount            Float
+  reservedAmount    Float
+  consumedAmount    Float
+  payload           Json
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([budgetExternalId, updatedAt])
+  @@index([targetType, targetExternalId])
+}
+
+model MediaResourcePool {
+  id                  String                    @id @default(cuid())
+  externalId          String                    @unique
+  name                String
+  kind                MediaCorpResourcePoolKind
+  totalCapacity       Float
+  reservedCapacity    Float
+  consumedCapacity    Float
+  remainingCapacity   Float
+  unit                String
+  franchiseExternalId String?
+  channelExternalId   String?
+  payload             Json
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+
+  @@index([kind, updatedAt])
+  @@index([franchiseExternalId, updatedAt])
+}
+
+model MediaCapacityWindow {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  resourcePoolExternalId String
+  label                String
+  startAt              DateTime
+  endAt                DateTime
+  totalCapacity        Float
+  reservedCapacity     Float
+  consumedCapacity     Float
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([resourcePoolExternalId, startAt])
+  @@index([startAt, endAt])
+}
+
+model MediaSpendEvent {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  budgetExternalId     String?
+  allocationExternalId String?
+  resourcePoolExternalId String?
+  amount               Float
+  eventType            String
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([budgetExternalId, createdAt])
+  @@index([resourcePoolExternalId, createdAt])
+}
+
+model MediaAllocationDecision {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  budgetExternalId     String?
+  resourcePoolExternalId String?
+  targetType           String
+  targetExternalId     String
+  decision             String
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([budgetExternalId, createdAt])
+  @@index([targetType, targetExternalId])
+}
+
+model MediaBudgetGuardrail {
+  id                String                  @id @default(cuid())
+  externalId        String                  @unique
+  budgetExternalId  String
+  name              String
+  metric            String
+  severity          MediaCorpPolicySeverity
+  payload           Json
+  createdAt         DateTime                @default(now())
+
+  @@index([budgetExternalId, createdAt])
+  @@index([severity, createdAt])
+}
+
+model MediaPlanningCycle {
+  id            String                     @id @default(cuid())
+  externalId    String                     @unique
+  cycleType     MediaCorpExecutiveCycleType
+  label         String
+  status        String
+  autonomyMode  MediaCorpAutonomyMode
+  payload       Json
+  startedAt     DateTime
+  endedAt       DateTime?
+  createdAt     DateTime                   @default(now())
+
+  @@index([cycleType, startedAt])
+  @@index([status, startedAt])
+}
+
+model MediaExecutivePlan {
+  id                String                      @id @default(cuid())
+  externalId        String                      @unique
+  planningCycleExternalId String
+  title             String
+  version           Int
+  status            MediaCorpExecutivePlanStatus
+  autonomyMode      MediaCorpAutonomyMode
+  payload           Json
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @updatedAt
+
+  @@index([planningCycleExternalId, updatedAt])
+  @@index([status, updatedAt])
+}
+
+model MediaPlanObjective {
+  id                 String   @id @default(cuid())
+  externalId         String   @unique
+  executivePlanExternalId String
+  strategicGoalExternalId String?
+  title              String
+  priority           Int
+  payload            Json
+  createdAt          DateTime @default(now())
+
+  @@index([executivePlanExternalId, createdAt])
+  @@index([strategicGoalExternalId, createdAt])
+}
+
+model MediaPlanDirective {
+  id                 String                       @id @default(cuid())
+  externalId         String                       @unique
+  executivePlanExternalId String
+  planObjectiveExternalId String?
+  actionType         MediaCorpDirectiveActionType
+  targetType         String
+  targetExternalId   String
+  status             String
+  requiresApproval   Boolean                      @default(false)
+  payload            Json
+  createdAt          DateTime                     @default(now())
+  updatedAt          DateTime                     @updatedAt
+
+  @@index([executivePlanExternalId, updatedAt])
+  @@index([targetType, targetExternalId])
+  @@index([status, updatedAt])
+}
+
+model MediaPlanAssignment {
+  id                    String                        @id @default(cuid())
+  externalId            String                        @unique
+  planDirectiveExternalId String
+  agentId               String
+  workflowId            String
+  stageId               String
+  status                MediaCorpPlanAssignmentStatus
+  downstreamTaskExternalId String?
+  payload               Json
+  createdAt             DateTime                      @default(now())
+  updatedAt             DateTime                      @updatedAt
+
+  @@index([planDirectiveExternalId, updatedAt])
+  @@index([status, updatedAt])
+}
+
+model MediaPlanDecision {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  executivePlanExternalId String
+  planDirectiveExternalId String?
+  decisionType         String
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([executivePlanExternalId, createdAt])
+  @@index([planDirectiveExternalId, createdAt])
+}
+
+model MediaPlanOutcomeExpectation {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  executivePlanExternalId String
+  planDirectiveExternalId String?
+  metric               String
+  baselineValue        Float
+  expectedValue        Float
+  confidence           Float
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([executivePlanExternalId, createdAt])
+  @@index([metric, createdAt])
+}
+
+model MediaGovernancePolicy {
+  id           String                  @id @default(cuid())
+  externalId   String                  @unique
+  name         String
+  autonomyMode MediaCorpAutonomyMode
+  enabled      Boolean                 @default(true)
+  payload      Json
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+
+  @@index([autonomyMode, updatedAt])
+  @@index([enabled, updatedAt])
+}
+
+model MediaApprovalRule {
+  id                   String                  @id @default(cuid())
+  externalId           String                  @unique
+  governancePolicyExternalId String
+  name                 String
+  actionType           String
+  approverRole         String
+  status               MediaCorpApprovalStatus
+  payload              Json
+  createdAt            DateTime                @default(now())
+
+  @@index([governancePolicyExternalId, createdAt])
+  @@index([status, createdAt])
+}
+
+model MediaAutonomyMode {
+  id             String                @id @default(cuid())
+  externalId     String                @unique
+  mode           MediaCorpAutonomyMode
+  isActive       Boolean               @default(false)
+  payload        Json
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  @@index([mode, updatedAt])
+  @@index([isActive, updatedAt])
+}
+
+model MediaDecisionGuardrail {
+  id                   String                  @id @default(cuid())
+  externalId           String                  @unique
+  governancePolicyExternalId String
+  name                 String
+  scope                String
+  severity             MediaCorpPolicySeverity
+  payload              Json
+  createdAt            DateTime                @default(now())
+
+  @@index([governancePolicyExternalId, createdAt])
+  @@index([severity, createdAt])
+}
+
+model MediaEscalationRule {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  governancePolicyExternalId String?
+  triggerType          String
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([governancePolicyExternalId, createdAt])
+  @@index([triggerType, createdAt])
+}
+
+model MediaPolicyViolation {
+  id                   String                  @id @default(cuid())
+  externalId           String                  @unique
+  governancePolicyExternalId String
+  decisionGuardrailExternalId String?
+  decisionLogExternalId String?
+  planDirectiveExternalId String?
+  severity             MediaCorpPolicySeverity
+  resolutionStatus     String
+  payload              Json
+  createdAt            DateTime                @default(now())
+  resolvedAt           DateTime?
+
+  @@index([governancePolicyExternalId, createdAt])
+  @@index([resolutionStatus, createdAt])
+}
+
+model MediaManualOverride {
+  id                String                  @id @default(cuid())
+  externalId        String                  @unique
+  targetType        String
+  targetExternalId  String
+  actor             String
+  status            MediaCorpOverrideStatus
+  payload           Json
+  createdAt         DateTime                @default(now())
+  expiresAt         DateTime?
+
+  @@index([targetType, targetExternalId])
+  @@index([status, createdAt])
+}
+
+model MediaFreezeWindow {
+  id                String   @id @default(cuid())
+  externalId        String   @unique
+  label             String
+  startAt           DateTime
+  endAt             DateTime
+  payload           Json
+  createdAt         DateTime @default(now())
+
+  @@index([startAt, endAt])
+}
+
+model MediaDecisionLog {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  planningCycleExternalId String?
+  executivePlanExternalId String?
+  planDirectiveExternalId String?
+  decisionType         String
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([planningCycleExternalId, createdAt])
+  @@index([executivePlanExternalId, createdAt])
+  @@index([planDirectiveExternalId, createdAt])
+}
+
+model MediaDecisionInputSnapshot {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  decisionLogExternalId String?
+  planningCycleExternalId String?
+  sourceType           String
+  sourceExternalId     String?
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([decisionLogExternalId, createdAt])
+  @@index([planningCycleExternalId, createdAt])
+}
+
+model MediaDecisionReason {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  decisionLogExternalId String
+  kind                 String
+  weight               Float
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([decisionLogExternalId, createdAt])
+  @@index([kind, createdAt])
+}
+
+model MediaAlternativeConsidered {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  decisionLogExternalId String
+  label                String
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([decisionLogExternalId, createdAt])
+}
+
+model MediaConfidenceAssessment {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  decisionLogExternalId String   @unique
+  score                Float
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([score, createdAt])
+}
+
+model MediaExpectedImpact {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  decisionLogExternalId String
+  metric               String
+  baselineValue        Float
+  expectedValue        Float
+  payload              Json
+  createdAt            DateTime @default(now())
+
+  @@index([decisionLogExternalId, createdAt])
+  @@index([metric, createdAt])
+}
+
+model MediaPostHocEvaluation {
+  id                   String   @id @default(cuid())
+  externalId           String   @unique
+  decisionLogExternalId String   @unique
+  outcome              String
+  payload              Json
+  evaluatedAt          DateTime
+  createdAt            DateTime @default(now())
+
+  @@index([outcome, evaluatedAt])
+}
+
+model MediaForecastRecord {
+  id                   String                  @id @default(cuid())
+  externalId           String                  @unique
+  planningCycleExternalId String?
+  executivePlanExternalId String?
+  metric               MediaCorpForecastMetric
+  targetType           String
+  targetExternalId     String?
+  baselineValue        Float
+  forecastValue        Float
+  confidence           Float
+  method               String
+  payload              Json
+  createdAt            DateTime                @default(now())
+
+  @@index([planningCycleExternalId, createdAt])
+  @@index([executivePlanExternalId, createdAt])
+  @@index([metric, createdAt])
+}

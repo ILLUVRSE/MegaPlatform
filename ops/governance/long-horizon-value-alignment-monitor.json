@@ -1,0 +1,4 @@
+{
+  "maxAllowedDrift": 0.2,
+  "triggerPolicyCorrection": true
+}

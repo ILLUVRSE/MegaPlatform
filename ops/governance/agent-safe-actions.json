@@ -1,0 +1,9 @@
+[
+  {"action":"create_task","risk":"low","blocked":false},
+  {"action":"run_shipcheck_quick","risk":"low","blocked":false},
+  {"action":"update_runbook","risk":"low","blocked":false},
+  {"action":"run_destructive_git","risk":"high","blocked":true},
+  {"action":"apply_destructive_migration","risk":"high","blocked":true},
+  {"action":"production_deploy","risk":"high","blocked":true},
+  {"action":"policy_edit","risk":"high","blocked":true}
+]

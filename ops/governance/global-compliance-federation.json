@@ -1,0 +1,10 @@
+{
+  "regions": ["us", "eu", "uk", "apac"],
+  "defaultRegion": "us",
+  "regionConstraints": {
+    "eu": ["gdpr", "dsa"],
+    "us": ["coppa", "ccpa"],
+    "uk": ["uk-gdpr"],
+    "apac": ["pdpa"]
+  }
+}

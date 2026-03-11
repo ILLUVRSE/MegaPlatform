@@ -1,0 +1,83 @@
+{
+  "frames": {
+    "idle": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 110
+      }
+    }
+  },
+  "animations": {
+    "idle": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "walk": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "crouch": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "jump": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "hit": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "block": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "attack_hit": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "attack_kick": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "attack_power": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "knockdown": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    },
+    "ko": {
+      "frames": [
+        "idle"
+      ],
+      "fps": 8
+    }
+  },
+  "meta": {
+    "generated": true
+  }
+}

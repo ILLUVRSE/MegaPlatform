@@ -1,0 +1,8 @@
+{
+  "requireCaptions": true,
+  "requireHighContrastUi": true,
+  "requireSeatedModeSupport": true,
+  "requireOneHandedInputSupport": true,
+  "requireAssistiveAudioCues": true,
+  "minimumBaselineScore": 0.95
+}

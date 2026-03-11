@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>PixelBrawl</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app">
+    <div id="gameMount"></div>
+
+    <section id="menuOverlay" class="overlay">
+      <h1>PIXELBRAWL</h1>
+      <p class="subtitle">Neon Lane Fighter</p>
+      <div class="menuActions">
+        <button id="playBtn" class="bigBtn">Play</button>
+        <button id="arcadeBtn" class="bigBtn">Arcade</button>
+        <button id="trainingBtn" class="bigBtn">Training</button>
+        <button id="progressBtn" class="bigBtn ghost">Progress</button>
+        <button id="openSettingsBtn" class="bigBtn ghost">Settings</button>
+      </div>
+    </section>
+
+    <section id="progressOverlay" class="overlay hidden">
+      <h2>Progress</h2>
+      <div id="progressStats" class="summaryStats"></div>
+      <div id="progressNextUnlock" class="matchMeta"></div>
+      <div id="progressUnlocked" class="progressGrid"></div>
+      <div class="menuActions">
+        <button id="closeProgressBtn" class="bigBtn ghost">Back</button>
+      </div>
+    </section>
+
+    <section id="selectOverlay" class="overlay hidden">
+      <h2>Select Fighters</h2>
+      <div class="modeRow">
+        <span>Mode</span>
+        <div class="modeButtons">
+          <button data-mode="versus" class="selected">Versus</button>
+          <button data-mode="arcade">Arcade</button>
+          <button data-mode="training">Training</button>
+        </div>
+      </div>
+      <div class="selectMeta">
+        <div class="slotCard">
+          <div class="slotLabel">P1</div>
+          <div id="p1SelectName" class="slotName">VEX</div>
+        </div>
+        <div class="slotCard">
+          <div class="slotLabel">CPU</div>
+          <div id="p2SelectName" class="slotName">BYTE</div>
+        </div>
+      </div>
+      <div class="stageRow">
+        <span>Stage</span>
+        <div id="stageButtons" class="stageButtons"></div>
+      </div>
+      <div id="selectGrid" class="selectGrid"></div>
+      <div class="difficultyRow">
+        <span>Difficulty</span>
+        <div class="difficultyButtons">
+          <button data-diff="easy">Easy</button>
+          <button data-diff="medium" class="selected">Medium</button>
+          <button data-diff="hard">Hard</button>
+        </div>
+      </div>
+      <div class="menuActions">
+        <button id="startMatchBtn" class="bigBtn">Start Match</button>
+        <button id="backToMenuBtn" class="bigBtn ghost">Back</button>
+      </div>
+    </section>
+
+    <section id="hud" class="hidden">
+      <div class="topHud">
+        <div class="healthWrap">
+          <div class="portrait" id="p1Portrait"></div>
+          <div class="name" id="p1Name">P1</div>
+          <div class="healthStack"><div class="chip" id="p1Chip"></div><div class="health" id="p1Health"></div></div>
+          <div class="roundPips" id="p1Rounds"></div>
+        </div>
+
+        <div class="centerHud">
+          <div class="timerPlate"><span id="timer">90</span></div>
+          <div id="battleCue" class="battleCue"></div>
+          <div id="koText" class="koText"></div>
+          <div id="comboText" class="comboText"></div>
+        </div>
+
+        <div class="healthWrap alignRight">
+          <div class="portrait" id="p2Portrait"></div>
+          <div class="name" id="p2Name">CPU</div>
+          <div class="healthStack"><div class="chip" id="p2Chip"></div><div class="health" id="p2Health"></div></div>
+          <div class="roundPips" id="p2Rounds"></div>
+        </div>
+      </div>
+
+      <div id="touchControls" class="controls mobileOnly">
+        <div id="stickZone" class="stickZone">
+          <div id="stickBase" class="stickBase">
+            <div class="stickRing"></div>
+            <div class="stickDeadzone"></div>
+            <div id="stickKnob" class="stickKnob"></div>
+          </div>
+          <div class="stickHints">
+            <span class="hint up">▲</span>
+            <span class="hint down">▼</span>
+          </div>
+          <div id="flickHint" class="flickHint"></div>
+        </div>
+
+        <div class="buttonsZone">
+          <button id="hitBtn" class="fightBtn hit">HIT</button>
+          <button id="kickBtn" class="fightBtn kick">KICK</button>
+          <button id="powerBtn" class="fightBtn power">POWER</button>
+          <button id="guardBtn" class="fightBtn guard">GUARD</button>
+        </div>
+      </div>
+
+      <div class="bottomUi">
+        <button id="debugBtn">Debug</button>
+        <button id="settingsBtn">Settings</button>
+      </div>
+    </section>
+
+    <section id="settingsOverlay" class="overlay hidden">
+      <h2>Settings</h2>
+      <label>Music <input id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.5" /></label>
+      <label>SFX <input id="sfxVolume" type="range" min="0" max="1" step="0.01" value="0.8" /></label>
+      <label>Controls Opacity <input id="controlsOpacity" type="range" min="0.4" max="1" step="0.05" value="0.9" /></label>
+      <label>Shake
+        <select id="shakeLevel">
+          <option value="full">Full</option>
+          <option value="reduced">Reduced</option>
+          <option value="off">Off</option>
+        </select>
+      </label>
+      <label><input id="muteToggle" type="checkbox" /> Mute</label>
+      <label><input id="storyEnabledToggle" type="checkbox" checked /> Story Panels</label>
+      <label>Story Text
+        <select id="storyTextMode">
+          <option value="instant" selected>Instant</option>
+          <option value="typewriter">Typewriter</option>
+        </select>
+      </label>
+      <label><input id="storyAutoAdvanceToggle" type="checkbox" /> Story Auto-Advance</label>
+      <button id="closeSettingsBtn">Back</button>
+    </section>
+
+    <section id="resultsOverlay" class="overlay hidden">
+      <h2>Results</h2>
+      <div id="winnerText" class="winnerText">WINNER</div>
+      <div id="matchMeta" class="matchMeta"></div>
+      <div class="menuActions">
+        <button id="nextFightBtn" class="bigBtn hidden">Next Fight</button>
+        <button id="rematchBtn" class="bigBtn">Rematch</button>
+        <button id="changeFightersBtn" class="bigBtn ghost">Change Fighters</button>
+        <button id="endRunBtn" class="bigBtn ghost hidden">End Run</button>
+        <button id="mainMenuBtn" class="bigBtn ghost">Main Menu</button>
+      </div>
+    </section>
+
+    <section id="arcadeSummaryOverlay" class="overlay hidden">
+      <h2>Arcade Summary</h2>
+      <div id="arcadeSummaryResult" class="summaryTitle">ARCADE CLEAR</div>
+      <div id="arcadeSummaryStats" class="summaryStats"></div>
+      <div id="unlockBanner" class="unlockBanner hidden"></div>
+      <div class="menuActions">
+        <button id="arcadeRematchBtn" class="bigBtn">Rematch Arcade</button>
+        <button id="arcadeChangeBtn" class="bigBtn ghost">Change Fighter</button>
+        <button id="arcadeMenuBtn" class="bigBtn ghost">Main Menu</button>
+      </div>
+    </section>
+
+    <section id="trainingOverlay" class="overlay hidden trainingOverlay">
+      <div class="trainingTop">
+        <div class="trainingTitle">Training</div>
+        <button id="trainingBackBtn" class="bigBtn ghost">Back</button>
+      </div>
+      <div class="trainingControls">
+        <button id="resetPosBtn">Reset Positions</button>
+        <button id="refillHealthBtn">Refill Health</button>
+        <button id="toggleHitboxBtn">Hitboxes</button>
+        <button id="toggleInputBtn">Input Display</button>
+        <button id="toggleInfoBtn">Info Panel</button>
+        <button id="pauseTrainBtn">Pause</button>
+        <button id="stepTrainBtn">Step +1f</button>
+        <button id="recordDummyBtn">Record Dummy</button>
+        <button id="playDummyBtn">Play Dummy</button>
+      </div>
+      <div class="trainingRow">
+        <label>Dummy
+          <select id="dummyBehavior">
+            <option value="stand">Stand</option>
+            <option value="block">Block All</option>
+            <option value="random">Random Block</option>
+            <option value="counter">Counter</option>
+          </select>
+        </label>
+        <label><input id="autoRefill" type="checkbox" checked /> Auto Refill</label>
+      </div>
+      <div id="inputDisplay" class="inputDisplay"></div>
+      <div id="infoPanel" class="infoPanel"></div>
+      <div id="tunePanel" class="infoPanel">
+        <div class="inputRow"><strong>Fighter Tune</strong> <span id="tuneFighterId">P1</span></div>
+        <div class="inputRow">Target
+          <select id="tuneTarget">
+            <option value="p1">P1</option>
+            <option value="p2">P2</option>
+          </select>
+        </div>
+        <div class="inputRow">Scale <input id="tuneScale" type="range" min="0.7" max="1.5" step="0.01" value="1" /></div>
+        <div class="inputRow">Offset X <input id="tuneOffsetX" type="range" min="-40" max="40" step="1" value="0" /></div>
+        <div class="inputRow">Offset Y <input id="tuneOffsetY" type="range" min="-40" max="40" step="1" value="0" /></div>
+        <div class="inputRow">
+          <button id="tuneResetBtn">Reset Tune</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

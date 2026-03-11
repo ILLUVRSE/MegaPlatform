@@ -1,0 +1,866 @@
+{
+  "largemouth-bass": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "smallmouth-bass": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "spotted-bass": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "white-bass": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "hybrid-striped-bass": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "bluegill": {
+    "baseColors": [
+      "#7eb7d0",
+      "#d7f3ff"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "panfish",
+    "spriteKeys": {
+      "idle": "fish-panfish-idle",
+      "bite": "fish-panfish-bite",
+      "thrash": "fish-panfish-thrash",
+      "exhausted": "fish-panfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "redear-sunfish": {
+    "baseColors": [
+      "#7eb7d0",
+      "#d7f3ff"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "panfish",
+    "spriteKeys": {
+      "idle": "fish-panfish-idle",
+      "bite": "fish-panfish-bite",
+      "thrash": "fish-panfish-thrash",
+      "exhausted": "fish-panfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "pumpkinseed": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "black-crappie": {
+    "baseColors": [
+      "#7eb7d0",
+      "#d7f3ff"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "panfish",
+    "spriteKeys": {
+      "idle": "fish-panfish-idle",
+      "bite": "fish-panfish-bite",
+      "thrash": "fish-panfish-thrash",
+      "exhausted": "fish-panfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "white-crappie": {
+    "baseColors": [
+      "#7eb7d0",
+      "#d7f3ff"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "panfish",
+    "spriteKeys": {
+      "idle": "fish-panfish-idle",
+      "bite": "fish-panfish-bite",
+      "thrash": "fish-panfish-thrash",
+      "exhausted": "fish-panfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "warmouth": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "channel-catfish": {
+    "baseColors": [
+      "#627a91",
+      "#9fb8ce"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "catfish",
+    "spriteKeys": {
+      "idle": "fish-catfish-idle",
+      "bite": "fish-catfish-bite",
+      "thrash": "fish-catfish-thrash",
+      "exhausted": "fish-catfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "blue-catfish": {
+    "baseColors": [
+      "#627a91",
+      "#9fb8ce"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "catfish",
+    "spriteKeys": {
+      "idle": "fish-catfish-idle",
+      "bite": "fish-catfish-bite",
+      "thrash": "fish-catfish-thrash",
+      "exhausted": "fish-catfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "flathead-catfish": {
+    "baseColors": [
+      "#627a91",
+      "#9fb8ce"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "catfish",
+    "spriteKeys": {
+      "idle": "fish-catfish-idle",
+      "bite": "fish-catfish-bite",
+      "thrash": "fish-catfish-thrash",
+      "exhausted": "fish-catfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "walleye": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "walleye",
+    "spriteKeys": {
+      "idle": "fish-walleye-idle",
+      "bite": "fish-walleye-bite",
+      "thrash": "fish-walleye-thrash",
+      "exhausted": "fish-walleye-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "sauger": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "walleye",
+    "spriteKeys": {
+      "idle": "fish-walleye-idle",
+      "bite": "fish-walleye-bite",
+      "thrash": "fish-walleye-thrash",
+      "exhausted": "fish-walleye-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "yellow-perch": {
+    "baseColors": [
+      "#7eb7d0",
+      "#d7f3ff"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "panfish",
+    "spriteKeys": {
+      "idle": "fish-panfish-idle",
+      "bite": "fish-panfish-bite",
+      "thrash": "fish-panfish-thrash",
+      "exhausted": "fish-panfish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "freshwater-drum": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "common-carp": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "carp",
+    "spriteKeys": {
+      "idle": "fish-carp-idle",
+      "bite": "fish-carp-bite",
+      "thrash": "fish-carp-thrash",
+      "exhausted": "fish-carp-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "grass-carp": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "carp",
+    "spriteKeys": {
+      "idle": "fish-carp-idle",
+      "bite": "fish-carp-bite",
+      "thrash": "fish-carp-thrash",
+      "exhausted": "fish-carp-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "longnose-gar": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#456b58",
+      "#c5d6b2"
+    ],
+    "silhouette": "gar",
+    "spriteKeys": {
+      "idle": "fish-gar-idle",
+      "bite": "fish-gar-bite",
+      "thrash": "fish-gar-thrash",
+      "exhausted": "fish-gar-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "shortnose-gar": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#456b58",
+      "#c5d6b2"
+    ],
+    "silhouette": "gar",
+    "spriteKeys": {
+      "idle": "fish-gar-idle",
+      "bite": "fish-gar-bite",
+      "thrash": "fish-gar-thrash",
+      "exhausted": "fish-gar-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "chain-pickerel": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#2f6176",
+      "#92c5d8"
+    ],
+    "silhouette": "bass",
+    "spriteKeys": {
+      "idle": "fish-bass-idle",
+      "bite": "fish-bass-bite",
+      "thrash": "fish-bass-thrash",
+      "exhausted": "fish-bass-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "rainbow-trout": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "trout",
+    "spriteKeys": {
+      "idle": "fish-trout-idle",
+      "bite": "fish-trout-bite",
+      "thrash": "fish-trout-thrash",
+      "exhausted": "fish-trout-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "none"
+    }
+  },
+  "brown-trout": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "trout",
+    "spriteKeys": {
+      "idle": "fish-trout-idle",
+      "bite": "fish-trout-bite",
+      "thrash": "fish-trout-thrash",
+      "exhausted": "fish-trout-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "mist"
+    }
+  },
+  "paddlefish": {
+    "baseColors": [
+      "#6ba1b8",
+      "#cfe8f2"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "paddlefish",
+    "spriteKeys": {
+      "idle": "fish-paddlefish-idle",
+      "bite": "fish-paddlefish-bite",
+      "thrash": "fish-paddlefish-thrash",
+      "exhausted": "fish-paddlefish-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "gold"
+    }
+  },
+  "ozark-muskie": {
+    "baseColors": [
+      "#8fa38a",
+      "#e5d5a7"
+    ],
+    "patternAccents": [
+      "#4f7388",
+      "#afd1e0"
+    ],
+    "silhouette": "muskie",
+    "spriteKeys": {
+      "idle": "fish-muskie-idle",
+      "bite": "fish-muskie-bite",
+      "thrash": "fish-muskie-thrash",
+      "exhausted": "fish-muskie-exhausted"
+    },
+    "animSpeed": {
+      "idle": 0.9,
+      "bite": 1.1,
+      "thrash": 1.55,
+      "exhausted": 0.58
+    },
+    "sizeScaleByPercentile": {
+      "p10": 0.82,
+      "p50": 1,
+      "p90": 1.24,
+      "p95": 1.34
+    },
+    "rarityEffects": {
+      "aura": "gold"
+    }
+  }
+}

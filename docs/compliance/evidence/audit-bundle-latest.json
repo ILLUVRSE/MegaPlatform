@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-03-11T14:30:20.560Z",
+  "bundleName": "governance-audit-core",
+  "status": "ready",
+  "evidence": [
+    {
+      "path": "docs/compliance/privacy-retention.md",
+      "present": true
+    },
+    {
+      "path": "docs/compliance/content-policy.md",
+      "present": true
+    },
+    {
+      "path": "docs/ops_brain/runbooks/incident-response.md",
+      "present": true
+    },
+    {
+      "path": "docs/ops_brain/briefings/latest.json",
+      "present": true
+    }
+  ],
+  "missingCount": 0
+}

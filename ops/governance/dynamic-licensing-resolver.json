@@ -1,0 +1,9 @@
+{
+  "incompatiblePairs": [
+    "all-rights-reserved|remix",
+    "cc-by-nc|commercial",
+    "proprietary|copyleft"
+  ],
+  "defaultResolution": "allow",
+  "blockOnUnknownLicense": true
+}

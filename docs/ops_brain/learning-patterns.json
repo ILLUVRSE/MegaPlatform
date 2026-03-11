@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-03-11T14:30:21.565Z",
+  "policy": {
+    "minWinsToPromote": 2,
+    "minConfidenceToPromote": 0.65,
+    "outputPath": "docs/ops_brain/learning-patterns.json"
+  },
+  "promoted": [
+    {
+      "module": "feed",
+      "pattern": "headline_curiosity_boost",
+      "wins": 2,
+      "total": 2,
+      "avgConfidence": 0.71,
+      "promote": true
+    }
+  ]
+}

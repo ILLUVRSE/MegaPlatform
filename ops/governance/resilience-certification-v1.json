@@ -1,0 +1,14 @@
+{
+  "requiredIncidentClasses": [
+    "service_outage",
+    "security_event",
+    "data_integrity"
+  ],
+  "minimumPassRate": 0.8,
+  "requiredChecks": [
+    "red_team",
+    "incident_replay",
+    "region_sovereignty"
+  ],
+  "maxCriticalFindings": 0
+}

@@ -1,0 +1,4 @@
+{
+  "requiredFlowCapabilities": ["room_join", "voice", "playlist", "host_controls"],
+  "allowGuestJoin": true
+}

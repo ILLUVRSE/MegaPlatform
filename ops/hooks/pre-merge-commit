@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${ALLOW_MERGE:-}" == "1" ]]; then
+  exit 0
+fi
+
+echo "Merge blocked by local policy." >&2
+echo "If you must merge locally, rerun with ALLOW_MERGE=1." >&2
+exit 1

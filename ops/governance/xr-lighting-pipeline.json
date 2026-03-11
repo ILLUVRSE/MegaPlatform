@@ -1,0 +1,5 @@
+{
+  "maxDynamicLightsByTier": { "low": 2, "medium": 6, "high": 12 },
+  "allowBakedLightingFallback": true,
+  "requiredCapabilityKey": "supportsDynamicLighting"
+}

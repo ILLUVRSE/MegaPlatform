@@ -1,0 +1,5 @@
+{
+  "maxEntries": 500,
+  "requiredEvidenceKinds": ["metric", "decision", "experiment"],
+  "strategyWindowDays": 90
+}

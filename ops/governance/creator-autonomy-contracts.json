@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/creator-autonomy-contracts.json",
+  "defaultPermissions": ["publish", "schedule"],
+  "restrictedActions": ["rights_override", "license_bypass"],
+  "maxContracts": 10000
+}

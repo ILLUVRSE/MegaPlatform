@@ -1,0 +1,6 @@
+{
+  "maxTrustRisk": 0.35,
+  "maxSafetyRisk": 0.3,
+  "requiredSignals": ["trust_score", "safety_score", "abuse_score"],
+  "blockedActions": ["aggressive_push", "dark_pattern_nudge"]
+}

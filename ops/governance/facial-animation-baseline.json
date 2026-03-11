@@ -1,0 +1,5 @@
+{
+  "requiredExpressions": ["neutral", "joy", "sadness", "anger", "surprise"],
+  "minimumReusableControllers": 1,
+  "maxExpressionDelta": 1
+}

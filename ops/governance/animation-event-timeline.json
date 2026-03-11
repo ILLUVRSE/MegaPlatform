@@ -1,0 +1,5 @@
+{
+  "strictOrdering": true,
+  "allowedConsumers": ["gameplay", "ux", "audio"],
+  "maxEventsPerClip": 128
+}

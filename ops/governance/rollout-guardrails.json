@@ -1,0 +1,17 @@
+[
+  {
+    "metricKey": "watch_completion_rate",
+    "maxRegressionRatio": 0.08,
+    "autoRollback": true
+  },
+  {
+    "metricKey": "feed_report_rate",
+    "maxRegressionRatio": 0.1,
+    "autoRollback": true
+  },
+  {
+    "metricKey": "studio_failed_jobs_24h_rate",
+    "maxRegressionRatio": 0.05,
+    "autoRollback": true
+  }
+]

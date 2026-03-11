@@ -1,0 +1,27 @@
+{
+  "entries": [
+    {
+      "outputId": "out-135",
+      "outputKind": "plan",
+      "inputs": [
+        {
+          "kind": "prompt",
+          "ref": "prompt-1"
+        },
+        {
+          "kind": "policy",
+          "ref": "policy-1"
+        },
+        {
+          "kind": "context",
+          "ref": "context-1"
+        }
+      ],
+      "decision": {
+        "decisionId": "dec-1",
+        "decisionSource": "autonomy-control-plane-v3"
+      },
+      "generatedAt": "1970-01-01T00:00:00.000Z"
+    }
+  ]
+}

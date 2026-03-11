@@ -1,0 +1,5 @@
+{
+  "requiredVisemes": ["AA", "EE", "OO", "MBP", "FV"],
+  "maxTimelineDriftMs": 40,
+  "minimumTimelineCoverage": 0.95
+}

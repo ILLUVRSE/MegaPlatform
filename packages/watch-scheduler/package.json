@@ -1,0 +1,21 @@
+{
+  "name": "@illuvrse/watch-scheduler",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/schedule.ts",
+  "scripts": {
+    "schedule": "node --import tsx src/schedule.ts",
+    "director": "node --import tsx src/director.ts",
+    "director:once": "node --import tsx src/director.ts --once"
+  },
+  "dependencies": {
+    "@illuvrse/agent-manager": "workspace:*",
+    "@illuvrse/db": "workspace:*",
+    "@prisma/client": "^5.22.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

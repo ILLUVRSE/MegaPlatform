@@ -1,0 +1,23 @@
+[
+  {
+    "id": "global_reliability",
+    "scope": "global",
+    "owner": "Ops/SRE",
+    "metricKey": "live_channel_healthy_ratio",
+    "target": 0.95
+  },
+  {
+    "id": "global_safety",
+    "scope": "global",
+    "owner": "Trust & Safety",
+    "metricKey": "feed_unresolved_reports_14d",
+    "target": 0
+  },
+  {
+    "id": "watch_engagement",
+    "scope": "watch",
+    "owner": "Watch Platform",
+    "metricKey": "watch_completion_rate",
+    "target": 0.55
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "roles": [
+    {
+      "id": "ops",
+      "displayName": "Ops",
+      "objectives": ["stability", "incident response"],
+      "taskTemplates": ["triage {{scenario}}", "prepare mitigation plan"]
+    },
+    {
+      "id": "product",
+      "displayName": "Product",
+      "objectives": ["user value", "execution sequencing"],
+      "taskTemplates": ["define product response for {{scenario}}", "scope rollout plan"]
+    },
+    {
+      "id": "safety",
+      "displayName": "Safety",
+      "objectives": ["policy compliance", "risk reduction"],
+      "taskTemplates": ["run policy impact review", "define containment checks"]
+    },
+    {
+      "id": "growth",
+      "displayName": "Growth",
+      "objectives": ["conversion impact", "retention"],
+      "taskTemplates": ["estimate growth impact", "propose guarded experiment"]
+    }
+  ],
+  "maxTasksPerRole": 3
+}

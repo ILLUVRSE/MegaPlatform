@@ -1,0 +1,8 @@
+{
+  "allowedCommands": ["open_menu", "join_room", "mute_self"],
+  "actionRoutes": {
+    "open_menu": "ui.menu.open",
+    "join_room": "presence.room.join",
+    "mute_self": "audio.self.mute"
+  }
+}

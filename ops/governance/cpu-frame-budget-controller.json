@@ -1,0 +1,5 @@
+{
+  "maxCpuFrameTimeMs": 5.5,
+  "requiredFallbacks": ["animation_update_throttle", "script_tick_budget"],
+  "requireBoundedFallbackBehavior": true
+}

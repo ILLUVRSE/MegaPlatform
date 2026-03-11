@@ -1,0 +1,11 @@
+{
+  "maxRiskScore": 0.6,
+  "highPrivilegeActions": [
+    "policy_edit",
+    "prod_deploy",
+    "bulk_delete",
+    "secret_rotation"
+  ],
+  "requireDualApprovalAbove": 0.45,
+  "maxActionsPerWindow": 5
+}

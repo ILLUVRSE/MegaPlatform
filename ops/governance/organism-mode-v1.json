@@ -1,0 +1,5 @@
+{
+  "requireMaturityCertification": true,
+  "blockedActionLimits": ["halted"],
+  "requiredBriefingPath": "docs/ops_brain/briefings/latest.json"
+}

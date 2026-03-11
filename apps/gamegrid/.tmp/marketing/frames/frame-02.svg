@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="275" height="157" viewBox="0 0 275 157">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#081620"/>
+      <stop offset="1" stop-color="#113247"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#36E0B5"/>
+      <stop offset="1" stop-color="#1B84FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="275" height="157" fill="url(#bg)"/>
+  <circle cx="67" cy="31" r="36" fill="rgba(27,132,255,0.26)"/>
+  <circle cx="213" cy="141" r="42" fill="rgba(54,224,181,0.22)"/>
+  <rect x="17" y="19" width="39" height="119" rx="8" fill="#0E1C2A"/>
+  <path d="M25 41h22v8h-17v9h14v8h-14v14h17v8h-22z" fill="url(#accent)"/>
+  <circle cx="47" cy="41" r="4" fill="#36E0B5"/>
+  <text x="69" y="66" fill="#EAF6FF" font-family="Trebuchet MS, Segoe UI, sans-serif" font-weight="700" font-size="23">GameGrid</text>
+  <text x="69" y="88" fill="#A6C9DC" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="11">Preview</text>
+  <rect x="69" y="99" width="85" height="19" rx="6" fill="rgba(54,224,181,0.2)" stroke="#36E0B5"/>
+  <text x="80" y="111" fill="#CFFFF1" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="9">12 SPORTS · PARTY READY</text>
+</svg>

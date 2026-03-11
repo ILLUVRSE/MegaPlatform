@@ -1,0 +1,5 @@
+{
+  "targetDensityPerCell": 30,
+  "maxFrameTimeMs": 16.7,
+  "maxBehaviorLodDowngrade": 2
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "gate-slo",
+    "name": "SLO Breach Gate",
+    "description": "Launch is blocked when any critical SLO is breached.",
+    "checkKey": "slo_breaches",
+    "maxAllowed": 0,
+    "severity": "critical"
+  },
+  {
+    "id": "gate-budget",
+    "name": "Budget Breach Gate",
+    "description": "Launch is blocked when spend guardrails are breached.",
+    "checkKey": "budget_breaches",
+    "maxAllowed": 0,
+    "severity": "critical"
+  },
+  {
+    "id": "gate-compliance",
+    "name": "Compliance Evidence Gate",
+    "description": "Required compliance controls must have evidence files.",
+    "checkKey": "compliance_required_failures",
+    "maxAllowed": 0,
+    "severity": "critical"
+  },
+  {
+    "id": "gate-prod-env",
+    "name": "Production Env Gate",
+    "description": "Production promotion requires all required environment variables.",
+    "checkKey": "prod_deployment_missing_env",
+    "maxAllowed": 0,
+    "severity": "critical"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "requiredResponsibilities": ["policy_review", "incident_review", "ethics_review"],
+  "cadenceDays": 30,
+  "requiredControls": ["audit_log", "approval_gate"]
+}

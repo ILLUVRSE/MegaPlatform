@@ -1,0 +1,501 @@
+{
+  "version": 1,
+  "cardDimensions": {
+    "width": 336,
+    "height": 468
+  },
+  "safeArea": {
+    "bleed": 16,
+    "padding": 20
+  },
+  "variants": {
+    "svg": {
+      "basePath": "src/assets/cards/svg"
+    },
+    "png1x": {
+      "basePath": "src/assets/cards/png/1x",
+      "width": 84,
+      "height": 117
+    },
+    "png2x": {
+      "basePath": "src/assets/cards/png/2x",
+      "width": 168,
+      "height": 234
+    }
+  },
+  "supportedThemes": [
+    "classic-green",
+    "midnight-blue",
+    "crimson-casino",
+    "neon-arcade",
+    "minimal-light"
+  ],
+  "cards": [
+    {
+      "id": "AS",
+      "rank": "A",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/AS.svg",
+      "png1x": "src/assets/cards/png/1x/AS.png",
+      "png2x": "src/assets/cards/png/2x/AS.png"
+    },
+    {
+      "id": "KS",
+      "rank": "K",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/KS.svg",
+      "png1x": "src/assets/cards/png/1x/KS.png",
+      "png2x": "src/assets/cards/png/2x/KS.png"
+    },
+    {
+      "id": "QS",
+      "rank": "Q",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/QS.svg",
+      "png1x": "src/assets/cards/png/1x/QS.png",
+      "png2x": "src/assets/cards/png/2x/QS.png"
+    },
+    {
+      "id": "JS",
+      "rank": "J",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/JS.svg",
+      "png1x": "src/assets/cards/png/1x/JS.png",
+      "png2x": "src/assets/cards/png/2x/JS.png"
+    },
+    {
+      "id": "10S",
+      "rank": "10",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/10S.svg",
+      "png1x": "src/assets/cards/png/1x/10S.png",
+      "png2x": "src/assets/cards/png/2x/10S.png"
+    },
+    {
+      "id": "9S",
+      "rank": "9",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/9S.svg",
+      "png1x": "src/assets/cards/png/1x/9S.png",
+      "png2x": "src/assets/cards/png/2x/9S.png"
+    },
+    {
+      "id": "8S",
+      "rank": "8",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/8S.svg",
+      "png1x": "src/assets/cards/png/1x/8S.png",
+      "png2x": "src/assets/cards/png/2x/8S.png"
+    },
+    {
+      "id": "7S",
+      "rank": "7",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/7S.svg",
+      "png1x": "src/assets/cards/png/1x/7S.png",
+      "png2x": "src/assets/cards/png/2x/7S.png"
+    },
+    {
+      "id": "6S",
+      "rank": "6",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/6S.svg",
+      "png1x": "src/assets/cards/png/1x/6S.png",
+      "png2x": "src/assets/cards/png/2x/6S.png"
+    },
+    {
+      "id": "5S",
+      "rank": "5",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/5S.svg",
+      "png1x": "src/assets/cards/png/1x/5S.png",
+      "png2x": "src/assets/cards/png/2x/5S.png"
+    },
+    {
+      "id": "4S",
+      "rank": "4",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/4S.svg",
+      "png1x": "src/assets/cards/png/1x/4S.png",
+      "png2x": "src/assets/cards/png/2x/4S.png"
+    },
+    {
+      "id": "3S",
+      "rank": "3",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/3S.svg",
+      "png1x": "src/assets/cards/png/1x/3S.png",
+      "png2x": "src/assets/cards/png/2x/3S.png"
+    },
+    {
+      "id": "2S",
+      "rank": "2",
+      "suit": "S",
+      "svg": "src/assets/cards/svg/2S.svg",
+      "png1x": "src/assets/cards/png/1x/2S.png",
+      "png2x": "src/assets/cards/png/2x/2S.png"
+    },
+    {
+      "id": "AH",
+      "rank": "A",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/AH.svg",
+      "png1x": "src/assets/cards/png/1x/AH.png",
+      "png2x": "src/assets/cards/png/2x/AH.png"
+    },
+    {
+      "id": "KH",
+      "rank": "K",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/KH.svg",
+      "png1x": "src/assets/cards/png/1x/KH.png",
+      "png2x": "src/assets/cards/png/2x/KH.png"
+    },
+    {
+      "id": "QH",
+      "rank": "Q",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/QH.svg",
+      "png1x": "src/assets/cards/png/1x/QH.png",
+      "png2x": "src/assets/cards/png/2x/QH.png"
+    },
+    {
+      "id": "JH",
+      "rank": "J",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/JH.svg",
+      "png1x": "src/assets/cards/png/1x/JH.png",
+      "png2x": "src/assets/cards/png/2x/JH.png"
+    },
+    {
+      "id": "10H",
+      "rank": "10",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/10H.svg",
+      "png1x": "src/assets/cards/png/1x/10H.png",
+      "png2x": "src/assets/cards/png/2x/10H.png"
+    },
+    {
+      "id": "9H",
+      "rank": "9",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/9H.svg",
+      "png1x": "src/assets/cards/png/1x/9H.png",
+      "png2x": "src/assets/cards/png/2x/9H.png"
+    },
+    {
+      "id": "8H",
+      "rank": "8",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/8H.svg",
+      "png1x": "src/assets/cards/png/1x/8H.png",
+      "png2x": "src/assets/cards/png/2x/8H.png"
+    },
+    {
+      "id": "7H",
+      "rank": "7",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/7H.svg",
+      "png1x": "src/assets/cards/png/1x/7H.png",
+      "png2x": "src/assets/cards/png/2x/7H.png"
+    },
+    {
+      "id": "6H",
+      "rank": "6",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/6H.svg",
+      "png1x": "src/assets/cards/png/1x/6H.png",
+      "png2x": "src/assets/cards/png/2x/6H.png"
+    },
+    {
+      "id": "5H",
+      "rank": "5",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/5H.svg",
+      "png1x": "src/assets/cards/png/1x/5H.png",
+      "png2x": "src/assets/cards/png/2x/5H.png"
+    },
+    {
+      "id": "4H",
+      "rank": "4",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/4H.svg",
+      "png1x": "src/assets/cards/png/1x/4H.png",
+      "png2x": "src/assets/cards/png/2x/4H.png"
+    },
+    {
+      "id": "3H",
+      "rank": "3",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/3H.svg",
+      "png1x": "src/assets/cards/png/1x/3H.png",
+      "png2x": "src/assets/cards/png/2x/3H.png"
+    },
+    {
+      "id": "2H",
+      "rank": "2",
+      "suit": "H",
+      "svg": "src/assets/cards/svg/2H.svg",
+      "png1x": "src/assets/cards/png/1x/2H.png",
+      "png2x": "src/assets/cards/png/2x/2H.png"
+    },
+    {
+      "id": "AD",
+      "rank": "A",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/AD.svg",
+      "png1x": "src/assets/cards/png/1x/AD.png",
+      "png2x": "src/assets/cards/png/2x/AD.png"
+    },
+    {
+      "id": "KD",
+      "rank": "K",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/KD.svg",
+      "png1x": "src/assets/cards/png/1x/KD.png",
+      "png2x": "src/assets/cards/png/2x/KD.png"
+    },
+    {
+      "id": "QD",
+      "rank": "Q",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/QD.svg",
+      "png1x": "src/assets/cards/png/1x/QD.png",
+      "png2x": "src/assets/cards/png/2x/QD.png"
+    },
+    {
+      "id": "JD",
+      "rank": "J",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/JD.svg",
+      "png1x": "src/assets/cards/png/1x/JD.png",
+      "png2x": "src/assets/cards/png/2x/JD.png"
+    },
+    {
+      "id": "10D",
+      "rank": "10",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/10D.svg",
+      "png1x": "src/assets/cards/png/1x/10D.png",
+      "png2x": "src/assets/cards/png/2x/10D.png"
+    },
+    {
+      "id": "9D",
+      "rank": "9",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/9D.svg",
+      "png1x": "src/assets/cards/png/1x/9D.png",
+      "png2x": "src/assets/cards/png/2x/9D.png"
+    },
+    {
+      "id": "8D",
+      "rank": "8",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/8D.svg",
+      "png1x": "src/assets/cards/png/1x/8D.png",
+      "png2x": "src/assets/cards/png/2x/8D.png"
+    },
+    {
+      "id": "7D",
+      "rank": "7",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/7D.svg",
+      "png1x": "src/assets/cards/png/1x/7D.png",
+      "png2x": "src/assets/cards/png/2x/7D.png"
+    },
+    {
+      "id": "6D",
+      "rank": "6",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/6D.svg",
+      "png1x": "src/assets/cards/png/1x/6D.png",
+      "png2x": "src/assets/cards/png/2x/6D.png"
+    },
+    {
+      "id": "5D",
+      "rank": "5",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/5D.svg",
+      "png1x": "src/assets/cards/png/1x/5D.png",
+      "png2x": "src/assets/cards/png/2x/5D.png"
+    },
+    {
+      "id": "4D",
+      "rank": "4",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/4D.svg",
+      "png1x": "src/assets/cards/png/1x/4D.png",
+      "png2x": "src/assets/cards/png/2x/4D.png"
+    },
+    {
+      "id": "3D",
+      "rank": "3",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/3D.svg",
+      "png1x": "src/assets/cards/png/1x/3D.png",
+      "png2x": "src/assets/cards/png/2x/3D.png"
+    },
+    {
+      "id": "2D",
+      "rank": "2",
+      "suit": "D",
+      "svg": "src/assets/cards/svg/2D.svg",
+      "png1x": "src/assets/cards/png/1x/2D.png",
+      "png2x": "src/assets/cards/png/2x/2D.png"
+    },
+    {
+      "id": "AC",
+      "rank": "A",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/AC.svg",
+      "png1x": "src/assets/cards/png/1x/AC.png",
+      "png2x": "src/assets/cards/png/2x/AC.png"
+    },
+    {
+      "id": "KC",
+      "rank": "K",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/KC.svg",
+      "png1x": "src/assets/cards/png/1x/KC.png",
+      "png2x": "src/assets/cards/png/2x/KC.png"
+    },
+    {
+      "id": "QC",
+      "rank": "Q",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/QC.svg",
+      "png1x": "src/assets/cards/png/1x/QC.png",
+      "png2x": "src/assets/cards/png/2x/QC.png"
+    },
+    {
+      "id": "JC",
+      "rank": "J",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/JC.svg",
+      "png1x": "src/assets/cards/png/1x/JC.png",
+      "png2x": "src/assets/cards/png/2x/JC.png"
+    },
+    {
+      "id": "10C",
+      "rank": "10",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/10C.svg",
+      "png1x": "src/assets/cards/png/1x/10C.png",
+      "png2x": "src/assets/cards/png/2x/10C.png"
+    },
+    {
+      "id": "9C",
+      "rank": "9",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/9C.svg",
+      "png1x": "src/assets/cards/png/1x/9C.png",
+      "png2x": "src/assets/cards/png/2x/9C.png"
+    },
+    {
+      "id": "8C",
+      "rank": "8",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/8C.svg",
+      "png1x": "src/assets/cards/png/1x/8C.png",
+      "png2x": "src/assets/cards/png/2x/8C.png"
+    },
+    {
+      "id": "7C",
+      "rank": "7",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/7C.svg",
+      "png1x": "src/assets/cards/png/1x/7C.png",
+      "png2x": "src/assets/cards/png/2x/7C.png"
+    },
+    {
+      "id": "6C",
+      "rank": "6",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/6C.svg",
+      "png1x": "src/assets/cards/png/1x/6C.png",
+      "png2x": "src/assets/cards/png/2x/6C.png"
+    },
+    {
+      "id": "5C",
+      "rank": "5",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/5C.svg",
+      "png1x": "src/assets/cards/png/1x/5C.png",
+      "png2x": "src/assets/cards/png/2x/5C.png"
+    },
+    {
+      "id": "4C",
+      "rank": "4",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/4C.svg",
+      "png1x": "src/assets/cards/png/1x/4C.png",
+      "png2x": "src/assets/cards/png/2x/4C.png"
+    },
+    {
+      "id": "3C",
+      "rank": "3",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/3C.svg",
+      "png1x": "src/assets/cards/png/1x/3C.png",
+      "png2x": "src/assets/cards/png/2x/3C.png"
+    },
+    {
+      "id": "2C",
+      "rank": "2",
+      "suit": "C",
+      "svg": "src/assets/cards/svg/2C.svg",
+      "png1x": "src/assets/cards/png/1x/2C.png",
+      "png2x": "src/assets/cards/png/2x/2C.png"
+    },
+    {
+      "id": "JR",
+      "rank": "JOKER",
+      "suit": null,
+      "svg": "src/assets/cards/svg/JR.svg",
+      "png1x": "src/assets/cards/png/1x/JR.png",
+      "png2x": "src/assets/cards/png/2x/JR.png"
+    },
+    {
+      "id": "JB",
+      "rank": "JOKER",
+      "suit": null,
+      "svg": "src/assets/cards/svg/JB.svg",
+      "png1x": "src/assets/cards/png/1x/JB.png",
+      "png2x": "src/assets/cards/png/2x/JB.png"
+    }
+  ],
+  "backs": [
+    {
+      "id": "back-classic",
+      "svg": "src/assets/cards/svg/backs/back-classic.svg",
+      "png1x": "src/assets/cards/png/1x/back-classic.png",
+      "png2x": "src/assets/cards/png/2x/back-classic.png"
+    },
+    {
+      "id": "back-midnight",
+      "svg": "src/assets/cards/svg/backs/back-midnight.svg",
+      "png1x": "src/assets/cards/png/1x/back-midnight.png",
+      "png2x": "src/assets/cards/png/2x/back-midnight.png"
+    },
+    {
+      "id": "back-crimson",
+      "svg": "src/assets/cards/svg/backs/back-crimson.svg",
+      "png1x": "src/assets/cards/png/1x/back-crimson.png",
+      "png2x": "src/assets/cards/png/2x/back-crimson.png"
+    }
+  ],
+  "suitIcons": {
+    "color": {
+      "spade": "src/assets/cards/svg/suits/spade.svg",
+      "heart": "src/assets/cards/svg/suits/heart.svg",
+      "diamond": "src/assets/cards/svg/suits/diamond.svg",
+      "club": "src/assets/cards/svg/suits/club.svg"
+    },
+    "monochrome": {
+      "spade": "src/assets/cards/svg/suits/mono/spade.svg",
+      "heart": "src/assets/cards/svg/suits/mono/heart.svg",
+      "diamond": "src/assets/cards/svg/suits/mono/diamond.svg",
+      "club": "src/assets/cards/svg/suits/mono/club.svg"
+    }
+  }
+}

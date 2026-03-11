@@ -1,0 +1,11 @@
+{
+  "name": "@illuvrse/media-corp-canon",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@illuvrse/db": "workspace:*",
+    "@illuvrse/media-corp-core": "workspace:*"
+  }
+}

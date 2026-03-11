@@ -1,0 +1,6 @@
+{
+  "maxCarbonIntensityForImmediate": 280,
+  "eligiblePriorities": ["low", "medium"],
+  "deferWindowMinutes": 90,
+  "hardBlockAboveIntensity": 500
+}

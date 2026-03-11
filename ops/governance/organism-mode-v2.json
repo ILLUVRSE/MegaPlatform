@@ -1,0 +1,5 @@
+{
+  "confidenceThreshold": 0.7,
+  "riskThreshold": 0.4,
+  "baseAutonomyBound": 0.6
+}

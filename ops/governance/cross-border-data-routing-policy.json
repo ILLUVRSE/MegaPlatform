@@ -1,0 +1,5 @@
+{
+  "residency": { "eu": "eu", "us": "us", "uk": "uk" },
+  "allowedTransfers": ["eu->eu", "us->us", "uk->uk", "eu->uk"],
+  "defaultDestination": "us"
+}

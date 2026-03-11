@@ -1,0 +1,5 @@
+{
+  "requireDeterministicConflictResolution": true,
+  "requireAuditTrail": true,
+  "maxConflictResolutionMs": 400
+}

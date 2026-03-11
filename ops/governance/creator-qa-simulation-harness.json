@@ -1,0 +1,5 @@
+{
+  "requireReproducibleScenarios": true,
+  "requirePassFailOutputs": true,
+  "maxScenarioRuntimeMs": 5000
+}

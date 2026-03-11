@@ -1,0 +1,78 @@
+@import "@illuvrse/ui/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-image: radial-gradient(circle at 20% 20%, rgba(15, 118, 110, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(245, 158, 11, 0.08), transparent 40%);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input, select, textarea, button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--illuvrse-accent);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .party-card {
+    @apply rounded-3xl border border-illuvrse-border bg-white/80 p-6 shadow-card backdrop-blur;
+  }
+}
+
+@layer utilities {
+  @keyframes illuvrse-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes illuvrse-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-illuvrse-fade-up {
+    animation: illuvrse-fade-up var(--illuvrse-motion-base) var(--illuvrse-motion-ease-standard) both;
+  }
+
+  .animate-illuvrse-fade {
+    animation: illuvrse-fade var(--illuvrse-motion-fast) var(--illuvrse-motion-ease-standard) both;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

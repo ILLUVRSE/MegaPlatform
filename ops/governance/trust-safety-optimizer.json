@@ -1,0 +1,5 @@
+{
+  "maxSafetyRisk": 0.25,
+  "minSafetyMargin": 0.05,
+  "rejectUnsafeGainPatterns": true
+}

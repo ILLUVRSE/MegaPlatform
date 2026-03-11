@@ -1,0 +1,6 @@
+{
+  "minimumCoherenceScore": 0.7,
+  "maxSequenceJump": 2,
+  "requiredContextLinks": ["character", "timeline", "theme"],
+  "blockOnMissingCoreLink": true
+}

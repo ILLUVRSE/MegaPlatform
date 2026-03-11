@@ -1,0 +1,123 @@
+[
+  {
+    "id": "corner_cut_1",
+    "title": "Corner Cut",
+    "description": "Cut the 1-ball into the top-right corner.",
+    "variant": "nine_ball",
+    "balls": [
+      { "number": 0, "x": 320, "y": 500 },
+      { "number": 1, "x": 730, "y": 330 },
+      { "number": 2, "x": 900, "y": 420 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 1, "pocketId": "TR" }
+  },
+  {
+    "id": "bank_side_2",
+    "title": "Side Bank",
+    "description": "Bank the 2-ball into the middle top pocket.",
+    "variant": "nine_ball",
+    "balls": [
+      { "number": 0, "x": 290, "y": 350 },
+      { "number": 2, "x": 760, "y": 560 },
+      { "number": 1, "x": 650, "y": 300 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 2, "pocketId": "TM" }
+  },
+  {
+    "id": "draw_back_3",
+    "title": "Draw Back",
+    "description": "Pocket the 3-ball and bring cue control back.",
+    "variant": "nine_ball",
+    "mustUseSpin": true,
+    "balls": [
+      { "number": 0, "x": 420, "y": 360 },
+      { "number": 3, "x": 740, "y": 360 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 3, "pocketId": "TR" }
+  },
+  {
+    "id": "cross_table_4",
+    "title": "Cross Table",
+    "description": "Send the 4-ball across table into bottom-left.",
+    "variant": "nine_ball",
+    "balls": [
+      { "number": 0, "x": 340, "y": 180 },
+      { "number": 4, "x": 820, "y": 240 },
+      { "number": 6, "x": 620, "y": 240 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 4, "pocketId": "BL" }
+  },
+  {
+    "id": "combo_5",
+    "title": "Simple Combo",
+    "description": "Combo the 5-ball into top-left.",
+    "variant": "nine_ball",
+    "balls": [
+      { "number": 0, "x": 350, "y": 520 },
+      { "number": 1, "x": 620, "y": 340 },
+      { "number": 5, "x": 700, "y": 280 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 5, "pocketId": "TL" }
+  },
+  {
+    "id": "side_spin_6",
+    "title": "English Side",
+    "description": "Use english to sink the 6-ball into the side pocket.",
+    "variant": "nine_ball",
+    "mustUseSpin": true,
+    "balls": [
+      { "number": 0, "x": 290, "y": 440 },
+      { "number": 6, "x": 790, "y": 170 },
+      { "number": 2, "x": 650, "y": 250 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 6, "pocketId": "TM" }
+  },
+  {
+    "id": "eight_finish_1",
+    "title": "Eight Finish",
+    "description": "Clear line and pocket the 8 in bottom-right.",
+    "variant": "eight_ball",
+    "balls": [
+      { "number": 0, "x": 400, "y": 320 },
+      { "number": 8, "x": 820, "y": 400 },
+      { "number": 10, "x": 730, "y": 420 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 8, "pocketId": "BR" }
+  },
+  {
+    "id": "thin_cut_11",
+    "title": "Thin Cut 11",
+    "description": "Feather the 11-ball into top-right.",
+    "variant": "eight_ball",
+    "balls": [
+      { "number": 0, "x": 310, "y": 300 },
+      { "number": 11, "x": 860, "y": 310 },
+      { "number": 4, "x": 770, "y": 350 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 11, "pocketId": "TR" }
+  },
+  {
+    "id": "rail_first_14",
+    "title": "Rail First",
+    "description": "Use rail line to pot 14-ball in bottom-middle.",
+    "variant": "eight_ball",
+    "balls": [
+      { "number": 0, "x": 360, "y": 160 },
+      { "number": 14, "x": 760, "y": 500 },
+      { "number": 3, "x": 690, "y": 460 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 14, "pocketId": "BM" }
+  },
+  {
+    "id": "double_bank_7",
+    "title": "Double Bank",
+    "description": "Bank the 7-ball into top-left corner.",
+    "variant": "eight_ball",
+    "balls": [
+      { "number": 0, "x": 450, "y": 540 },
+      { "number": 7, "x": 920, "y": 510 },
+      { "number": 15, "x": 800, "y": 490 }
+    ],
+    "goal": { "type": "pocket_ball", "ballNumber": 7, "pocketId": "TL" }
+  }
+]

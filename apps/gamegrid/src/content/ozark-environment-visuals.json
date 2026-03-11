@@ -1,0 +1,34 @@
+{
+  "spots": {
+    "cove": {
+      "signatureProps": ["lily_pad", "reeds", "cattail"],
+      "distantSilhouette": "treeline-cove",
+      "midground": "shoreline-cove",
+      "previewImage": "/ozark/env/previews/cove.svg"
+    },
+    "dock": {
+      "signatureProps": ["dock_post", "rope_float", "rock"],
+      "distantSilhouette": "treeline-dock",
+      "midground": "shoreline-dock",
+      "previewImage": "/ozark/env/previews/dock.svg"
+    },
+    "open-water": {
+      "signatureProps": ["island", "wave_band", "rock"],
+      "distantSilhouette": "hills-open",
+      "midground": "shoreline-open",
+      "previewImage": "/ozark/env/previews/open-water.svg"
+    },
+    "river-mouth": {
+      "signatureProps": ["current_streak", "driftwood", "reeds"],
+      "distantSilhouette": "treeline-river",
+      "midground": "shoreline-river",
+      "previewImage": "/ozark/env/previews/river-mouth.svg"
+    }
+  },
+  "seasonalPalette": {
+    "spring": { "tint": "#a6d8a6", "skyBias": 0.06 },
+    "summer": { "tint": "#a8cfe8", "skyBias": 0.1 },
+    "fall": { "tint": "#d7b38a", "skyBias": -0.02 },
+    "winter": { "tint": "#b7c7d8", "skyBias": -0.1 }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "minimumDistanceMeters": 1,
+  "maximumViolationSecondsBeforeProtection": 2.5,
+  "maxComfortBoundaryBreaches": 2,
+  "requireHapticWarning": true,
+  "requireAutoReposition": true,
+  "requireInteractionCooldown": true
+}

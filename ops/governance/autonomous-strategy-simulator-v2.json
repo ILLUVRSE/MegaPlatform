@@ -1,0 +1,7 @@
+{
+  "maxScenarioCount": 8,
+  "riskCeiling": 0.75,
+  "impactWeight": 0.5,
+  "costWeight": 0.2,
+  "riskWeight": 0.3
+}

@@ -1,0 +1,7 @@
+{
+  "requireStoreChecklist": true,
+  "requirePerformanceCertification": true,
+  "requirePrivacyDisclosures": true,
+  "requireAgeRating": true,
+  "maxBlockingDefects": 0
+}

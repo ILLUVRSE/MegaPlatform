@@ -1,0 +1,48 @@
+{
+  "modules": [
+    { "id": "burst-laser", "name": "Burst Laser", "slot": "weapon", "rarity": "common", "price": 120, "sellValue": 70, "unlockRank": 1, "tags": ["weapon"], "effects": { "damageBonus": 0.16 } },
+    { "id": "ion-blaster", "name": "Ion Blaster", "slot": "weapon", "rarity": "common", "price": 140, "sellValue": 80, "unlockRank": 1, "tags": ["weapon"], "effects": { "damageBonus": 0.2, "fireRateBonus": 0.08 } },
+    { "id": "pulse-lance", "name": "Pulse Lance", "slot": "weapon", "rarity": "uncommon", "price": 240, "sellValue": 140, "unlockRank": 3, "tags": ["weapon"], "effects": { "damageBonus": 0.35, "fireRateBonus": 0.12 } },
+    { "id": "smuggler-rails", "name": "Smuggler Rails", "slot": "weapon", "rarity": "uncommon", "price": 230, "sellValue": 130, "unlockRank": 2, "tags": ["weapon"], "effects": { "damageBonus": 0.28, "speedBonus": 0.1 } },
+    { "id": "choir-lance", "name": "Choir Lance", "slot": "weapon", "rarity": "rare", "price": 360, "sellValue": 210, "unlockRank": 4, "tags": ["weapon"], "effects": { "damageBonus": 0.44, "fireRateBonus": 0.14 } },
+    { "id": "warden-rail", "name": "Warden Rail", "slot": "weapon", "rarity": "rare", "price": 380, "sellValue": 220, "unlockRank": 5, "tags": ["weapon"], "effects": { "damageBonus": 0.5 } },
+    { "id": "cathedral-breaker", "name": "Cathedral Breaker", "slot": "weapon", "rarity": "rare", "price": 450, "sellValue": 260, "unlockRank": 6, "tags": ["weapon"], "effects": { "damageBonus": 0.62 } },
+
+    { "id": "reactive-shield", "name": "Reactive Shield", "slot": "shield", "rarity": "common", "price": 110, "sellValue": 65, "unlockRank": 1, "tags": ["shield"], "effects": { "shieldBonus": 26, "shieldRegenBonus": 1.5 } },
+    { "id": "harmonic-shield", "name": "Harmonic Shield", "slot": "shield", "rarity": "uncommon", "price": 210, "sellValue": 120, "unlockRank": 2, "tags": ["shield"], "effects": { "shieldBonus": 44, "shieldRegenBonus": 2.6 } },
+    { "id": "market-shield", "name": "Market Shield", "slot": "shield", "rarity": "uncommon", "price": 220, "sellValue": 130, "unlockRank": 3, "tags": ["shield"], "effects": { "shieldBonus": 38, "abilityCooldownBonus": 0.08 } },
+    { "id": "choir-ward", "name": "Choir Ward", "slot": "shield", "rarity": "rare", "price": 340, "sellValue": 200, "unlockRank": 4, "tags": ["shield"], "effects": { "shieldBonus": 56, "shieldRegenBonus": 3.2 } },
+    { "id": "treaty-shield", "name": "Treaty Shield", "slot": "shield", "rarity": "rare", "price": 360, "sellValue": 210, "unlockRank": 5, "tags": ["shield"], "effects": { "shieldBonus": 60, "shieldRegenBonus": 3.5 } },
+    { "id": "phase-bastion", "name": "Phase Bastion", "slot": "shield", "rarity": "rare", "price": 430, "sellValue": 250, "unlockRank": 6, "tags": ["shield"], "effects": { "shieldBonus": 70, "shieldRegenBonus": 4.2 } },
+
+    { "id": "survey-booster", "name": "Survey Booster", "slot": "utility", "rarity": "common", "price": 105, "sellValue": 60, "unlockRank": 1, "tags": ["utility"], "effects": { "scanBonus": 0.24 } },
+    { "id": "thruster-lattice", "name": "Thruster Lattice", "slot": "utility", "rarity": "common", "price": 120, "sellValue": 70, "unlockRank": 1, "tags": ["utility"], "effects": { "speedBonus": 0.18 } },
+    { "id": "chrono-capacitor", "name": "Chrono Capacitor", "slot": "utility", "rarity": "uncommon", "price": 220, "sellValue": 130, "unlockRank": 2, "tags": ["utility"], "effects": { "abilityCooldownBonus": 0.2 } },
+    { "id": "broker-suite", "name": "Broker Suite", "slot": "utility", "rarity": "uncommon", "price": 215, "sellValue": 125, "unlockRank": 3, "tags": ["utility"], "effects": { "scanBonus": 0.18, "speedBonus": 0.1 } },
+    { "id": "hidden-compartments", "name": "Hidden Compartments", "slot": "utility", "rarity": "uncommon", "price": 245, "sellValue": 145, "unlockRank": 3, "tags": ["utility", "contraband"], "effects": { "speedBonus": 0.08 } },
+    { "id": "harmony-core", "name": "Harmony Core", "slot": "utility", "rarity": "rare", "price": 330, "sellValue": 195, "unlockRank": 4, "tags": ["utility"], "effects": { "scanBonus": 0.3, "abilityCooldownBonus": 0.16 } },
+    { "id": "nav-compass", "name": "Nav Compass", "slot": "utility", "rarity": "rare", "price": 340, "sellValue": 200, "unlockRank": 5, "tags": ["utility"], "effects": { "speedBonus": 0.2, "scanBonus": 0.16 } },
+    { "id": "singularity-loop", "name": "Singularity Loop", "slot": "utility", "rarity": "rare", "price": 420, "sellValue": 240, "unlockRank": 6, "tags": ["utility"], "effects": { "abilityCooldownBonus": 0.28, "scanBonus": 0.24 } }
+  ],
+  "consumables": [
+    { "id": "repair-kit", "name": "Repair Kit", "rarity": "common", "price": 55, "sellValue": 30, "unlockRank": 1, "tags": ["consumable"], "effect": { "type": "repair", "value": 18 } },
+    { "id": "field-repair", "name": "Field Repair", "rarity": "uncommon", "price": 90, "sellValue": 48, "unlockRank": 2, "tags": ["consumable"], "effect": { "type": "repair", "value": 30 } },
+    { "id": "overcharge", "name": "Overcharge", "rarity": "uncommon", "price": 85, "sellValue": 45, "unlockRank": 2, "tags": ["consumable"], "effect": { "type": "next-combat-damage", "value": 0.22 } },
+    { "id": "scan-booster", "name": "Scan Booster", "rarity": "common", "price": 65, "sellValue": 34, "unlockRank": 1, "tags": ["consumable"], "effect": { "type": "next-explore-scan", "value": 0.35 } },
+    { "id": "choir-incense", "name": "Choir Incense", "rarity": "rare", "price": 130, "sellValue": 74, "unlockRank": 4, "tags": ["consumable"], "effect": { "type": "morale", "value": 8 } }
+  ],
+  "loot": [
+    { "id": "alloy-crate", "name": "Alloy Crate", "sellValue": 22, "materialYield": 2 },
+    { "id": "data-cache", "name": "Data Cache", "sellValue": 28, "materialYield": 1 },
+    { "id": "artifact-shard", "name": "Artifact Shard", "sellValue": 44, "materialYield": 2 },
+    { "id": "ion-core", "name": "Ion Core", "sellValue": 65, "materialYield": 3 },
+    { "id": "light-filament", "name": "Light Filament", "sellValue": 72, "materialYield": 3 },
+    { "id": "living-prism", "name": "Living Prism", "sellValue": 110, "materialYield": 5 },
+    { "id": "gate-dust", "name": "Gate Dust", "sellValue": 85, "materialYield": 4 },
+    { "id": "choir-amber", "name": "Choir Amber", "sellValue": 95, "materialYield": 4 }
+  ],
+  "shop": {
+    "buyModuleIds": ["burst-laser", "reactive-shield", "survey-booster", "ion-blaster", "thruster-lattice"],
+    "buyConsumableIds": ["repair-kit", "overcharge", "scan-booster"]
+  }
+}

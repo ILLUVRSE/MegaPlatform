@@ -1,0 +1,11 @@
+[Unit]
+Description=ILLUVRSE Ops Orchestrator
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ryan/ILLUVRSE
+ExecStart=/usr/bin/python3 /home/ryan/ILLUVRSE/ops/orchestrator.py
+
+[Install]
+WantedBy=multi-user.target

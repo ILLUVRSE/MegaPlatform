@@ -1,0 +1,5 @@
+{
+  "supportedFormats": ["fbx", "bvh", "c3d"],
+  "maxSamples": 200000,
+  "requiredTransformProfiles": ["humanoid", "quadruped"]
+}

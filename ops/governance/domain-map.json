@@ -1,0 +1,93 @@
+[
+  {
+    "id": "identity",
+    "name": "Identity and Access",
+    "owner": "Platform Core / Auth",
+    "primaryPaths": [
+      "apps/web/app/api/auth",
+      "apps/web/app/auth",
+      "apps/web/lib/auth.ts",
+      "apps/web/lib/authz.ts",
+      "apps/web/lib/rbac.ts",
+      "apps/web/middleware.ts"
+    ],
+    "dataModels": ["User", "Role", "Profile", "Session", "Account"],
+    "notes": "Owns authentication, principal resolution, RBAC, and session enforcement."
+  },
+  {
+    "id": "content",
+    "name": "Content and Media Lifecycle",
+    "owner": "Content Platform",
+    "primaryPaths": [
+      "apps/web/app/studio",
+      "apps/web/app/api/studio",
+      "apps/web/app/api/uploads",
+      "apps/web/app/api/media",
+      "apps/web/lib/contentLifecycle.ts",
+      "packages/storage/src"
+    ],
+    "dataModels": ["StudioProject", "AgentJob", "StudioAsset", "ContentItem", "ContentStateTransition", "Show", "Season", "Episode", "LiveChannel", "LiveProgram"],
+    "notes": "Owns authoring, processing, publishing, storage, and media catalog lifecycles."
+  },
+  {
+    "id": "engagement",
+    "name": "Engagement and Discovery",
+    "owner": "Growth and Discovery",
+    "primaryPaths": [
+      "apps/web/app/home",
+      "apps/web/app/shorts",
+      "apps/web/app/api/feed",
+      "apps/web/app/api/shorts",
+      "apps/web/app/api/games/telemetry",
+      "apps/web/lib/feedRanking.ts",
+      "apps/web/lib/shortsRanking.ts"
+    ],
+    "dataModels": ["FeedPost", "FeedLike", "FeedComment", "FeedReport", "ShortPost", "PlatformEvent", "UserGame"],
+    "notes": "Owns ranking, feed interactions, discovery telemetry, and growth-facing engagement signals."
+  },
+  {
+    "id": "economy",
+    "name": "Economy and Entitlements",
+    "owner": "Monetization",
+    "primaryPaths": [
+      "apps/web/app/admin/monetization",
+      "apps/web/app/api/admin/monetization",
+      "apps/web/app/api/shorts/[id]/purchase",
+      "apps/web/lib/watchEntitlements.ts",
+      "apps/web/lib/platformAnalytics.ts"
+    ],
+    "dataModels": ["ShortPurchase", "Show.price", "Show.isPremium"],
+    "notes": "Owns premium access, purchase checks, and monetization controls/reporting."
+  },
+  {
+    "id": "ops",
+    "name": "Operations and Automation",
+    "owner": "Ops Engineering",
+    "primaryPaths": [
+      "ops",
+      "packages/agent-manager/src",
+      "packages/watch-scheduler/src",
+      "docs/ops_brain",
+      "scripts/shipcheck.mjs"
+    ],
+    "dataModels": ["OpsTask"],
+    "notes": "Owns autonomous runner loops, queue orchestration, and operator workflows."
+  },
+  {
+    "id": "governance",
+    "name": "Governance, Risk, and Compliance",
+    "owner": "Governance and Trust",
+    "primaryPaths": [
+      "ops/governance",
+      "docs/compliance",
+      "apps/web/lib/platformGovernance.ts",
+      "apps/web/app/api/admin/compliance",
+      "apps/web/app/api/admin/deploy",
+      "apps/web/app/api/admin/launch",
+      "apps/web/app/api/admin/finance",
+      "apps/web/app/api/admin/observability"
+    ],
+    "dataModels": ["Governance manifests in ops/governance/*.json"],
+    "notes": "Owns policy manifests, readiness gates, SLO/budget/compliance status, and enforcement checks."
+  }
+]

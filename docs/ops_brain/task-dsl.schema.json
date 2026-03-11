@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://illuvrse.local/schemas/task-dsl.v1.json",
+  "title": "ILLUVRSE Task DSL v1",
+  "type": "object",
+  "required": ["title", "agent", "priority", "context", "acceptance_criteria", "risk_level", "rollback_notes"],
+  "properties": {
+    "title": {"type": "string", "minLength": 3},
+    "agent": {"type": "string"},
+    "priority": {"type": "integer", "minimum": 1, "maximum": 5},
+    "context": {"type": "string"},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "risk_level": {"type": "string", "enum": ["low", "medium", "high"]},
+    "rollback_notes": {"type": "string"},
+    "handoff": {
+      "type": "object",
+      "required": ["from", "to", "summary"],
+      "properties": {
+        "from": {"type": "string"},
+        "to": {"type": "string"},
+        "summary": {"type": "string"},
+        "artifacts": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

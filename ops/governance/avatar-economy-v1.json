@@ -1,0 +1,7 @@
+{
+  "requireEntitlementProof": true,
+  "requireOwnershipForUpgrades": true,
+  "minimumLedgerFields": 4,
+  "allowNegativeBalance": false,
+  "maxUpgradeCost": 5000
+}

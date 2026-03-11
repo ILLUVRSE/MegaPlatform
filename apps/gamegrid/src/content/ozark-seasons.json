@@ -1,0 +1,57 @@
+{
+  "dateMapping": {
+    "spring": [3, 4, 5],
+    "summer": [6, 7, 8],
+    "fall": [9, 10, 11],
+    "winter": [12, 1, 2]
+  },
+  "seasons": [
+    {
+      "id": "spring",
+      "name": "Spring",
+      "fishBoosts": {
+        "largemouth-bass": 1.18,
+        "smallmouth-bass": 1.12,
+        "black-crappie": 1.1
+      },
+      "weatherOdds": { "sunny": 0.42, "overcast": 0.4, "light_rain": 0.18 },
+      "visualTheme": { "tint": "#a7dcb8", "particle": "pollen" }
+    },
+    {
+      "id": "summer",
+      "name": "Summer",
+      "fishBoosts": {
+        "bluegill": 1.22,
+        "white-bass": 1.16,
+        "common-carp": 1.1
+      },
+      "weatherOdds": { "sunny": 0.58, "overcast": 0.28, "light_rain": 0.14 },
+      "visualTheme": { "tint": "#ffe6a8", "particle": "heat-haze" }
+    },
+    {
+      "id": "fall",
+      "name": "Fall",
+      "fishBoosts": {
+        "walleye": 1.16,
+        "sauger": 1.16,
+        "channel-catfish": 1.12
+      },
+      "weatherOdds": { "sunny": 0.34, "overcast": 0.46, "light_rain": 0.2 },
+      "visualTheme": { "tint": "#d5b08a", "particle": "leaves" }
+    },
+    {
+      "id": "winter",
+      "name": "Winter",
+      "fishBoosts": {
+        "walleye": 1.14,
+        "yellow-perch": 1.18,
+        "bluegill": 1.1,
+        "brown-trout": 1.14,
+        "rainbow-trout": 1.12,
+        "sauger": 1.2
+      },
+      "weatherOdds": { "sunny": 0.22, "overcast": 0.56, "light_rain": 0.22 },
+      "visualTheme": { "tint": "#b6cfe3", "particle": "snow" }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "relevanceWeight": 0.4,
+  "qualityWeight": 0.25,
+  "safetyWeight": 0.25,
+  "freshnessWeight": 0.1,
+  "minimumSafetyScore": 0.7,
+  "maximumPromotionBoost": 0.15
+}

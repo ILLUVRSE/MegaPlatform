@@ -1,0 +1,6 @@
+{
+  "targetFrameTimeMs": 11.1,
+  "frameTimeControlBandMs": 1.2,
+  "minimumResolutionScale": 0.6,
+  "maximumResolutionScale": 1.0
+}

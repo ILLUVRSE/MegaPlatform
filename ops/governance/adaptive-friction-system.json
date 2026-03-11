@@ -1,0 +1,10 @@
+{
+  "lowRiskMax": 0.3,
+  "mediumRiskMax": 0.65,
+  "frictionByTier": {
+    "low": ["none"],
+    "medium": ["confirm_action", "rate_limit"],
+    "high": ["step_up_auth", "manual_review"]
+  },
+  "maxInterventionsPerSession": 3
+}

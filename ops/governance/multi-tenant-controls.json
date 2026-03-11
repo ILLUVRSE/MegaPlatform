@@ -1,0 +1,15 @@
+{
+  "defaultTenant": "core",
+  "tenants": [
+    {
+      "id": "core",
+      "allowedPathPrefixes": ["/api", "/apps", "/watch", "/shorts", "/games"],
+      "allowedModules": ["news", "gamegrid", "pixelbrawl", "art-atlas", "watch", "shorts", "party", "studio", "games"]
+    },
+    {
+      "id": "partner-alpha",
+      "allowedPathPrefixes": ["/api/partner-alpha", "/apps", "/news", "/art-atlas"],
+      "allowedModules": ["news", "art-atlas"]
+    }
+  ]
+}

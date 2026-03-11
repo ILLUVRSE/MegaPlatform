@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="468" viewBox="0 0 336 468">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect x="16" y="16" width="304" height="436" rx="26" fill="#ffffff" stroke="#cbd5e1" stroke-width="3" filter="url(#shadow)"/>
+  <text x="34" y="54" font-size="36" font-family="'Trebuchet MS', Arial, sans-serif" font-weight="700" fill="#b91c1c">6</text>
+  <g transform="translate(44 66) scale(0.24)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+  <g transform="rotate(180 168 234)">
+    <text x="34" y="54" font-size="36" font-family="'Trebuchet MS', Arial, sans-serif" font-weight="700" fill="#b91c1c">6</text>
+  </g>
+  <g transform="translate(292 402) rotate(180) scale(0.24)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+  <g transform="translate(104 118) rotate(0) scale(0.35)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+<g transform="translate(232 118) rotate(0) scale(0.35)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+<g transform="translate(104 234) rotate(0) scale(0.35)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+<g transform="translate(232 234) rotate(0) scale(0.35)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+<g transform="translate(104 350) rotate(180) scale(0.35)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+<g transform="translate(232 350) rotate(180) scale(0.35)"><path d="M 50 8 L 84 50 L 50 92 L 16 50 Z" fill="#b91c1c"/></g>
+</svg>

@@ -1,0 +1,23 @@
+[
+  {
+    "experimentId": "exp-feed-1",
+    "module": "feed",
+    "pattern": "headline_curiosity_boost",
+    "win": true,
+    "confidence": 0.72
+  },
+  {
+    "experimentId": "exp-feed-2",
+    "module": "feed",
+    "pattern": "headline_curiosity_boost",
+    "win": true,
+    "confidence": 0.7
+  },
+  {
+    "experimentId": "exp-watch-1",
+    "module": "watch",
+    "pattern": "episode_next_prompt_v2",
+    "win": false,
+    "confidence": 0.62
+  }
+]

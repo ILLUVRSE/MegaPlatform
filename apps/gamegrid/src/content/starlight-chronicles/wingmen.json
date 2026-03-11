@@ -1,0 +1,16 @@
+{
+  "wingmen": [
+    { "id": "wm-argo", "name": "Argo Vale", "factionAffinity": "concordium", "role": "Fighter", "rarity": "common", "passive": "cargo_safety", "behavior": { "targeting": "nearest", "aggression": 0.6 } },
+    { "id": "wm-lyra", "name": "Lyra Voss", "factionAffinity": "astral", "role": "Support", "rarity": "common", "passive": "scan_hint", "behavior": { "targeting": "weakest", "aggression": 0.4 } },
+    { "id": "wm-quill", "name": "Quill Dane", "factionAffinity": "freebelt", "role": "Interceptor", "rarity": "common", "passive": "shop_discount", "behavior": { "targeting": "harasser", "aggression": 0.7 } },
+    { "id": "wm-sable", "name": "Sable Kett", "factionAffinity": "freebelt", "role": "Fighter", "rarity": "common", "passive": "piracy_screen", "behavior": { "targeting": "nearest", "aggression": 0.65 } },
+    { "id": "wm-helix", "name": "Helix Roe", "factionAffinity": "astral", "role": "Support", "rarity": "uncommon", "passive": "inspection_warning", "behavior": { "targeting": "support", "aggression": 0.3 } },
+    { "id": "wm-drift", "name": "Drift Monroe", "factionAffinity": "concordium", "role": "Interceptor", "rarity": "uncommon", "passive": "flee_vector", "behavior": { "targeting": "harasser", "aggression": 0.72 } },
+    { "id": "wm-cinder", "name": "Cinder Holt", "factionAffinity": "freebelt", "role": "Fighter", "rarity": "uncommon", "passive": "escort_guard", "behavior": { "targeting": "convoy_threat", "aggression": 0.68 } },
+    { "id": "wm-orbit", "name": "Orbit Hsu", "factionAffinity": "concordium", "role": "Support", "rarity": "uncommon", "passive": "shield_tone", "behavior": { "targeting": "nearest", "aggression": 0.35 } },
+    { "id": "wm-mote", "name": "Mote Soren", "factionAffinity": "astral", "role": "Interceptor", "rarity": "rare", "passive": "anomaly_trace", "behavior": { "targeting": "weakest", "aggression": 0.78 } },
+    { "id": "wm-brink", "name": "Brink Adler", "factionAffinity": "concordium", "role": "Fighter", "rarity": "rare", "passive": "convoy_plating", "behavior": { "targeting": "convoy_threat", "aggression": 0.75 } },
+    { "id": "wm-echo", "name": "Echo Mire", "factionAffinity": "freebelt", "role": "Support", "rarity": "rare", "passive": "market_rumor", "behavior": { "targeting": "support", "aggression": 0.42 } },
+    { "id": "wm-nova", "name": "Nova Kade", "factionAffinity": "astral", "role": "Fighter", "rarity": "rare", "passive": "patrol_mediator", "behavior": { "targeting": "nearest", "aggression": 0.7 } }
+  ]
+}

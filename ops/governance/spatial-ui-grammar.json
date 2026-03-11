@@ -1,0 +1,5 @@
+{
+  "minDepthMeters": 0.5,
+  "maxDepthMeters": 3,
+  "requiredTokens": ["panel", "focus_ring", "affordance"]
+}

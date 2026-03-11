@@ -1,0 +1,5 @@
+{
+  "minWorldScale": 0.25,
+  "maxWorldScale": 4,
+  "maxTerrainSlopeDegrees": 45
+}

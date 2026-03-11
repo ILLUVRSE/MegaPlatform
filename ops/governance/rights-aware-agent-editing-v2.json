@@ -1,0 +1,6 @@
+{
+  "blockedLicenseStates": ["unknown", "expired", "disputed"],
+  "requiredRights": ["derivative", "distribution"],
+  "requireAttribution": true,
+  "maxPendingClaims": 0
+}

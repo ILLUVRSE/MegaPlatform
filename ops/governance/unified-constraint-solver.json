@@ -1,0 +1,6 @@
+{
+  "effectOrder": ["deny", "require_approval", "allow"],
+  "globalScopeKey": "global",
+  "emitTrace": true,
+  "maxTraceRules": 25
+}

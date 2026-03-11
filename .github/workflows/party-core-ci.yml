@@ -1,0 +1,73 @@
+name: Party Core CI
+
+on:
+  push:
+    branches: ["feature/party-core"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  party-core:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: illuvrse
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/illuvrse
+      REDIS_URL: redis://localhost:6379
+      NEXTAUTH_SECRET: test-secret
+      NEXT_PUBLIC_LIVEKIT_URL: https://livekit.invalid
+      NEXT_PUBLIC_LIVEKIT_API_KEY: test
+      NPM_CONFIG_FETCH_RETRIES: 5
+      NPM_CONFIG_FETCH_RETRY_MINTIMEOUT: 10000
+      NPM_CONFIG_FETCH_RETRY_MAXTIMEOUT: 120000
+      NPM_CONFIG_FETCH_TIMEOUT: 120000
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+      - name: Install
+        run: pnpm install
+      - name: Prisma generate
+        run: pnpm prisma:generate
+      - name: Prisma validate
+        run: pnpm --filter @illuvrse/db exec prisma validate --schema schema.prisma
+      - name: Prisma migrate status
+        run: pnpm --filter @illuvrse/db exec prisma migrate status --schema schema.prisma
+      - name: Prisma migrate
+        run: pnpm prisma:migrate
+      - name: Lint
+        run: pnpm --filter @illuvrse/web lint
+      - name: Typecheck
+        run: pnpm --filter @illuvrse/web exec tsc --noEmit
+      - name: Unit tests
+        run: pnpm test
+      - name: Build
+        run: pnpm --filter @illuvrse/web build
+      - name: Install Playwright
+        run: pnpm exec playwright install --with-deps
+      - name: Start dev server
+        run: pnpm dev &
+      - name: Wait for server
+        run: pnpm dlx wait-on http://localhost:3000
+      - name: E2E tests
+        run: pnpm test:e2e

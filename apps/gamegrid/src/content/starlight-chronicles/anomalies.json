@@ -1,0 +1,162 @@
+{
+  "anomalies": [
+    {
+      "id": "derelict-signal",
+      "name": "Derelict Signal",
+      "description": "A silent ark transmits rotating distress harmonics.",
+      "unlockRank": 1,
+      "tags": ["salvage"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "factionDelta": { "concordium": 1 }, "credits": 30, "materials": 1 } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 2, "factionDelta": { "concordium": 1 } } },
+        {
+          "id": "salvage",
+          "label": "Salvage",
+          "riskTable": [
+            { "weight": 0.55, "outcome": { "credits": 55, "materials": 3, "shipCondition": -1, "factionDelta": { "freebelt": 1 } } },
+            { "weight": 0.45, "outcome": { "credits": 30, "materials": 2, "shipCondition": -4, "factionDelta": { "freebelt": 1 } } }
+          ]
+        },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 1 } }
+      ]
+    },
+    {
+      "id": "strange-gate",
+      "name": "Strange Gate",
+      "description": "An aperture blinks between star maps from parallel centuries.",
+      "unlockRank": 1,
+      "tags": ["temporal"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "materials": 2, "xp": 16, "factionDelta": { "concordium": 1 } } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 1, "credits": 20 } },
+        {
+          "id": "salvage",
+          "label": "Salvage",
+          "riskTable": [
+            { "weight": 0.5, "outcome": { "credits": 70, "materials": 4, "factionDelta": { "freebelt": 2 }, "shipCondition": -2 } },
+            { "weight": 0.5, "outcome": { "credits": 40, "materials": 2, "shipCondition": -5 } }
+          ]
+        },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 1, "xp": 6 } }
+      ]
+    },
+    {
+      "id": "whisper-reef",
+      "name": "Whisper Reef",
+      "description": "Crystalline voices echo from vacuum like reef-song.",
+      "unlockRank": 1,
+      "tags": ["astral"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "materials": 2, "factionDelta": { "astral": 1 } } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 2, "factionDelta": { "astral": 1 } } },
+        { "id": "salvage", "label": "Salvage", "outcome": { "credits": 45, "shipCondition": -2, "factionDelta": { "freebelt": 1 } } },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 1 } }
+      ]
+    },
+    {
+      "id": "quantum-bloom",
+      "name": "Quantum Bloom",
+      "description": "Localized flowers of folded space pulse around your prow.",
+      "unlockRank": 1,
+      "tags": ["science"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "xp": 22, "materials": 3, "factionDelta": { "concordium": 1 } } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 1, "factionDelta": { "astral": 1 } } },
+        { "id": "salvage", "label": "Salvage", "outcome": { "credits": 40, "shipCondition": -1 } },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 1 } }
+      ]
+    },
+    {
+      "id": "void-harvest",
+      "name": "Void Harvest",
+      "description": "Automated drills mine frozen dark matter from a dead moon.",
+      "unlockRank": 1,
+      "tags": ["industry"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "materials": 2, "factionDelta": { "concordium": 1 } } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 1, "credits": 15 } },
+        { "id": "salvage", "label": "Salvage", "outcome": { "credits": 80, "materials": 4, "factionDelta": { "freebelt": 1 }, "shipCondition": -3 } },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 1 } }
+      ]
+    },
+    {
+      "id": "singing-comet",
+      "name": "Singing Comet",
+      "description": "A comet emits tones that alter crew dream cycles.",
+      "unlockRank": 2,
+      "tags": ["morale"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "xp": 18, "crewMorale": 1 } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 3, "factionDelta": { "astral": 1 } } },
+        { "id": "salvage", "label": "Salvage", "outcome": { "credits": 35, "shipCondition": -2 } },
+        { "id": "avoid", "label": "Avoid", "outcome": { "crewMorale": 0 } }
+      ]
+    },
+    {
+      "id": "mirror-reef",
+      "name": "Mirror Reef",
+      "description": "Reflective shards duplicate sensor ghosts and false fleets.",
+      "unlockRank": 2,
+      "tags": ["risk"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "materials": 3, "xp": 18 } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "factionDelta": { "concordium": 1 }, "crewMorale": 1 } },
+        {
+          "id": "salvage",
+          "label": "Salvage",
+          "riskTable": [
+            { "weight": 0.4, "outcome": { "credits": 95, "materials": 5, "shipCondition": -4 } },
+            { "weight": 0.6, "outcome": { "credits": 40, "materials": 2, "shipCondition": -1 } }
+          ]
+        },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 2 } }
+      ]
+    },
+    {
+      "id": "living-light",
+      "name": "Living Light",
+      "description": "A conscious aurora wraps your hull and responds to emotion.",
+      "unlockRank": 3,
+      "tags": ["astral", "mystery"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "factionDelta": { "astral": 2 }, "materials": 3, "xp": 24 } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "factionDelta": { "astral": 3 }, "crewMorale": 4 } },
+        { "id": "salvage", "label": "Salvage", "outcome": { "credits": 120, "shipCondition": -6, "factionDelta": { "freebelt": 1 } } },
+        { "id": "avoid", "label": "Avoid", "outcome": { "crewMorale": 1 } }
+      ]
+    },
+    {
+      "id": "choir-echo",
+      "name": "Choir Echo",
+      "description": "An impossible choir sings your crew names in reverse time.",
+      "unlockRank": 4,
+      "tags": ["astral", "mystery"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "xp": 30, "factionDelta": { "astral": 2 } } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 5, "factionDelta": { "astral": 3 } } },
+        {
+          "id": "salvage",
+          "label": "Salvage",
+          "riskTable": [
+            { "weight": 0.5, "outcome": { "credits": 140, "materials": 6, "shipCondition": -4 } },
+            { "weight": 0.5, "outcome": { "credits": 70, "materials": 3, "shipCondition": -7 } }
+          ]
+        },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 1 } }
+      ]
+    },
+    {
+      "id": "cathedral-gate",
+      "name": "Cathedral Gate",
+      "description": "A geometric gate opens only when three faction sigils align.",
+      "unlockRank": 5,
+      "tags": ["endgame"],
+      "responses": [
+        { "id": "science", "label": "Science", "outcome": { "xp": 32, "materials": 5, "factionDelta": { "concordium": 2 } } },
+        { "id": "diplomacy", "label": "Diplomacy", "outcome": { "crewMorale": 4, "factionDelta": { "concordium": 1, "astral": 1 } } },
+        { "id": "salvage", "label": "Salvage", "outcome": { "credits": 150, "materials": 4, "factionDelta": { "freebelt": 2 }, "shipCondition": -5 } },
+        { "id": "avoid", "label": "Avoid", "outcome": { "shipCondition": 2 } }
+      ]
+    }
+  ]
+}

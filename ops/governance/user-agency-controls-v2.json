@@ -1,0 +1,7 @@
+{
+  "outputPath": "ops/logs/user-agency-controls-v2.json",
+  "maxProfiles": 5000,
+  "allowedAutonomyModes": ["balanced", "exploratory", "strict"],
+  "maxPersonalizationIntensityCap": 0.85,
+  "maxTopicOptOuts": 30
+}

@@ -1,0 +1,5 @@
+{
+  "requiredDeviceCapabilities": ["eye_tracking"],
+  "minimumPeripheralQualityScore": 0.78,
+  "allowFallbackWhenUnsupported": true
+}

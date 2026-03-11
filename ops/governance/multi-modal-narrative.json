@@ -1,0 +1,5 @@
+{
+  "allowedFormats": ["text", "video", "audio", "game"],
+  "maxArcSteps": 6,
+  "requireSharedTheme": true
+}

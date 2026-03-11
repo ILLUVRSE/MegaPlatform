@@ -1,0 +1,7 @@
+{
+  "maximumRoundingDrift": 0.01,
+  "requireFullAllocation": true,
+  "minimumCreatorSharePercent": 30,
+  "maximumPlatformSharePercent": 40,
+  "requireAllocationExplanation": true
+}

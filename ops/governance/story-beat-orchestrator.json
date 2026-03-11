@@ -1,0 +1,4 @@
+{
+  "requirePolicyDrivenTransitions": true,
+  "maxRecoveryWindowMs": 1500
+}

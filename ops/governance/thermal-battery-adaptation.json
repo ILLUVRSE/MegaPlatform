@@ -1,0 +1,5 @@
+{
+  "maxSafeThermalState": 2,
+  "minimumBatteryPercentForFullQuality": 30,
+  "requireThrottleRegressionProtection": true
+}

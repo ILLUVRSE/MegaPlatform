@@ -1,0 +1,20 @@
+{
+  "restrictedBiometricRegions": [
+    "eu",
+    "br"
+  ],
+  "restrictedRecordingRegions": [
+    "de",
+    "kr"
+  ],
+  "highModerationRegions": [
+    "uk",
+    "ca",
+    "au"
+  ],
+  "defaultContentRatingFloor": "teen",
+  "strictContentRatingRegions": {
+    "de": "mature",
+    "kr": "mature"
+  }
+}

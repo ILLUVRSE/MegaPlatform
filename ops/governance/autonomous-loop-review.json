@@ -1,0 +1,6 @@
+{
+  "minSuccessRate": 0.92,
+  "maxErrorRate": 0.05,
+  "maxP95LatencyMs": 2000,
+  "overrideRunbookPath": "docs/ops_brain/runbooks/stuck-tasks.md"
+}

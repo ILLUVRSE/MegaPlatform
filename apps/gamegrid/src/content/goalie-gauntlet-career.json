@@ -1,0 +1,42 @@
+{
+  "opponentTiers": [
+    { "id": "bronze", "label": "Bronze Club", "difficulty": "easy", "ratingBase": 90 },
+    { "id": "silver", "label": "Silver Club", "difficulty": "medium", "ratingBase": 140 },
+    { "id": "gold", "label": "Gold Club", "difficulty": "medium", "ratingBase": 190 },
+    { "id": "elite", "label": "Elite Club", "difficulty": "hard", "ratingBase": 250 }
+  ],
+  "matchTemplates": [
+    { "id": "c01", "name": "Opening Wall", "patternId": "balanced-core", "opponentTier": "bronze", "shotCount": 14, "objective": { "type": "save_target", "savesTarget": 10 } },
+    { "id": "c02", "name": "Calm Hands", "patternId": "balanced-core", "opponentTier": "bronze", "shotCount": 15, "objective": { "type": "goals_under", "maxGoals": 3 } },
+    { "id": "c03", "name": "Early Focus", "patternId": "perfect-streak", "opponentTier": "bronze", "shotCount": 14, "objective": { "type": "streak_target", "streakTarget": 4 } },
+    { "id": "c04", "name": "Blue Paint", "patternId": "only-high", "opponentTier": "bronze", "shotCount": 15, "objective": { "type": "save_target", "savesTarget": 11 } },
+    { "id": "c05", "name": "Quick Recovery", "patternId": "rapid-fire", "opponentTier": "bronze", "shotCount": 16, "objective": { "type": "goals_under", "maxGoals": 4 } },
+    { "id": "c06", "name": "Short Bench", "patternId": "balanced-core", "opponentTier": "bronze", "shotCount": 13, "objective": { "type": "sudden_death", "lives": 1 } },
+
+    { "id": "c07", "name": "Split Save", "patternId": "deflection-drill", "opponentTier": "silver", "shotCount": 16, "objective": { "type": "save_target", "savesTarget": 12 } },
+    { "id": "c08", "name": "Paint Control", "patternId": "rapid-fire", "opponentTier": "silver", "shotCount": 17, "objective": { "type": "goals_under", "maxGoals": 3 } },
+    { "id": "c09", "name": "Crowd Tempo", "patternId": "perfect-streak", "opponentTier": "silver", "shotCount": 16, "objective": { "type": "streak_target", "streakTarget": 5 } },
+    { "id": "c10", "name": "High Net Read", "patternId": "only-high", "opponentTier": "silver", "shotCount": 17, "objective": { "type": "save_target", "savesTarget": 13 } },
+    { "id": "c11", "name": "Chaos Slot", "patternId": "chaos-mix", "opponentTier": "silver", "shotCount": 16, "objective": { "type": "goals_under", "maxGoals": 4 } },
+    { "id": "c12", "name": "Clutch Shift", "patternId": "deflection-drill", "opponentTier": "silver", "shotCount": 15, "objective": { "type": "sudden_death", "lives": 1 } },
+
+    { "id": "c13", "name": "Edge Battle", "patternId": "rapid-fire", "opponentTier": "gold", "shotCount": 18, "objective": { "type": "save_target", "savesTarget": 14 } },
+    { "id": "c14", "name": "Bad Angle", "patternId": "deflection-drill", "opponentTier": "gold", "shotCount": 18, "objective": { "type": "goals_under", "maxGoals": 3 } },
+    { "id": "c15", "name": "Heat Check", "patternId": "chaos-mix", "opponentTier": "gold", "shotCount": 18, "objective": { "type": "streak_target", "streakTarget": 6 } },
+    { "id": "c16", "name": "Top Shelf Lock", "patternId": "only-high", "opponentTier": "gold", "shotCount": 19, "objective": { "type": "save_target", "savesTarget": 15 } },
+    { "id": "c17", "name": "Rush Lanes", "patternId": "rapid-fire", "opponentTier": "gold", "shotCount": 19, "objective": { "type": "goals_under", "maxGoals": 3 } },
+    { "id": "c18", "name": "Sudden Push", "patternId": "chaos-mix", "opponentTier": "gold", "shotCount": 17, "objective": { "type": "sudden_death", "lives": 1 } },
+
+    { "id": "c19", "name": "Elite Cycle", "patternId": "deflection-drill", "opponentTier": "elite", "shotCount": 20, "objective": { "type": "save_target", "savesTarget": 16 } },
+    { "id": "c20", "name": "Phase Break", "patternId": "chaos-mix", "opponentTier": "elite", "shotCount": 20, "objective": { "type": "goals_under", "maxGoals": 2 } },
+    { "id": "c21", "name": "Rebound Rush", "patternId": "rapid-fire", "opponentTier": "elite", "shotCount": 21, "objective": { "type": "streak_target", "streakTarget": 7 } },
+    { "id": "c22", "name": "Glass and Iron", "patternId": "deflection-drill", "opponentTier": "elite", "shotCount": 20, "objective": { "type": "save_target", "savesTarget": 17 } },
+    { "id": "c23", "name": "Noisy Barn", "patternId": "chaos-mix", "opponentTier": "elite", "shotCount": 21, "objective": { "type": "goals_under", "maxGoals": 2 } },
+    { "id": "c24", "name": "Last Shift", "patternId": "rapid-fire", "opponentTier": "elite", "shotCount": 19, "objective": { "type": "sudden_death", "lives": 1 } }
+  ],
+  "finalsTemplates": [
+    { "id": "f01", "name": "Finals: Iron Curtain", "patternId": "chaos-mix", "opponentTier": "elite", "shotCount": 24, "objective": { "type": "save_target", "savesTarget": 19 } },
+    { "id": "f02", "name": "Finals: Last Stand", "patternId": "deflection-drill", "opponentTier": "elite", "shotCount": 24, "objective": { "type": "goals_under", "maxGoals": 2 } },
+    { "id": "f03", "name": "Finals: Overtime", "patternId": "chaos-mix", "opponentTier": "elite", "shotCount": 25, "objective": { "type": "streak_target", "streakTarget": 8 } }
+  ]
+}

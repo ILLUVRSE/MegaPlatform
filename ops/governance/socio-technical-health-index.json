@@ -1,0 +1,4 @@
+{
+  "minimumHealthyIndex": 0.65,
+  "autonomyCapWhenUnhealthy": 0.45
+}

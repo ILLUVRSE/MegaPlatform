@@ -1,0 +1,5 @@
+{
+  "noveltyThreshold": 0.7,
+  "riskThreshold": 0.6,
+  "opportunityThreshold": 0.65
+}

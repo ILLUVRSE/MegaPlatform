@@ -1,0 +1,5 @@
+{
+  "blockThreshold": 0.8,
+  "escalateThreshold": 0.55,
+  "weights": { "dataSensitivity": 0.4, "scope": 0.3, "transferRisk": 0.3 }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@illuvrse/news-workers",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "bash -lc 'set -a; [ -f ../.env ] && . ../.env; set +a; ts-node src/index.ts'",
+    "build": "tsc -p tsconfig.json",
+    "start": "bash -lc 'set -a; [ -f ../.env ] && . ../.env; set +a; node dist/index.js'",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "bullmq": "^5.40.4",
+    "dotenv": "^16.4.7",
+    "ioredis": "^5.5.0",
+    "rss-parser": "^3.13.0"
+  }
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GameGrid Embed Test</title>
+    <style>
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0a1520; color: #e8f3ff; font-family: Trebuchet MS, Segoe UI, sans-serif; }
+      .wrap { width: min(96vw, 1280px); display: grid; gap: 12px; }
+      iframe { width: 100%; aspect-ratio: 16 / 9; border: 2px solid #2ed7a3; border-radius: 12px; background: #000; }
+      button { border: 0; border-radius: 10px; background: #2ed7a3; color: #083a2d; padding: 10px 12px; font-weight: 700; }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; }
+      code { color: #9fdcff; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>GameGrid Embed Harness</h1>
+      <p>Loads the portal in an iframe with <code>allow="fullscreen; autoplay"</code> for partner validation.</p>
+      <div class="row">
+        <button id="focus">Focus iframe</button>
+        <button id="pause">Send pause</button>
+        <button id="resume">Send resume</button>
+      </div>
+      <iframe id="game" src="/" title="GameGrid embedded" allow="fullscreen; autoplay"></iframe>
+    </div>
+    <script>
+      const frame = document.getElementById('game');
+      const post = (payload) => frame.contentWindow?.postMessage(payload, '*');
+      document.getElementById('focus').addEventListener('click', () => frame.focus());
+      document.getElementById('pause').addEventListener('click', () => post({ type: 'pause' }));
+      document.getElementById('resume').addEventListener('click', () => post({ type: 'resume' }));
+      window.addEventListener('message', (event) => {
+        if (!event.data || event.data.source !== 'gamegrid') return;
+        console.log('child event', event.data);
+      });
+    </script>
+  </body>
+</html>

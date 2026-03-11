@@ -1,0 +1,4 @@
+{
+  "minReusablePrimitives": 3,
+  "maxRigSwitchLatencyMs": 120
+}

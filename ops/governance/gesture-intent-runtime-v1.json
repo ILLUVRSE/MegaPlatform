@@ -1,0 +1,9 @@
+{
+  "minConfidence": 0.8,
+  "gestureIntentMap": {
+    "pinch": "select",
+    "grab": "hold",
+    "swipe_left": "navigate_prev",
+    "swipe_right": "navigate_next"
+  }
+}

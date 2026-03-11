@@ -1,0 +1,5 @@
+[
+  {"action":"production_deploy","approvalRequired":true,"owner":"Human Operator"},
+  {"action":"policy_edit","approvalRequired":true,"owner":"Governance and Trust"},
+  {"action":"apply_destructive_migration","approvalRequired":true,"owner":"DB Owner"}
+]

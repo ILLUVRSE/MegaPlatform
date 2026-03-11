@@ -1,0 +1,6 @@
+{
+  "capexPreferredWorkloads": ["steady_render", "batch_inference"],
+  "opexPreferredWorkloads": ["burst_recommendation", "ad_hoc_generation"],
+  "maxOpexRatio": 0.65,
+  "fallbackMode": "opex"
+}

@@ -1,0 +1,5 @@
+{
+  "authorityModel": "server_authoritative",
+  "conflictPolicy": "highest_version_wins",
+  "maxSkewMs": 120
+}

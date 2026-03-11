@@ -1,0 +1,5 @@
+{
+  "allowedAssessors": ["external_auditor", "regulator_partner"],
+  "allowedArtifacts": ["certification", "evidence"],
+  "redactSensitive": true
+}

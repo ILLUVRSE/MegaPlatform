@@ -1,0 +1,8 @@
+{
+  "minimumScore": 0.75,
+  "dimensionWeights": {
+    "reliability": 0.4,
+    "safety": 0.35,
+    "growth": 0.25
+  }
+}

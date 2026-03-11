@@ -1,0 +1,6 @@
+{
+  "primaryRegions": ["us-east-1", "us-west-2"],
+  "requiredControlStates": ["constraint_enforced", "guardrails_active"],
+  "maxUnavailablePrimaries": 1,
+  "degradedModeActionLimit": "restricted"
+}

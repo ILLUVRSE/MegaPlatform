@@ -1,0 +1,5 @@
+{
+  "requiredSections": ["summary", "risks", "wins", "blockers", "nextActions"],
+  "maxItemsPerSection": 5,
+  "riskSeverityThreshold": "warning"
+}

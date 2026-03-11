@@ -1,0 +1,26 @@
+{
+  "enabledSources": ["partner-analytics"],
+  "mappings": [
+    {
+      "source": "partner-analytics",
+      "event": "external_module_open",
+      "canonicalEvent": "module_open",
+      "canonicalSurface": "apps_directory",
+      "moduleStrategy": "payload"
+    },
+    {
+      "source": "partner-analytics",
+      "event": "external_module_direct_open",
+      "canonicalEvent": "module_open_direct",
+      "canonicalSurface": "embedded_app",
+      "moduleStrategy": "payload"
+    },
+    {
+      "source": "partner-analytics",
+      "event": "external_nav_click",
+      "canonicalEvent": "nav_click",
+      "canonicalSurface": "home_hub",
+      "moduleStrategy": "source"
+    }
+  ]
+}

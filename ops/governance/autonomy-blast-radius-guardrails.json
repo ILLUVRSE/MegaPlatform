@@ -1,0 +1,6 @@
+{
+  "maxRiskScore": 0.65,
+  "maxAffectedDomains": 2,
+  "maxAffectedUsers": 5000,
+  "requireApprovalAboveRisk": 0.45
+}

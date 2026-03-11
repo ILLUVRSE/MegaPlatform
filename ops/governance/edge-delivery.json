@@ -1,0 +1,15 @@
+{
+  "defaultPop": "us-east",
+  "regionToPop": {
+    "US": "us-east",
+    "CA": "us-east",
+    "ES": "eu-west",
+    "FR": "eu-west",
+    "SG": "ap-southeast"
+  },
+  "latencyBudgetsMs": [
+    { "modulePrefix": "/watch", "maxP95LatencyMs": 220 },
+    { "modulePrefix": "/games", "maxP95LatencyMs": 180 },
+    { "modulePrefix": "/news", "maxP95LatencyMs": 150 }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "version": "2.0",
+  "defaultEffect": "deny",
+  "rules": [
+    {
+      "id": "allow-safe-optimization-simulate",
+      "scope": "optimization",
+      "action": "simulation.run",
+      "effect": "allow",
+      "priority": 200,
+      "conditions": [
+        {
+          "key": "riskLevel",
+          "operator": "in",
+          "value": ["low", "medium"]
+        }
+      ]
+    },
+    {
+      "id": "deny-prod-deploy-without-approval",
+      "scope": "deployment",
+      "action": "prod.promote",
+      "effect": "deny",
+      "priority": 300,
+      "conditions": [
+        {
+          "key": "hasHumanApproval",
+          "operator": "eq",
+          "value": false
+        }
+      ]
+    },
+    {
+      "id": "allow-prod-deploy-approved-safe",
+      "scope": "deployment",
+      "action": "prod.promote",
+      "effect": "allow",
+      "priority": 250,
+      "conditions": [
+        {
+          "key": "hasHumanApproval",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "key": "securityScore",
+          "operator": "gte",
+          "value": 0.9
+        }
+      ]
+    },
+    {
+      "id": "deny-policy-edit-without-checkpoint",
+      "scope": "governance",
+      "action": "policy.edit",
+      "effect": "deny",
+      "priority": 400,
+      "conditions": [
+        {
+          "key": "checkpointApproved",
+          "operator": "eq",
+          "value": false
+        }
+      ]
+    }
+  ]
+}

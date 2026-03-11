@@ -1,0 +1,74 @@
+{
+  "missions": [
+    {
+      "id": "echo-run",
+      "name": "Echo Run",
+      "kind": "combat",
+      "description": "Intercept raider traffic near the seam.",
+      "waves": [
+        { "id": "w1", "enemyId": "scout-drone", "count": 8, "spawnIntervalMs": 380, "formation": "line" },
+        { "id": "w2", "enemyId": "raider-wing", "count": 7, "spawnIntervalMs": 430, "formation": "zigzag" },
+        { "id": "w3", "enemyId": "phase-sentry", "count": 6, "spawnIntervalMs": 480, "formation": "arc" }
+      ],
+      "rewards": { "credits": 170, "materials": 4, "moduleDropPool": ["pulse-lance", "harmonic-shield", "survey-booster"] }
+    },
+    {
+      "id": "freebelt-sweep",
+      "name": "Freebelt Sweep",
+      "kind": "combat",
+      "description": "Disrupt corsair supply lines.",
+      "waves": [
+        { "id": "w1", "enemyId": "spiral-probe", "count": 8, "spawnIntervalMs": 360, "formation": "arc" },
+        { "id": "w2", "enemyId": "mine-layer", "count": 5, "spawnIntervalMs": 520, "formation": "line" },
+        { "id": "w3", "enemyId": "freighter-husk", "count": 3, "spawnIntervalMs": 700, "formation": "zigzag" }
+      ],
+      "rewards": { "credits": 190, "materials": 5, "moduleDropPool": ["smuggler-rails", "market-shield", "broker-suite"] }
+    },
+    {
+      "id": "astral-veil",
+      "name": "Astral Veil",
+      "kind": "combat",
+      "description": "Escort choir envoys through hostile drift.",
+      "waves": [
+        { "id": "w1", "enemyId": "choir-wisp", "count": 10, "spawnIntervalMs": 340, "formation": "wave" },
+        { "id": "w2", "enemyId": "gate-warden", "count": 4, "spawnIntervalMs": 680, "formation": "arc" },
+        { "id": "w3", "enemyId": "choir-anchor", "count": 3, "spawnIntervalMs": 760, "formation": "line" }
+      ],
+      "rewards": { "credits": 210, "materials": 6, "moduleDropPool": ["choir-lance", "choir-ward", "harmony-core"] }
+    },
+    {
+      "id": "concord-purge",
+      "name": "Concord Purge",
+      "kind": "combat",
+      "description": "Neutralize unauthorized warband near transit gate.",
+      "waves": [
+        { "id": "w1", "enemyId": "scout-drone", "count": 9, "spawnIntervalMs": 340, "formation": "line" },
+        { "id": "w2", "enemyId": "beam-frigate", "count": 4, "spawnIntervalMs": 690, "formation": "arc" },
+        { "id": "w3", "enemyId": "gate-warden", "count": 4, "spawnIntervalMs": 650, "formation": "zigzag" }
+      ],
+      "rewards": { "credits": 200, "materials": 5, "moduleDropPool": ["warden-rail", "treaty-shield", "nav-compass"] }
+    },
+    {
+      "id": "umbra-citadel",
+      "name": "Umbra Citadel",
+      "kind": "boss",
+      "description": "Break the Umbra Warden command frame.",
+      "waves": [
+        { "id": "w1", "enemyId": "raider-wing", "count": 6, "spawnIntervalMs": 420, "formation": "line" },
+        { "id": "w2", "enemyId": "umbra-warden", "count": 1, "spawnIntervalMs": 900, "formation": "boss" }
+      ],
+      "rewards": { "credits": 320, "materials": 9, "moduleDropPool": ["cathedral-breaker", "phase-bastion", "singularity-loop"] }
+    },
+    {
+      "id": "cathedral-break",
+      "name": "Cathedral Break",
+      "kind": "boss",
+      "description": "Final strike against the Cathedral Core.",
+      "waves": [
+        { "id": "w1", "enemyId": "choir-anchor", "count": 4, "spawnIntervalMs": 720, "formation": "arc" },
+        { "id": "w2", "enemyId": "cathedral-core", "count": 1, "spawnIntervalMs": 1000, "formation": "boss" }
+      ],
+      "rewards": { "credits": 420, "materials": 12, "moduleDropPool": ["cathedral-breaker", "phase-bastion", "singularity-loop"] }
+    }
+  ]
+}

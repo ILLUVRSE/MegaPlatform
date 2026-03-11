@@ -1,0 +1,84 @@
+[
+  {
+    "id": "balanced-core",
+    "name": "Balanced Core",
+    "description": "Even mix of corner and mid-height attempts with readable telegraphs.",
+    "tags": ["starter", "balanced"],
+    "shots": [
+      { "zone": "mid-left", "telegraph": "both", "speed": 500, "type": "straight", "rebound": true, "reboundSpeedMultiplier": 1.12 },
+      { "zone": "mid-right", "telegraph": "windup", "speed": 510, "type": "straight" },
+      { "zone": "high-left", "telegraph": "glow", "speed": 545, "type": "curve", "spin": true },
+      { "zone": "high-right", "telegraph": "both", "speed": 550, "type": "curve", "spin": true },
+      { "zone": "low-left", "telegraph": "windup", "speed": 530, "type": "straight", "rebound": true, "reboundSpeedMultiplier": 1.1 },
+      { "zone": "low-right", "telegraph": "glow", "speed": 535, "type": "straight", "rebound": true, "reboundSpeedMultiplier": 1.1 }
+    ]
+  },
+  {
+    "id": "only-high",
+    "name": "Only High Shots",
+    "description": "High glove and high blocker repetition for quick reads.",
+    "tags": ["high", "challenge"],
+    "shots": [
+      { "zone": "high-left", "telegraph": "both", "speed": 560, "type": "straight" },
+      { "zone": "high-right", "telegraph": "both", "speed": 570, "type": "straight" },
+      { "zone": "high-left", "telegraph": "glow", "speed": 590, "type": "one_timer", "comboGapMs": 220 },
+      { "zone": "high-right", "telegraph": "windup", "speed": 600, "type": "one_timer", "comboGapMs": 240 }
+    ]
+  },
+  {
+    "id": "rapid-fire",
+    "name": "Rapid Fire 20",
+    "description": "Short combo gaps and one-timer pressure.",
+    "tags": ["rapid", "combo"],
+    "shots": [
+      { "zone": "mid-left", "telegraph": "windup", "speed": 620, "type": "one_timer", "comboGapMs": 190 },
+      { "zone": "mid-right", "telegraph": "glow", "speed": 625, "type": "one_timer", "comboGapMs": 190 },
+      { "zone": "low-left", "telegraph": "both", "speed": 610, "type": "straight", "comboGapMs": 210 },
+      { "zone": "low-right", "telegraph": "both", "speed": 615, "type": "straight", "comboGapMs": 210 },
+      { "zone": "high-left", "telegraph": "windup", "speed": 635, "type": "one_timer", "comboGapMs": 180 },
+      { "zone": "high-right", "telegraph": "glow", "speed": 640, "type": "one_timer", "comboGapMs": 180 }
+    ]
+  },
+  {
+    "id": "deflection-drill",
+    "name": "Deflection Drill",
+    "description": "Late path changes and fake telegraphs to train patience.",
+    "tags": ["deflection", "fake"],
+    "shots": [
+      { "zone": "mid-left", "telegraph": "both", "speed": 560, "type": "curve", "deflection": true, "fake": true, "fakeShiftAtMs": 190, "realZone": "mid-right", "rebound": true, "reboundSpeedMultiplier": 1.2 },
+      { "zone": "mid-right", "telegraph": "both", "speed": 565, "type": "curve", "deflection": true, "fake": true, "fakeShiftAtMs": 185, "realZone": "mid-left", "rebound": true, "reboundSpeedMultiplier": 1.22 },
+      { "zone": "high-left", "telegraph": "windup", "speed": 590, "type": "curve", "deflection": true, "spin": true },
+      { "zone": "high-right", "telegraph": "glow", "speed": 595, "type": "curve", "deflection": true, "spin": true },
+      { "zone": "low-left", "telegraph": "both", "speed": 575, "type": "straight", "deflection": true, "rebound": true, "reboundSpeedMultiplier": 1.14 },
+      { "zone": "low-right", "telegraph": "both", "speed": 578, "type": "straight", "deflection": true, "rebound": true, "reboundSpeedMultiplier": 1.14 }
+    ]
+  },
+  {
+    "id": "perfect-streak",
+    "name": "Perfect Save Streak",
+    "description": "Predictable lane cadence tuned for early perfect timing windows.",
+    "tags": ["perfect", "timing"],
+    "shots": [
+      { "zone": "mid-left", "telegraph": "both", "speed": 520, "type": "straight" },
+      { "zone": "mid-right", "telegraph": "both", "speed": 520, "type": "straight" },
+      { "zone": "high-left", "telegraph": "both", "speed": 530, "type": "straight" },
+      { "zone": "high-right", "telegraph": "both", "speed": 530, "type": "straight" },
+      { "zone": "low-left", "telegraph": "both", "speed": 515, "type": "straight" },
+      { "zone": "low-right", "telegraph": "both", "speed": 515, "type": "straight" }
+    ]
+  },
+  {
+    "id": "chaos-mix",
+    "name": "Chaos Mix",
+    "description": "Aggressive blend for late-round escalation.",
+    "tags": ["hard", "mixed"],
+    "shots": [
+      { "zone": "high-left", "telegraph": "glow", "speed": 640, "type": "one_timer", "spin": true, "comboGapMs": 190 },
+      { "zone": "low-right", "telegraph": "windup", "speed": 650, "type": "one_timer", "deflection": true, "comboGapMs": 170 },
+      { "zone": "mid-left", "telegraph": "both", "speed": 630, "type": "curve", "fake": true, "fakeShiftAtMs": 170, "realZone": "mid-right", "deflection": true, "rebound": true, "reboundSpeedMultiplier": 1.25, "comboGapMs": 200 },
+      { "zone": "high-right", "telegraph": "glow", "speed": 660, "type": "one_timer", "spin": true, "comboGapMs": 180 },
+      { "zone": "low-left", "telegraph": "windup", "speed": 625, "type": "curve", "fake": true, "fakeShiftAtMs": 165, "realZone": "low-right", "rebound": true, "reboundSpeedMultiplier": 1.18, "comboGapMs": 210 },
+      { "zone": "mid-right", "telegraph": "both", "speed": 635, "type": "curve", "deflection": true, "comboGapMs": 205 }
+    ]
+  }
+]

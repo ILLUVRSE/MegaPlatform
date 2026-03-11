@@ -1,0 +1,5 @@
+{
+  "minimumDwellMs": 400,
+  "minimumAttentionScore": 0.6,
+  "policyControls": ["ranking_hook_opt_in", "privacy_masking"]
+}

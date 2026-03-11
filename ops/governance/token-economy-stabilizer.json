@@ -1,0 +1,11 @@
+{
+  "targetTokenBudget": 100000,
+  "controlBandMinRatio": 0.9,
+  "controlBandMaxRatio": 1.1,
+  "maxAutoCorrectionRatio": 0.2,
+  "stabilizationActions": [
+    "throttle_low_priority",
+    "rebalance_compute_pool",
+    "pause_non_critical_jobs"
+  ]
+}

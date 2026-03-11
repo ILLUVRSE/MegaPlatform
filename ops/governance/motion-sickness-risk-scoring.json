@@ -1,0 +1,8 @@
+{
+  "highRiskScoreThreshold": 0.7,
+  "safeModeDefaultThreshold": 0.85,
+  "vectionWeight": 0.35,
+  "angularVelocityWeight": 0.25,
+  "frameTimeVarianceWeight": 0.2,
+  "durationWeight": 0.2
+}

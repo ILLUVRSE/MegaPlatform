@@ -1,0 +1,7 @@
+{
+  "requireExplicitConsent": true,
+  "requireSessionScopedConsent": true,
+  "allowRecordingAfterRevocation": false,
+  "maxConsentAgeMinutes": 240,
+  "requireGuardianConsentForYouth": true
+}

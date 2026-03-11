@@ -1,0 +1,5 @@
+{
+  "minCharacterClasses": 2,
+  "maxBlendDepth": 6,
+  "allowedBlendModes": ["linear", "additive", "override"]
+}

@@ -1,0 +1,5 @@
+{
+  "minimumNarrativeScore": 0.8,
+  "minimumSpatialScore": 0.82,
+  "minimumVisualScore": 0.78
+}

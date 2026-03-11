@@ -1,0 +1,18 @@
+[
+  {
+    "role": "admin",
+    "permissions": ["admin:*"]
+  },
+  {
+    "role": "moderator",
+    "permissions": ["feed:review", "feed:hide", "feed:shadowban"]
+  },
+  {
+    "role": "creator",
+    "permissions": ["studio:read", "studio:write", "studio:publish"]
+  },
+  {
+    "role": "user",
+    "permissions": ["watch:read", "party:join", "feed:interact"]
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "toxicity_rate": 0.01,
+  "policy_bypass_rate": 0.005,
+  "high_severity_incident_rate": 0.002
+}

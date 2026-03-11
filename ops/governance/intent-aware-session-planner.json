@@ -1,0 +1,12 @@
+{
+  "minimumIntentConfidence": 0.55,
+  "intentModuleMap": {
+    "relax": ["watch", "shorts"],
+    "create": ["studio"],
+    "socialize": ["party", "watch"],
+    "compete": ["games", "gamegrid"],
+    "learn": ["news", "watch"]
+  },
+  "fallbackSequence": ["watch", "shorts", "home"],
+  "maxHighRiskRecommendations": 1
+}

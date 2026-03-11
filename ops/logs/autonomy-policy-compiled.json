@@ -1,0 +1,53 @@
+{
+  "compilerVersion": "1.0.0",
+  "defaultEffect": "deny",
+  "ruleCount": 3,
+  "compiledRules": [
+    {
+      "id": "safety-high-risk-block",
+      "scope": "global",
+      "effect": "deny",
+      "priority": 100,
+      "normalizedConditions": [
+        {
+          "key": "riskLevel",
+          "values": [
+            "critical",
+            "high"
+          ]
+        }
+      ],
+      "executableKey": "global:deny:100:safety-high-risk-block"
+    },
+    {
+      "id": "finance-sensitive-approval",
+      "scope": "finance",
+      "effect": "require_approval",
+      "priority": 80,
+      "normalizedConditions": [
+        {
+          "key": "costTier",
+          "values": [
+            "elevated"
+          ]
+        }
+      ],
+      "executableKey": "finance:require_approval:80:finance-sensitive-approval"
+    },
+    {
+      "id": "ops-low-risk-allow",
+      "scope": "ops",
+      "effect": "allow",
+      "priority": 20,
+      "normalizedConditions": [
+        {
+          "key": "riskLevel",
+          "values": [
+            "low"
+          ]
+        }
+      ],
+      "executableKey": "ops:allow:20:ops-low-risk-allow"
+    }
+  ]
+}

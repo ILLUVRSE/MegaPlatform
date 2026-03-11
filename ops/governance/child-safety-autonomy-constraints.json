@@ -1,0 +1,5 @@
+{
+  "youthContexts": ["kids_mode", "under_teen"],
+  "blockedActions": ["direct_message", "targeted_ads"],
+  "maxAutonomyLevel": "assisted"
+}

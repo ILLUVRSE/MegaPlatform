@@ -1,0 +1,4 @@
+{
+  "requiredInvariants": ["human_oversight", "non_maleficence"],
+  "failClosed": true
+}

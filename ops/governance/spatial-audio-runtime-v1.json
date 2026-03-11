@@ -1,0 +1,5 @@
+{
+  "maxVoicesPerTier": { "low": 16, "medium": 32, "high": 64 },
+  "maxHrtfSourcesPerTier": { "low": 8, "medium": 16, "high": 24 },
+  "requireDistanceAttenuation": true
+}

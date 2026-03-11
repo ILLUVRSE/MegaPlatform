@@ -1,0 +1,4 @@
+{
+  "requiredAnchorKinds": ["head", "left_hand", "right_hand"],
+  "defaultStabilityThreshold": 0.85
+}

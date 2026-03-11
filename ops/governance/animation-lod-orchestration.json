@@ -1,0 +1,5 @@
+{
+  "minimumQualityRetentionScore": 0.8,
+  "maxAnimationRuntimeCostMs": 4.5,
+  "requireDistanceTiering": true
+}

@@ -1,0 +1,134 @@
+{
+  "rods": [
+    {
+      "id": "rod-starter-6ft",
+      "name": "6' Starter Composite",
+      "tier": 1,
+      "unlockLevel": 1,
+      "flexDamping": 1,
+      "hookForgiveness": 1,
+      "tensionControl": 1
+    },
+    {
+      "id": "rod-river-66",
+      "name": "River 6'6\" Medium",
+      "tier": 2,
+      "unlockLevel": 2,
+      "flexDamping": 1.08,
+      "hookForgiveness": 1.06,
+      "tensionControl": 1.05
+    },
+    {
+      "id": "rod-ozark-7",
+      "name": "Ozark 7' Control",
+      "tier": 3,
+      "unlockLevel": 4,
+      "flexDamping": 1.14,
+      "hookForgiveness": 1.12,
+      "tensionControl": 1.11
+    },
+    {
+      "id": "rod-structure-72",
+      "name": "Structure 7'2\" Heavy",
+      "tier": 4,
+      "unlockLevel": 6,
+      "flexDamping": 1.2,
+      "hookForgiveness": 1.16,
+      "tensionControl": 1.16
+    },
+    {
+      "id": "rod-legend-74",
+      "name": "Legend 7'4\" Trophy",
+      "tier": 5,
+      "unlockLevel": 8,
+      "flexDamping": 1.28,
+      "hookForgiveness": 1.22,
+      "tensionControl": 1.24
+    }
+  ],
+  "reels": [
+    {
+      "id": "reel-starter",
+      "name": "Starter Spin 2000",
+      "tier": 1,
+      "unlockLevel": 1,
+      "dragStability": 1,
+      "reelSpeed": 1,
+      "slackRecovery": 1
+    },
+    {
+      "id": "reel-dockrunner",
+      "name": "DockRunner 2500",
+      "tier": 2,
+      "unlockLevel": 2,
+      "dragStability": 1.08,
+      "reelSpeed": 1.05,
+      "slackRecovery": 1.06
+    },
+    {
+      "id": "reel-deepcurrent",
+      "name": "DeepCurrent 3000",
+      "tier": 3,
+      "unlockLevel": 4,
+      "dragStability": 1.14,
+      "reelSpeed": 1.09,
+      "slackRecovery": 1.12
+    },
+    {
+      "id": "reel-torqueplus",
+      "name": "TorquePlus 3500",
+      "tier": 4,
+      "unlockLevel": 6,
+      "dragStability": 1.2,
+      "reelSpeed": 1.14,
+      "slackRecovery": 1.18
+    },
+    {
+      "id": "reel-trophy-max",
+      "name": "Trophy Max 4000",
+      "tier": 5,
+      "unlockLevel": 8,
+      "dragStability": 1.28,
+      "reelSpeed": 1.2,
+      "slackRecovery": 1.24
+    }
+  ],
+  "lines": [
+    {
+      "id": "line-mono-8",
+      "name": "8 lb Mono",
+      "tier": 1,
+      "unlockLevel": 1,
+      "snapThreshold": 1,
+      "visibility": 1.1,
+      "abrasionResistance": 1
+    },
+    {
+      "id": "line-fluoro-10",
+      "name": "10 lb Fluoro",
+      "tier": 2,
+      "unlockLevel": 3,
+      "snapThreshold": 1.08,
+      "visibility": 0.92,
+      "abrasionResistance": 1.06
+    },
+    {
+      "id": "line-braid-20",
+      "name": "20 lb Braid",
+      "tier": 3,
+      "unlockLevel": 5,
+      "snapThreshold": 1.2,
+      "visibility": 1.08,
+      "abrasionResistance": 1.2
+    },
+    {
+      "id": "line-hybrid-16",
+      "name": "16 lb Hybrid Trophy",
+      "tier": 4,
+      "unlockLevel": 7,
+      "snapThreshold": 1.32,
+      "visibility": 0.88,
+      "abrasionResistance": 1.3
+    }
+  ]
+}

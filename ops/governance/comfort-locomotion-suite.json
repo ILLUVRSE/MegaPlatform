@@ -1,0 +1,5 @@
+{
+  "allowedModes": ["teleport", "snap_turn", "vignette"],
+  "defaultMode": "teleport",
+  "requireComfortPolicy": true
+}

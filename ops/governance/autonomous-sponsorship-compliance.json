@@ -1,0 +1,6 @@
+{
+  "requireDisclosureTag": true,
+  "requiredDisclosureMarkers": ["sponsored", "paid_partnership"],
+  "blockUndeclaredSponsoredContent": true,
+  "maxHiddenSponsorMentions": 0
+}

@@ -1,0 +1,9 @@
+{
+  "maxActionSpendCents": 2500,
+  "maxHourlyAutonomySpendCents": 20000,
+  "minRemainingBudgetRatio": 0.15,
+  "throttleMultiplier": 0.5,
+  "blockedActionTypes": [
+    "high_risk_experiment"
+  ]
+}

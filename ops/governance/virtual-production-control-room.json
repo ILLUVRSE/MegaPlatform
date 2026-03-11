@@ -1,0 +1,5 @@
+{
+  "requiredControlSurfaces": ["cues", "camera", "effects", "moderation"],
+  "maxPendingCueDepth": 20,
+  "requireStateAuditability": true
+}

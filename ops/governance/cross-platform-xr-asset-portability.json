@@ -1,0 +1,11 @@
+{
+  "allowedRuntimes": [
+    "openxr",
+    "webxr",
+    "visionos"
+  ],
+  "requireRightsClearance": true,
+  "requireFormatCompatibility": true,
+  "minimumCompatibilityScore": 0.8,
+  "allowPolicyBypass": false
+}

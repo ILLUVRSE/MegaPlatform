@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/emotional-safety-signals-v1.json",
+  "maxEntries": 1000,
+  "highSeverityThreshold": 0.75,
+  "protectedPatterns": ["doom_scroll", "self_harm_spiral", "harassment_loop"]
+}

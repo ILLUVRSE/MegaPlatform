@@ -1,0 +1,4 @@
+{
+  "minimumAnomalyScore": 0.7,
+  "maxHypotheses": 8
+}

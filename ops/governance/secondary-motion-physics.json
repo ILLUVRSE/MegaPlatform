@@ -1,0 +1,5 @@
+{
+  "maxCpuCostMs": 2.5,
+  "maxSimulatedNodes": 120,
+  "maxFrameBudgetPercent": 15
+}

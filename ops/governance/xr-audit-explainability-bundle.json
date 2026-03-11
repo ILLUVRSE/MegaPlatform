@@ -1,0 +1,11 @@
+{
+  "minimumEvidenceLinks": 2,
+  "allowedOutcomes": [
+    "allow",
+    "restrict",
+    "block"
+  ],
+  "requireHumanReviewer": true,
+  "requireDecisionRationale": true,
+  "requireTraceabilityId": true
+}

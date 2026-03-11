@@ -1,0 +1,21 @@
+{
+  "proposals": [
+    {
+      "proposalId": "prop-160",
+      "title": "Adjust remix rights baseline",
+      "proposerId": "creator-1",
+      "policyArea": "rights",
+      "status": "approved",
+      "votes": [
+        {
+          "voterId": "c2",
+          "vote": "yes"
+        },
+        {
+          "voterId": "c1",
+          "vote": "yes"
+        }
+      ]
+    }
+  ]
+}

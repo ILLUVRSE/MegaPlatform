@@ -1,0 +1,32 @@
+[
+  {
+    "id": "studio-failure-rate-24h",
+    "name": "Studio Failure Rate (24h)",
+    "description": "Protects media pipeline reliability under steady production load.",
+    "metricKey": "studio_failed_jobs_24h_rate",
+    "operator": "<=",
+    "target": 0.08,
+    "unit": "ratio",
+    "severity": "critical"
+  },
+  {
+    "id": "live-channel-health",
+    "name": "Live Channel Healthy Ratio",
+    "description": "Ensures watch live channels stay healthy for viewers.",
+    "metricKey": "live_channel_healthy_ratio",
+    "operator": ">=",
+    "target": 0.95,
+    "unit": "ratio",
+    "severity": "critical"
+  },
+  {
+    "id": "ops-stale-tasks",
+    "name": "Ops Stale In-Progress Tasks",
+    "description": "Keeps incident/task response loops from silently stalling.",
+    "metricKey": "ops_stale_in_progress_tasks",
+    "operator": "<=",
+    "target": 2,
+    "unit": "count",
+    "severity": "warning"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "maxSceneNodeCount": 5000,
+  "requiredMetadataFields": ["worldId", "ownerId", "theme"],
+  "allowSharedOwnership": false
+}

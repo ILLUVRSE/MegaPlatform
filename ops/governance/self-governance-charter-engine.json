@@ -1,0 +1,4 @@
+{
+  "requiredPrinciples": ["safety", "accountability", "human_oversight"],
+  "enforceHighImpactOnly": true
+}

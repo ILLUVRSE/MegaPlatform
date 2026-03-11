@@ -1,0 +1,4 @@
+{
+  "outputPath": "ops/logs/regulatory-change-deltas.json",
+  "requiredDeltaFields": ["regulation", "changeSummary", "controlMapping"]
+}

@@ -1,0 +1,5 @@
+{
+  "requiredFields": ["id", "name", "category", "route", "launchUrl", "tagline", "description"],
+  "supportedCategories": ["Media", "Games", "Culture"],
+  "schemaVersion": "1.0.0"
+}

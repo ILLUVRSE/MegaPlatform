@@ -1,0 +1,8 @@
+{
+  "weights": {
+    "impact": 0.5,
+    "risk": 0.3,
+    "cost": 0.2
+  },
+  "minEvidenceFields": ["impactEvidence", "riskEvidence", "costEvidence"]
+}

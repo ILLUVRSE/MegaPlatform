@@ -1,0 +1,13 @@
+{
+  "notes": "Example designer-editable wave file. Runtime currently consumes ts mirrors in starlightWaves.ts.",
+  "waves": [
+    {
+      "id": "sector1-m2",
+      "durationSec": 100,
+      "spawns": [
+        { "t": 4, "enemyId": "dart", "count": 6, "formation": "line", "pathType": "zigzag", "firePattern": "none" },
+        { "t": 58, "enemyId": "midboss", "count": 1, "formation": "line", "pathType": "straight", "firePattern": "burst5", "midboss": true, "hpScale": 1.1 }
+      ]
+    }
+  ]
+}

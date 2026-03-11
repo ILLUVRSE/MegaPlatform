@@ -1,0 +1,8 @@
+{
+  "active": true,
+  "lastEvaluatedAt": "2026-03-11T14:30:20.429Z",
+  "reason": "ready",
+  "maturityScore": 0.755,
+  "actionLimit": "restricted",
+  "briefingPath": "docs/ops_brain/briefings/latest.json"
+}

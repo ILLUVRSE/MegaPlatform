@@ -1,0 +1,4 @@
+{
+  "designatedRefreshRatesHz": [90, 120],
+  "minimumStabilityScore": 0.95
+}

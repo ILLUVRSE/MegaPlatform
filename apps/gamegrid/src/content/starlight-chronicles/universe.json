@@ -1,0 +1,116 @@
+{
+  "regions": [
+    {
+      "id": "orion-spindle",
+      "name": "Orion Spindle",
+      "systemIds": ["solace-anchor", "auric-yards", "frontier-gate", "veil-cross", "choir-rest"]
+    },
+    {
+      "id": "perseus-drift",
+      "name": "Perseus Drift",
+      "systemIds": ["iron-hollow", "blackwake", "ember-lane", "cathedral-void", "glimmer-reach"]
+    }
+  ],
+  "systems": [
+    {
+      "id": "solace-anchor",
+      "name": "Solace Anchor",
+      "regionId": "orion-spindle",
+      "security": "SAFE",
+      "controllingFaction": "concordium",
+      "tags": ["industrial"],
+      "neighbors": ["auric-yards", "frontier-gate"],
+      "categoryModifiers": { "ore": 0.9, "food": 0.95, "medicine": 1.04, "tech": 1.08, "luxury": 1.06, "relic": 1.12, "weapon": 1.08, "fuel": 0.94, "data": 1.05 }
+    },
+    {
+      "id": "auric-yards",
+      "name": "Auric Yards",
+      "regionId": "orion-spindle",
+      "security": "SAFE",
+      "controllingFaction": "freebelt",
+      "tags": ["industrial"],
+      "neighbors": ["solace-anchor", "veil-cross", "iron-hollow"],
+      "categoryModifiers": { "ore": 0.82, "food": 1.06, "medicine": 1.08, "tech": 0.94, "luxury": 1.1, "relic": 1.14, "weapon": 0.9, "fuel": 0.88, "data": 1.02 }
+    },
+    {
+      "id": "frontier-gate",
+      "name": "Frontier Gate",
+      "regionId": "orion-spindle",
+      "security": "LOW",
+      "controllingFaction": "freebelt",
+      "tags": ["frontier"],
+      "neighbors": ["solace-anchor", "blackwake", "ember-lane"],
+      "categoryModifiers": { "ore": 1.08, "food": 1.12, "medicine": 1.18, "tech": 1.02, "luxury": 1.2, "relic": 1.16, "weapon": 1.06, "fuel": 1.02, "data": 1.04 }
+    },
+    {
+      "id": "veil-cross",
+      "name": "Veil Cross",
+      "regionId": "orion-spindle",
+      "security": "LOW",
+      "controllingFaction": "astral",
+      "tags": ["shrine"],
+      "neighbors": ["auric-yards", "choir-rest", "glimmer-reach"],
+      "categoryModifiers": { "ore": 1.06, "food": 1.04, "medicine": 0.98, "tech": 1.02, "luxury": 1.12, "relic": 0.82, "weapon": 1.08, "fuel": 1.05, "data": 0.9 }
+    },
+    {
+      "id": "choir-rest",
+      "name": "Choir Rest",
+      "regionId": "orion-spindle",
+      "security": "SAFE",
+      "controllingFaction": "astral",
+      "tags": ["shrine"],
+      "neighbors": ["veil-cross", "glimmer-reach"],
+      "categoryModifiers": { "ore": 1.15, "food": 1.08, "medicine": 0.92, "tech": 1.06, "luxury": 0.9, "relic": 0.78, "weapon": 1.1, "fuel": 1.06, "data": 0.84 }
+    },
+    {
+      "id": "iron-hollow",
+      "name": "Iron Hollow",
+      "regionId": "perseus-drift",
+      "security": "LOW",
+      "controllingFaction": "freebelt",
+      "tags": ["industrial", "frontier"],
+      "neighbors": ["auric-yards", "blackwake", "cathedral-void"],
+      "categoryModifiers": { "ore": 0.8, "food": 1.14, "medicine": 1.2, "tech": 0.92, "luxury": 1.18, "relic": 1.22, "weapon": 0.86, "fuel": 0.84, "data": 1.06 }
+    },
+    {
+      "id": "blackwake",
+      "name": "Blackwake Exchange",
+      "regionId": "perseus-drift",
+      "security": "NULL",
+      "controllingFaction": "freebelt",
+      "tags": ["blackmarket"],
+      "neighbors": ["frontier-gate", "iron-hollow", "ember-lane"],
+      "categoryModifiers": { "ore": 1.1, "food": 1.12, "medicine": 1.16, "tech": 1.1, "luxury": 0.92, "relic": 0.86, "weapon": 0.94, "fuel": 1.08, "data": 0.9 }
+    },
+    {
+      "id": "ember-lane",
+      "name": "Ember Lane",
+      "regionId": "perseus-drift",
+      "security": "LOW",
+      "controllingFaction": "concordium",
+      "tags": ["frontier"],
+      "neighbors": ["frontier-gate", "blackwake", "cathedral-void"],
+      "categoryModifiers": { "ore": 1.04, "food": 1.06, "medicine": 1.1, "tech": 0.98, "luxury": 1.08, "relic": 1.14, "weapon": 1.02, "fuel": 0.96, "data": 1 }
+    },
+    {
+      "id": "cathedral-void",
+      "name": "Cathedral Void",
+      "regionId": "perseus-drift",
+      "security": "NULL",
+      "controllingFaction": "astral",
+      "tags": ["shrine", "blackmarket"],
+      "neighbors": ["iron-hollow", "ember-lane", "glimmer-reach"],
+      "categoryModifiers": { "ore": 1.18, "food": 1.12, "medicine": 1.2, "tech": 1.08, "luxury": 0.88, "relic": 0.74, "weapon": 1.12, "fuel": 1.1, "data": 0.84 }
+    },
+    {
+      "id": "glimmer-reach",
+      "name": "Glimmer Reach",
+      "regionId": "perseus-drift",
+      "security": "SAFE",
+      "controllingFaction": "concordium",
+      "tags": ["industrial"],
+      "neighbors": ["cathedral-void", "veil-cross", "choir-rest"],
+      "categoryModifiers": { "ore": 0.94, "food": 0.92, "medicine": 1.02, "tech": 0.9, "luxury": 1.04, "relic": 1.12, "weapon": 0.96, "fuel": 0.9, "data": 0.96 }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "supportedRigFamilies": ["humanoid", "stylized_humanoid", "quadruped"],
+  "minimumQualityScore": 0.9,
+  "maxJointError": 0.08
+}

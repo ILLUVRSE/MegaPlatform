@@ -1,0 +1,8 @@
+{
+  "monitoredPaths": [
+    "ops/governance"
+  ],
+  "snapshotPath": "ops/logs/governance-integrity-snapshot.json",
+  "hashAlgorithm": "sha256",
+  "failOnMissing": true
+}

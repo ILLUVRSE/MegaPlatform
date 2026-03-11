@@ -1,0 +1,13 @@
+{
+  "disputes": [
+    {
+      "disputeId": "disp-159",
+      "claimantId": "creator-a",
+      "subjectId": "asset-1",
+      "evidenceRefs": [
+        "evidence-a"
+      ],
+      "state": "intake"
+    }
+  ]
+}

@@ -1,0 +1,2020 @@
+{
+  "chapters": [
+    {
+      "id": "arrival-munchkins",
+      "title": "Arrival in the Munchkin Country",
+      "startNodeId": "arrival_1",
+      "nodes": [
+        {
+          "id": "arrival_1",
+          "text": "The house settles after the storm. Dorothy and Toto step into bright fields and tiny cottages.",
+          "choices": [
+            {
+              "id": "arrival_1_steady",
+              "label": "Take a careful look before moving",
+              "nextNodeId": "arrival_2",
+              "outcome": {
+                "brains": 1,
+                "unlockGlossary": [
+                  "munchkins"
+                ]
+              }
+            },
+            {
+              "id": "arrival_1_kind",
+              "label": "Greet the nearby townspeople kindly",
+              "nextNodeId": "arrival_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "munchkins"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "arrival_2",
+          "text": "The Good Witch of the North explains that Dorothy has landed in a strange country and gives guidance for the road ahead.",
+          "choices": [
+            {
+              "id": "arrival_2_ask",
+              "label": "Ask how to reach home",
+              "nextNodeId": "arrival_3",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "good-witch-north",
+                  "witch-of-east"
+                ]
+              }
+            },
+            {
+              "id": "arrival_2_listen",
+              "label": "Listen to every warning",
+              "nextNodeId": "arrival_3",
+              "outcome": {
+                "brains": 1,
+                "unlockGlossary": [
+                  "good-witch-north",
+                  "witch-of-east"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "arrival_3",
+          "text": "Dorothy receives the silver slippers and a protective kiss, then turns toward the distant city.",
+          "choices": [
+            {
+              "id": "arrival_3_ready",
+              "label": "Begin the road at once",
+              "nextNodeId": null,
+              "outcome": {
+                "courage": 1,
+                "silverSlippers": true,
+                "protectionMark": true,
+                "unlockGlossary": [
+                  "silver-slippers",
+                  "protection-kiss",
+                  "emerald-city"
+                ],
+                "unlockSketches": [
+                  "north-country-greeting"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meet-scarecrow",
+      "title": "The Scarecrow in the Field",
+      "startNodeId": "scarecrow_1",
+      "nodes": [
+        {
+          "id": "scarecrow_1",
+          "text": "A Scarecrow on a pole waves his painted sleeve and asks to be set down.",
+          "choices": [
+            {
+              "id": "scarecrow_1_help",
+              "label": "Free him quickly",
+              "nextNodeId": "scarecrow_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "scarecrow"
+                ]
+              }
+            },
+            {
+              "id": "scarecrow_1_check",
+              "label": "Study the knots first",
+              "nextNodeId": "scarecrow_2",
+              "outcome": {
+                "brains": 1,
+                "unlockGlossary": [
+                  "scarecrow"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "scarecrow_2",
+          "text": "The Scarecrow asks to travel with Dorothy in hopes of gaining brains.",
+          "choices": [
+            {
+              "id": "scarecrow_2_join",
+              "label": "Invite him to join the road",
+              "nextNodeId": null,
+              "outcome": {
+                "courage": 1,
+                "companionAcquire": [
+                  "scarecrow"
+                ],
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Joined the road with a hopeful grin."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roadside-incidents",
+      "title": "Roadside Incidents",
+      "startNodeId": "roadside_1",
+      "nodes": [
+        {
+          "id": "roadside_1",
+          "text": "The companions follow the road through fields and orchards, arguing with stubborn trees and hunting clear waymarks.",
+          "choices": [
+            {
+              "id": "roadside_1_plan",
+              "label": "Let Scarecrow pick the best route",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1,
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Mapped turns between orchard rows."
+                }
+              }
+            },
+            {
+              "id": "roadside_1_push",
+              "label": "Push onward with pace",
+              "nextNodeId": null,
+              "outcome": {
+                "courage": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meet-tin-woodman",
+      "title": "The Tin Woodman",
+      "startNodeId": "tin_1",
+      "nodes": [
+        {
+          "id": "tin_1",
+          "text": "In a damp wood the travelers find a Tin Woodman standing motionless, rusted at every joint.",
+          "choices": [
+            {
+              "id": "tin_1_oil",
+              "label": "Find the oil can and begin carefully",
+              "nextNodeId": "tin_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "tin-woodman",
+                  "oil-can",
+                  "forest-road"
+                ]
+              }
+            },
+            {
+              "id": "tin_1_study",
+              "label": "Check each hinge before turning valves",
+              "nextNodeId": "tin_2",
+              "outcome": {
+                "brains": 1,
+                "unlockGlossary": [
+                  "tin-woodman",
+                  "oil-can",
+                  "forest-road"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "tin_2",
+          "text": "Freed from rust, the Tin Woodman says he seeks a heart and asks to join the company.",
+          "choices": [
+            {
+              "id": "tin_2_join",
+              "label": "Welcome him to the party",
+              "nextNodeId": null,
+              "outcome": {
+                "companionAcquire": [
+                  "tin-woodman"
+                ],
+                "companionMeter": {
+                  "tin-woodman": 1
+                },
+                "companionAction": {
+                  "tin-woodman": "Promised to guard the road with a bright axe."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meet-cowardly-lion",
+      "title": "The Cowardly Lion",
+      "startNodeId": "lion_1",
+      "nodes": [
+        {
+          "id": "lion_1",
+          "text": "A Lion leaps from the trees with a roar, then admits his courage fails him.",
+          "choices": [
+            {
+              "id": "lion_1_brave",
+              "label": "Speak firmly and invite honesty",
+              "nextNodeId": "lion_2",
+              "outcome": {
+                "courage": 1,
+                "unlockGlossary": [
+                  "cowardly-lion"
+                ]
+              }
+            },
+            {
+              "id": "lion_1_kind",
+              "label": "Speak gently and lower the tension",
+              "nextNodeId": "lion_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "cowardly-lion"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "lion_2",
+          "text": "The Lion asks to travel to the Emerald City and seek true courage.",
+          "choices": [
+            {
+              "id": "lion_2_join",
+              "label": "Accept him as a companion",
+              "nextNodeId": null,
+              "outcome": {
+                "companionAcquire": [
+                  "cowardly-lion"
+                ],
+                "companionMeter": {
+                  "cowardly-lion": 1
+                },
+                "companionAction": {
+                  "cowardly-lion": "Joined with a shy promise to stand firm."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forest-road",
+      "title": "Forest Road Trials",
+      "startNodeId": "forest_1",
+      "nodes": [
+        {
+          "id": "forest_1",
+          "text": "Roots and low branches force careful movement while the trees grow denser.",
+          "choices": [
+            {
+              "id": "forest_1_team",
+              "label": "Let each companion call hazards",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1,
+                "heart": 1,
+                "companionMeter": {
+                  "scarecrow": 1,
+                  "tin-woodman": 1,
+                  "cowardly-lion": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Pointed out tangled branches.",
+                  "tin-woodman": "Cleared roots with careful swings.",
+                  "cowardly-lion": "Held the rear despite shaking."
+                },
+                "unlockSketches": [
+                  "forest-road-ink"
+                ]
+              }
+            },
+            {
+              "id": "forest_1_stride",
+              "label": "Cross quickly before dusk",
+              "nextNodeId": null,
+              "outcome": {
+                "courage": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kalidah-encounter",
+      "title": "The Kalidahs Give Chase",
+      "startNodeId": "kalidah_1",
+      "nodes": [
+        {
+          "id": "kalidah_1",
+          "text": "From the deep wood come Kalidahs, fierce beasts with bodies like bears and heads like tigers, driving the company toward a chasm.",
+          "choices": [
+            {
+              "id": "kalidah_1_run",
+              "label": "Race over the fallen tree before they close in",
+              "nextNodeId": "kalidah_2",
+              "outcome": {
+                "courage": 1,
+                "unlockGlossary": [
+                  "kalidahs"
+                ],
+                "unlockSketches": [
+                  "kalidah-bridge-break"
+                ]
+              }
+            },
+            {
+              "id": "kalidah_1_watch",
+              "label": "Study the beasts and track their movement",
+              "nextNodeId": "kalidah_2",
+              "outcome": {
+                "brains": 1,
+                "unlockGlossary": [
+                  "kalidahs"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "kalidah_2",
+          "text": "The tree trunk shakes behind them as the Kalidahs leap. A careful choice now could keep the path open.",
+          "choices": [
+            {
+              "id": "kalidah_2_chop",
+              "label": "Have the Tin Woodman chop the far end of the trunk",
+              "nextNodeId": null,
+              "outcome": {
+                "heart": 1,
+                "companionMeter": {
+                  "tin-woodman": 1
+                },
+                "companionAction": {
+                  "tin-woodman": "Dropped the trunk at exactly the right moment."
+                },
+                "unlockSketches": [
+                  "kalidah-ravine-split"
+                ]
+              }
+            },
+            {
+              "id": "kalidah_2_smart",
+              "label": "Use Scarecrow's route plan to draw the beasts onto the weakest span",
+              "nextNodeId": null,
+              "requiresCompanionMeter": {
+                "companionId": "scarecrow",
+                "minMeter": 4
+              },
+              "companionBonusTag": "Companion Bonus Applied: Scarecrow found the weak span.",
+              "outcome": {
+                "brains": 1,
+                "courage": 1,
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Marked where the trunk would break cleanly."
+                },
+                "unlockSketches": [
+                  "kalidah-ravine-split"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poppy-field",
+      "title": "The Deadly Poppy Field",
+      "startNodeId": "poppy_1",
+      "nodes": [
+        {
+          "id": "poppy_1",
+          "text": "A broad field of scarlet poppies lies across the road. Their heavy scent makes Dorothy drowsy while Scarecrow and the Tin Woodman keep moving.",
+          "choices": [
+            {
+              "id": "poppy_1_press",
+              "label": "Press on quickly and carry Dorothy if needed",
+              "nextNodeId": "poppy_2",
+              "outcome": {
+                "status": {
+                  "dorothyAsleep": true,
+                  "lionAsleep": true
+                },
+                "unlockGlossary": [
+                  "poppy-field-effect"
+                ],
+                "courage": 1,
+                "unlockSketches": [
+                  "poppy-sea-trail"
+                ]
+              }
+            },
+            {
+              "id": "poppy_1_help",
+              "label": "Seek help before everyone loses strength",
+              "nextNodeId": "poppy_2",
+              "outcome": {
+                "status": {
+                  "dorothyAsleep": true,
+                  "lionAsleep": true
+                },
+                "unlockGlossary": [
+                  "poppy-field-effect",
+                  "field-mice-queen"
+                ],
+                "heart": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "poppy_2",
+          "text": "Dorothy can no longer stay awake, and even the Lion sinks into sleep among the blossoms.",
+          "choices": [
+            {
+              "id": "poppy_2_tin-lift",
+              "label": "Let the Tin Woodman and Scarecrow carry Dorothy while Toto scouts",
+              "nextNodeId": null,
+              "companionBonus": {
+                "companionId": "tin-woodman",
+                "minMeter": 4,
+                "outcome": {
+                  "companionMeter": {
+                    "tin-woodman": 1
+                  },
+                  "status": {
+                    "lionAsleep": true
+                  }
+                },
+                "tag": "Companion Bonus Applied: Tin rescue efficiency +1."
+              },
+              "outcome": {
+                "heart": 1,
+                "companionAction": {
+                  "tin-woodman": "Carried Dorothy without tiring through the flowers.",
+                  "scarecrow": "Stayed clear-minded and led the route."
+                }
+              }
+            },
+            {
+              "id": "poppy_2_lion-guard",
+              "label": "Keep a close watch on the Lion and try to rouse him as long as possible",
+              "nextNodeId": null,
+              "companionBonus": {
+                "companionId": "cowardly-lion",
+                "minMeter": 5,
+                "outcome": {
+                  "status": {
+                    "lionAsleep": false
+                  },
+                  "companionMeter": {
+                    "cowardly-lion": 1
+                  }
+                },
+                "tag": "Companion Bonus Applied: Lion courage reduced sleep penalty."
+              },
+              "outcome": {
+                "courage": 1,
+                "status": {
+                  "lionAsleep": true
+                },
+                "companionAction": {
+                  "cowardly-lion": "Fought sleep for several more strides."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "field-mice-rescue",
+      "title": "Queen of the Field Mice",
+      "startNodeId": "mice_1",
+      "nodes": [
+        {
+          "id": "mice_1",
+          "text": "The Queen of the Field Mice arrives with her people and offers aid after Dorothy's party spares her little nation.",
+          "choices": [
+            {
+              "id": "mice_1_accept",
+              "label": "Thank the Queen and organize a rescue line",
+              "nextNodeId": "mice_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "field-mice-queen"
+                ],
+                "unlockSketches": [
+                  "field-mice-harness"
+                ]
+              }
+            },
+            {
+              "id": "mice_1_plan",
+              "label": "Have Scarecrow coordinate teams by distance",
+              "nextNodeId": "mice_2",
+              "outcome": {
+                "brains": 1,
+                "unlockGlossary": [
+                  "field-mice-queen"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "mice_2",
+          "text": "Hundreds of mice pull together to free Dorothy from danger and set workers around the sleeping Lion.",
+          "choices": [
+            {
+              "id": "mice_2_finish",
+              "label": "Guide the final pull and clear the road",
+              "nextNodeId": null,
+              "outcome": {
+                "status": {
+                  "dorothyAsleep": false,
+                  "lionAsleep": false,
+                  "fieldMiceRescueComplete": true
+                },
+                "companionMeter": {
+                  "scarecrow": 1,
+                  "tin-woodman": 1,
+                  "cowardly-lion": 1
+                },
+                "unlockSketches": [
+                  "queen-mouse-audience",
+                  "lion-drawn-by-mice"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outlook-to-city",
+      "title": "Toward the Emerald City",
+      "startNodeId": "outlook_1",
+      "nodes": [
+        {
+          "id": "outlook_1",
+          "text": "At last the city glimmers ahead. The road remains long, but the companions press forward together.",
+          "choices": [
+            {
+              "id": "outlook_1_end",
+              "label": "Close Chapter Pack #3",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "emerald-gates-distant"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emerald-city-approach",
+      "title": "The Road to the Emerald City",
+      "startNodeId": "approach_1",
+      "nodes": [
+        {
+          "id": "approach_1",
+          "text": "Past the poppy fields the road grows smooth and wide. The friends pass tidy farms and green-painted houses as the city walls rise in the distance.",
+          "choices": [
+            {
+              "id": "approach_1_wonder",
+              "label": "Take in every sign of the city ahead",
+              "nextNodeId": "approach_2",
+              "outcome": {
+                "heart": 1,
+                "unlockSketches": [
+                  "roads-end"
+                ],
+                "unlockGlossary": [
+                  "emerald-city-entry-protocol"
+                ]
+              }
+            },
+            {
+              "id": "approach_1_study",
+              "label": "Ask Scarecrow to mark the approach route",
+              "nextNodeId": "approach_2",
+              "outcome": {
+                "brains": 1,
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Counted every turn as the city walls came near."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "approach_2",
+          "text": "A green-clad farmer points them to the great gate and warns that all visitors must obey the city's entry custom.",
+          "choices": [
+            {
+              "id": "approach_2_continue",
+              "label": "Continue to the gate and present your request",
+              "nextNodeId": null,
+              "outcome": {
+                "courage": 1,
+                "unlockSketches": [
+                  "city-glimmer"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guardian-of-gates",
+      "title": "Guardian of the Gates",
+      "startNodeId": "gate_1",
+      "nodes": [
+        {
+          "id": "gate_1",
+          "text": "At the high gate, a green-bearded Guardian asks your business and listens while each traveler names a wish for the Wizard.",
+          "choices": [
+            {
+              "id": "gate_1_state-purpose",
+              "label": "State each companion's request plainly",
+              "nextNodeId": "gate_2",
+              "outcome": {
+                "unlockGlossary": [
+                  "guardian-of-the-gates",
+                  "palace-approach"
+                ],
+                "companionMeter": {
+                  "scarecrow": 1,
+                  "tin-woodman": 1,
+                  "cowardly-lion": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Declared his need for brains without wavering.",
+                  "tin-woodman": "Spoke quietly of his wish for a heart.",
+                  "cowardly-lion": "Admitted his fear and asked for courage."
+                }
+              }
+            },
+            {
+              "id": "gate_1_dorothy-first",
+              "label": "Let Dorothy ask first to be sent home",
+              "nextNodeId": "gate_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "guardian-of-the-gates"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "gate_2",
+          "text": "The Guardian explains that all in the city wear green spectacles, fastened and locked, because the city's brightness would otherwise dazzle the eyes.",
+          "choices": [
+            {
+              "id": "gate_2_accept",
+              "label": "Accept the admission protocol",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "green-spectacles",
+                  "emerald-city-entry-protocol"
+                ],
+                "unlockSketches": [
+                  "the-gate-guardian"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emerald-city-entry",
+      "title": "Inside the Emerald City",
+      "startNodeId": "entry_1",
+      "nodes": [
+        {
+          "id": "entry_1",
+          "text": "With straps checked and clasps sealed, the green spectacles are fixed in place. The companions pass through the gate and see every street washed in brilliant green light.",
+          "choices": [
+            {
+              "id": "entry_1_step-through",
+              "label": "Step inside and keep close together",
+              "nextNodeId": "entry_2",
+              "outcome": {
+                "status": {
+                  "spectaclesOn": true
+                },
+                "unlockSketches": [
+                  "green-spectacles"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "entry_2",
+          "text": "Servants direct the company toward rooms and send word ahead. Every companion repeats the reason for coming: brains, heart, courage, and Dorothy's journey home.",
+          "choices": [
+            {
+              "id": "entry_2_prepare",
+              "label": "Prepare for city errands before seeing the Wizard",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "city-glimmer"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emerald-city-explore",
+      "title": "A Short Turn Through the City",
+      "startNodeId": "explore_1",
+      "nodes": [
+        {
+          "id": "explore_1",
+          "text": "A brief halt inside the walls offers three choices: rest at an inn, walk the shining streets, or go straight toward the palace district.",
+          "choices": [
+            {
+              "id": "explore_1_choose",
+              "label": "Choose the next stop before the palace",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1
+              }
+            },
+            {
+              "id": "explore_1_lion-line",
+              "label": "Ask the Lion to keep spirits up on the crowded streets",
+              "nextNodeId": null,
+              "requiresCompanionMeter": {
+                "companionId": "cowardly-lion",
+                "minMeter": 4
+              },
+              "companionBonusTag": "Companion Bonus Applied: Lion steadied the group through the crowd.",
+              "outcome": {
+                "heart": 1,
+                "companionMeter": {
+                  "cowardly-lion": 1
+                },
+                "companionAction": {
+                  "cowardly-lion": "Walked at the front despite trembling paws."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wizard-audience-setup",
+      "title": "Requesting the First Audience",
+      "startNodeId": "audience_1",
+      "nodes": [
+        {
+          "id": "audience_1",
+          "text": "At the palace approach, attendants record each petition and instruct the travelers to wait for an appointment with the great Wizard.",
+          "choices": [
+            {
+              "id": "audience_1_patience",
+              "label": "Wait for the summons and keep the party ready",
+              "nextNodeId": "audience_2",
+              "outcome": {
+                "courage": 1,
+                "unlockSketches": [
+                  "palace-approach"
+                ]
+              }
+            },
+            {
+              "id": "audience_1_tin",
+              "label": "Have the Tin Woodman reassure Dorothy while they wait",
+              "nextNodeId": "audience_2",
+              "requiresCompanionMeter": {
+                "companionId": "tin-woodman",
+                "minMeter": 4
+              },
+              "companionBonusTag": "Companion Bonus Applied: Tin Woodman kept everyone calm while waiting.",
+              "outcome": {
+                "heart": 1,
+                "companionMeter": {
+                  "tin-woodman": 1
+                },
+                "companionAction": {
+                  "tin-woodman": "Spoke kindly while the appointment was arranged."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "audience_2",
+          "text": "The party is told their first audience will be granted in order. Dorothy and her friends gather themselves for what comes next.",
+          "choices": [
+            {
+              "id": "audience_2_cliffhanger",
+              "label": "End Pack #4 and await the audience",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "palace-approach"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "palace-waiting-protocol",
+      "title": "Waiting Hall Protocol",
+      "startNodeId": "wait_1",
+      "nodes": [
+        {
+          "id": "wait_1",
+          "text": "Servants in green guide the party to a quiet waiting hall. Names and requests are written in order before anyone may enter the audience chamber.",
+          "choices": [
+            {
+              "id": "wait_1_ready",
+              "label": "Keep the group settled until called",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "palace-audience",
+                  "the-wizard"
+                ],
+                "unlockSketches": [
+                  "hall-of-audience"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wizard-first-audience",
+      "title": "The First Audience",
+      "startNodeId": "wiz_1",
+      "nodes": [
+        {
+          "id": "wiz_1",
+          "text": "Dorothy enters first and sees a mighty head set high in the chamber, solemn and watchful. She asks to be sent home to Kansas.",
+          "choices": [
+            {
+              "id": "wiz_1_dorothy",
+              "label": "Speak plainly and ask for home",
+              "nextNodeId": "wiz_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "four-requests"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "wiz_2",
+          "text": "Scarecrow later reports a shining lady upon a seat of light. He states his wish for brains and listens for the Wizard's terms.",
+          "choices": [
+            {
+              "id": "wiz_2_plain",
+              "label": "Let Scarecrow ask directly",
+              "nextNodeId": "wiz_3",
+              "outcome": {
+                "brains": 1
+              }
+            },
+            {
+              "id": "wiz_2_sharp",
+              "label": "Have Scarecrow ask how the promise will be kept",
+              "nextNodeId": "wiz_3",
+              "requiresCompanionMeter": {
+                "companionId": "scarecrow",
+                "minMeter": 5
+              },
+              "companionBonusTag": "Companion Bonus Applied: Scarecrow asked a sharper question.",
+              "outcome": {
+                "brains": 1,
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Pressed for clear terms before bowing."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "wiz_3",
+          "text": "Tin Woodman says he faced a fearsome beast in the same chamber and still spoke for a heart. He keeps his voice gentle despite the sight.",
+          "choices": [
+            {
+              "id": "wiz_3_plain",
+              "label": "Continue with the formal request",
+              "nextNodeId": "wiz_4",
+              "outcome": {
+                "heart": 1
+              }
+            },
+            {
+              "id": "wiz_3_empathy",
+              "label": "Have Tin answer with kindness before asking",
+              "nextNodeId": "wiz_4",
+              "requiresCompanionMeter": {
+                "companionId": "tin-woodman",
+                "minMeter": 5
+              },
+              "companionBonusTag": "Companion Bonus Applied: Tin Woodman answered with empathy.",
+              "outcome": {
+                "heart": 1,
+                "companionMeter": {
+                  "tin-woodman": 1
+                },
+                "companionAction": {
+                  "tin-woodman": "Spoke with courtesy even before his own plea."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "wiz_4",
+          "text": "The Lion describes a burning sphere that seemed ready to consume him. He trembles, then asks for courage all the same.",
+          "choices": [
+            {
+              "id": "wiz_4_plain",
+              "label": "Let the Lion finish his request",
+              "nextNodeId": "wiz_5",
+              "outcome": {
+                "courage": 1
+              }
+            },
+            {
+              "id": "wiz_4_steady",
+              "label": "Ask the Lion to steady his breath first",
+              "nextNodeId": "wiz_5",
+              "requiresCompanionMeter": {
+                "companionId": "cowardly-lion",
+                "minMeter": 5
+              },
+              "companionBonusTag": "Companion Bonus Applied: Lion steadied himself before speaking.",
+              "outcome": {
+                "courage": 1,
+                "companionMeter": {
+                  "cowardly-lion": 1
+                },
+                "companionAction": {
+                  "cowardly-lion": "Held his voice firm through the final words."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "wiz_5",
+          "text": "After hearing all four petitions, the Wizard gives one answer: the party must first settle the matter of the Witch of the West.",
+          "choices": [
+            {
+              "id": "wiz_5_record",
+              "label": "Record the four requests and the condition",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "westward-journey",
+                  "witch-of-west"
+                ],
+                "unlockSketches": [
+                  "four-requests",
+                  "wonders-behind-the-curtain"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "westward-mission-setup",
+      "title": "A Promise Before the Westward Road",
+      "startNodeId": "westward_1",
+      "nodes": [
+        {
+          "id": "westward_1",
+          "text": "Outside the audience hall, Dorothy and her companions compare what each one saw. Though the forms differed, the command was the same: go west before any wish is granted.",
+          "choices": [
+            {
+              "id": "westward_1_oath",
+              "label": "Agree to travel west together",
+              "nextNodeId": "westward_2",
+              "outcome": {
+                "unlockSketches": [
+                  "a-promise-made"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "westward_2",
+          "text": "The four petitions are written on a new quest card: home, brains, heart, and courage. The party binds itself to a westward journey at dawn.",
+          "choices": [
+            {
+              "id": "westward_2_accept",
+              "label": "Take the quest card and set the westward objective",
+              "nextNodeId": null,
+              "outcome": {
+                "status": {
+                  "westwardJourneyUnlocked": true,
+                  "pack6RouteToken": true
+                },
+                "unlockSketches": [
+                  "westward-oath",
+                  "green-spectacles-close-up"
+                ],
+                "unlockGlossary": [
+                  "westward-journey",
+                  "four-requests"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "westward-departure",
+      "title": "Westward Departure",
+      "startNodeId": "west_depart_1",
+      "nodes": [
+        {
+          "id": "west_depart_1",
+          "text": "At dawn the party studies the quest card and leaves the Emerald City by the western gate. Dorothy keeps the silver slippers close as they follow the road into unknown country.",
+          "choices": [
+            {
+              "id": "west_depart_1_route",
+              "label": "Set the westward line and keep moving",
+              "nextNodeId": "west_depart_2",
+              "outcome": {
+                "unlockGlossary": [
+                  "westward-quest"
+                ],
+                "unlockSketches": [
+                  "westward-road"
+                ],
+                "status": {
+                  "westThreatLevel": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "west_depart_2",
+          "text": "On the march, each companion repeats a simple aim: Dorothy for Kansas, Scarecrow for brains, Tin Woodman for a heart, and Lion for courage. They agree to hold one pace until the west is crossed.",
+          "choices": [
+            {
+              "id": "west_depart_2_keep-rank",
+              "label": "Keep a tight traveling order",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "tins-footsteps"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "winkie-country",
+      "title": "Into Winkie Country",
+      "startNodeId": "winkie_1",
+      "nodes": [
+        {
+          "id": "winkie_1",
+          "text": "The road enters the western lands where the ground runs yellow and broken into long hills. The wind is dry, and the party sees few homes along the ridges.",
+          "choices": [
+            {
+              "id": "winkie_1_step-in",
+              "label": "Enter the Country of the Winkies",
+              "nextNodeId": "winkie_2",
+              "outcome": {
+                "status": {
+                  "winkieCountryReached": true,
+                  "westThreatLevel": 2
+                },
+                "unlockGlossary": [
+                  "winkie-country"
+                ],
+                "unlockSketches": [
+                  "winkie-hills"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "winkie_2",
+          "text": "The travelers notice watch-fires on far rises and old warning marks cut into stone. No attack comes yet, but someone in the west has measured their road.",
+          "choices": [
+            {
+              "id": "winkie_2_press-on",
+              "label": "Press on before night closes",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "winkie-hidden-hollow",
+      "title": "Hidden Hollow Side Path",
+      "startNodeId": "hollow_1",
+      "nodes": [
+        {
+          "id": "hollow_1",
+          "text": "A hollow between stone banks offers brief cover. Scattered marks show where western scouts once signaled across the hills, and the party slips through unseen.",
+          "choices": [
+            {
+              "id": "hollow_1_resume",
+              "label": "Rejoin the main road with new notes",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "witch-scouts"
+                ],
+                "unlockSketches": [
+                  "hidden-hollow"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "witch-interference-early",
+      "title": "A Watching Presence",
+      "startNodeId": "west_watch_1",
+      "nodes": [
+        {
+          "id": "west_watch_1",
+          "text": "From her western stronghold, the Witch of the West watches the road with her far-seeing eye and learns Dorothy carries the silver slippers. Soon an ink-dark sweep moves over ridges ahead of the party.",
+          "choices": [
+            {
+              "id": "west_watch_1_hide",
+              "label": "Move between cover and avoid the sweep",
+              "nextNodeId": "west_watch_2",
+              "outcome": {
+                "status": {
+                  "westThreatLevel": 3
+                },
+                "unlockGlossary": [
+                  "witch-of-the-west",
+                  "silver-slippers-power",
+                  "western-watch-eye"
+                ],
+                "unlockSketches": [
+                  "watching-presence"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "west_watch_2",
+          "text": "The shadow passes, then returns from another angle. Scarecrow marks safer hollows while Tin and Lion guard Dorothy and Toto through the narrowing paths.",
+          "choices": [
+            {
+              "id": "west_watch_2_signal",
+              "label": "Follow Scarecrow's quick route marks",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "scarecrows-plan"
+                ],
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Mapped cover breaks under the western sweep."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "westward-cliffhanger",
+      "title": "The Western Threat Nears",
+      "startNodeId": "west_cliff_1",
+      "nodes": [
+        {
+          "id": "west_cliff_1",
+          "text": "Before sunset they glimpse workers driven under harsh command near the western heights, and word spreads that the Witch binds Winkies to forced labor. Beyond the ridge rises her high dwelling in the west.",
+          "choices": [
+            {
+              "id": "west_cliff_1_witness",
+              "label": "Take cover and watch the lines of labor",
+              "nextNodeId": "west_cliff_2",
+              "outcome": {
+                "unlockGlossary": [
+                  "enchanted-constraint",
+                  "palace-of-the-west"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "west_cliff_2",
+          "text": "Night signals answer each other across the hills. The companions prepare for seizure and vow that, if one is taken, the others will attempt a rescue at once.",
+          "choices": [
+            {
+              "id": "west_cliff_2_hold-fast",
+              "label": "Hold formation and prepare for capture resistance",
+              "nextNodeId": null,
+              "outcome": {
+                "status": {
+                  "westThreatLevel": 4
+                },
+                "unlockSketches": [
+                  "lions-resolve"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "west-capture",
+      "title": "Capture in Winkie Country",
+      "startNodeId": "capture_1",
+      "nodes": [
+        {
+          "id": "capture_1",
+          "text": "The western watch closes quickly, and Dorothy with Toto is seized and taken toward the Witch of the West's hold. Dorothy keeps steady and marks turns in the road for any companion who might follow.",
+          "choices": [
+            {
+              "id": "capture_1_endure",
+              "label": "Stay calm and remember each gate",
+              "nextNodeId": "capture_2",
+              "outcome": {
+                "courage": 1,
+                "status": {
+                  "westThreatLevel": 5
+                },
+                "unlockSketches": [
+                  "western-hold"
+                ],
+                "unlockGlossary": [
+                  "western-hold",
+                  "courage-under-duress"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "capture_2",
+          "text": "Inside the western hold, Dorothy is set to tasks among Winkie servants while Toto keeps close. She waits for the right moment instead of wasting strength in panic.",
+          "choices": [
+            {
+              "id": "capture_2_watch",
+              "label": "Watch the routines and wait for an opening",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "winkie-servants"
+                ],
+                "unlockSketches": [
+                  "servants-of-winkie-country"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "golden-cap-discovery",
+      "title": "The Golden Cap",
+      "startNodeId": "cap_1",
+      "nodes": [
+        {
+          "id": "cap_1",
+          "text": "Dorothy gains the Golden Cap and learns its command over the Winged Monkeys. The charm allows three commands, and each use must be chosen carefully.",
+          "choices": [
+            {
+              "id": "cap_1_claim",
+              "label": "Claim the cap and record the three commands",
+              "nextNodeId": "cap_2",
+              "outcome": {
+                "goldenCapAcquire": true,
+                "unlockGlossary": [
+                  "golden-cap",
+                  "winged-monkeys",
+                  "command-limit"
+                ],
+                "unlockSketches": [
+                  "golden-cap"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "cap_2",
+          "text": "Dorothy keeps the cap hidden and plans how each command might serve rescue, travel, and escape if companions reach the hold.",
+          "choices": [
+            {
+              "id": "cap_2_plan",
+              "label": "Save the first command for rescue",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1,
+                "unlockSketches": [
+                  "quiet-plan"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "winkie-workdays",
+      "title": "Days in the Western Hold",
+      "startNodeId": "work_1",
+      "nodes": [
+        {
+          "id": "work_1",
+          "text": "The hold keeps Dorothy on short daily chores under guard while Winkie servants move through the yards. She chooses between conserving strength or risking a small escape probe.",
+          "choices": [
+            {
+              "id": "work_1_conserve",
+              "label": "Conserve strength and gather routine details",
+              "nextNodeId": "work_2",
+              "outcome": {
+                "heart": 1,
+                "unlockGlossary": [
+                  "rescue-plan"
+                ]
+              }
+            },
+            {
+              "id": "work_1_probe",
+              "label": "Test one route and retreat before alarm",
+              "nextNodeId": "work_2",
+              "outcome": {
+                "courage": 1,
+                "status": {
+                  "westThreatLevel": 5
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "work_2",
+          "text": "By night, Dorothy and Toto keep low and pass signs with friendly Winkies who whisper that her companions are searching nearby.",
+          "choices": [
+            {
+              "id": "work_2_ready",
+              "label": "Prepare a silent signal for allies",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "a-narrow-corridor"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "companion-rescue-chain",
+      "title": "Rescue at the Western Hold",
+      "startNodeId": "rescue_1",
+      "nodes": [
+        {
+          "id": "rescue_1",
+          "text": "Scarecrow, Tin Woodman, and the Lion reach the outer lines and try to draw Dorothy clear. The hold closes fast, leaving only seconds to choose a command.",
+          "choices": [
+            {
+              "id": "rescue_1_command-aid",
+              "label": "Use the cap command: Aid Rescue",
+              "requiresGoldenCapUses": 1,
+              "nextNodeId": "rescue_2",
+              "outcome": {
+                "goldenCapCommand": "aid-rescue",
+                "unlockSketches": [
+                  "winged-monkeys"
+                ]
+              }
+            },
+            {
+              "id": "rescue_1_signal-only",
+              "label": "Signal companions and run without a command",
+              "nextNodeId": "rescue_2",
+              "outcome": {
+                "courage": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "rescue_2",
+          "text": "The party reaches an inner latch that opens only after gathering route tokens. A second command can carry the companions over a collapsing span if needed.",
+          "choices": [
+            {
+              "id": "rescue_2_command-carry",
+              "label": "Use the cap command: Carry Companions",
+              "requiresGoldenCapUses": 1,
+              "nextNodeId": null,
+              "outcome": {
+                "goldenCapCommand": "carry-companions",
+                "unlockSketches": [
+                  "latch-and-token"
+                ]
+              }
+            },
+            {
+              "id": "rescue_2_manual",
+              "label": "Cross by handholds and keep the line tight",
+              "nextNodeId": null,
+              "outcome": {
+                "companionMeter": {
+                  "scarecrow": 1,
+                  "tin-woodman": 1,
+                  "cowardly-lion": 1
+                },
+                "companionAction": {
+                  "scarecrow": "Mapped handholds through the hold wall.",
+                  "tin-woodman": "Lifted a gate arm for Dorothy and Toto.",
+                  "cowardly-lion": "Held patrols at bay while the others crossed."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pack7-cliffhanger",
+      "title": "Escape Under Way",
+      "startNodeId": "p7_1",
+      "nodes": [
+        {
+          "id": "p7_1",
+          "text": "Dorothy and companions clear the hold and regroup with Winkie allies. They swear to finish the western danger and then resume the road toward home.",
+          "choices": [
+            {
+              "id": "p7_1_vow",
+              "label": "Set the vow and prepare to return at dawn",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "vow-to-return-home"
+                ],
+                "unlockSketches": [
+                  "hands-unbound"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "western-reckoning-setup",
+      "title": "Western Reckoning",
+      "startNodeId": "west8_1",
+      "nodes": [
+        {
+          "id": "west8_1",
+          "text": "In the western hold, pressure rises again as the Witch of the West closes on Dorothy. Scarecrow, Tin Woodman, and the Lion regroup nearby, ready to shield her at the first opening.",
+          "choices": [
+            {
+              "id": "west8_1_steady",
+              "label": "Keep formation and wait for a clean moment",
+              "nextNodeId": "west8_2",
+              "outcome": {
+                "courage": 1,
+                "status": {
+                  "westThreatLevel": 5
+                },
+                "unlockSketches": [
+                  "quiet-courage"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "west8_2",
+          "text": "Dorothy spots water close at hand and prepares to act when the shadow swell peaks. The companions hold lanes and buy her the timing she needs.",
+          "choices": [
+            {
+              "id": "west8_2_ready",
+              "label": "Ready the water and commit to the timing",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1,
+                "unlockSketches": [
+                  "bowl-of-water"
+                ],
+                "unlockGlossary": [
+                  "water-against-witch"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "water-defeat-moment",
+      "title": "Water Against the West",
+      "startNodeId": "water8_1",
+      "nodes": [
+        {
+          "id": "water8_1",
+          "text": "Dorothy casts water at the right instant, and the western danger breaks at once. The threat that held the hold together falls away.",
+          "choices": [
+            {
+              "id": "water8_1_act",
+              "label": "Hold steady and finish the action",
+              "nextNodeId": "water8_2",
+              "outcome": {
+                "status": {
+                  "witchDefeatedWest": true,
+                  "westThreatLevel": 1
+                },
+                "unlockGlossary": [
+                  "western-liberation",
+                  "melted-remains"
+                ],
+                "unlockSketches": [
+                  "ink-shadow-swell"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "water8_2",
+          "text": "Dorothy and Toto step back in surprise, then call to the others. The hold is no longer under the same command, and the rescue line can move freely.",
+          "choices": [
+            {
+              "id": "water8_2_regroup",
+              "label": "Regroup with companions and check every gate",
+              "nextNodeId": null,
+              "outcome": {
+                "heart": 1,
+                "unlockSketches": [
+                  "promise-kept"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "winkie-liberation-aftermath",
+      "title": "Winkie Gratitude",
+      "startNodeId": "wink8_1",
+      "nodes": [
+        {
+          "id": "wink8_1",
+          "text": "Freed Winkies gather in the courts and thank Dorothy and her companions. They offer lanterns, food, and guides for the road back east.",
+          "choices": [
+            {
+              "id": "wink8_1_accept",
+              "label": "Accept help and listen to local road advice",
+              "nextNodeId": "wink8_2",
+              "outcome": {
+                "status": {
+                  "winkieFreed": true
+                },
+                "unlockGlossary": [
+                  "winkie-gratitude",
+                  "promise-to-help",
+                  "journey-west-complete"
+                ],
+                "unlockSketches": [
+                  "winkie-lanterns",
+                  "freedom-banner"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "wink8_2",
+          "text": "Winkie workers confirm the roads are safer and ask the travelers to remember them kindly when they reach the city again.",
+          "choices": [
+            {
+              "id": "wink8_2_thanks",
+              "label": "Promise to carry their thanks eastward",
+              "nextNodeId": null,
+              "outcome": {
+                "heart": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "golden-cap-continuity",
+      "title": "Cap Ledger",
+      "startNodeId": "cap8_1",
+      "nodes": [
+        {
+          "id": "cap8_1",
+          "text": "Dorothy checks the Golden Cap and counts how many commands remain. The number is recorded before they leave the western hold behind.",
+          "choices": [
+            {
+              "id": "cap8_1_record",
+              "label": "Record remaining commands and keep the cap secure",
+              "nextNodeId": "cap8_2",
+              "outcome": {
+                "unlockGlossary": [
+                  "silver-slippers-note"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "cap8_2",
+          "text": "A Winkie elder notes that the Winged Monkeys still answer lawful cap calls. Dorothy saves any remaining command for the road ahead.",
+          "choices": [
+            {
+              "id": "cap8_2_save",
+              "label": "Save remaining commands for necessary travel",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "return-to-emerald-setup",
+      "title": "Return to Emerald City",
+      "startNodeId": "ret8_1",
+      "nodes": [
+        {
+          "id": "ret8_1",
+          "text": "With the western danger ended, Dorothy sets the next objective: return to the Emerald City and speak with the Wizard again.",
+          "choices": [
+            {
+              "id": "ret8_1_set",
+              "label": "Set the return objective and gather supplies",
+              "nextNodeId": "ret8_2",
+              "outcome": {
+                "status": {
+                  "returnQuestUnlocked": true
+                },
+                "unlockGlossary": [
+                  "return-to-emerald-city"
+                ],
+                "unlockSketches": [
+                  "road-back-east"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "ret8_2",
+          "text": "The party turns from the western hold toward eastern roads, with Winkie guides pointing the first miles and Dorothy keeping the silver slippers ready.",
+          "choices": [
+            {
+              "id": "ret8_2_depart",
+              "label": "Begin the return road at first light",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockSketches": [
+                  "silver-road-turning",
+                  "promise-kept"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emerald-return-arrival",
+      "title": "Back to Emerald City",
+      "startNodeId": "ret9_1",
+      "nodes": [
+        {
+          "id": "ret9_1",
+          "text": "Dorothy and her companions return to the Emerald City and are received under the same city customs as before. The green spectacles remain part of every formal approach within the walls.",
+          "choices": [
+            {
+              "id": "ret9_1_enter",
+              "label": "Enter the city and report the western mission complete",
+              "nextNodeId": "ret9_2",
+              "outcome": {
+                "status": {
+                  "spectaclesOn": true
+                },
+                "unlockGlossary": [
+                  "green-spectacles-continuity"
+                ],
+                "unlockSketches": [
+                  "back-to-the-green-city"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "ret9_2",
+          "text": "Officials guide the party to a private audience where the Wizard must answer the promises made before the westward journey.",
+          "choices": [
+            {
+              "id": "ret9_2_prepare",
+              "label": "Present each request clearly and wait for his answer",
+              "nextNodeId": null,
+              "outcome": {
+                "brains": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wizard-revelation-resolution",
+      "title": "The Wizard's Truth",
+      "startNodeId": "wiz9_1",
+      "nodes": [
+        {
+          "id": "wiz9_1",
+          "text": "Dorothy and companions discover the Wizard is an ordinary man using devices and stagecraft to preserve authority. He admits the deception and asks to mend what he can.",
+          "choices": [
+            {
+              "id": "wiz9_1_truth",
+              "label": "Hear the full account and keep the meeting calm",
+              "nextNodeId": "wiz9_2",
+              "outcome": {
+                "status": {
+                  "wizardRevealed": true
+                },
+                "unlockGlossary": [
+                  "humbug-revelation",
+                  "wizard-ordinary-man"
+                ],
+                "unlockSketches": [
+                  "plain-mans-tale"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "wiz9_2",
+          "text": "Though ordinary, the Wizard promises to honor his word in symbolic form for Scarecrow, Tin Woodman, and the Lion before attempting Dorothy's return.",
+          "choices": [
+            {
+              "id": "wiz9_2_continue",
+              "label": "Proceed to the companion gifts",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "mementos-of-virtue"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "companion-gifts-ceremony",
+      "title": "Gifts in Symbol",
+      "startNodeId": "gift9_1",
+      "nodes": [
+        {
+          "id": "gift9_1",
+          "text": "The Wizard presents Scarecrow with a symbolic brains token, honoring his thoughtful leadership on the road.",
+          "choices": [
+            {
+              "id": "gift9_1_accept",
+              "label": "Record Scarecrow's gift",
+              "nextNodeId": "gift9_2",
+              "outcome": {
+                "status": {
+                  "scarecrowGifted": true
+                },
+                "companionMeter": {
+                  "scarecrow": 1
+                },
+                "unlockSketches": [
+                  "token-of-brains"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "gift9_2",
+          "text": "Tin Woodman receives a symbolic heart token, a sign of the care he already showed through every trial.",
+          "choices": [
+            {
+              "id": "gift9_2_accept",
+              "label": "Record Tin Woodman's gift",
+              "nextNodeId": "gift9_3",
+              "outcome": {
+                "status": {
+                  "tinGifted": true
+                },
+                "companionMeter": {
+                  "tin-woodman": 1
+                },
+                "unlockSketches": [
+                  "token-of-heart"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "gift9_3",
+          "text": "The Lion receives a symbolic courage token, confirming the bravery he proved despite fear.",
+          "choices": [
+            {
+              "id": "gift9_3_accept",
+              "label": "Record the Lion's gift and move to departure",
+              "nextNodeId": null,
+              "outcome": {
+                "status": {
+                  "lionGifted": true
+                },
+                "companionMeter": {
+                  "cowardly-lion": 1
+                },
+                "unlockGlossary": [
+                  "promise-fulfilled"
+                ],
+                "unlockSketches": [
+                  "token-of-courage"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "balloon-departure-attempt",
+      "title": "Balloon Departure Attempt",
+      "startNodeId": "bal9_1",
+      "nodes": [
+        {
+          "id": "bal9_1",
+          "text": "The Wizard prepares a balloon ascent for Dorothy's return. Ropes, basket, and wind checks are rushed into place while the party holds the yard clear.",
+          "choices": [
+            {
+              "id": "bal9_1_prepare",
+              "label": "Assist launch preparation carefully",
+              "nextNodeId": "bal9_2",
+              "outcome": {
+                "unlockGlossary": [
+                  "balloon-attempt"
+                ],
+                "unlockSketches": [
+                  "wind-vane"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "bal9_2",
+          "text": "The balloon lifts with the Wizard aboard, but Dorothy is delayed by a final scramble and cannot reach the basket in time.",
+          "choices": [
+            {
+              "id": "bal9_2_missed",
+              "label": "Watch the ascent and hold steady for what comes next",
+              "nextNodeId": null,
+              "outcome": {
+                "status": {
+                  "balloonAttempted": true,
+                  "dorothyStillInOz": true
+                },
+                "unlockGlossary": [
+                  "departure-mishap"
+                ],
+                "unlockSketches": [
+                  "departure-missed"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "balloon-mishap-aftermath",
+      "title": "Find Another Way Home",
+      "startNodeId": "aft9_1",
+      "nodes": [
+        {
+          "id": "aft9_1",
+          "text": "Dorothy remains in Oz after the failed departure and gathers with her companions to decide a new path home.",
+          "choices": [
+            {
+              "id": "aft9_1_plan",
+              "label": "Set a new objective and begin planning immediately",
+              "nextNodeId": null,
+              "outcome": {
+                "unlockGlossary": [
+                  "next-path-home"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SourceCategory {
+  global
+  vertical
+  local
+}
+
+enum ShowType {
+  daily_global
+  daily_vertical
+  daily_local
+  deep_dive
+  weekly_global
+  weekly_vertical
+  weekly_local
+}
+
+enum EntityType {
+  cluster
+  summary
+  ranking
+}
+
+enum InteractionType {
+  view
+  save
+  skip
+  listen
+}
+
+enum TaskStatus {
+  open
+  in_progress
+  done
+}
+
+model Source {
+  id            String         @id @default(cuid())
+  name          String
+  baseUrl       String
+  rssUrl        String         @unique
+  category      SourceCategory
+  region        String?
+  active        Boolean        @default(true)
+  parserVersion Int            @default(1)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  articles      Article[]
+  metrics       SourceMetrics?
+
+  @@index([active, createdAt])
+  @@index([category, active])
+}
+
+model Article {
+  id            String   @id @default(cuid())
+  sourceId      String
+  title         String
+  author        String?
+  url           String   @unique
+  canonicalUrl  String?
+  publishedAt   DateTime
+  rawHtml       String?
+  extractedText String?
+  contentHash   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  source        Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  clusterLinks  ClusterArticle[]
+
+  @@index([sourceId, publishedAt])
+  @@index([publishedAt])
+  @@index([contentHash])
+  @@index([canonicalUrl])
+}
+
+model Cluster {
+  id             String   @id @default(cuid())
+  title          String
+  summaryBullets Json
+  whyItMatters   Json
+  localAngle     Json?
+  verticalAngle  Json?
+  storyVector    Json?
+  citations      Json     @default("[]")
+  builderTakeaway Json?
+  monetizationImpact Json?
+  platformImplications Json?
+  globalScore    Float    @default(0)
+  verticalScore  Float    @default(0)
+  localScore     Float    @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  articles       ClusterArticle[]
+  userInteractions UserInteraction[]
+
+  @@index([globalScore, updatedAt])
+  @@index([verticalScore, updatedAt])
+  @@index([localScore, updatedAt])
+  @@index([updatedAt])
+}
+
+model ClusterArticle {
+  clusterId String
+  articleId String
+  cluster   Cluster @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@id([clusterId, articleId])
+  @@index([articleId])
+}
+
+model Episode {
+  id              String   @id @default(cuid())
+  showType        ShowType
+  title           String
+  description     String
+  audioUrl        String
+  durationSeconds Int
+  publishedAt     DateTime
+  rssGuid         String   @unique
+  templateId      String?
+  voiceMode       String? // solo | debate | analyst | rapid
+  createdAt       DateTime @default(now())
+
+  @@index([showType, publishedAt])
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  preferences  Json
+  interestVector Json?
+  createdAt    DateTime @default(now())
+  interactions UserInteraction[]
+}
+
+model UserInteraction {
+  id              String          @id @default(cuid())
+  userId          String
+  clusterId       String
+  interactionType InteractionType
+  createdAt       DateTime        @default(now())
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cluster         Cluster         @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([clusterId, createdAt])
+}
+
+model PipelineLog {
+  id         String   @id @default(cuid())
+  queue      String
+  status     String
+  payload    Json
+  createdAt  DateTime @default(now())
+
+  @@index([queue, createdAt])
+  @@index([status, createdAt])
+}
+
+model EvaluationLog {
+  id         String   @id @default(cuid())
+  entityType EntityType
+  entityId   String
+  score      Float
+  metadata   Json
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId, createdAt])
+}
+
+model SourceMetrics {
+  sourceId         String   @id
+  accuracyScore    Float    @default(0)
+  recencyScore     Float    @default(0)
+  diversityScore   Float    @default(0)
+  biasScore        Float    @default(0)
+  lastEvaluatedAt  DateTime @default(now())
+  source           Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+}
+
+model PodcastTemplate {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  structure  Json
+  createdAt  DateTime @default(now())
+}
+
+model PodcastVoice {
+  id         String   @id @default(cuid())
+  voiceName  String   @unique
+  style      String
+  createdAt  DateTime @default(now())
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  type       String
+  metadata   Json
+  createdAt  DateTime @default(now())
+
+  @@index([type, createdAt])
+}
+
+model Experiment {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  variantA   Json
+  variantB   Json
+  metric     String
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  assignments ExperimentAssignment[]
+}
+
+model ExperimentAssignment {
+  id           String   @id @default(cuid())
+  userId       String
+  experimentId String
+  variant      String
+  createdAt    DateTime @default(now())
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+
+  @@index([userId, experimentId])
+}
+
+model TokenUsageLog {
+  id           String   @id @default(cuid())
+  pipelineStage String
+  tokensUsed   Int
+  costEstimate Float
+  createdAt    DateTime @default(now())
+
+  @@index([pipelineStage, createdAt])
+}
+
+model TaskCard {
+  id            String     @id @default(cuid())
+  title         String
+  description   String
+  status        TaskStatus @default(open)
+  autoGenerated Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+
+  @@index([status, createdAt])
+}

@@ -1,0 +1,5 @@
+{
+  "minAbsoluteDelta": 0.1,
+  "maxHypothesesPerRun": 3,
+  "defaultAgent": "Quality/Analytics"
+}

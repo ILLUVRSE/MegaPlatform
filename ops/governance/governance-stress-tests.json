@@ -1,0 +1,23 @@
+[
+  {
+    "id": "stress-prod-without-approval",
+    "scope": "deployment",
+    "action": "prod.promote",
+    "attributes": {
+      "hasHumanApproval": false,
+      "securityScore": 0.95
+    },
+    "expectedAllow": false,
+    "control": "approval_checkpoint"
+  },
+  {
+    "id": "stress-safe-simulation",
+    "scope": "optimization",
+    "action": "simulation.run",
+    "attributes": {
+      "riskLevel": "low"
+    },
+    "expectedAllow": true,
+    "control": "safe_optimization"
+  }
+]

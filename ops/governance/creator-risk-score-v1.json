@@ -1,0 +1,10 @@
+{
+  "weights": {
+    "quality": 0.3,
+    "safety": 0.4,
+    "fraud": 0.3
+  },
+  "highRiskThreshold": 0.75,
+  "mediumRiskThreshold": 0.5,
+  "maxAutoEscalation": "review"
+}

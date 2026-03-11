@@ -1,0 +1,5 @@
+[
+  { "modulePath": "/watch/live", "region": "US", "p95LatencyMs": 205, "requestCount": 1000 },
+  { "modulePath": "/games", "region": "US", "p95LatencyMs": 172, "requestCount": 750 },
+  { "modulePath": "/news", "region": "ES", "p95LatencyMs": 162, "requestCount": 380 }
+]

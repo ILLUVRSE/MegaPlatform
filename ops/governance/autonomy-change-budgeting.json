@@ -1,0 +1,18 @@
+{
+  "period": "daily",
+  "budgets": [
+    {
+      "changeClass": "policy",
+      "maxUnits": 30
+    },
+    {
+      "changeClass": "config",
+      "maxUnits": 50
+    },
+    {
+      "changeClass": "runtime",
+      "maxUnits": 80
+    }
+  ],
+  "warnAtRatio": 0.8
+}

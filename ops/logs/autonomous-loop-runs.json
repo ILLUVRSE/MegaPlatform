@@ -1,0 +1,8 @@
+[
+  {
+    "runId": "loop-001",
+    "successRate": 0.95,
+    "errorRate": 0.03,
+    "p95LatencyMs": 1450
+  }
+]

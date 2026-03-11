@@ -1,0 +1,26 @@
+[
+  {
+    "legendaryId": "ozark-muskie",
+    "name": "Ozark Muskie",
+    "requiredSeasons": ["fall", "winter"],
+    "requiredEvents": ["deep-drop-legends", "trophy-hunt"],
+    "spawnOdds": 0.03,
+    "behaviorTags": ["long-investigation", "tension-spike"]
+  },
+  {
+    "legendaryId": "paddlefish",
+    "name": "Ancient Paddlefish",
+    "requiredSeasons": ["spring", "summer"],
+    "requiredEvents": ["trophy-hunt", "storm-bite"],
+    "spawnOdds": 0.024,
+    "behaviorTags": ["long-investigation", "deep-diver"]
+  },
+  {
+    "legendaryId": "blue-catfish",
+    "name": "Midnight Blue Cat",
+    "requiredSeasons": ["summer", "fall"],
+    "requiredEvents": ["catfish-nights"],
+    "spawnOdds": 0.028,
+    "behaviorTags": ["tension-spike", "tanker-runs"]
+  }
+]

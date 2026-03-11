@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Show"
+ADD COLUMN "isPremium" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "price" INTEGER;

@@ -1,0 +1,5 @@
+{
+  "maxLagMs": 120,
+  "maxJitterMs": 40,
+  "maxPacketDropRate": 0.02
+}

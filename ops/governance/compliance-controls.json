@@ -1,0 +1,30 @@
+[
+  {
+    "id": "privacy-retention-policy",
+    "name": "Privacy and Retention Policy",
+    "owner": "Legal/Compliance",
+    "evidencePath": "docs/compliance/privacy-retention.md",
+    "required": true
+  },
+  {
+    "id": "content-policy-enforcement",
+    "name": "Content Policy and Enforcement Runbook",
+    "owner": "Trust & Safety",
+    "evidencePath": "docs/compliance/content-policy.md",
+    "required": true
+  },
+  {
+    "id": "incident-response-runbook",
+    "name": "Incident Response Runbook",
+    "owner": "Ops/SRE",
+    "evidencePath": "docs/ops_brain/runbooks/incident-response.md",
+    "required": true
+  },
+  {
+    "id": "user-data-request-playbook",
+    "name": "User Data Access/Deletion Playbook",
+    "owner": "Support + Legal",
+    "evidencePath": "docs/compliance/data-request-playbook.md",
+    "required": true
+  }
+]

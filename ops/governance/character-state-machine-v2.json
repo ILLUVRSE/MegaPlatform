@@ -1,0 +1,9 @@
+{
+  "allowedTransitions": {
+    "idle": ["walk", "interact"],
+    "walk": ["idle", "run", "interact"],
+    "run": ["walk", "idle"],
+    "interact": ["idle"]
+  },
+  "blockedTransitions": [["run", "interact"]]
+}

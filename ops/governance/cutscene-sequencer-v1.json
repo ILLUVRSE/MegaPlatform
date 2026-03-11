@@ -1,0 +1,5 @@
+{
+  "maxTracks": 12,
+  "requireVersionedSequence": true,
+  "maxPlaybackJitterMs": 25
+}

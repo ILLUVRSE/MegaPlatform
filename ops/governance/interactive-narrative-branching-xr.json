@@ -1,0 +1,5 @@
+{
+  "requireDeterministicBranching": true,
+  "requireReplayAuditTrail": true,
+  "maxBranchFanout": 6
+}

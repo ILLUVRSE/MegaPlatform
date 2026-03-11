@@ -1,0 +1,5 @@
+{
+  "minimumRuntimeUptime": 0.995,
+  "maximumDroppedFrameRate": 0.015,
+  "breachSurfaces": ["character_dashboard", "incident_channel"]
+}

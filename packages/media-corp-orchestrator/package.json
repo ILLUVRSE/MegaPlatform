@@ -1,0 +1,15 @@
+{
+  "name": "@illuvrse/media-corp-orchestrator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@illuvrse/media-corp-agents": "workspace:*",
+    "@illuvrse/media-corp-canon": "workspace:*",
+    "@illuvrse/media-corp-core": "workspace:*",
+    "@illuvrse/media-corp-memory": "workspace:*",
+    "@illuvrse/media-corp-scoring": "workspace:*",
+    "@illuvrse/media-corp-workflows": "workspace:*"
+  }
+}

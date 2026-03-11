@@ -1,0 +1,5 @@
+{
+  "minimumPatternSupport": 2,
+  "maxPatterns": 6,
+  "recommendationThreshold": 0.6
+}

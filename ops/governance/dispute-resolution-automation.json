@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/dispute-resolution-automation.json",
+  "allowedStates": ["intake", "investigating", "resolved", "rejected"],
+  "initialState": "intake",
+  "maxOpenDisputes": 5000
+}

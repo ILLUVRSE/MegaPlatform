@@ -1,0 +1,5 @@
+{
+  "taxonomyVersion": "v1",
+  "allowedModules": ["xr_contract", "capability_matrix", "identity_anchors", "scene_graph"],
+  "allowedEventTypes": ["session", "motion", "interaction"]
+}

@@ -1,0 +1,90 @@
+{
+  "title": "Inkbound Prairie",
+  "visualDirection": "storybook engraving",
+  "disclaimer": "Original style with ink outlines and flat fills; not based on film adaptation art direction.",
+  "tokens": {
+    "ink": "#1f1a16",
+    "paper": "#f8f1de",
+    "prairie": "#d5bb7b",
+    "field": "#8cab63",
+    "storm": "#4d6770",
+    "northWitch": "#7f8fb8",
+    "silver": "#c4c9d3",
+    "emeraldHint": "#3f8d66",
+    "accentRose": "#b86161"
+  },
+  "semantics": {
+    "background": "#f8f1de",
+    "ink": "#1f1a16",
+    "accent": "#3f8d66",
+    "danger": "#b86161",
+    "success": "#8cab63",
+    "paper": "#fbf6e8",
+    "shadow": "#2d2a25"
+  },
+  "typography": {
+    "headline": 38,
+    "body": 24,
+    "caption": 18
+  },
+  "spacing": {
+    "sm": 12,
+    "md": 18,
+    "lg": 28
+  },
+  "radius": {
+    "panel": 14,
+    "button": 12
+  },
+  "shadow": {
+    "panelAlpha": 0.22,
+    "insetAlpha": 0.1
+  },
+  "skins": [
+    {
+      "id": "engraved-paper",
+      "label": "Engraved Paper",
+      "semantics": {
+        "background": "#f8f1de",
+        "ink": "#1f1a16",
+        "accent": "#3f8d66",
+        "danger": "#b86161",
+        "success": "#8cab63",
+        "paper": "#fbf6e8",
+        "shadow": "#2d2a25"
+      }
+    },
+    {
+      "id": "night-ink",
+      "label": "Night Ink",
+      "semantics": {
+        "background": "#1a2027",
+        "ink": "#f1ead5",
+        "accent": "#5ba87e",
+        "danger": "#cf7676",
+        "success": "#89bc7b",
+        "paper": "#2a333d",
+        "shadow": "#0d1218"
+      }
+    },
+    {
+      "id": "field-bloom",
+      "label": "Field Bloom",
+      "semantics": {
+        "background": "#f4edd2",
+        "ink": "#2a2418",
+        "accent": "#6f9d4e",
+        "danger": "#b96a62",
+        "success": "#6eaf63",
+        "paper": "#fff7df",
+        "shadow": "#3b3429"
+      }
+    }
+  ],
+  "styleGuide": {
+    "lineWeight": "2px to 3px dark ink outline",
+    "shading": "single flat fill plus one hatch shadow at 20% opacity",
+    "typography": "Georgia for body, Trebuchet MS for UI labels",
+    "motion": "subtle sways and fades; disable heavy movement when reduced motion is enabled"
+  }
+}

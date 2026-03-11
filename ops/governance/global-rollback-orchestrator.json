@@ -1,0 +1,6 @@
+{
+  "defaultOrder": ["runtime", "config", "policy"],
+  "maxRollbackSteps": 20,
+  "requireApprovalForClasses": ["policy"],
+  "safeModeOnRollback": true
+}

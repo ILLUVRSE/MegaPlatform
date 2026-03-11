@@ -1,0 +1,14 @@
+{
+  "defaultLocale": "en-US",
+  "supportedLocales": ["en-US", "es-ES", "fr-FR"],
+  "regionDefaults": {
+    "US": "en-US",
+    "ES": "es-ES",
+    "FR": "fr-FR"
+  },
+  "localePrefixes": {
+    "en-US": "en",
+    "es-ES": "es",
+    "fr-FR": "fr"
+  }
+}

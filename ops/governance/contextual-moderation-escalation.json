@@ -1,0 +1,11 @@
+{
+  "baseSeverityThreshold": 0.5,
+  "contextAmplifiers": {
+    "repeat_offense": 0.2,
+    "cross_surface_pattern": 0.15,
+    "targeted_harassment": 0.25,
+    "coordinated_behavior": 0.2
+  },
+  "escalateAbove": 0.7,
+  "hardBlockAbove": 0.9
+}

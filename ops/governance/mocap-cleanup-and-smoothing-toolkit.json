@@ -1,0 +1,5 @@
+{
+  "minimumJitterImprovement": 0.25,
+  "maxResidualJitter": 0.08,
+  "maxResidualNoise": 0.1
+}

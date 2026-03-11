@@ -1,0 +1,43 @@
+{
+  "baseBiteChancePerSecond": 0.052,
+  "waterClarity": 0.78,
+  "weatherMultipliers": {
+    "sunny": 0.92,
+    "overcast": 1.08,
+    "light_rain": 1.18
+  },
+  "timeMultipliers": {
+    "day": 1,
+    "night": 1.14
+  },
+  "depthBands": {
+    "shallowMax": 0.34,
+    "midMax": 0.7
+  },
+  "lakeDepthMap": {
+    "shorelineMaxX": 0.18,
+    "weedBandStartX": 0.2,
+    "weedBandEndX": 0.42,
+    "dropoffStartX": 0.74
+  },
+  "vegetationZones": {
+    "weedBandDensity": 0.82,
+    "shorelineDensity": 0.47
+  },
+  "zoneSpawnWeights": {
+    "shoreline": 1.12,
+    "weed_bed": 1.24,
+    "open_water": 1,
+    "deep_dropoff": 0.86
+  },
+  "fishZonePreferences": {
+    "largemouth-bass": { "shoreline": 1.26, "weed_bed": 1.32, "open_water": 0.9, "deep_dropoff": 0.7 },
+    "smallmouth-bass": { "shoreline": 0.9, "weed_bed": 1, "open_water": 1.16, "deep_dropoff": 1.12 },
+    "bluegill": { "shoreline": 1.35, "weed_bed": 1.28, "open_water": 0.75, "deep_dropoff": 0.52 },
+    "catfish": { "shoreline": 0.72, "weed_bed": 0.84, "open_water": 1.04, "deep_dropoff": 1.45 },
+    "crappie": { "shoreline": 0.88, "weed_bed": 1.15, "open_water": 1.08, "deep_dropoff": 0.9 },
+    "walleye": { "shoreline": 0.66, "weed_bed": 0.86, "open_water": 1.1, "deep_dropoff": 1.38 },
+    "carp": { "shoreline": 0.9, "weed_bed": 1.12, "open_water": 1, "deep_dropoff": 1.02 },
+    "ozark-muskie": { "shoreline": 0.45, "weed_bed": 0.82, "open_water": 1.05, "deep_dropoff": 1.6 }
+  }
+}

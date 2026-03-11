@@ -1,0 +1,82 @@
+[
+  {
+    "id": "starter-spare",
+    "name": "Starter Spare",
+    "description": "Pick up one spare in the first two frames.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 4,
+    "goal": { "type": "spares_in_frames", "required": 1, "frameWindow": 2 }
+  },
+  {
+    "id": "double-trouble",
+    "name": "Double Trouble",
+    "description": "Throw two strikes in a row.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 5,
+    "goal": { "type": "strike_streak", "required": 2 }
+  },
+  {
+    "id": "turkey-run",
+    "name": "Turkey Run",
+    "description": "Hit a three-strike streak.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 7,
+    "goal": { "type": "strike_streak", "required": 3 }
+  },
+  {
+    "id": "pin-collector",
+    "name": "Pin Collector",
+    "description": "Knock down 18 pins in limited rolls.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 3,
+    "goal": { "type": "knock_total", "required": 18 }
+  },
+  {
+    "id": "score-hunter",
+    "name": "Score Hunter",
+    "description": "Reach 35 challenge points.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 5,
+    "goal": { "type": "score_min", "required": 35 }
+  },
+  {
+    "id": "seven-ten-split",
+    "name": "Split Pickup 7-10",
+    "description": "Convert the 7-10 split once.",
+    "startingPins": [7,10],
+    "rollLimit": 4,
+    "goal": { "type": "split_convert", "split": "7-10", "required": 1 }
+  },
+  {
+    "id": "bucket-break",
+    "name": "Bucket Break",
+    "description": "Convert a bucket setup.",
+    "startingPins": [2,4,5,8],
+    "rollLimit": 4,
+    "goal": { "type": "split_convert", "split": "bucket", "required": 1 }
+  },
+  {
+    "id": "spare-machine",
+    "name": "Spare Machine",
+    "description": "Record two spares in three frames.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 6,
+    "goal": { "type": "spares_in_frames", "required": 2, "frameWindow": 3 }
+  },
+  {
+    "id": "big-frame",
+    "name": "Big Frame",
+    "description": "Reach 50 challenge points quickly.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 6,
+    "goal": { "type": "score_min", "required": 50 }
+  },
+  {
+    "id": "pin-storm",
+    "name": "Pin Storm",
+    "description": "Knock down 28 pins before running out of rolls.",
+    "startingPins": [1,2,3,4,5,6,7,8,9,10],
+    "rollLimit": 5,
+    "goal": { "type": "knock_total", "required": 28 }
+  }
+]

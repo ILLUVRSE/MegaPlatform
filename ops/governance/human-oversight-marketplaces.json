@@ -1,0 +1,5 @@
+{
+  "defaultSlaHours": 24,
+  "highImpactSlaHours": 4,
+  "reviewPools": ["safety_board", "legal_review", "ops_command"]
+}

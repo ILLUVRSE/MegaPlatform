@@ -1,0 +1,159 @@
+{
+  "difficultyPresets": [
+    {
+      "id": "calm",
+      "multiplier": 0.92
+    },
+    {
+      "id": "steady",
+      "multiplier": 1
+    },
+    {
+      "id": "tense",
+      "multiplier": 1.12
+    }
+  ],
+  "cycloneEscape": {
+    "durationMs": 13000,
+    "driftPerSecond": 0.42,
+    "correctionStrength": 0.9,
+    "safeBand": 0.4
+  },
+  "cornfieldRescue": {
+    "requiredProgress": 4,
+    "maxStrikes": 3,
+    "durationMs": 12000
+  },
+  "silverSlippersDash": {
+    "durationMs": 9000,
+    "markerValue": 120,
+    "fallPenalty": 90
+  },
+  "oilAndJoints": {
+    "durationMs": 11000,
+    "valveCount": 4,
+    "targetCorrects": 9,
+    "drainPerSecond": 10,
+    "refillOnCorrect": 16,
+    "penaltyOnMiss": 12
+  },
+  "courageTrial": {
+    "durationMs": 10500,
+    "menaceDrift": 0.72,
+    "holdStrength": 0.9,
+    "maxSpikes": 5,
+    "centerBand": 0.24
+  },
+  "forestCrossing": {
+    "durationMs": 9000,
+    "speedPerSecond": 190,
+    "markerValue": 90,
+    "hitPenalty": 110
+  },
+  "kalidahChase": {
+    "durationMs": 14000,
+    "laneCount": 3,
+    "patternLength": 28,
+    "baseGap": 0.68,
+    "closeRatePerSecond": 0.075,
+    "tokenGain": 0.09,
+    "hitPenalty": 0.16,
+    "burstBoost": 0.12,
+    "roarBoost": 0.18,
+    "surviveGap": 0.18,
+    "logMaskChance": 0.38,
+    "narrowMaskChance": 0.34
+  },
+  "poppyRescue": {
+    "durationMs": 12500,
+    "laneCount": 3,
+    "patternLength": 30,
+    "targetProgress": 100,
+    "baseProgressPerSecond": 11,
+    "sleepGainPerCloud": 0.095,
+    "sleepRecoveryPerSecond": 0.04,
+    "heavyCloudChance": 0.28,
+    "slowFactor": 0.45,
+    "lionSleepPenalty": 0.12
+  },
+  "spectacleFastening": {
+    "durationMs": 11500,
+    "stepsMin": 3,
+    "stepsMax": 5,
+    "baseToleranceMs": 230,
+    "retryPenaltyMs": 520,
+    "oscillationMs": 900
+  },
+  "audiencePerception": {
+    "durationMs": 12000,
+    "audienceCount": 4,
+    "dialSteps": 12,
+    "tolerance": 1,
+    "rotateStep": 1
+  },
+  "shadowOfTheWest": {
+    "durationMs": 13000,
+    "laneCount": 3,
+    "patternLength": 30,
+    "baseExposurePerSecond": 0.022,
+    "sweepExposurePerEvent": 0.12,
+    "coverRecoveryPerEvent": 0.05,
+    "clearRecoveryPerEvent": 0.022,
+    "tokenExposureDrop": 0.1,
+    "revealMs": 1800,
+    "tinWardMs": 2200,
+    "tinWardReduction": 0.28,
+    "lionSteadyMs": 1000,
+    "successExposureThreshold": 0.84,
+    "sweepChance": 0.44,
+    "coverChance": 0.38
+  },
+  "westernHoldEscape": {
+    "durationMs": 14000,
+    "laneCount": 3,
+    "patternLength": 32,
+    "targetTokens": 3,
+    "baseAlarmPerSecond": 0.026,
+    "sweepAlarmPerEvent": 0.13,
+    "hazardAlarmPerEvent": 0.18,
+    "coverRecoveryPerEvent": 0.06,
+    "clearRecoveryPerEvent": 0.02,
+    "commandSafeMs": 2000,
+    "scarecrowRevealMs": 1000,
+    "scarecrowRevealCooldownMs": 3000,
+    "lionPauseMs": 750,
+    "successAlarmThreshold": 0.88,
+    "patrolChance": 0.45,
+    "coverChance": 0.36,
+    "hazardChance": 0.34
+  },
+  "dousingTheShadow": {
+    "durationMs": 12600,
+    "laneCount": 3,
+    "patternLength": 30,
+    "requiredDouses": 3,
+    "baseFearPerSecond": 0.022,
+    "swellFearPerEvent": 0.112,
+    "safeFearRecoveryPerEvent": 0.043,
+    "calmCourageGainPerEvent": 0.05,
+    "douseCourageGain": 0.16,
+    "peakWindowMs": 280,
+    "peakEveryEvents": 8,
+    "scarecrowWindowBonusMs": 120,
+    "tinWardMs": 2000,
+    "tinFearReduction": 0.28,
+    "lionSteadyMs": 1000,
+    "clearSwellMs": 1800,
+    "successFearThreshold": 0.86,
+    "swellChance": 0.46,
+    "safeChance": 0.37
+  },
+  "balloonRigging": {
+    "durationMs": 11200,
+    "stepsMin": 4,
+    "stepsMax": 6,
+    "baseToleranceMs": 220,
+    "retryPenaltyMs": 500,
+    "oscillationMs": 860
+  }
+}

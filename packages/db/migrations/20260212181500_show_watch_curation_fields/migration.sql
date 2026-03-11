@@ -1,0 +1,13 @@
+-- AlterTable
+ALTER TABLE "Show"
+ADD COLUMN "featured" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "trending" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "newRelease" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "heroPriority" INTEGER,
+ADD COLUMN "featuredRail" TEXT,
+ADD COLUMN "featuredRailOrder" INTEGER,
+ADD COLUMN "watchOrder" INTEGER,
+ADD COLUMN "maturityRating" TEXT,
+ADD COLUMN "genres" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ADD COLUMN "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ADD COLUMN "cast" TEXT[] DEFAULT ARRAY[]::TEXT[];

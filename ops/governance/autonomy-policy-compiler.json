@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "allowedEffects": ["allow", "deny", "require_approval"],
+  "requiredFields": ["id", "scope", "effect", "priority"],
+  "defaultEffect": "deny",
+  "outputPath": "ops/logs/autonomy-policy-compiled.json"
+}

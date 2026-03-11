@@ -1,0 +1,23 @@
+{
+  "goods": [
+    { "id": "iron-ore", "name": "Iron Ore", "category": "ore", "basePrice": 24, "volatility": 0.16, "legality": "legal", "size": 1 },
+    { "id": "rare-metals", "name": "Rare Metals", "category": "ore", "basePrice": 58, "volatility": 0.2, "legality": "legal", "size": 1 },
+    { "id": "food-rations", "name": "Food Rations", "category": "food", "basePrice": 18, "volatility": 0.14, "legality": "legal", "size": 1 },
+    { "id": "luxury-meals", "name": "Luxury Meals", "category": "food", "basePrice": 45, "volatility": 0.19, "legality": "legal", "size": 1 },
+    { "id": "med-supplies", "name": "Med Supplies", "category": "medicine", "basePrice": 64, "volatility": 0.18, "legality": "legal", "size": 1 },
+    { "id": "gene-gels", "name": "Gene Gels", "category": "medicine", "basePrice": 88, "volatility": 0.2, "legality": "legal", "size": 1 },
+    { "id": "microchips", "name": "Microchips", "category": "tech", "basePrice": 52, "volatility": 0.17, "legality": "legal", "size": 1 },
+    { "id": "sensor-arrays", "name": "Sensor Arrays", "category": "tech", "basePrice": 94, "volatility": 0.22, "legality": "legal", "size": 2 },
+    { "id": "reactor-coils", "name": "Reactor Coils", "category": "tech", "basePrice": 110, "volatility": 0.24, "legality": "legal", "size": 2 },
+    { "id": "star-silk", "name": "Star Silk", "category": "luxury", "basePrice": 76, "volatility": 0.23, "legality": "legal", "size": 1 },
+    { "id": "cryo-wine", "name": "Cryo Wine", "category": "luxury", "basePrice": 98, "volatility": 0.24, "legality": "legal", "size": 1 },
+    { "id": "relic-fragments", "name": "Relic Fragments", "category": "relic", "basePrice": 132, "volatility": 0.28, "legality": "legal", "size": 1 },
+    { "id": "sanctum-idols", "name": "Sanctum Idols", "category": "relic", "basePrice": 180, "volatility": 0.3, "legality": "contraband", "size": 1 },
+    { "id": "void-arms", "name": "Void Arms", "category": "weapon", "basePrice": 140, "volatility": 0.27, "legality": "contraband", "size": 2 },
+    { "id": "hush-missiles", "name": "Hush Missiles", "category": "weapon", "basePrice": 168, "volatility": 0.31, "legality": "contraband", "size": 2 },
+    { "id": "plasma-fuel", "name": "Plasma Fuel", "category": "fuel", "basePrice": 38, "volatility": 0.15, "legality": "legal", "size": 1 },
+    { "id": "dark-fuel", "name": "Dark Fuel", "category": "fuel", "basePrice": 72, "volatility": 0.22, "legality": "contraband", "size": 1 },
+    { "id": "quantum-ledgers", "name": "Quantum Ledgers", "category": "data", "basePrice": 84, "volatility": 0.21, "legality": "legal", "size": 1 },
+    { "id": "ghost-keys", "name": "Ghost Keys", "category": "data", "basePrice": 156, "volatility": 0.29, "legality": "contraband", "size": 1 }
+  ]
+}

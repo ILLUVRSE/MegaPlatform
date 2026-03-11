@@ -1,0 +1,5 @@
+{
+  "maxPoseDriftMeters": 0.3,
+  "conflictStrategy": "highest_version_wins",
+  "reconnectWindowMs": 30000
+}

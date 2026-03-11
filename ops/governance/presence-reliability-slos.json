@@ -1,0 +1,5 @@
+{
+  "minimumSessionUptime": 0.995,
+  "maximumSyncLossRate": 0.01,
+  "alertSurfaces": ["admin_dashboard", "incident_channel"]
+}

@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-03-11T14:30:05.147Z",
+  "events": [
+    {
+      "id": "e1",
+      "signal": "novel spike",
+      "novelty": 0.9,
+      "risk": 0.7,
+      "impact": 0.5,
+      "emergent": true,
+      "category": "risk",
+      "recommendedAction": "constrain"
+    },
+    {
+      "id": "e2",
+      "signal": "unexpected uplift",
+      "novelty": 0.8,
+      "risk": 0.2,
+      "impact": 0.8,
+      "emergent": true,
+      "category": "opportunity",
+      "recommendedAction": "explore"
+    }
+  ]
+}

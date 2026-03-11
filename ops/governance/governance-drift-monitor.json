@@ -1,0 +1,6 @@
+{
+  "maxMismatchRatio": 0.1,
+  "minSampleSize": 10,
+  "defaultSeverity": "warning",
+  "escalateSeverityAt": 0.25
+}

@@ -1,0 +1,193 @@
+{
+  "fighters": {
+    "byte": {
+      "displayName": "BYTE",
+      "tag": "Boxer",
+      "accent": { "primary": "#44ecff", "secondary": "#9bf8ff" },
+      "portrait": "assets/fighters/byte/portrait.png",
+      "assets": {
+        "type": "atlas",
+        "image": "assets/fighters/byte/atlas.png",
+        "data": "assets/fighters/byte/atlas.json"
+      },
+      "render": {
+        "origin": { "x": 0.5, "y": 1.0 },
+        "baseScale": 1.0,
+        "offset": { "x": 0, "y": 0 },
+        "lane": {
+          "back":  { "scaleMul": 0.92, "brightMul": 0.9, "shadowMul": 0.85 },
+          "mid":   { "scaleMul": 1.0, "brightMul": 1.0, "shadowMul": 1.0 },
+          "front": { "scaleMul": 1.08, "brightMul": 1.08, "shadowMul": 1.1 }
+        }
+      },
+      "stats": {
+        "walkSpeedMul": 1.04,
+        "damageMul": 1.0,
+        "hpMul": 1.02,
+        "throwMul": 1.0,
+        "recoveryMul": 1.0
+      },
+      "enabled": true
+    },
+    "vex": {
+      "displayName": "VEX",
+      "tag": "Balanced",
+      "accent": { "primary": "#ff7070", "secondary": "#ffd1d1" },
+      "portrait": "assets/fighters/vex/portrait.png",
+      "assets": {
+        "type": "atlas",
+        "image": "assets/fighters/vex/atlas.png",
+        "data": "assets/fighters/vex/atlas.json"
+      },
+      "render": {
+        "origin": { "x": 0.5, "y": 1.0 },
+        "baseScale": 1.0,
+        "offset": { "x": 0, "y": 0 }
+      },
+      "stats": {
+        "walkSpeedMul": 1.0,
+        "damageMul": 1.0,
+        "hpMul": 1.04,
+        "throwMul": 1.0,
+        "recoveryMul": 0.92
+      },
+      "enabled": true
+    },
+    "glitch": {
+      "displayName": "GLITCH",
+      "tag": "Trick",
+      "accent": { "primary": "#8f6aff", "secondary": "#f6e8ff" },
+      "portrait": "assets/fighters/glitch/portrait.png",
+      "assets": {
+        "type": "atlas",
+        "image": "assets/fighters/glitch/atlas.png",
+        "data": "assets/fighters/glitch/atlas.json"
+      },
+      "render": {
+        "origin": { "x": 0.5, "y": 1.0 },
+        "baseScale": 1.0,
+        "offset": { "x": 0, "y": 0 }
+      },
+      "stats": {
+        "walkSpeedMul": 1.02,
+        "damageMul": 1.0,
+        "hpMul": 0.98,
+        "throwMul": 1.0,
+        "recoveryMul": 1.0
+      },
+      "enabled": true
+    },
+    "brick": {
+      "displayName": "BRICK",
+      "tag": "Grapple",
+      "accent": { "primary": "#f5aa42", "secondary": "#fff2d8" },
+      "portrait": "assets/fighters/brick/portrait.png",
+      "assets": {
+        "type": "atlas",
+        "image": "assets/fighters/brick/atlas.png",
+        "data": "assets/fighters/brick/atlas.json"
+      },
+      "render": {
+        "origin": { "x": 0.5, "y": 1.0 },
+        "baseScale": 1.0,
+        "offset": { "x": 0, "y": 0 }
+      },
+      "stats": {
+        "walkSpeedMul": 0.82,
+        "damageMul": 1.08,
+        "hpMul": 1.22,
+        "throwMul": 1.25,
+        "recoveryMul": 1.1
+      },
+      "enabled": true
+    },
+    "echo": {
+      "displayName": "ECHO",
+      "tag": "Balanced",
+      "accent": { "primary": "#70d5ff", "secondary": "#f6fdff" },
+      "portrait": "assets/fighters/echo/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/echo/atlas.png", "data": "assets/fighters/echo/atlas.json" },
+      "enabled": false
+    },
+    "zip": {
+      "displayName": "ZIP",
+      "tag": "Speed",
+      "accent": { "primary": "#81f569", "secondary": "#eafff1" },
+      "portrait": "assets/fighters/zip/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/zip/atlas.png", "data": "assets/fighters/zip/atlas.json" },
+      "enabled": false
+    },
+    "spark": {
+      "displayName": "SPARK",
+      "tag": "Power",
+      "accent": { "primary": "#ffe54d", "secondary": "#fffce0" },
+      "portrait": "assets/fighters/spark/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/spark/atlas.png", "data": "assets/fighters/spark/atlas.json" },
+      "enabled": false
+    },
+    "shade": {
+      "displayName": "SHADE",
+      "tag": "Trick",
+      "accent": { "primary": "#8aa0ff", "secondary": "#f1f4ff" },
+      "portrait": "assets/fighters/shade/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/shade/atlas.png", "data": "assets/fighters/shade/atlas.json" },
+      "enabled": false
+    },
+    "iron": {
+      "displayName": "IRON",
+      "tag": "Tank",
+      "accent": { "primary": "#b4b4be", "secondary": "#fafaff" },
+      "portrait": "assets/fighters/iron/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/iron/atlas.png", "data": "assets/fighters/iron/atlas.json" },
+      "enabled": false
+    },
+    "flair": {
+      "displayName": "FLAIR",
+      "tag": "Speed",
+      "accent": { "primary": "#ff7dbd", "secondary": "#fff0f8" },
+      "portrait": "assets/fighters/flair/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/flair/atlas.png", "data": "assets/fighters/flair/atlas.json" },
+      "enabled": false
+    },
+    "rift": {
+      "displayName": "RIFT",
+      "tag": "Trick",
+      "accent": { "primary": "#74fff6", "secondary": "#eaffff" },
+      "portrait": "assets/fighters/rift/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/rift/atlas.png", "data": "assets/fighters/rift/atlas.json" },
+      "enabled": false
+    },
+    "nova": {
+      "displayName": "NOVA",
+      "tag": "Glass",
+      "accent": { "primary": "#ff6b4a", "secondary": "#ffece7" },
+      "portrait": "assets/fighters/nova/portrait.png",
+      "assets": { "type": "atlas", "image": "assets/fighters/nova/atlas.png", "data": "assets/fighters/nova/atlas.json" },
+      "enabled": false
+    }
+  },
+  "slots": [
+    "byte",
+    "vex",
+    "glitch",
+    "brick",
+    "echo",
+    "zip",
+    "spark",
+    "shade",
+    "iron",
+    "flair",
+    "rift",
+    "nova"
+  ],
+  "locked": [
+    "echo",
+    "zip",
+    "spark",
+    "shade",
+    "iron",
+    "flair",
+    "rift",
+    "nova"
+  ]
+}

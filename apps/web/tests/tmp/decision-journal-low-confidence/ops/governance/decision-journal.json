@@ -1,0 +1,15 @@
+{
+  "requiredEvidenceKinds": [
+    "metric"
+  ],
+  "requiredFields": [
+    "agentRole",
+    "decisionType",
+    "rationale",
+    "evidence",
+    "confidence",
+    "riskLevel"
+  ],
+  "minConfidence": 0.5,
+  "maxEntryAgeDays": 90
+}

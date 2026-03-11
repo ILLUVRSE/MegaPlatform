@@ -1,0 +1,10 @@
+{
+  "name": "@illuvrse/media-corp-agents",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@illuvrse/media-corp-core": "workspace:*"
+  }
+}

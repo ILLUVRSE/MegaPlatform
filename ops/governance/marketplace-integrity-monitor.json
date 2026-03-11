@@ -1,0 +1,6 @@
+{
+  "fraudRiskBlockThreshold": 0.8,
+  "fraudRiskReviewThreshold": 0.55,
+  "maxViolationsBeforeSuspend": 3,
+  "remediationActions": ["throttle_payouts", "manual_review", "suspend_listing"]
+}

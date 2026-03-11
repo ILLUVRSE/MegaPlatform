@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cert-launch-readiness",
+    "name": "Launch Critical Blockers",
+    "required": true,
+    "checkKey": "launch_blockers"
+  },
+  {
+    "id": "cert-key-rotation",
+    "name": "Key Rotation Compliance",
+    "required": true,
+    "checkKey": "key_rotation_overdue"
+  },
+  {
+    "id": "cert-supply-chain",
+    "name": "Supply Chain Blockers",
+    "required": true,
+    "checkKey": "supply_chain_blockers"
+  }
+]

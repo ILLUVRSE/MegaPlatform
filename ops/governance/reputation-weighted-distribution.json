@@ -1,0 +1,7 @@
+{
+  "minimumReputationForBoost": 0.7,
+  "throttleBelowReputation": 0.4,
+  "maxThrottleFactor": 0.8,
+  "qualityWeight": 0.5,
+  "reputationWeight": 0.5
+}

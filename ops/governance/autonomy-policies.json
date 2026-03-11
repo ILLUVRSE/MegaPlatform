@@ -1,0 +1,29 @@
+[
+  {
+    "id": "safety-high-risk-block",
+    "scope": "global",
+    "effect": "deny",
+    "priority": 100,
+    "conditions": {
+      "riskLevel": ["high", "critical"]
+    }
+  },
+  {
+    "id": "finance-sensitive-approval",
+    "scope": "finance",
+    "effect": "require_approval",
+    "priority": 80,
+    "conditions": {
+      "costTier": ["elevated"]
+    }
+  },
+  {
+    "id": "ops-low-risk-allow",
+    "scope": "ops",
+    "effect": "allow",
+    "priority": 20,
+    "conditions": {
+      "riskLevel": ["low"]
+    }
+  }
+]

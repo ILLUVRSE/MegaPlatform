@@ -1,0 +1,5 @@
+{
+  "maxRecoveryTimeMs": 30000,
+  "requireRunbookEvidence": true,
+  "requireDrillEvidence": true
+}

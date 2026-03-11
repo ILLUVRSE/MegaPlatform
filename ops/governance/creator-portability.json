@@ -1,0 +1,4 @@
+{
+  "maxAssetsPerRequest": 200,
+  "maxPayloadBytes": 2000000
+}

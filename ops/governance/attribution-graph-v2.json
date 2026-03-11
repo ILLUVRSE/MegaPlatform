@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/attribution-graph-v2.json",
+  "maxEdges": 50000,
+  "allowedEdgeTypes": ["authored", "edited", "remixed", "prompted", "approved"],
+  "requireEvidenceRef": true
+}

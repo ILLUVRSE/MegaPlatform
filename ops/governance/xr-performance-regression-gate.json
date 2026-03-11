@@ -1,0 +1,7 @@
+{
+  "maximumGpuFrameTimeMs": 8.5,
+  "maximumCpuFrameTimeMs": 5.5,
+  "minimumStableFps": 90,
+  "requireCiEnforcement": true,
+  "requireReleaseBlockingOnFailure": true
+}

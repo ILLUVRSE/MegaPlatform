@@ -1,0 +1,12 @@
+{
+  "edges": [
+    {
+      "edgeId": "edge-154",
+      "subjectId": "asset-154",
+      "objectId": "creator-154",
+      "edgeType": "authored",
+      "actorKind": "human",
+      "evidenceRef": "evidence-154"
+    }
+  ]
+}

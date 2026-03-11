@@ -1,0 +1,6 @@
+{
+  "includeTrace": true,
+  "includeInputs": true,
+  "maxTraceItems": 50,
+  "requiredSections": ["constraint", "temporal", "blast_radius"]
+}

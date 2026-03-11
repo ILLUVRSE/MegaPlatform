@@ -1,0 +1,26 @@
+[
+  {
+    "id": "queue-backlog-drill",
+    "name": "Queue Backlog Drill",
+    "target": "queue",
+    "cadence": "weekly",
+    "maxDurationMin": 20,
+    "safeModeOnly": true
+  },
+  {
+    "id": "storage-upload-failure-drill",
+    "name": "Storage Upload Failure Drill",
+    "target": "storage",
+    "cadence": "weekly",
+    "maxDurationMin": 15,
+    "safeModeOnly": true
+  },
+  {
+    "id": "realtime-voice-drop-drill",
+    "name": "Realtime Voice Drop Drill",
+    "target": "realtime",
+    "cadence": "biweekly",
+    "maxDurationMin": 10,
+    "safeModeOnly": true
+  }
+]

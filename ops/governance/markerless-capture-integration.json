@@ -1,0 +1,5 @@
+{
+  "minConfidence": 0.85,
+  "maxNoise": 0.12,
+  "normalizationProfile": "body_v1"
+}

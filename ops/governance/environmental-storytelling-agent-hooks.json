@@ -1,0 +1,5 @@
+{
+  "allowedHookTypes": ["ambient_shift", "prop_recontextualization", "npc_dialogue_seed"],
+  "maxMutationScope": 3,
+  "requireSafetyGuardrails": true
+}

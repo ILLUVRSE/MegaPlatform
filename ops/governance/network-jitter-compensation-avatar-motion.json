@@ -1,0 +1,5 @@
+{
+  "minimumContinuityScore": 0.85,
+  "maxAuthorityDivergence": 0.03,
+  "maxCompensationLatencyMs": 120
+}

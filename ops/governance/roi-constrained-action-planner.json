@@ -1,0 +1,6 @@
+{
+  "minRoiRatio": 1.2,
+  "confidenceFloor": 0.55,
+  "maxPaybackDays": 45,
+  "requirePositiveNetValue": true
+}

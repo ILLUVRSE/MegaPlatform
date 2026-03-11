@@ -1,0 +1,6 @@
+{
+  "maxCandidates": 5,
+  "impactWeight": 0.5,
+  "riskWeight": 0.3,
+  "costWeight": 0.2
+}

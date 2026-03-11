@@ -1,0 +1,5 @@
+{
+  "failOnSeverity": "critical",
+  "blockedPackages": ["left-pad-demo"],
+  "allowlist": []
+}

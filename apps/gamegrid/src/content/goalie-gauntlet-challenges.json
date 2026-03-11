@@ -1,0 +1,110 @@
+[
+  {
+    "id": "chal-01",
+    "name": "Only High Shots",
+    "description": "Read high corners with clean first move timing.",
+    "patternId": "only-high",
+    "difficulty": "easy",
+    "shotCount": 12,
+    "win": { "minSaves": 10, "maxMisses": 2 }
+  },
+  {
+    "id": "chal-02",
+    "name": "Rapid Fire 20",
+    "description": "Survive a rapid sequence of 20 shots.",
+    "patternId": "rapid-fire",
+    "difficulty": "medium",
+    "shotCount": 20,
+    "win": { "minSaves": 16, "maxMisses": 4, "maxLate": 4 }
+  },
+  {
+    "id": "chal-03",
+    "name": "Deflection Drill",
+    "description": "Track redirected puck paths and fake tells.",
+    "patternId": "deflection-drill",
+    "difficulty": "medium",
+    "shotCount": 16,
+    "win": { "minSaves": 13, "maxMisses": 3 }
+  },
+  {
+    "id": "chal-04",
+    "name": "Perfect Save Streak 10",
+    "description": "Hit a perfect save streak of ten.",
+    "patternId": "perfect-streak",
+    "difficulty": "medium",
+    "shotCount": 24,
+    "win": { "minSaves": 20, "maxMisses": 3, "minPerfectStreak": 10 }
+  },
+  {
+    "id": "chal-05",
+    "name": "Crease Warmup",
+    "description": "Consistency drill for baseline saves.",
+    "patternId": "balanced-core",
+    "difficulty": "easy",
+    "shotCount": 14,
+    "win": { "minSaves": 12, "maxMisses": 2 }
+  },
+  {
+    "id": "chal-06",
+    "name": "No Lates Allowed",
+    "description": "Get in early; late saves are not accepted.",
+    "patternId": "balanced-core",
+    "difficulty": "medium",
+    "shotCount": 18,
+    "win": { "minSaves": 15, "maxMisses": 3, "maxLate": 0 }
+  },
+  {
+    "id": "chal-07",
+    "name": "Top Shelf Run",
+    "description": "Top-half pressure with speed increase.",
+    "patternId": "only-high",
+    "difficulty": "hard",
+    "shotCount": 18,
+    "win": { "minSaves": 15, "maxMisses": 2, "minPerfect": 6 }
+  },
+  {
+    "id": "chal-08",
+    "name": "Chaos Read",
+    "description": "Mixed fakes and curves under one-miss tolerance.",
+    "patternId": "chaos-mix",
+    "difficulty": "hard",
+    "shotCount": 20,
+    "win": { "minSaves": 18, "maxMisses": 1 }
+  },
+  {
+    "id": "chal-09",
+    "name": "Timed Deflections",
+    "description": "Complete deflection sequence under time pressure.",
+    "patternId": "deflection-drill",
+    "difficulty": "hard",
+    "shotCount": 18,
+    "win": { "minSaves": 15, "maxMisses": 2, "maxTimeMs": 23000 }
+  },
+  {
+    "id": "chal-10",
+    "name": "Rapid Perfection",
+    "description": "Find perfect windows in rapid fire combos.",
+    "patternId": "rapid-fire",
+    "difficulty": "hard",
+    "shotCount": 22,
+    "win": { "minSaves": 18, "maxMisses": 2, "minPerfect": 8 }
+  },
+  {
+    "id": "chal-11",
+    "name": "Midline Lock",
+    "description": "Hold structure and avoid panic movement.",
+    "patternId": "perfect-streak",
+    "difficulty": "medium",
+    "shotCount": 16,
+    "win": { "minSaves": 14, "maxMisses": 2, "maxLate": 2 }
+  },
+  {
+    "id": "chal-12",
+    "name": "Gauntlet Master",
+    "description": "Final mixed gauntlet with elite requirements.",
+    "patternId": "chaos-mix",
+    "difficulty": "hard",
+    "shotCount": 26,
+    "win": { "minSaves": 22, "maxMisses": 2, "minPerfect": 9, "minPerfectStreak": 4 }
+  }
+]

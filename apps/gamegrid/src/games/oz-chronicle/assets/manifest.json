@@ -1,0 +1,18 @@
+{
+  "assets": [
+    { "key": "oz-map-node", "file": "ui/map-node.svg", "role": "map-node-icon" },
+    { "key": "oz-companion", "file": "ui/companion.svg", "role": "companion-icon" },
+    { "key": "oz-quest", "file": "ui/quest.svg", "role": "quest-icon" },
+    { "key": "oz-sketchbook", "file": "ui/sketchbook.svg", "role": "sketchbook-icon" },
+    { "key": "oz-glossary", "file": "ui/glossary.svg", "role": "glossary-icon" },
+    { "key": "oz-cap", "file": "ui/cap.svg", "role": "golden-cap-icon" },
+    { "key": "oz-grain", "file": "motifs/paper-grain.svg", "role": "background-grain" },
+    { "key": "oz-frame", "file": "motifs/frame-border.svg", "role": "panel-frame" },
+    { "key": "oz-vignette", "file": "motifs/vignette.svg", "role": "vignette-shape" },
+    { "key": "oz-fear", "file": "minigame/fear-meter.svg", "role": "fear-meter-icon" },
+    { "key": "oz-courage", "file": "minigame/courage-meter.svg", "role": "courage-meter-icon" },
+    { "key": "oz-token", "file": "minigame/token.svg", "role": "token-icon" },
+    { "key": "oz-sweep", "file": "minigame/sweep.svg", "role": "sweep-indicator" },
+    { "key": "oz-water", "file": "minigame/water-ready.svg", "role": "water-ready-icon" }
+  ]
+}

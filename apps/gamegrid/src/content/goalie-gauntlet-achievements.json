@@ -1,0 +1,7 @@
+[
+  { "id": "perfect-25", "name": "Perfect 25", "description": "Record 25 perfect saves.", "badge": "timing", "type": "perfect_total", "target": 25 },
+  { "id": "no-goals-allowed", "name": "No Goals Allowed", "description": "Finish a match without allowing a goal.", "badge": "wall", "type": "clean_sheet", "target": 1 },
+  { "id": "rebound-slayer", "name": "Rebound Slayer", "description": "Save 20 rebound shots.", "badge": "rebound", "type": "rebound_saves", "target": 20 },
+  { "id": "ranked-gold", "name": "Ranked Gold", "description": "Reach Gold tier in ranked mode.", "badge": "ranked", "type": "ranked_tier", "target": 1, "tier": "Gold" },
+  { "id": "saves-1000", "name": "1000 Saves", "description": "Make 1000 saves total.", "badge": "grind", "type": "saves_total", "target": 1000 }
+]

@@ -1,0 +1,6 @@
+{
+  "forbiddenCouplings": [
+    { "from": "xr_runtime", "to": "finance" },
+    { "from": "xr_runtime", "to": "creator_payouts" }
+  ]
+}

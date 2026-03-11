@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${ALLOW_PUSH:-}" == "1" ]]; then
+  exit 0
+fi
+
+echo "Push blocked by local policy (local branches only)." >&2
+echo "If you must push, rerun with ALLOW_PUSH=1." >&2
+exit 1

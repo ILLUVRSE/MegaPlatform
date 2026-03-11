@@ -1,0 +1,20 @@
+{
+  "notes": "Example mission definitions for Sector 1.",
+  "missions": [
+    {
+      "id": "s1-m1",
+      "name": "Sector 1: Fringe Sweep",
+      "waveId": "sector1-m1",
+      "difficulty": 1,
+      "hasFinalBoss": false
+    },
+    {
+      "id": "s1-m3",
+      "name": "Sector 1: Prism Gate",
+      "waveId": "sector1-m3",
+      "difficulty": 3,
+      "hasFinalBoss": true,
+      "midbossAtSec": 66
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "bundleName": "governance-audit-core",
+  "requiredEvidence": [
+    "docs/compliance/privacy-retention.md",
+    "docs/compliance/content-policy.md",
+    "docs/ops_brain/runbooks/incident-response.md",
+    "docs/ops_brain/briefings/latest.json"
+  ]
+}

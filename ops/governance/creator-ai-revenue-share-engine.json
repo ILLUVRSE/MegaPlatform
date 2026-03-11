@@ -1,0 +1,6 @@
+{
+  "minimumCreatorShare": 0.5,
+  "maximumAgentShare": 0.4,
+  "platformShare": 0.1,
+  "requireAttributionWeights": true
+}

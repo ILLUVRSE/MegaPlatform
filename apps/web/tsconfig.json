@@ -1,0 +1,88 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@illuvrse/db": [
+        "../../packages/db/src/index.ts"
+      ],
+      "@illuvrse/audit": [
+        "../../packages/audit/src/index.ts"
+      ],
+      "@illuvrse/world-state": [
+        "../../packages/world-state/src/index.ts"
+      ],
+      "@illuvrse/storage": [
+        "../../packages/storage/src/index.ts"
+      ],
+      "@illuvrse/agent-manager": [
+        "../../packages/agent-manager/src/index.ts"
+      ],
+      "@illuvrse/media-corp-core": [
+        "../../packages/media-corp-core/src/index.ts"
+      ],
+      "@illuvrse/media-corp-canon": [
+        "../../packages/media-corp-canon/src/index.ts"
+      ],
+      "@illuvrse/media-corp-memory": [
+        "../../packages/media-corp-memory/src/index.ts"
+      ],
+      "@illuvrse/media-corp-scoring": [
+        "../../packages/media-corp-scoring/src/index.ts"
+      ],
+      "@illuvrse/media-corp-workflows": [
+        "../../packages/media-corp-workflows/src/index.ts"
+      ],
+      "@illuvrse/media-corp-agents": [
+        "../../packages/media-corp-agents/src/index.ts"
+      ],
+      "@illuvrse/media-corp-orchestrator": [
+        "../../packages/media-corp-orchestrator/src/index.ts"
+      ],
+      "@illuvrse/ui": [
+        "../../packages/ui/src/index.ts"
+      ],
+      "@/*": [
+        "./*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    ".next",
+    "node_modules",
+    "tests"
+  ]
+}

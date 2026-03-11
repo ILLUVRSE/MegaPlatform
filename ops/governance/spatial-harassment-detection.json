@@ -1,0 +1,7 @@
+{
+  "minimumHarassmentScore": 0.75,
+  "maxWarningDistanceMeters": 1.2,
+  "requireRepeatedPattern": true,
+  "minimumEvidenceEvents": 3,
+  "autoEscalateThreshold": 0.9
+}

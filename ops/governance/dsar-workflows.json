@@ -1,0 +1,24 @@
+[
+  {
+    "type": "export",
+    "steps": [
+      "Verify requester identity",
+      "Collect user-linked records",
+      "Generate machine-readable export",
+      "Deliver via secure channel"
+    ],
+    "evidencePath": "docs/compliance/evidence/dsar-requests.json",
+    "slaDays": 30
+  },
+  {
+    "type": "delete",
+    "steps": [
+      "Verify requester identity",
+      "Check legal retention exceptions",
+      "Execute deletion/anonymization",
+      "Confirm completion and audit trail"
+    ],
+    "evidencePath": "docs/compliance/evidence/dsar-requests.json",
+    "slaDays": 30
+  }
+]

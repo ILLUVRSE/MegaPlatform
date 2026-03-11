@@ -1,0 +1,11 @@
+{
+  "maxReplaysPerRun": 20,
+  "requiredResponseFields": ["containment", "rollback", "comms"],
+  "passThreshold": 0.75,
+  "severityWeights": {
+    "low": 0.5,
+    "medium": 1,
+    "high": 1.5,
+    "critical": 2
+  }
+}

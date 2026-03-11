@@ -1,0 +1,5 @@
+{
+  "minimumCompliantOutcomeRate": 0.9,
+  "requiredStewardshipControls": ["audit_log", "approval_gate", "human_review"],
+  "minimumObservationWindows": 3
+}

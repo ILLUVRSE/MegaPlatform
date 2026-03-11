@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TitleType {
+  movie
+  tv
+}
+
+enum InteractionType {
+  like
+  dislike
+  detail
+  watchlist_add
+  watchlist_remove
+}
+
+model Title {
+  id               String          @id @default(cuid())
+  tmdbId           Int
+  type             TitleType
+  name             String
+  overview         String
+  posterPath       String?
+  backdropPath     String?
+  releaseDate      DateTime?
+  runtime          Int?
+  tmdbPopularity   Float           @default(0)
+  tmdbVoteAverage  Float           @default(0)
+  tmdbVoteCount    Int             @default(0)
+  updatedAt        DateTime        @updatedAt
+  createdAt        DateTime        @default(now())
+  genres           TitleGenre[]
+  availability     Availability[]
+  trendSnapshots   TrendSnapshot[]
+  interactions     UserInteraction[]
+  watchlistedBy    Watchlist[]
+
+  @@unique([tmdbId, type])
+  @@index([type, tmdbPopularity])
+}
+
+model Genre {
+  id         String      @id @default(cuid())
+  tmdbGenreId Int        @unique
+  name       String
+  titleLinks TitleGenre[]
+}
+
+model TitleGenre {
+  titleId String
+  genreId String
+  title   Title @relation(fields: [titleId], references: [id], onDelete: Cascade)
+  genre   Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@id([titleId, genreId])
+}
+
+model Availability {
+  id            String   @id @default(cuid())
+  titleId        String
+  platform      String
+  region        String
+  url           String
+  leavingDate   DateTime?
+  lastCheckedAt DateTime @default(now())
+  title         Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
+
+  @@index([titleId, region])
+}
+
+model TrendSnapshot {
+  id         String   @id @default(cuid())
+  titleId    String
+  date       DateTime
+  trendScore Float
+  momentum   Float
+  components Json
+  title      Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
+
+  @@unique([titleId, date])
+  @@index([date, trendScore])
+}
+
+model User {
+  id           String            @id @default(cuid())
+  anonId       String            @unique
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  preference   UserPreference?
+  interactions UserInteraction[]
+  watchlist    Watchlist[]
+  notifications NotificationEvent[]
+}
+
+model UserPreference {
+  userId           String @id
+  genreWeights     Json
+  platformWeights  Json
+  runtimeWeights   Json
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserInteraction {
+  id        String          @id @default(cuid())
+  userId    String
+  titleId   String
+  type      InteractionType
+  createdAt DateTime        @default(now())
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     Title           @relation(fields: [titleId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([titleId, type])
+}
+
+model Watchlist {
+  userId    String
+  titleId   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, titleId])
+  @@index([createdAt])
+}
+
+model NotificationEvent {
+  id         String   @id @default(cuid())
+  userId     String
+  titleId    String?
+  type       String
+  payload    Json
+  createdAt  DateTime @default(now())
+  readAt     DateTime?
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}

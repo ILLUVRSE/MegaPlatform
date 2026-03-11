@@ -1,0 +1,5 @@
+{
+  "minWinsToPromote": 2,
+  "minConfidenceToPromote": 0.65,
+  "outputPath": "docs/ops_brain/learning-patterns.json"
+}

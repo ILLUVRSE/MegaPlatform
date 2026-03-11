@@ -1,0 +1,6 @@
+{
+  "maxSwitchLatencyMs": 400,
+  "requireIdentityContinuity": true,
+  "requireSessionContinuity": true,
+  "requireStateCarryover": true
+}

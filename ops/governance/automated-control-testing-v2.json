@@ -1,0 +1,4 @@
+{
+  "tests": ["access_control", "retention_control", "audit_logging"],
+  "evidenceOutputPath": "ops/logs/automated-control-testing-v2.json"
+}

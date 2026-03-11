@@ -1,0 +1,4 @@
+{
+  "outputPath": "ops/logs/legal-explainability-dossiers.json",
+  "requiredSections": ["policyRationale", "evidenceLinks", "outcome"]
+}

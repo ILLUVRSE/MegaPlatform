@@ -1,0 +1,11 @@
+{
+  "actions": [
+    {
+      "actionId": "act-150-proposed",
+      "actionType": "ranking_override",
+      "status": "overridden",
+      "operator": "ops-admin",
+      "reason": "manual rollback"
+    }
+  ]
+}

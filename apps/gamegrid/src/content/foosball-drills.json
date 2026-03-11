@@ -1,0 +1,101 @@
+[
+  {
+    "id": "top-corner-finisher",
+    "title": "Top Corner Finisher",
+    "instructions": "Score 1 goal from your striker lane toward the top corner.",
+    "goal": { "type": "score", "target": 1 },
+    "timeLimitSec": 25,
+    "startBall": { "x": 760, "y": 220, "vx": -80, "vy": 30 },
+    "activeRods": ["strikers"],
+    "lockedRods": ["goalkeeper", "defense", "midfield"]
+  },
+  {
+    "id": "quick-double",
+    "title": "Quick Double",
+    "instructions": "Score 2 goals quickly with active striker and midfield rods.",
+    "goal": { "type": "score", "target": 2 },
+    "timeLimitSec": 35,
+    "startBall": { "x": 660, "y": 350, "vx": 40, "vy": -30 },
+    "activeRods": ["midfield", "strikers"],
+    "lockedRods": ["goalkeeper", "defense"]
+  },
+  {
+    "id": "wall-pass-chain",
+    "title": "Wall Pass Chain",
+    "instructions": "Complete 3 pass contacts before shooting.",
+    "goal": { "type": "pass_chain", "target": 3 },
+    "timeLimitSec": 30,
+    "startBall": { "x": 620, "y": 410, "vx": 120, "vy": -20 },
+    "activeRods": ["defense", "midfield", "strikers"],
+    "lockedRods": ["goalkeeper"]
+  },
+  {
+    "id": "defensive-wall",
+    "title": "Defensive Wall",
+    "instructions": "Block 5 incoming AI shots.",
+    "goal": { "type": "block", "target": 5 },
+    "timeLimitSec": 45,
+    "startBall": { "x": 980, "y": 360, "vx": -260, "vy": 0 },
+    "activeRods": ["goalkeeper", "defense"],
+    "lockedRods": ["midfield", "strikers"]
+  },
+  {
+    "id": "midfield-screen",
+    "title": "Midfield Screen",
+    "instructions": "Use midfield to block 4 transitions.",
+    "goal": { "type": "block", "target": 4 },
+    "timeLimitSec": 35,
+    "startBall": { "x": 720, "y": 300, "vx": -180, "vy": 50 },
+    "activeRods": ["midfield"],
+    "lockedRods": ["goalkeeper", "defense", "strikers"]
+  },
+  {
+    "id": "three-pass-break",
+    "title": "Three-Pass Break",
+    "instructions": "String 3 clean passes across your rods.",
+    "goal": { "type": "pass_chain", "target": 3 },
+    "timeLimitSec": 40,
+    "startBall": { "x": 540, "y": 520, "vx": 100, "vy": -80 },
+    "activeRods": ["goalkeeper", "defense", "midfield"],
+    "lockedRods": ["strikers"]
+  },
+  {
+    "id": "striker-rhythm",
+    "title": "Striker Rhythm",
+    "instructions": "Hit 4 successful striker contacts in sequence.",
+    "goal": { "type": "pass_chain", "target": 4 },
+    "startBall": { "x": 780, "y": 360, "vx": -40, "vy": 0 },
+    "activeRods": ["strikers"],
+    "lockedRods": ["goalkeeper", "defense", "midfield"]
+  },
+  {
+    "id": "keeper-reflex",
+    "title": "Keeper Reflex",
+    "instructions": "Make 3 saves from close-range attempts.",
+    "goal": { "type": "block", "target": 3 },
+    "timeLimitSec": 20,
+    "startBall": { "x": 290, "y": 360, "vx": -200, "vy": 20 },
+    "activeRods": ["goalkeeper"],
+    "lockedRods": ["defense", "midfield", "strikers"]
+  },
+  {
+    "id": "counter-press",
+    "title": "Counter Press",
+    "instructions": "Block twice then score once.",
+    "goal": { "type": "score", "target": 1 },
+    "timeLimitSec": 35,
+    "startBall": { "x": 900, "y": 240, "vx": -160, "vy": 90 },
+    "activeRods": ["defense", "midfield", "strikers"],
+    "lockedRods": ["goalkeeper"]
+  },
+  {
+    "id": "lane-discipline",
+    "title": "Lane Discipline",
+    "instructions": "Complete 5 controlled passes with all rods available.",
+    "goal": { "type": "pass_chain", "target": 5 },
+    "timeLimitSec": 50,
+    "startBall": { "x": 640, "y": 210, "vx": 60, "vy": 120 },
+    "activeRods": ["goalkeeper", "defense", "midfield", "strikers"],
+    "lockedRods": []
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "minimumSafetyScore": 0.9,
+  "minimumComplianceScore": 0.92,
+  "minimumPerformanceScore": 0.88,
+  "minimumEvidenceArtifacts": 3,
+  "requireHumanSignoff": true
+}

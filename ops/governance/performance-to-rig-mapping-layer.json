@@ -1,0 +1,5 @@
+{
+  "maxUnmappedJoints": 2,
+  "fallbackMode": "bind-pose-lock",
+  "requiredFixtureCoverage": 1
+}

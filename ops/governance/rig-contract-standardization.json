@@ -1,0 +1,9 @@
+{
+  "supportedSkeletons": ["humanoid", "quadruped"],
+  "maxBoneCountBySkeleton": {
+    "humanoid": 256,
+    "quadruped": 220
+  },
+  "allowedConstraintTypes": ["ik", "fk", "aim", "twist"],
+  "blockedConstraintPairs": [["ik", "twist"]]
+}

@@ -1,0 +1,5 @@
+{
+  "minimumReadinessScore": 0.9,
+  "requireCertification": true,
+  "allowGoLiveWhenNonCertified": false
+}

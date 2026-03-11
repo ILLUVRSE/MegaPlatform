@@ -1,0 +1,5 @@
+{
+  "requiredCertifications": ["financial_v1", "privacy_v1", "safety_v1"],
+  "nonCertifiedMode": "constrained",
+  "blockedCapabilitiesWhenNonCertified": ["autonomous_publish", "autonomous_payout", "cross_border_transfer"]
+}

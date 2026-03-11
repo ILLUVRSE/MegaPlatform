@@ -1,0 +1,74 @@
+[
+  {
+    "id": "auth_rbac",
+    "name": "Authentication and RBAC",
+    "domain": "identity",
+    "owner": "Platform Core / Auth",
+    "maturity": "implemented",
+    "paths": ["apps/web/lib/auth.ts", "apps/web/lib/authz.ts", "apps/web/lib/rbac.ts", "apps/web/middleware.ts"]
+  },
+  {
+    "id": "watch_platform",
+    "name": "Watch Platform",
+    "domain": "content",
+    "owner": "Content Platform",
+    "maturity": "implemented",
+    "paths": ["apps/web/app/watch", "apps/web/app/api/watch", "apps/web/lib/watchEntitlements.ts"]
+  },
+  {
+    "id": "party_core",
+    "name": "Party Core",
+    "domain": "engagement",
+    "owner": "Party Ops",
+    "maturity": "implemented",
+    "paths": ["apps/web/app/party", "apps/web/app/api/party", "packages/world-state/src"]
+  },
+  {
+    "id": "studio_pipeline",
+    "name": "Studio Pipeline",
+    "domain": "content",
+    "owner": "Studio Pipeline",
+    "maturity": "implemented",
+    "paths": ["apps/web/app/studio", "apps/web/app/api/studio", "packages/agent-manager/src", "packages/storage/src"]
+  },
+  {
+    "id": "feed_and_shorts",
+    "name": "Feed and Shorts",
+    "domain": "engagement",
+    "owner": "Growth and Discovery",
+    "maturity": "implemented",
+    "paths": ["apps/web/app/home", "apps/web/app/shorts", "apps/web/app/api/feed", "apps/web/app/api/shorts"]
+  },
+  {
+    "id": "external_module_shell",
+    "name": "External Module Shell",
+    "domain": "engagement",
+    "owner": "Platform UX",
+    "maturity": "implemented",
+    "paths": ["apps/web/app/news", "apps/web/app/gamegrid", "apps/web/app/pixelbrawl", "apps/web/app/art-atlas", "apps/web/lib/platformApps.ts"]
+  },
+  {
+    "id": "agent_control_plane",
+    "name": "Autonomous Agent Control Plane",
+    "domain": "ops",
+    "owner": "Ops Engineering",
+    "maturity": "partial",
+    "paths": ["packages/agent-manager/src/ops", "docs/ops_brain", "docs/queue"]
+  },
+  {
+    "id": "governance_guardrails",
+    "name": "Governance Guardrails",
+    "domain": "governance",
+    "owner": "Governance and Trust",
+    "maturity": "implemented",
+    "paths": ["ops/governance", "apps/web/lib/platformGovernance.ts", "apps/web/app/api/admin"]
+  },
+  {
+    "id": "feature_store",
+    "name": "Feature Store and Candidate Retrieval",
+    "domain": "engagement",
+    "owner": "Growth and Discovery",
+    "maturity": "planned",
+    "paths": ["apps/web/lib/feedRanking.ts", "apps/web/lib/shortsRanking.ts"]
+  }
+]

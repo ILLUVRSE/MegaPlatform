@@ -1,0 +1,318 @@
+{
+  "chapters": [
+    {
+      "id": "prologue",
+      "title": "Lantern Wake",
+      "startNodeId": "p1",
+      "nodes": [
+        {
+          "id": "p1",
+          "text": "A lantern comet shadows your hull and mirrors your engine pulse.",
+          "choices": [
+            {
+              "id": "p1-concord",
+              "label": "Open concord hailing channel",
+              "nextNodeId": "p2",
+              "outcome": { "crewMorale": 1, "credits": 15, "factionDelta": { "concordium": 2 } }
+            },
+            {
+              "id": "p1-freebelt",
+              "label": "Trade encrypted route snippets",
+              "nextNodeId": "p2",
+              "outcome": { "credits": 50, "crewMorale": -1, "factionDelta": { "freebelt": 2 } }
+            }
+          ]
+        },
+        {
+          "id": "p2",
+          "text": "Dawnline refugees request escort while private contractors offer fast credits.",
+          "choices": [
+            {
+              "id": "p2-escort",
+              "label": "Escort the flotilla",
+              "nextNodeId": "p3",
+              "outcome": { "crewMorale": 3, "shipCondition": -2, "factionDelta": { "concordium": 2 }, "xp": 20 }
+            },
+            {
+              "id": "p2-sell",
+              "label": "Sell lanes to contractors",
+              "nextNodeId": "p3",
+              "outcome": { "credits": 90, "factionDelta": { "freebelt": 2 }, "crewMorale": -2, "xp": 18 }
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "text": "The Astral Choir transmits a memory-hymn that predicts branching wars.",
+          "choices": [
+            {
+              "id": "p3-listen",
+              "label": "Listen and archive",
+              "nextNodeId": "p4",
+              "outcome": { "materials": 2, "factionDelta": { "astral": 2 }, "xp": 18 }
+            },
+            {
+              "id": "p3-jam",
+              "label": "Jam and isolate channel",
+              "nextNodeId": "p4",
+              "outcome": { "shipCondition": 2, "factionDelta": { "concordium": 1, "astral": -1 } }
+            }
+          ]
+        },
+        {
+          "id": "p4",
+          "text": "A station quartermaster asks whether your charter values law, profit, or wonder.",
+          "choices": [
+            {
+              "id": "p4-law",
+              "label": "Law before fear",
+              "nextNodeId": "p5",
+              "outcome": { "factionDelta": { "concordium": 2 }, "crewMorale": 1 }
+            },
+            {
+              "id": "p4-profit",
+              "label": "Profit keeps engines lit",
+              "nextNodeId": "p5",
+              "outcome": { "factionDelta": { "freebelt": 2 }, "credits": 40 }
+            },
+            {
+              "id": "p4-wonder",
+              "label": "Wonder keeps us human",
+              "nextNodeId": "p5",
+              "outcome": { "factionDelta": { "astral": 2 }, "crewMorale": 2 }
+            }
+          ]
+        },
+        {
+          "id": "p5",
+          "text": "The lantern vault opens. Medicine can be used now or sold for leverage.",
+          "choices": [
+            {
+              "id": "p5-heal",
+              "label": "Use medicine for crew",
+              "nextNodeId": "p6",
+              "outcome": { "crewMorale": 2, "shipCondition": 5, "factionDelta": { "concordium": 1 } }
+            },
+            {
+              "id": "p5-auction",
+              "label": "Auction medicine lots",
+              "nextNodeId": "p6",
+              "outcome": { "credits": 120, "crewMorale": -1, "factionDelta": { "freebelt": 1 } }
+            }
+          ]
+        },
+        {
+          "id": "p6",
+          "text": "Chronicle seam locked. Your charter begins.",
+          "choices": []
+        }
+      ]
+    },
+    {
+      "id": "freebelt-accord",
+      "title": "Freebelt Accord",
+      "startNodeId": "f1",
+      "nodes": [
+        {
+          "id": "f1",
+          "text": "A caravan leader offers black market fuel at a discount.",
+          "choices": [
+            {
+              "id": "f1-buy",
+              "label": "Buy discounted fuel",
+              "nextNodeId": "f2",
+              "outcome": { "credits": -40, "shipCondition": 4, "factionDelta": { "freebelt": 2 } }
+            },
+            {
+              "id": "f1-report",
+              "label": "Report smugglers to Concordium",
+              "nextNodeId": "f2",
+              "outcome": { "credits": 30, "factionDelta": { "concordium": 2, "freebelt": -2 } }
+            }
+          ]
+        },
+        {
+          "id": "f2",
+          "text": "A syndicate broker asks for priority docking rights.",
+          "choices": [
+            {
+              "id": "f2-grant",
+              "label": "Grant docking rights",
+              "nextNodeId": "f3",
+              "outcome": { "credits": 70, "factionDelta": { "freebelt": 2 }, "crewMorale": -1 }
+            },
+            {
+              "id": "f2-deny",
+              "label": "Keep neutral access",
+              "nextNodeId": "f3",
+              "outcome": { "crewMorale": 1, "factionDelta": { "concordium": 1 } }
+            }
+          ]
+        },
+        {
+          "id": "f3",
+          "text": "Loot manifests reveal relief cargo hidden among contraband.",
+          "choices": [
+            {
+              "id": "f3-return",
+              "label": "Return relief cargo",
+              "nextNodeId": "f4",
+              "outcome": { "crewMorale": 2, "factionDelta": { "concordium": 2 }, "xp": 18 }
+            },
+            {
+              "id": "f3-split",
+              "label": "Split cargo with broker",
+              "nextNodeId": "f4",
+              "outcome": { "credits": 85, "factionDelta": { "freebelt": 2 }, "xp": 16 }
+            }
+          ]
+        },
+        {
+          "id": "f4",
+          "text": "Only captains trusted by Freebelt can enter the Gray Bazaar vault.",
+          "choices": [
+            {
+              "id": "f4-enter",
+              "label": "Enter vault",
+              "requiresFaction": { "faction": "freebelt", "min": 4 },
+              "nextNodeId": "f5",
+              "outcome": { "credits": 120, "materials": 3, "factionDelta": { "freebelt": 1 } }
+            },
+            {
+              "id": "f4-skip",
+              "label": "Skip vault",
+              "nextNodeId": "f5",
+              "outcome": { "crewMorale": 1 }
+            }
+          ]
+        },
+        {
+          "id": "f5",
+          "text": "A syndicate cell asks for safe escort through Concordium patrols.",
+          "choices": [
+            {
+              "id": "f5-escort",
+              "label": "Escort cell",
+              "nextNodeId": "f6",
+              "outcome": { "shipCondition": -3, "credits": 95, "factionDelta": { "freebelt": 2 } }
+            },
+            {
+              "id": "f5-refuse",
+              "label": "Refuse and maintain charter",
+              "nextNodeId": "f6",
+              "outcome": { "factionDelta": { "concordium": 1 }, "crewMorale": 1 }
+            }
+          ]
+        },
+        {
+          "id": "f6",
+          "text": "The Accord chapter closes with your reputation recalibrated across border worlds.",
+          "choices": []
+        }
+      ]
+    },
+    {
+      "id": "choir-of-light",
+      "title": "Choir of Light",
+      "startNodeId": "a1",
+      "nodes": [
+        {
+          "id": "a1",
+          "text": "Astral envoys offer a pilgrimage route through living nebula strata.",
+          "choices": [
+            {
+              "id": "a1-accept",
+              "label": "Accept pilgrimage",
+              "nextNodeId": "a2",
+              "outcome": { "factionDelta": { "astral": 2 }, "crewMorale": 2 }
+            },
+            {
+              "id": "a1-decline",
+              "label": "Decline and hold tactical corridor",
+              "nextNodeId": "a2",
+              "outcome": { "shipCondition": 2, "factionDelta": { "concordium": 1 } }
+            }
+          ]
+        },
+        {
+          "id": "a2",
+          "text": "A choir relic hums with probability echoes and asks for sacrifice.",
+          "choices": [
+            {
+              "id": "a2-offer",
+              "label": "Offer rare materials",
+              "nextNodeId": "a3",
+              "outcome": { "materials": -2, "factionDelta": { "astral": 2 }, "xp": 20 }
+            },
+            {
+              "id": "a2-seal",
+              "label": "Seal relic",
+              "nextNodeId": "a3",
+              "outcome": { "shipCondition": 2, "factionDelta": { "astral": -1, "concordium": 1 } }
+            }
+          ]
+        },
+        {
+          "id": "a3",
+          "text": "The relic predicts a hidden gate near Freebelt salvage lanes.",
+          "choices": [
+            {
+              "id": "a3-share",
+              "label": "Share prophecy publicly",
+              "nextNodeId": "a4",
+              "outcome": { "factionDelta": { "concordium": 1, "astral": 1 }, "crewMorale": 1 }
+            },
+            {
+              "id": "a3-sell",
+              "label": "Sell coordinates privately",
+              "nextNodeId": "a4",
+              "outcome": { "factionDelta": { "freebelt": 2, "astral": -1 }, "credits": 110 }
+            }
+          ]
+        },
+        {
+          "id": "a4",
+          "text": "Only captains resonant with the Choir can trigger the luminal archive.",
+          "choices": [
+            {
+              "id": "a4-trigger",
+              "label": "Trigger archive",
+              "requiresFaction": { "faction": "astral", "min": 4 },
+              "nextNodeId": "a5",
+              "outcome": { "factionDelta": { "astral": 2 }, "materials": 4, "xp": 24 }
+            },
+            {
+              "id": "a4-observe",
+              "label": "Observe only",
+              "nextNodeId": "a5",
+              "outcome": { "crewMorale": 1 }
+            }
+          ]
+        },
+        {
+          "id": "a5",
+          "text": "The Choir asks if your charter serves certainty or transformation.",
+          "choices": [
+            {
+              "id": "a5-certainty",
+              "label": "Certainty",
+              "nextNodeId": "a6",
+              "outcome": { "factionDelta": { "concordium": 2 }, "shipCondition": 2 }
+            },
+            {
+              "id": "a5-transform",
+              "label": "Transformation",
+              "nextNodeId": "a6",
+              "outcome": { "factionDelta": { "astral": 2 }, "crewMorale": 2 }
+            }
+          ]
+        },
+        {
+          "id": "a6",
+          "text": "Your crew records the hymn as a tactical and spiritual map for future runs.",
+          "choices": []
+        }
+      ]
+    }
+  ]
+}

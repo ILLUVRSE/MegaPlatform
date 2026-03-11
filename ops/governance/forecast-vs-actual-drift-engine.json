@@ -1,0 +1,11 @@
+{
+  "driftWarningRatio": 0.1,
+  "driftCriticalRatio": 0.25,
+  "maxCorrectiveActions": 3,
+  "requiredActions": [
+    "tighten_budget",
+    "reduce_non_urgent_runs",
+    "escalate_finance_review"
+  ],
+  "outputPath": "ops/logs/forecast-vs-actual-drift-reports.json"
+}

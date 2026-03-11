@@ -1,0 +1,5 @@
+{
+  "proposalScoreThreshold": 0.65,
+  "minimumSignalCount": 3,
+  "requiredHorizonDays": 90
+}

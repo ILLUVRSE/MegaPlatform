@@ -1,0 +1,6 @@
+{
+  "requiredSurfaces": ["watch", "shorts", "games", "narrative"],
+  "requiredContextKeys": ["profileId", "sessionId", "contentAnchor"],
+  "maxIdleMinutes": 25,
+  "allowPartialContinuityAboveRisk": false
+}

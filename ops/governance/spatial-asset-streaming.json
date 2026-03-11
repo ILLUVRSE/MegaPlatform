@@ -1,0 +1,5 @@
+{
+  "maxConcurrentStreams": 3,
+  "maxResidentMemoryMb": 512,
+  "defaultChunkSizeKb": 256
+}

@@ -1,0 +1,18 @@
+{
+  "signals": [
+    {
+      "signalId": "sig-149-low",
+      "userId": "user-149",
+      "pattern": "neutral",
+      "severity": 0.2,
+      "source": "engagement"
+    },
+    {
+      "signalId": "sig-149-high",
+      "userId": "user-149",
+      "pattern": "doom_scroll",
+      "severity": 0.9,
+      "source": "ranking"
+    }
+  ]
+}

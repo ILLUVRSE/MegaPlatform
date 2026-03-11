@@ -1,0 +1,5 @@
+{
+  "priorityOrder": ["safety", "ops", "governance", "product", "growth"],
+  "denyBeatsAllow": true,
+  "requiredTraceFields": ["winner", "losers", "reason"]
+}

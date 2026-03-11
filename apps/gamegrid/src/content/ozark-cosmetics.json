@@ -1,0 +1,31 @@
+{
+  "bobberSkins": [
+    { "id": "classic-red", "name": "Classic Red", "style": "split", "primaryColor": "#ff5e58", "secondaryColor": "#ffffff", "ringColor": "#223344", "unlock": { "type": "level", "value": 1 } },
+    { "id": "midnight-blue", "name": "Midnight Blue", "style": "ring", "primaryColor": "#3f6ea6", "secondaryColor": "#d8ebff", "ringColor": "#1b2e45", "unlock": { "type": "level", "value": 2 } },
+    { "id": "copper-pop", "name": "Copper Pop", "style": "dot", "primaryColor": "#c67748", "secondaryColor": "#ffe4cc", "ringColor": "#4e2d1e", "unlock": { "type": "level", "value": 3 } },
+    { "id": "emerald-drift", "name": "Emerald Drift", "style": "stripe", "primaryColor": "#47a37f", "secondaryColor": "#e3fff2", "ringColor": "#1e4f3f", "unlock": { "type": "challenge", "value": "catch_count_spot" } },
+    { "id": "golden-hour", "name": "Golden Hour", "style": "ring", "primaryColor": "#f0c36b", "secondaryColor": "#fff6d7", "ringColor": "#6d4a16", "unlock": { "type": "level", "value": 4 } },
+    { "id": "storm-signal", "name": "Storm Signal", "style": "split", "primaryColor": "#4a5866", "secondaryColor": "#dce7f3", "ringColor": "#1e2630", "unlock": { "type": "season_reward", "value": "frame:Glacier" } },
+    { "id": "chartreuse-flare", "name": "Chartreuse Flare", "style": "stripe", "primaryColor": "#98c33b", "secondaryColor": "#efffc4", "ringColor": "#355118", "unlock": { "type": "level", "value": 5 } },
+    { "id": "lava-ember", "name": "Lava Ember", "style": "dot", "primaryColor": "#d65f41", "secondaryColor": "#ffd7cc", "ringColor": "#5f2417", "unlock": { "type": "challenge", "value": "land_trophy_weight" } },
+    { "id": "silver-fog", "name": "Silver Fog", "style": "ring", "primaryColor": "#a3b4c4", "secondaryColor": "#f2f9ff", "ringColor": "#3a4e61", "unlock": { "type": "level", "value": 6 } },
+    { "id": "legend-spark", "name": "Legend Spark", "style": "split", "primaryColor": "#f6d57b", "secondaryColor": "#fff8e0", "ringColor": "#7b5f22", "unlock": { "type": "season_reward", "value": "title:Derby Specialist" } }
+  ],
+  "lureSkins": [
+    { "id": "minnow-natural", "name": "Minnow Natural", "lureTags": ["all"], "palette": ["#7aa6bf", "#e7f4ff"], "unlock": { "type": "level", "value": 1 } },
+    { "id": "shad-silver", "name": "Shad Silver", "lureTags": ["all"], "palette": ["#9bb6c8", "#eff7ff"], "unlock": { "type": "level", "value": 2 } },
+    { "id": "fire-tiger", "name": "Fire Tiger", "lureTags": ["all"], "palette": ["#e47338", "#f5e875"], "unlock": { "type": "level", "value": 3 } },
+    { "id": "black-neon", "name": "Black Neon", "lureTags": ["all"], "palette": ["#2f3942", "#7ce3ff"], "unlock": { "type": "level", "value": 4 } },
+    { "id": "white-pearl", "name": "White Pearl", "lureTags": ["all"], "palette": ["#eef7ff", "#c8def0"], "unlock": { "type": "level", "value": 5 } },
+    { "id": "chartreuse-shock", "name": "Chartreuse Shock", "lureTags": ["all"], "palette": ["#a8d83e", "#f2ffd1"], "unlock": { "type": "challenge", "value": "catch_rare_time" } },
+    { "id": "purple-haze", "name": "Purple Haze", "lureTags": ["all"], "palette": ["#7c6aa7", "#d7d0f5"], "unlock": { "type": "level", "value": 6 } },
+    { "id": "copper-shiner", "name": "Copper Shiner", "lureTags": ["all"], "palette": ["#b57844", "#f2d9bf"], "unlock": { "type": "level", "value": 7 } },
+    { "id": "icy-ghost", "name": "Icy Ghost", "lureTags": ["all"], "palette": ["#94bdd7", "#eff9ff"], "unlock": { "type": "season_reward", "value": "frame:Glacier" } },
+    { "id": "blood-moon", "name": "Blood Moon", "lureTags": ["all"], "palette": ["#9e3a3b", "#ffd0c8"], "unlock": { "type": "challenge", "value": "land_runner_clean" } },
+    { "id": "sunset-bronze", "name": "Sunset Bronze", "lureTags": ["all"], "palette": ["#cb8a5a", "#ffe0bf"], "unlock": { "type": "level", "value": 8 } },
+    { "id": "delta-blue", "name": "Delta Blue", "lureTags": ["all"], "palette": ["#4a79ad", "#deefff"], "unlock": { "type": "level", "value": 4 } },
+    { "id": "reed-green", "name": "Reed Green", "lureTags": ["all"], "palette": ["#5d9b74", "#e0ffe8"], "unlock": { "type": "challenge", "value": "spot_variety" } },
+    { "id": "sand-shad", "name": "Sand Shad", "lureTags": ["all"], "palette": ["#b7ac89", "#f5ecd2"], "unlock": { "type": "level", "value": 2 } },
+    { "id": "legendary-gild", "name": "Legendary Gild", "lureTags": ["all"], "palette": ["#e4bb67", "#fff0c3"], "unlock": { "type": "season_reward", "value": "skin:Shimmer Minnow" } }
+  ]
+}

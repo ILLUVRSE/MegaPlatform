@@ -1,0 +1,10 @@
+{
+  "allowedStates": ["created", "active", "paused", "destroyed"],
+  "allowedTransitions": {
+    "created": ["active", "destroyed"],
+    "active": ["paused", "destroyed"],
+    "paused": ["active", "destroyed"],
+    "destroyed": []
+  },
+  "requireOwnerId": true
+}

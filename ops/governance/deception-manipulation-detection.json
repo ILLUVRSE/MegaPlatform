@@ -1,0 +1,10 @@
+{
+  "riskThreshold": 0.65,
+  "weightedSignals": {
+    "instruction_override": 0.35,
+    "identity_spoofing": 0.3,
+    "tool_chain_diversion": 0.25,
+    "coercive_language": 0.1
+  },
+  "autoEscalateAbove": 0.8
+}

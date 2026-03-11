@@ -1,0 +1,10 @@
+{
+  "drones": [
+    { "id": "repair-microdrone", "name": "Repair Microdrone", "type": "repair", "rarity": "common", "effects": { "postCombatHullRepair": 2 } },
+    { "id": "repair-fieldmate", "name": "Repair Fieldmate", "type": "repair", "rarity": "uncommon", "effects": { "postCombatHullRepair": 3 } },
+    { "id": "shield-kite", "name": "Shield Kite", "type": "shield", "rarity": "common", "effects": { "shieldBonus": 6 } },
+    { "id": "scan-sprite", "name": "Scan Sprite", "type": "scan", "rarity": "common", "effects": { "scanBonus": 0.08 } },
+    { "id": "smuggler-wisp", "name": "Smuggler Wisp", "type": "smuggler", "rarity": "uncommon", "effects": { "contrabandDetectionReduction": 0.08 } },
+    { "id": "escort-node", "name": "Escort Node", "type": "shield", "rarity": "rare", "effects": { "convoyHpBonus": 8, "shieldBonus": 4 } }
+  ]
+}

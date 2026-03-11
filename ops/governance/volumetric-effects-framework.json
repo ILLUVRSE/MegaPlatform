@@ -1,0 +1,5 @@
+{
+  "allowedPresets": ["mist", "godrays", "storm"],
+  "maxGpuCostMs": 3.5,
+  "maxParticleDensity": 0.8
+}

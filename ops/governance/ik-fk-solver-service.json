@@ -1,0 +1,5 @@
+{
+  "maxChainLength": 16,
+  "maxSolveIterations": 24,
+  "deterministicFallbackMode": "fk_lock"
+}

@@ -1,0 +1,2741 @@
+{
+  "scope": "apps/web/app/api",
+  "routeCount": 383,
+  "routes": [
+    {
+      "route": "/api/admin/apps/certification/publish",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/apps/certification/publish/route.ts"
+    },
+    {
+      "route": "/api/admin/assets/[id]",
+      "methods": [
+        "PATCH"
+      ],
+      "source": "apps/web/app/api/admin/assets/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/assets/cleanup",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/assets/cleanup/route.ts"
+    },
+    {
+      "route": "/api/admin/assets",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/assets/route.ts"
+    },
+    {
+      "route": "/api/admin/audit",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/audit/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/change-budgets/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/change-budgets/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/constraints/solve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/constraints/solve/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/control-plane/v3",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/control-plane/v3/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/guardrails/blast-radius/check",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/guardrails/blast-radius/check/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/intent/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/intent/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/policies/compile",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/policies/compile/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/policies/explain",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/policies/explain/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/policies/windows/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/policies/windows/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/priorities/arbitrate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/priorities/arbitrate/route.ts"
+    },
+    {
+      "route": "/api/admin/autonomy/rollback/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/autonomy/rollback/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/audit/evidence-graph",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/audit/evidence-graph/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/certification/gate/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/certification/gate/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/child-safety/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/child-safety/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/control-testing/v2/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/control-testing/v2/run/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/data-routing/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/data-routing/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/dsar/requests",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/dsar/requests/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/federation/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/federation/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/legal/dossier/generate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/legal/dossier/generate/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/privacy-risk/score",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/privacy-risk/score/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/regulatory/ingest",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/regulatory/ingest/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/retention/jobs",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/retention/jobs/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/scorecard",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/compliance/scorecard/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/sensitive-context/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/compliance/sensitive-context/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/compliance/status",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/compliance/status/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/attribution/graph",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/attribution/graph/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/compliance/sponsorship/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/compliance/sponsorship/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/disputes",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/disputes/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/distribution/reputation/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/distribution/reputation/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/economy/revenue-share/calculate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/economy/revenue-share/calculate/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/governance/autonomy-contracts",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/governance/autonomy-contracts/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/governance/council",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/governance/council/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/licensing/resolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/licensing/resolve/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/revenue-attribution",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/creator/revenue-attribution/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/rights/agent-editing/enforce",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/rights/agent-editing/enforce/route.ts"
+    },
+    {
+      "route": "/api/admin/creator/risk/score",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/creator/risk/score/route.ts"
+    },
+    {
+      "route": "/api/admin/deploy/promotion-readiness",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/deploy/promotion-readiness/route.ts"
+    },
+    {
+      "route": "/api/admin/distribution/actions",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/distribution/actions/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/co-creation/workflows",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/co-creation/workflows/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/emergent-behaviors",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/emergent-behaviors/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/goals/select",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/goals/select/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/maturity/certification",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/maturity/certification/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/narrative/arc",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/narrative/arc/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/organism-mode",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/organism-mode/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/programming/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/programming/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/self-heal/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/self-heal/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/state",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/state/route.ts"
+    },
+    {
+      "route": "/api/admin/ecosystem/strategy/memory",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ecosystem/strategy/memory/route.ts"
+    },
+    {
+      "route": "/api/admin/episodes/[id]",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/episodes/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/episodes",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/episodes/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/[id]/feature",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/feed/[id]/feature/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/[id]/hide",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/feed/[id]/hide/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/[id]/pin",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/feed/[id]/pin/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/[id]/shadowban",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/feed/[id]/shadowban/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/[id]/unhide",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/feed/[id]/unhide/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/posts/[id]",
+      "methods": [
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/feed/posts/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/posts",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/feed/posts/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/reports/[reportId]/resolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/feed/reports/[reportId]/resolve/route.ts"
+    },
+    {
+      "route": "/api/admin/feed/reports",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/feed/reports/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/capex-opex/optimize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/capex-opex/optimize/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/carbon-scheduler/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/carbon-scheduler/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/certification/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/certification/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/controller/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/controller/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/forecast-drift/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/forecast-drift/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/guardrails",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/finance/guardrails/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/marketplace-integrity/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/marketplace-integrity/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/revenue-stress-test/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/revenue-stress-test/run/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/rewards/fraud-guardrails/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/rewards/fraud-guardrails/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/roi-planner/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/roi-planner/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/finance/token-economy/stabilize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/finance/token-economy/stabilize/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/alignment/long-horizon-monitor",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/alignment/long-horizon-monitor/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/antifragility/learn",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/antifragility/learn/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/assurance/third-party/query",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/assurance/third-party/query/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/audit/bundles",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/audit/bundles/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/autonomy/confidence-calibrate-v2",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/autonomy/confidence-calibrate-v2/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/briefings/executive",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/briefings/executive/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/charter/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/charter/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/conflicts/resolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/conflicts/resolve/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/constitutional/tests/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/constitutional/tests/run/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/decisions",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/decisions/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/deliberation/collective",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/deliberation/collective/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/discovery/unknown-unknowns",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/discovery/unknown-unknowns/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/drift",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/governance/drift/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/goals/evolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/goals/evolve/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/health/socio-technical-index",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/health/socio-technical-index/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/memory/consolidate-v2",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/memory/consolidate-v2/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/meta-learning/policy-optimize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/meta-learning/policy-optimize/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/org/simulate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/org/simulate/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/organism-mode/v2/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/organism-mode/v2/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/organism-mode/v3/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/organism-mode/v3/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/oversight/marketplace/assign",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/oversight/marketplace/assign/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/policy/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/policy/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/portfolio/optimize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/portfolio/optimize/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/recovery/strategic-failure-plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/recovery/strategic-failure-plan/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/roadmap/synthesize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/roadmap/synthesize/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/stewardship/program/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/stewardship/program/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/strategy/simulate-v2",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/strategy/simulate-v2/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/stress-tests/run",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/stress-tests/run/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/transparency/portal/snapshot",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/governance/transparency/portal/snapshot/route.ts"
+    },
+    {
+      "route": "/api/admin/governance/trustworthy-ai/score",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/governance/trustworthy-ai/score/route.ts"
+    },
+    {
+      "route": "/api/admin/growth/recommendations",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/growth/recommendations/route.ts"
+    },
+    {
+      "route": "/api/admin/incidents/automation",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/incidents/automation/route.ts"
+    },
+    {
+      "route": "/api/admin/ingestion/connectors/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ingestion/connectors/run/route.ts"
+    },
+    {
+      "route": "/api/admin/intelligence/health",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/intelligence/health/route.ts"
+    },
+    {
+      "route": "/api/admin/launch/certification",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/launch/certification/route.ts"
+    },
+    {
+      "route": "/api/admin/launch/readiness",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/launch/readiness/route.ts"
+    },
+    {
+      "route": "/api/admin/live/channels/[id]/health",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/live/channels/[id]/health/route.ts"
+    },
+    {
+      "route": "/api/admin/live/channels/[id]/programs",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/live/channels/[id]/programs/route.ts"
+    },
+    {
+      "route": "/api/admin/live/channels/[id]",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/live/channels/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/live/channels/[id]/schedule/actions",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/live/channels/[id]/schedule/actions/route.ts"
+    },
+    {
+      "route": "/api/admin/live/channels",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/live/channels/route.ts"
+    },
+    {
+      "route": "/api/admin/live/programs/[id]",
+      "methods": [
+        "DELETE",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/live/programs/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/live/scheduler/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/live/scheduler/run/route.ts"
+    },
+    {
+      "route": "/api/admin/live/scheduler/runs",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/live/scheduler/runs/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/channels",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/channels/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/metrics",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/metrics/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/publish",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/publish/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/release",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/release/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/review",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/review/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/run/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/state",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/state/route.ts"
+    },
+    {
+      "route": "/api/admin/media-corp/summary",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/media-corp/summary/route.ts"
+    },
+    {
+      "route": "/api/admin/monetization/purchases",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/monetization/purchases/route.ts"
+    },
+    {
+      "route": "/api/admin/monetization/shorts/[id]",
+      "methods": [
+        "PATCH"
+      ],
+      "source": "apps/web/app/api/admin/monetization/shorts/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/monetization/shorts",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/monetization/shorts/route.ts"
+    },
+    {
+      "route": "/api/admin/monetization/shows",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "source": "apps/web/app/api/admin/monetization/shows/route.ts"
+    },
+    {
+      "route": "/api/admin/objectives",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/objectives/route.ts"
+    },
+    {
+      "route": "/api/admin/observability/summary",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/observability/summary/route.ts"
+    },
+    {
+      "route": "/api/admin/ops/briefing",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ops/briefing/route.ts"
+    },
+    {
+      "route": "/api/admin/ops/enqueue",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ops/enqueue/route.ts"
+    },
+    {
+      "route": "/api/admin/ops/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ops/run/route.ts"
+    },
+    {
+      "route": "/api/admin/ops/state",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/ops/state/route.ts"
+    },
+    {
+      "route": "/api/admin/ops/tasks/[id]",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/ops/tasks/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/coordinator/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/coordinator/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/cost-aware/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/cost-aware/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/experiments/run",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/experiments/run/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/hypotheses/generate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/hypotheses/generate/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/learning/consolidate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/learning/consolidate/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/loops/reliability-review",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/optimization/loops/reliability-review/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/rollout/guardrails",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/rollout/guardrails/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/rollout/preflight",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/rollout/preflight/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/simulation",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/simulation/route.ts"
+    },
+    {
+      "route": "/api/admin/optimization/trust-safety/optimize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/optimization/trust-safety/optimize/route.ts"
+    },
+    {
+      "route": "/api/admin/partners/activate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/partners/activate/route.ts"
+    },
+    {
+      "route": "/api/admin/platform/edge/performance",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/platform/edge/performance/route.ts"
+    },
+    {
+      "route": "/api/admin/platform/events/export",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/platform/events/export/route.ts"
+    },
+    {
+      "route": "/api/admin/platform/runtime-readiness",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/platform/runtime-readiness/route.ts"
+    },
+    {
+      "route": "/api/admin/platform/telemetry/bridge",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/platform/telemetry/bridge/route.ts"
+    },
+    {
+      "route": "/api/admin/profiles/[id]/my-list/reset",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/profiles/[id]/my-list/reset/route.ts"
+    },
+    {
+      "route": "/api/admin/profiles/[id]/progress/reset",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/profiles/[id]/progress/reset/route.ts"
+    },
+    {
+      "route": "/api/admin/profiles/[id]",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PATCH"
+      ],
+      "source": "apps/web/app/api/admin/profiles/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/profiles",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/profiles/route.ts"
+    },
+    {
+      "route": "/api/admin/reliability/failure-drills",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/reliability/failure-drills/route.ts"
+    },
+    {
+      "route": "/api/admin/roles",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/roles/route.ts"
+    },
+    {
+      "route": "/api/admin/seasons/[id]",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/seasons/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/seasons",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/seasons/route.ts"
+    },
+    {
+      "route": "/api/admin/security/deception/detect",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/deception/detect/route.ts"
+    },
+    {
+      "route": "/api/admin/security/governance/tamper/scan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/governance/tamper/scan/route.ts"
+    },
+    {
+      "route": "/api/admin/security/incidents/replay",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/incidents/replay/route.ts"
+    },
+    {
+      "route": "/api/admin/security/insider-risk/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/insider-risk/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/security/key-rotation/status",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/security/key-rotation/status/route.ts"
+    },
+    {
+      "route": "/api/admin/security/permission-drift",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/security/permission-drift/route.ts"
+    },
+    {
+      "route": "/api/admin/security/provenance/outputs",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/provenance/outputs/route.ts"
+    },
+    {
+      "route": "/api/admin/security/red-team/simulate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/red-team/simulate/route.ts"
+    },
+    {
+      "route": "/api/admin/security/regions/failover/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/regions/failover/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/security/resilience/certify",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/resilience/certify/route.ts"
+    },
+    {
+      "route": "/api/admin/security/secrets/minimize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/security/secrets/minimize/route.ts"
+    },
+    {
+      "route": "/api/admin/security/supply-chain",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/security/supply-chain/route.ts"
+    },
+    {
+      "route": "/api/admin/shows/[id]",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/shows/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/shows",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/shows/route.ts"
+    },
+    {
+      "route": "/api/admin/tenancy/authorize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/tenancy/authorize/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/agency/controls",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/agency/controls/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/continuity/cross-format/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/continuity/cross-format/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/emotional-safety/signals",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/emotional-safety/signals/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/experience/console/actions",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/experience/console/actions/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/friction/adaptive/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/friction/adaptive/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/growth/preserve/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/growth/preserve/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/moderation/contextual/escalate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/moderation/contextual/escalate/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/narrative/coherence/score",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/narrative/coherence/score/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/personalization/ethics/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/personalization/ethics/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/trust/sessions/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/trust/sessions/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/users/[id]",
+      "methods": [
+        "PUT"
+      ],
+      "source": "apps/web/app/api/admin/users/[id]/route.ts"
+    },
+    {
+      "route": "/api/admin/users",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/users/route.ts"
+    },
+    {
+      "route": "/api/admin/ux/diagnostics",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/ux/diagnostics/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/accessibility/baseline/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/accessibility/baseline/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/blend-tree/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/blend-tree/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/data-model/v1/ingest",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/data-model/v1/ingest/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/event-timeline/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/event-timeline/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/facial/baseline/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/facial/baseline/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/ik-fk/solve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/ik-fk/solve/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/lip-sync/viseme/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/lip-sync/viseme/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/quality-gate/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/quality-gate/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/retargeting/v1/execute",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/retargeting/v1/execute/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/rig-contract/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/rig-contract/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/animation/secondary-motion/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/animation/secondary-motion/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/assets/streaming/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/assets/streaming/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/attention/gaze/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/attention/gaze/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/autonomy/maturity-certification/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/autonomy/maturity-certification/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/boundaries/lint",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/boundaries/lint/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/capabilities/matrix/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/capabilities/matrix/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/character/crowd/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/character/crowd/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/character/emotion/controller/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/character/emotion/controller/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/character/locomotion/procedural/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/character/locomotion/procedural/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/character/performance-rig/map",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/character/performance-rig/map/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/character/performance/slo/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/character/performance/slo/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/character/state-machine/v2/transition",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/character/state-machine/v2/transition/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/compliance/audit/explainability-bundle/generate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/compliance/audit/explainability-bundle/generate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/compliance/regional-overlays/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/compliance/regional-overlays/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/config/contract/check",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/config/contract/check/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/contracts/v1/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/contracts/v1/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/analytics/dashboard/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/analytics/dashboard/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/animation-graph/editor/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/animation-graph/editor/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/animation-presets/library/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/animation-presets/library/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/assets/kitbash/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/assets/kitbash/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/publish/pipeline/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/publish/pipeline/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/qa/simulation-harness/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/qa/simulation-harness/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/rigging/assistant/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/rigging/assistant/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/scene/collab/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/scene/collab/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/templates/marketplace/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/templates/marketplace/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/creator/workspace/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/creator/workspace/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/discovery/world-ranking/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/discovery/world-ranking/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/distribution/asset-portability/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/distribution/asset-portability/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/distribution/vr-ar-orchestrator/plan",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/distribution/vr-ar-orchestrator/plan/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/economy/avatar/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/economy/avatar/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/economy/live-performance/revenue-share/calculate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/economy/live-performance/revenue-share/calculate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/economy/virtual-goods/ownership-physics/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/economy/virtual-goods/ownership-physics/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/haptics/orchestrate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/haptics/orchestrate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/identity/anchors/restore",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/identity/anchors/restore/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/input/normalize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/input/normalize/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/interaction/gestures/resolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/interaction/gestures/resolve/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/launch/readiness-store-compliance/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/launch/readiness-store-compliance/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/audience/choreography/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/audience/choreography/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/crowd/reactions/animation/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/crowd/reactions/animation/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/failover/drills/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/failover/drills/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/moderation/realtime/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/moderation/realtime/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/narrative/branching/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/narrative/branching/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/performer/avatar-switch/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/performer/avatar-switch/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/production/control-room/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/production/control-room/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/readiness/certification-gate/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/readiness/certification-gate/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/replay/highlights/capture/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/replay/highlights/capture/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/live/stages/shared/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/live/stages/shared/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/locomotion/comfort/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/locomotion/comfort/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/marketplace/fraud-controls/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/marketplace/fraud-controls/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/mocap/cleanup/smooth/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/mocap/cleanup/smooth/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/mocap/ingestion/v1/import",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/mocap/ingestion/v1/import/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/mocap/live/stream/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/mocap/live/stream/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/mocap/markerless/integrate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/mocap/markerless/integrate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/network/object-sync/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/network/object-sync/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/party/rooms/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/party/rooms/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/animation/lod/orchestration/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/animation/lod/orchestration/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/cpu/frame-budget/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/cpu/frame-budget/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/gpu/budget/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/gpu/budget/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/network/jitter-compensation/avatar-motion/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/network/jitter-compensation/avatar-motion/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/refresh-rate/readiness/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/refresh-rate/readiness/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/regression-gate/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/regression-gate/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/rendering/dynamic-resolution/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/rendering/dynamic-resolution/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/rendering/foveated/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/rendering/foveated/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/rendering/occlusion-culling/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/rendering/occlusion-culling/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/performance/thermal-battery/adaptation/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/performance/thermal-battery/adaptation/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/presence/copresence/sync",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/presence/copresence/sync/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/presence/slo/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/presence/slo/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/privacy/biometric/boundaries/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/privacy/biometric/boundaries/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/privacy/recording/consent/check",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/privacy/recording/consent/check/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/rights/animation-performance/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/rights/animation-performance/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/safety/comfort-motion/risk-labels/generate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/safety/comfort-motion/risk-labels/generate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/safety/motion-sickness/score",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/safety/motion-sickness/score/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/safety/proximity/envelopes/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/safety/proximity/envelopes/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/safety/spatial-harassment/detect",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/safety/spatial-harassment/detect/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/safety/youth-safe-mode/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/safety/youth-safe-mode/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/scene-graph/contract/v1/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/scene-graph/contract/v1/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/telemetry/events/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/telemetry/events/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/ui/grammar/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/ui/grammar/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/voice/commands/dispatch",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/voice/commands/dispatch/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/audio/spatial/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/audio/spatial/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/authoring/contract/v1/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/authoring/contract/v1/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/camera/cinematic-rig/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/camera/cinematic-rig/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/coherence/validate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/coherence/validate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/cutscene/sequencer/v1/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/cutscene/sequencer/v1/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/effects/volumetric/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/effects/volumetric/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/lighting/pipeline/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/lighting/pipeline/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/relocalization/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/relocalization/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/story-beats/orchestrate/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/story-beats/orchestrate/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/storytelling/agent-hooks/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/storytelling/agent-hooks/evaluate/route.ts"
+    },
+    {
+      "route": "/api/admin/xr/world/terrain-scale/governance/evaluate",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/admin/xr/world/terrain-scale/governance/evaluate/route.ts"
+    },
+    {
+      "route": "/api/auth/[...nextauth]",
+      "methods": [],
+      "source": "apps/web/app/api/auth/[...nextauth]/route.ts"
+    },
+    {
+      "route": "/api/auth/federation/token",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/auth/federation/token/route.ts"
+    },
+    {
+      "route": "/api/creator/control-center",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/creator/control-center/route.ts"
+    },
+    {
+      "route": "/api/creator/portability/export",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/creator/portability/export/route.ts"
+    },
+    {
+      "route": "/api/creator/portability/import",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/creator/portability/import/route.ts"
+    },
+    {
+      "route": "/api/economy/summary",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/economy/summary/route.ts"
+    },
+    {
+      "route": "/api/feed/[id]/comments",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/feed/[id]/comments/route.ts"
+    },
+    {
+      "route": "/api/feed/[id]/like",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/feed/[id]/like/route.ts"
+    },
+    {
+      "route": "/api/feed/[id]/report",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/feed/[id]/report/route.ts"
+    },
+    {
+      "route": "/api/feed/[id]/share",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/feed/[id]/share/route.ts"
+    },
+    {
+      "route": "/api/feed",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/feed/route.ts"
+    },
+    {
+      "route": "/api/gamegrid/games/[id]/publish",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/gamegrid/games/[id]/publish/route.ts"
+    },
+    {
+      "route": "/api/gamegrid/games/[id]",
+      "methods": [
+        "GET",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/gamegrid/games/[id]/route.ts"
+    },
+    {
+      "route": "/api/gamegrid/games/community",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/gamegrid/games/community/route.ts"
+    },
+    {
+      "route": "/api/gamegrid/games/my",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/gamegrid/games/my/route.ts"
+    },
+    {
+      "route": "/api/gamegrid/games",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/gamegrid/games/route.ts"
+    },
+    {
+      "route": "/api/games/telemetry",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/games/telemetry/route.ts"
+    },
+    {
+      "route": "/api/inbox",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/inbox/route.ts"
+    },
+    {
+      "route": "/api/media/episodes",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/media/episodes/route.ts"
+    },
+    {
+      "route": "/api/media/seasons/[id]/episodes",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/media/seasons/[id]/episodes/route.ts"
+    },
+    {
+      "route": "/api/media/shows/[id]/seasons",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/media/shows/[id]/seasons/route.ts"
+    },
+    {
+      "route": "/api/media/shows",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/media/shows/route.ts"
+    },
+    {
+      "route": "/api/onboarding/complete",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/onboarding/complete/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/events",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/party/[code]/events/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/join",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/join/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/lock",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/lock/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/playback",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/playback/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/playlist/append",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/playlist/append/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/playlist",
+      "methods": [
+        "GET",
+        "PUT"
+      ],
+      "source": "apps/web/app/api/party/[code]/playlist/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/presence/ping",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/presence/ping/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/release",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/release/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/reserve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/reserve/route.ts"
+    },
+    {
+      "route": "/api/party/[code]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/party/[code]/route.ts"
+    },
+    {
+      "route": "/api/party/[code]/voice/token",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/[code]/voice/token/route.ts"
+    },
+    {
+      "route": "/api/party/create",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/create/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/end",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/end/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/events",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/events/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/input",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/input/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/join",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/join/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/leave",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/leave/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/next-round",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/next-round/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/ping",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/ping/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/ready",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/ready/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/reset",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/reset/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/role",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/role/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/[code]/start",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/[code]/start/route.ts"
+    },
+    {
+      "route": "/api/party/minigames/create",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/party/minigames/create/route.ts"
+    },
+    {
+      "route": "/api/platform/commands",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/platform/commands/route.ts"
+    },
+    {
+      "route": "/api/platform/edge/resolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/platform/edge/resolve/route.ts"
+    },
+    {
+      "route": "/api/platform/events",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/platform/events/route.ts"
+    },
+    {
+      "route": "/api/platform/i18n/resolve",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/platform/i18n/resolve/route.ts"
+    },
+    {
+      "route": "/api/platform/presence",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/platform/presence/route.ts"
+    },
+    {
+      "route": "/api/platform/search",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/platform/search/route.ts"
+    },
+    {
+      "route": "/api/platform/session",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/platform/session/route.ts"
+    },
+    {
+      "route": "/api/shorts/[id]/access",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/shorts/[id]/access/route.ts"
+    },
+    {
+      "route": "/api/shorts/[id]/meme",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/shorts/[id]/meme/route.ts"
+    },
+    {
+      "route": "/api/shorts/[id]/monetize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/shorts/[id]/monetize/route.ts"
+    },
+    {
+      "route": "/api/shorts/[id]/purchase",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/shorts/[id]/purchase/route.ts"
+    },
+    {
+      "route": "/api/shorts/[id]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/shorts/[id]/route.ts"
+    },
+    {
+      "route": "/api/shorts",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/shorts/route.ts"
+    },
+    {
+      "route": "/api/social/squads",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/social/squads/route.ts"
+    },
+    {
+      "route": "/api/storage/upload",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/storage/upload/route.ts"
+    },
+    {
+      "route": "/api/studio/content/[id]/publish",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/content/[id]/publish/route.ts"
+    },
+    {
+      "route": "/api/studio/content/[id]/reject",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/content/[id]/reject/route.ts"
+    },
+    {
+      "route": "/api/studio/content/[id]/request-publish",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/content/[id]/request-publish/route.ts"
+    },
+    {
+      "route": "/api/studio/content/[id]",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "source": "apps/web/app/api/studio/content/[id]/route.ts"
+    },
+    {
+      "route": "/api/studio/content",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/content/route.ts"
+    },
+    {
+      "route": "/api/studio/jobs/[id]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/studio/jobs/[id]/route.ts"
+    },
+    {
+      "route": "/api/studio/jobs/stats",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/studio/jobs/stats/route.ts"
+    },
+    {
+      "route": "/api/studio/ops/jobs/[id]/cancel",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/ops/jobs/[id]/cancel/route.ts"
+    },
+    {
+      "route": "/api/studio/ops/jobs/[id]/retry",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/ops/jobs/[id]/retry/route.ts"
+    },
+    {
+      "route": "/api/studio/ops/jobs/[id]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/studio/ops/jobs/[id]/route.ts"
+    },
+    {
+      "route": "/api/studio/ops/jobs",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/studio/ops/jobs/route.ts"
+    },
+    {
+      "route": "/api/studio/projects/[id]/assets",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/projects/[id]/assets/route.ts"
+    },
+    {
+      "route": "/api/studio/projects/[id]/jobs",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/projects/[id]/jobs/route.ts"
+    },
+    {
+      "route": "/api/studio/projects/[id]/publish",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/projects/[id]/publish/route.ts"
+    },
+    {
+      "route": "/api/studio/projects/[id]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/studio/projects/[id]/route.ts"
+    },
+    {
+      "route": "/api/studio/projects",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/projects/route.ts"
+    },
+    {
+      "route": "/api/studio/remix/jobs",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/remix/jobs/route.ts"
+    },
+    {
+      "route": "/api/studio/templates/[id]/reuse",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/templates/[id]/reuse/route.ts"
+    },
+    {
+      "route": "/api/studio/templates/[id]/versions",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/templates/[id]/versions/route.ts"
+    },
+    {
+      "route": "/api/studio/templates",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/studio/templates/route.ts"
+    },
+    {
+      "route": "/api/uploads/finalize",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/uploads/finalize/route.ts"
+    },
+    {
+      "route": "/api/uploads/sign",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/uploads/sign/route.ts"
+    },
+    {
+      "route": "/api/watch/episodes/[id]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/episodes/[id]/route.ts"
+    },
+    {
+      "route": "/api/watch/featured",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/featured/route.ts"
+    },
+    {
+      "route": "/api/watch/live/channels/[id]/epg",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/live/channels/[id]/epg/route.ts"
+    },
+    {
+      "route": "/api/watch/live/channels/[id]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/live/channels/[id]/route.ts"
+    },
+    {
+      "route": "/api/watch/live/channels",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/live/channels/route.ts"
+    },
+    {
+      "route": "/api/watch/my-list",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/my-list/route.ts"
+    },
+    {
+      "route": "/api/watch/my-list/toggle",
+      "methods": [
+        "POST"
+      ],
+      "source": "apps/web/app/api/watch/my-list/toggle/route.ts"
+    },
+    {
+      "route": "/api/watch/profiles",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/watch/profiles/route.ts"
+    },
+    {
+      "route": "/api/watch/progress",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "source": "apps/web/app/api/watch/progress/route.ts"
+    },
+    {
+      "route": "/api/watch/shows/[slug]",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/watch/shows/[slug]/route.ts"
+    }
+  ]
+}

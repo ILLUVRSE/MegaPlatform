@@ -1,0 +1,15 @@
+node_modules
+.pnpm-store
+.next
+coverage
+test-results
+playwright-report
+.env
+.env.local
+.DS_Store
+apps/*/node_modules
+apps/*/dist
+apps/*/.next
+apps/ambush-soccer/node_modules
+apps/ambush-soccer/dist/assets
+apps/ambush-soccer/dist/server

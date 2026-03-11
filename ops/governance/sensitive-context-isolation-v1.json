@@ -1,0 +1,5 @@
+{
+  "sensitiveContexts": ["health", "biometric", "legal_case"],
+  "requiredApprovals": 2,
+  "requiredPolicyTags": ["sensitive_context", "manual_review"]
+}

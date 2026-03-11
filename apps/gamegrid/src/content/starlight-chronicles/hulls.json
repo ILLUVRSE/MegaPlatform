@@ -1,0 +1,183 @@
+{
+  "hulls": [
+    {
+      "id": "swift-scout",
+      "name": "Swift Scout",
+      "class": "Scout",
+      "description": "Fast courier frame optimized for scans and evasive travel.",
+      "stats": {
+        "maxHP": 78,
+        "moveSpeed": 670,
+        "fireRate": 165,
+        "damageMult": 0.92,
+        "scanBonus": 0.28,
+        "diplomacyBonus": 1,
+        "cargoCapacity": 12,
+        "fleeBonus": 0.18
+      },
+      "slots": {
+        "weaponSlots": 1,
+        "shieldSlots": 1,
+        "utilitySlots": 2
+      },
+      "unlock": {
+        "type": "credits",
+        "credits": 260
+      },
+      "visuals": {
+        "skinKey": "azure-stripe",
+        "silhouetteKey": "sil-scout-a"
+      }
+    },
+    {
+      "id": "pathfinder-frigate",
+      "name": "Pathfinder Frigate",
+      "class": "Frigate",
+      "description": "Balanced patrol hull for mixed route operations.",
+      "stats": {
+        "maxHP": 102,
+        "moveSpeed": 560,
+        "fireRate": 178,
+        "damageMult": 1,
+        "scanBonus": 0.1,
+        "diplomacyBonus": 0,
+        "cargoCapacity": 18,
+        "fleeBonus": 0.06
+      },
+      "slots": {
+        "weaponSlots": 1,
+        "shieldSlots": 1,
+        "utilitySlots": 2
+      },
+      "unlock": {
+        "type": "starter"
+      },
+      "visuals": {
+        "skinKey": "navy-band",
+        "silhouetteKey": "sil-frigate-a"
+      }
+    },
+    {
+      "id": "bulk-hauler",
+      "name": "Bulk Hauler",
+      "class": "Freighter",
+      "description": "Cargo-heavy freighter built for long-distance trade lanes.",
+      "stats": {
+        "maxHP": 124,
+        "moveSpeed": 470,
+        "fireRate": 210,
+        "damageMult": 0.86,
+        "scanBonus": 0.02,
+        "diplomacyBonus": 0,
+        "cargoCapacity": 34,
+        "fleeBonus": -0.08
+      },
+      "slots": {
+        "weaponSlots": 1,
+        "shieldSlots": 2,
+        "utilitySlots": 3
+      },
+      "unlock": {
+        "type": "rank",
+        "rank": 2,
+        "credits": 420
+      },
+      "visuals": {
+        "skinKey": "industrial-rust",
+        "silhouetteKey": "sil-freighter-a"
+      }
+    },
+    {
+      "id": "vector-interceptor",
+      "name": "Vector Interceptor",
+      "class": "Interceptor",
+      "description": "High-acceleration combat frame tuned for strike runs.",
+      "stats": {
+        "maxHP": 90,
+        "moveSpeed": 650,
+        "fireRate": 148,
+        "damageMult": 1.16,
+        "scanBonus": 0.05,
+        "diplomacyBonus": -1,
+        "cargoCapacity": 10,
+        "fleeBonus": 0.1
+      },
+      "slots": {
+        "weaponSlots": 2,
+        "shieldSlots": 1,
+        "utilitySlots": 1
+      },
+      "unlock": {
+        "type": "faction",
+        "faction": "freebelt",
+        "standing": 4,
+        "credits": 520
+      },
+      "visuals": {
+        "skinKey": "ember-streak",
+        "silhouetteKey": "sil-interceptor-a"
+      }
+    },
+    {
+      "id": "lumen-researcher",
+      "name": "Lumen Researcher",
+      "class": "Science Vessel",
+      "description": "Survey vessel with expanded utility lattice and anomaly tools.",
+      "stats": {
+        "maxHP": 96,
+        "moveSpeed": 545,
+        "fireRate": 186,
+        "damageMult": 0.94,
+        "scanBonus": 0.36,
+        "diplomacyBonus": 1,
+        "cargoCapacity": 16,
+        "fleeBonus": 0.04
+      },
+      "slots": {
+        "weaponSlots": 1,
+        "shieldSlots": 1,
+        "utilitySlots": 3
+      },
+      "unlock": {
+        "type": "rank",
+        "rank": 3,
+        "credits": 540
+      },
+      "visuals": {
+        "skinKey": "lumen-white",
+        "silhouetteKey": "sil-science-a"
+      }
+    },
+    {
+      "id": "iron-gunship",
+      "name": "Iron Gunship",
+      "class": "Gunship",
+      "description": "Assault platform with reinforced weapon hardpoints.",
+      "stats": {
+        "maxHP": 136,
+        "moveSpeed": 505,
+        "fireRate": 152,
+        "damageMult": 1.24,
+        "scanBonus": -0.08,
+        "diplomacyBonus": -1,
+        "cargoCapacity": 14,
+        "fleeBonus": -0.03
+      },
+      "slots": {
+        "weaponSlots": 2,
+        "shieldSlots": 2,
+        "utilitySlots": 1
+      },
+      "unlock": {
+        "type": "faction",
+        "faction": "concordium",
+        "standing": 5,
+        "credits": 700
+      },
+      "visuals": {
+        "skinKey": "warsteel",
+        "silhouetteKey": "sil-gunship-a"
+      }
+    }
+  ]
+}

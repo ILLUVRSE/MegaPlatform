@@ -1,0 +1,7 @@
+{
+  "requireAgeSegmentClassification": true,
+  "requireSafeLocomotionProfile": true,
+  "requireVoiceChatModeration": true,
+  "requireGuardianControls": true,
+  "minimumSafetyDefaultsScore": 0.9
+}

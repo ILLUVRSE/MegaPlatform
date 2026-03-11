@@ -1,0 +1,10 @@
+[
+  {
+    "jobId": "retention-retention-platform-events",
+    "policyId": "retention-platform-events",
+    "dataClass": "PlatformEvent",
+    "status": "pass",
+    "summary": "Anonymize policy enforced for records older than 180 days.",
+    "generatedAt": "2026-03-04T00:00:00.000Z"
+  }
+]

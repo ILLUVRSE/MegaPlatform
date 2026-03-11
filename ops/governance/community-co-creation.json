@@ -1,0 +1,5 @@
+{
+  "requiredContributorTypes": ["user", "agent"],
+  "allowedModerationStates": ["pending", "approved", "rejected"],
+  "requireProvenance": true
+}

@@ -1,0 +1,5 @@
+{
+  "maxJitter": 0.03,
+  "maxFootSlip": 0.02,
+  "maxPoseError": 0.04
+}

@@ -1,0 +1,11 @@
+{
+  "ok": false,
+  "failedMetrics": [
+    {
+      "metric": "toxicity_rate",
+      "value": 0.03,
+      "maxAllowed": 0.02,
+      "reason": "threshold_exceeded"
+    }
+  ]
+}

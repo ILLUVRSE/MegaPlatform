@@ -1,0 +1,5 @@
+{
+  "maxIntensity": 0.9,
+  "minimumTransitionCoherence": 0.8,
+  "allowedEmotionStates": ["calm", "joy", "focus", "sadness", "anger"]
+}

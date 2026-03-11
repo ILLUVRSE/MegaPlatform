@@ -1,0 +1,8 @@
+{
+  "supportedPatterns": ["wave", "pulse", "cheer_burst"],
+  "maxParticipantsPerPattern": 5000,
+  "safetyCaps": {
+    "maxAmplitude": 0.8,
+    "maxVelocity": 1.4
+  }
+}

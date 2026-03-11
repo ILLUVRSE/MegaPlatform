@@ -1,0 +1,5 @@
+{
+  "minResilienceRatio": 0.7,
+  "breachThresholdRatio": 0.5,
+  "requiredScenarios": ["demand_drop", "refund_spike", "ad_market_decline"]
+}

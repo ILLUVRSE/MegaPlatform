@@ -1,0 +1,9 @@
+[
+  {"agent":"Director","action":"create_task","requiresApproval":false},
+  {"agent":"Director","action":"update_signals","requiresApproval":false},
+  {"agent":"Director","action":"record_decision","requiresApproval":false},
+  {"agent":"Quality/Analytics","action":"run_shipcheck_quick","requiresApproval":false},
+  {"agent":"Quality/Analytics","action":"record_memory","requiresApproval":false},
+  {"agent":"Ops/SRE","action":"update_runbook","requiresApproval":false},
+  {"agent":"Ops/SRE","action":"record_memory","requiresApproval":false}
+]

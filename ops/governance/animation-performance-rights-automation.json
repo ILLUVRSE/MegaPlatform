@@ -1,0 +1,7 @@
+{
+  "requirePerformanceConsent": true,
+  "requireLicenseToken": true,
+  "requireTerritoryCoverage": true,
+  "requireExpirationCheck": true,
+  "blockOnRightsMismatch": true
+}

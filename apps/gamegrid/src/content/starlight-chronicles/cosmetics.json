@@ -1,0 +1,23 @@
+{
+  "skins": [
+    { "id": "navy-band", "name": "Navy Band", "color": 9160821, "unlock": { "type": "starter" } },
+    { "id": "azure-stripe", "name": "Azure Stripe", "color": 9165028, "unlock": { "type": "rank", "rank": 2 } },
+    { "id": "ember-streak", "name": "Ember Streak", "color": 16747981, "unlock": { "type": "faction", "faction": "freebelt", "standing": 3 } },
+    { "id": "lumen-white", "name": "Lumen White", "color": 15790831, "unlock": { "type": "rank", "rank": 3 } },
+    { "id": "industrial-rust", "name": "Industrial Rust", "color": 12085154, "unlock": { "type": "contracts", "contractsCompleted": 3 } },
+    { "id": "warsteel", "name": "Warsteel", "color": 9521016, "unlock": { "type": "weekly-report", "weeksSeen": 2 } }
+  ],
+  "decals": [
+    { "id": "none", "name": "None", "symbol": "", "unlock": { "type": "starter" } },
+    { "id": "concordium-star", "name": "Concordium Star", "symbol": "★", "unlock": { "type": "faction", "faction": "concordium", "standing": 2 } },
+    { "id": "freebelt-claw", "name": "Freebelt Claw", "symbol": "V", "unlock": { "type": "faction", "faction": "freebelt", "standing": 2 } },
+    { "id": "astral-eye", "name": "Astral Eye", "symbol": "◉", "unlock": { "type": "faction", "faction": "astral", "standing": 2 } },
+    { "id": "frontline-mark", "name": "Frontline Mark", "symbol": "✦", "unlock": { "type": "weekly-report", "weeksSeen": 1 } }
+  ],
+  "trails": [
+    { "id": "none", "name": "None", "color": 0, "unlock": { "type": "starter" } },
+    { "id": "ion-blue", "name": "Ion Blue", "color": 65395, "unlock": { "type": "rank", "rank": 2 } },
+    { "id": "market-gold", "name": "Market Gold", "color": 16761395, "unlock": { "type": "contracts", "contractsCompleted": 2 } },
+    { "id": "void-violet", "name": "Void Violet", "color": 12611583, "unlock": { "type": "weekly-report", "weeksSeen": 3 } }
+  ]
+}

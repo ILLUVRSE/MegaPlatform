@@ -1,0 +1,5 @@
+{
+  "maxErrorRate": 0.05,
+  "maxLatencyMs": 2000,
+  "requireRollbackPlan": true
+}

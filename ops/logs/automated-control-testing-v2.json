@@ -1,0 +1,301 @@
+{
+  "runs": [
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T14:30:19.079Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T14:29:12.494Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-07T18:06:52.717Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-07T17:27:48.681Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-07T17:26:23.767Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:56:11.485Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:47:29.841Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:46:13.932Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:45:14.929Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:44:19.375Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:43:24.940Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:42:28.756Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:41:32.591Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:40:36.450Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:39:36.184Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:38:38.788Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:37:46.473Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:36:48.126Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:35:54.439Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:34:58.339Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:34:03.290Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:33:02.514Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:32:08.504Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:31:14.078Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:30:16.790Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:29:04.918Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-04T19:21:29.681Z"
+    }
+  ]
+}

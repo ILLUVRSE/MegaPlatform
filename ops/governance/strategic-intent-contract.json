@@ -1,0 +1,6 @@
+{
+  "requiredFields": ["intentId", "objective", "owner", "horizon", "successMetric"],
+  "allowedHorizons": ["immediate", "quarter", "annual"],
+  "maxObjectives": 5,
+  "requirePolicyReference": true
+}

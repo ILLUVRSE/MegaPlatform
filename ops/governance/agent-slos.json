@@ -1,0 +1,5 @@
+[
+  {"id":"director-cycle-success-rate","metric":"director_ok_ratio_24h","target":0.95,"operator":">="},
+  {"id":"specialist-task-completion-latency","metric":"specialist_task_p95_minutes","target":180,"operator":"<="},
+  {"id":"specialist-run-failure-rate","metric":"specialist_failed_runs_ratio_24h","target":0.1,"operator":"<="}
+]

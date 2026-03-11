@@ -1,0 +1,4 @@
+{
+  "trustedIssuers": ["illuvrse-internal", "partner-sso"],
+  "allowedScopes": ["profile:read", "content:read", "events:write"]
+}

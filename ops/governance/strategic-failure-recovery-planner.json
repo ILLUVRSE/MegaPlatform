@@ -1,0 +1,4 @@
+{
+  "maxStages": 4,
+  "rollbackSafetyRequired": true
+}

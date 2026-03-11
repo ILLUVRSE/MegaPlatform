@@ -1,0 +1,5 @@
+{
+  "requireQueryableArtifacts": true,
+  "requireDeterministicTimelineRefs": true,
+  "maxCaptureDelayMs": 900
+}

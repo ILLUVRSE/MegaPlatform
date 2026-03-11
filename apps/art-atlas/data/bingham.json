@@ -1,0 +1,432 @@
+{
+  "biographySource": {
+    "title": "Smithsonian American Art Museum: George Caleb Bingham",
+    "url": "https://americanart.si.edu/artist/george-caleb-bingham-6356"
+  },
+  "furtherStudy": {
+    "title": "George Caleb Bingham Catalogue Raisonne",
+    "url": "https://www.binghamcatalogue.org/"
+  },
+  "artworks": [
+    {
+      "slug": "jolly-flatboatmen",
+      "title": "The Jolly Flatboatmen",
+      "year": 1846,
+      "medium": "Oil on canvas",
+      "dimensions": "96.8 x 123.2 cm (38 1/8 x 48 1/2 in.)",
+      "institution": "National Gallery of Art",
+      "location": "Washington, D.C., USA",
+      "themes": ["River Life"],
+      "tags": ["Missouri River", "Frontier commerce", "Labor", "Music", "Washington, D.C."],
+      "description": "A flatboat crew pauses work to dance and play music, framing river labor as social life.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%2C%20The%20Jolly%20Flatboatmen%2C%201846%2C%20NGA%2075206.jpg",
+        "width": 1900,
+        "height": 1480
+      },
+      "sourceUrl": "https://www.nga.gov/artworks/75206-jolly-flatboatmen",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham,_The_Jolly_Flatboatmen,_1846,_NGA_75206.jpg"
+      ],
+      "rights": "NGA Open Access / public domain image availability noted on NGA object page.",
+      "creditLine": "National Gallery of Art (Open Access image via Wikimedia Commons)",
+      "context": [
+        "Bingham presents transport labor as a public and performative culture.",
+        "The river is treated as economic infrastructure before rail dominance.",
+        "The painting became one of his most recognized national works."
+      ],
+      "popularity": 1,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "high",
+        "image": "medium"
+      }
+    },
+    {
+      "slug": "cottage-scenery",
+      "title": "Cottage Scenery",
+      "year": 1845,
+      "medium": "Oil on canvas",
+      "dimensions": "64.8 x 76.2 cm (25 1/2 x 30 in.)",
+      "institution": "National Gallery of Art",
+      "location": "Washington, D.C., USA",
+      "themes": ["Landscape"],
+      "tags": ["Rural life", "Missouri", "Settlement", "Washington, D.C."],
+      "description": "A domestic frontier setting within a carefully observed landscape.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cottage%20Scenery%20A31100.jpg",
+        "width": 1440,
+        "height": 1220
+      },
+      "sourceUrl": "https://www.nga.gov/artworks/166430-cottage-scenery",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/File:Cottage_Scenery_A31100.jpg"
+      ],
+      "rights": "NGA Open Access / public domain image availability.",
+      "creditLine": "National Gallery of Art (image via Wikimedia Commons)",
+      "context": [
+        "The composition emphasizes settled land instead of wilderness spectacle.",
+        "Small figures help scale the natural environment.",
+        "The painting aligns with mid-19th-century rural identity building."
+      ],
+      "popularity": 6,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "high",
+        "image": "medium"
+      }
+    },
+    {
+      "slug": "fur-traders-descending-the-missouri",
+      "title": "Fur Traders Descending the Missouri",
+      "year": 1845,
+      "medium": "Oil on canvas",
+      "dimensions": "73.7 x 92.7 cm (29 x 36 1/2 in.)",
+      "institution": "The Metropolitan Museum of Art",
+      "location": "New York, NY, USA",
+      "themes": ["River Life"],
+      "tags": ["Missouri River", "Trade", "Boat travel", "New York"],
+      "description": "Two traders and a bear cub drift downstream in a tightly framed river scene.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20001FXD.jpg",
+        "width": 1900,
+        "height": 1510
+      },
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/10159",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_001FXD.jpg"
+      ],
+      "rights": "Public domain artwork; metadata from The Met collection page.",
+      "creditLine": "The Metropolitan Museum of Art (public domain image via Wikimedia Commons)",
+      "context": [
+        "The painting condenses commerce, travel, and display into one river vignette.",
+        "Its intimate scale contrasts with Bingham's larger civic compositions.",
+        "The river functions as a trade corridor and social stage."
+      ],
+      "popularity": 2,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "high",
+        "image": "medium"
+      }
+    },
+    {
+      "slug": "county-election",
+      "title": "The County Election",
+      "year": 1852,
+      "medium": "Oil on canvas",
+      "dimensions": "96.5 x 132.1 cm (38 x 52 in.)",
+      "institution": "Saint Louis Art Museum",
+      "location": "St. Louis, MO, USA",
+      "themes": ["Politics"],
+      "tags": ["Election series", "Missouri", "Civic life", "St. Louis"],
+      "description": "A dense polling scene where participation, pressure, and spectacle overlap.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20The%20County%20Election.jpg",
+        "width": 2200,
+        "height": 1620
+      },
+      "sourceUrl": "https://www.slam.org/collection/objects/29775/",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_The_County_Election.jpg"
+      ],
+      "rights": "SLAM object page identifies the work as public domain.",
+      "creditLine": "Saint Louis Art Museum (image via Wikimedia Commons)",
+      "context": [
+        "This work is part of Bingham's Election Series.",
+        "The composition shows competing visions of civic order.",
+        "Bingham records political behavior across social groups."
+      ],
+      "popularity": 3,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "high",
+        "image": "medium"
+      }
+    },
+    {
+      "slug": "stump-speaking",
+      "title": "Stump Speaking",
+      "year": 1853,
+      "medium": "Oil on canvas",
+      "dimensions": "108 x 147.3 cm (42 1/2 x 58 in.)",
+      "institution": "Saint Louis Art Museum",
+      "location": "St. Louis, MO, USA",
+      "themes": ["Politics"],
+      "tags": ["Election series", "Debate", "Campaign rhetoric", "St. Louis"],
+      "description": "A candidate addresses a mixed audience, turning politics into staged public argument.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20Stump%20Speaking.jpg",
+        "width": 2300,
+        "height": 1710
+      },
+      "sourceUrl": "https://www.slam.org/collection/objects/29774/",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_Stump_Speaking.jpg"
+      ],
+      "rights": "SLAM object page identifies the work as public domain.",
+      "creditLine": "Saint Louis Art Museum (image via Wikimedia Commons)",
+      "context": [
+        "Public speech is presented as both persuasion and performance.",
+        "Bingham draws on Missouri campaign culture.",
+        "Audience reactions become central narrative evidence."
+      ],
+      "popularity": 4,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "high",
+        "image": "medium"
+      }
+    },
+    {
+      "slug": "verdict-of-the-people",
+      "title": "The Verdict of the People",
+      "year": 1854,
+      "medium": "Oil on canvas",
+      "dimensions": "116.8 x 139.7 cm (46 x 55 in.)",
+      "institution": "Saint Louis Art Museum",
+      "location": "St. Louis, MO, USA",
+      "themes": ["Politics"],
+      "tags": ["Election series", "Public opinion", "Temperance", "St. Louis"],
+      "description": "Crowds process election results outside a courthouse through celebration and conflict.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20The%20Verdict%20of%20the%20People%20-%2045-2001%20-%20Saint%20Louis%20Art%20Museum.jpg",
+        "width": 2200,
+        "height": 1840
+      },
+      "sourceUrl": "https://www.slam.org/collection/objects/29776/",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_The_Verdict_of_the_People_-_45-2001_-_Saint_Louis_Art_Museum.jpg"
+      ],
+      "rights": "SLAM object page identifies the work as public domain.",
+      "creditLine": "Saint Louis Art Museum (image via Wikimedia Commons)",
+      "context": [
+        "The painting completes the Election Series.",
+        "Voting outcomes are staged as communal spectacle.",
+        "Non-voting observers remain visible in the political scene."
+      ],
+      "popularity": 5,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "high",
+        "image": "medium"
+      }
+    },
+    {
+      "slug": "raftsmen-playing-cards",
+      "title": "Raftsmen Playing Cards",
+      "year": 1847,
+      "medium": "Oil on canvas",
+      "dimensions": null,
+      "institution": "Private collection",
+      "location": "United States",
+      "themes": ["River Life"],
+      "tags": ["Missouri River", "Labor", "Leisure", "Card games"],
+      "description": "Raftsmen pause for cards and conversation while drifting through calm water.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20Raftsmen%20Playing%20Cards.jpg",
+        "width": 1800,
+        "height": 1310
+      },
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_Raftsmen_Playing_Cards.jpg",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/Category:Paintings_by_George_Caleb_Bingham"
+      ],
+      "rights": "Public domain reproduction listed on Wikimedia Commons.",
+      "creditLine": "Wikimedia Commons (public domain reproduction)",
+      "context": [
+        "Bingham repeatedly contrasts labor with social downtime.",
+        "Card play reflects risk culture in river economies.",
+        "The scene keeps attention on working-class recreation."
+      ],
+      "popularity": 7,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "high",
+        "dimensions": "low",
+        "image": "low"
+      }
+    },
+    {
+      "slug": "the-wood-boat",
+      "title": "The Wood-Boat",
+      "year": 1850,
+      "medium": "Oil on canvas",
+      "dimensions": null,
+      "institution": "Saint Louis Art Museum",
+      "location": "St. Louis, MO, USA",
+      "themes": ["River Life"],
+      "tags": ["Steamboat economy", "Fuel trade", "Missouri River", "St. Louis"],
+      "description": "Men transfer and sell firewood for steamboat fuel in a river logistics scene.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20The%20Wood-Boat%20-%2014-1951%20-%20Saint%20Louis%20Art%20Museum.jpg",
+        "width": 2100,
+        "height": 1620
+      },
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_The_Wood-Boat_-_14-1951_-_Saint_Louis_Art_Museum.jpg",
+      "referenceUrls": [
+        "https://www.slam.org/"
+      ],
+      "rights": "Public domain reproduction listed on Wikimedia Commons.",
+      "creditLine": "Saint Louis Art Museum (image via Wikimedia Commons)",
+      "context": [
+        "The painting foregrounds supply chains behind river transport.",
+        "Bingham documents infrastructure rather than only scenery.",
+        "Foreground figures anchor broader market exchange."
+      ],
+      "popularity": 8,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "medium",
+        "dimensions": "low",
+        "image": "low"
+      }
+    },
+    {
+      "slug": "mississippi-boatman",
+      "title": "Mississippi Boatman",
+      "year": 1850,
+      "medium": "Oil on canvas",
+      "dimensions": null,
+      "institution": "Private collection",
+      "location": "United States",
+      "themes": ["Portraits", "River Life"],
+      "tags": ["Boatman", "Worker portrait", "Mississippi River"],
+      "description": "A single river worker is rendered with portrait-level attention.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20Mississippi%20Boatman.jpg",
+        "width": 1600,
+        "height": 2100
+      },
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_Mississippi_Boatman.jpg",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/Category:Paintings_by_George_Caleb_Bingham"
+      ],
+      "rights": "Public domain reproduction listed on Wikimedia Commons.",
+      "creditLine": "Wikimedia Commons (public domain reproduction)",
+      "context": [
+        "Bingham combines genre painting and portrait conventions.",
+        "The figure stands for occupational identity on inland rivers.",
+        "The work isolates character rather than crowd narrative."
+      ],
+      "popularity": 9,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "medium",
+        "dimensions": "low",
+        "image": "low"
+      }
+    },
+    {
+      "slug": "landscape-with-cattle",
+      "title": "Landscape with Cattle",
+      "year": 1850,
+      "medium": "Oil on canvas",
+      "dimensions": null,
+      "institution": "Saint Louis Art Museum",
+      "location": "St. Louis, MO, USA",
+      "themes": ["Landscape"],
+      "tags": ["Pastoral", "Missouri", "Agrarian economy", "St. Louis"],
+      "description": "Pastoral terrain and livestock connect regional identity to agricultural production.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20Landscape%20with%20Cattle%20-%20410-1923%20-%20Saint%20Louis%20Art%20Museum.jpg",
+        "width": 2000,
+        "height": 1460
+      },
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_Landscape_with_Cattle_-_410-1923_-_Saint_Louis_Art_Museum.jpg",
+      "referenceUrls": [
+        "https://www.slam.org/"
+      ],
+      "rights": "Public domain reproduction listed on Wikimedia Commons.",
+      "creditLine": "Saint Louis Art Museum (image via Wikimedia Commons)",
+      "context": [
+        "Landscape and labor economies remain linked through livestock imagery.",
+        "The work complements Bingham's civic and river scenes.",
+        "Managed land becomes a core marker of regional identity."
+      ],
+      "popularity": 11,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "medium",
+        "dimensions": "low",
+        "image": "low"
+      }
+    },
+    {
+      "slug": "the-storm",
+      "title": "The Storm",
+      "year": 1853,
+      "medium": "Oil on canvas",
+      "dimensions": null,
+      "institution": "Private collection",
+      "location": "United States",
+      "themes": ["Landscape"],
+      "tags": ["Weather", "Frontier landscape", "Atmosphere"],
+      "description": "Darkened sky and shifting light turn landscape into a scene of instability.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20The%20Storm%20%28c.1852-53%29.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_The_Storm_(c.1852-53).jpg",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/Category:Paintings_by_George_Caleb_Bingham"
+      ],
+      "rights": "Public domain reproduction listed on Wikimedia Commons.",
+      "creditLine": "Wikimedia Commons (public domain reproduction)",
+      "context": [
+        "The scene departs from electoral narratives toward atmospheric drama.",
+        "Weather is used as narrative pressure rather than backdrop.",
+        "It demonstrates range across Bingham's thematic practice."
+      ],
+      "popularity": 10,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "medium",
+        "dimensions": "low",
+        "image": "low"
+      }
+    },
+    {
+      "slug": "country-politician",
+      "title": "Country Politician",
+      "year": 1849,
+      "medium": "Oil on canvas",
+      "dimensions": null,
+      "institution": "Fine Arts Museums of San Francisco",
+      "location": "San Francisco, CA, USA",
+      "themes": ["Politics"],
+      "tags": ["Campaign culture", "Public speech", "Party politics"],
+      "description": "An early political scene centered on persuasion and local party dynamics.",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Caleb%20Bingham%20-%20Country%20Politician%20-%20Google%20Art%20Project.jpg",
+        "width": 1900,
+        "height": 1370
+      },
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:George_Caleb_Bingham_-_Country_Politician_-_Google_Art_Project.jpg",
+      "referenceUrls": [
+        "https://commons.wikimedia.org/wiki/Category:Paintings_by_George_Caleb_Bingham"
+      ],
+      "rights": "Public domain reproduction listed on Wikimedia Commons.",
+      "creditLine": "Google Art Project image via Wikimedia Commons",
+      "context": [
+        "This political subject predates the Election Series panels.",
+        "Conversation and gesture drive the narrative.",
+        "Bingham tracks electoral culture beyond formal voting scenes."
+      ],
+      "popularity": 12,
+      "lastVerified": "2026-03-02",
+      "confidence": {
+        "year": "medium",
+        "dimensions": "low",
+        "image": "low"
+      }
+    }
+  ]
+}

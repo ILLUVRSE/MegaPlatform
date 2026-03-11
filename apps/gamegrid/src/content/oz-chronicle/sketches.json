@@ -1,0 +1,340 @@
+{
+  "sketches": [
+    {
+      "id": "north-country-greeting",
+      "title": "North Country Greeting",
+      "caption": "Dorothy and Toto on the first morning in Oz.",
+      "unlockRule": "Complete Munchkin Greeting chapter"
+    },
+    {
+      "id": "field-knots-study",
+      "title": "Field Knots Study",
+      "caption": "A rough sketch of straw ties and pole lashings.",
+      "unlockRule": "Perfect Scarecrow rescue"
+    },
+    {
+      "id": "orchard-turning",
+      "title": "Orchard Turning",
+      "caption": "Companions choosing a side path by the orchard.",
+      "unlockRule": "Visit optional orchard side node"
+    },
+    {
+      "id": "tin-polish-study",
+      "title": "Tin Polish Study",
+      "caption": "Oiled joints and careful valve order notes.",
+      "unlockRule": "Perfect Oil & Joints"
+    },
+    {
+      "id": "lion-roar-echo",
+      "title": "Lion Roar Echo",
+      "caption": "A trembling roar crossing the trees.",
+      "unlockRule": "Perfect Courage Trial"
+    },
+    {
+      "id": "forest-road-ink",
+      "title": "Forest Road Ink",
+      "caption": "Road marks and tree shadows toward the city.",
+      "unlockRule": "Complete forest detour or crossing"
+    },
+    {
+      "id": "kalidah-bridge-break",
+      "title": "Kalidah Bridge Break",
+      "caption": "The fallen tree over the gulf with beasts closing in.",
+      "unlockRule": "Reach the Kalidah chase"
+    },
+    {
+      "id": "kalidah-ravine-split",
+      "title": "Ravine Split",
+      "caption": "A quick axe stroke sends the trunk down behind the party.",
+      "unlockRule": "Resolve the Kalidah escape chapter"
+    },
+    {
+      "id": "poppy-sea-trail",
+      "title": "Poppy Sea Trail",
+      "caption": "A wavering road through scarlet flowers and sleep-heavy air.",
+      "unlockRule": "Enter the poppy field chapter"
+    },
+    {
+      "id": "field-mice-harness",
+      "title": "Field Mice Harness",
+      "caption": "Thread lines and tiny teams prepared for rescue labor.",
+      "unlockRule": "Accept aid from the Queen of the Field Mice"
+    },
+    {
+      "id": "queen-mouse-audience",
+      "title": "Audience with the Queen",
+      "caption": "Dorothy thanks the Queen as scouts race through grass.",
+      "unlockRule": "Complete field mice rescue"
+    },
+    {
+      "id": "lion-drawn-by-mice",
+      "title": "Lion Drawn by Mice",
+      "caption": "Many mice pull together to move the sleeping Lion.",
+      "unlockRule": "Complete poppy rescue with Lion recovered"
+    },
+    {
+      "id": "emerald-gates-distant",
+      "title": "Emerald Gates, Distant",
+      "caption": "The city walls gleam at the end of the yellow road.",
+      "unlockRule": "Finish Pack #3"
+    },
+    {
+      "id": "the-gate-guardian",
+      "title": "The Gate Guardian",
+      "caption": "The green-bearded Guardian records each petition at the city gate.",
+      "unlockRule": "Complete Guardian of the Gates chapter"
+    },
+    {
+      "id": "green-spectacles",
+      "title": "Green Spectacles",
+      "caption": "Locked lenses and careful straps before city entry.",
+      "unlockRule": "Perfect Spectacle Fastening"
+    },
+    {
+      "id": "city-glimmer",
+      "title": "City Glimmer",
+      "caption": "First look down the bright green streets within the walls.",
+      "unlockRule": "Enter the Emerald City"
+    },
+    {
+      "id": "palace-approach",
+      "title": "Palace Approach",
+      "caption": "The companions wait in order for their first audience request.",
+      "unlockRule": "Reach the palace appointment setup"
+    },
+    {
+      "id": "roads-end",
+      "title": "Road's End",
+      "caption": "The long road narrows at the gate of the city.",
+      "unlockRule": "Complete Emerald City approach"
+    },
+    {
+      "id": "hall-of-audience",
+      "title": "Hall of Audience",
+      "caption": "A long green hall where petitions are called one by one.",
+      "unlockRule": "Enter the palace waiting protocol chapter"
+    },
+    {
+      "id": "four-requests",
+      "title": "Four Requests",
+      "caption": "The four companions' wishes copied into a single ledger line.",
+      "unlockRule": "Complete Wizard first audience chapter"
+    },
+    {
+      "id": "wonders-behind-the-curtain",
+      "title": "Wonders Behind the Curtain",
+      "caption": "Shifting symbols and changing forms inside the audience chamber.",
+      "unlockRule": "Perfect Audience Perception"
+    },
+    {
+      "id": "a-promise-made",
+      "title": "A Promise Made",
+      "caption": "Dorothy and companions swear to hold together on the westward task.",
+      "unlockRule": "Reach westward mission setup"
+    },
+    {
+      "id": "westward-oath",
+      "title": "Westward Oath",
+      "caption": "The quest card sealed with four names and one road.",
+      "unlockRule": "Accept the westward mission"
+    },
+    {
+      "id": "green-spectacles-close-up",
+      "title": "Green Spectacles Close-Up",
+      "caption": "Lock, clasp, and rim details before another palace crossing.",
+      "unlockRule": "Finish Pack #5 route token node"
+    },
+    {
+      "id": "westward-road",
+      "title": "Westward Road",
+      "caption": "Quest-card directions traced beside the long western road.",
+      "unlockRule": "Complete Westward Departure story beat"
+    },
+    {
+      "id": "winkie-hills",
+      "title": "Winkie Hills",
+      "caption": "Yellow ridges and sparse watch-fires in the western country.",
+      "unlockRule": "Reach Winkie Country"
+    },
+    {
+      "id": "watching-presence",
+      "title": "Watching Presence",
+      "caption": "An inked sweep crossing ridges where no figure is seen.",
+      "unlockRule": "Reach A Watching Presence chapter"
+    },
+    {
+      "id": "hidden-hollow",
+      "title": "Hidden Hollow",
+      "caption": "Stone banks and low brush that hide the party from scouts.",
+      "unlockRule": "Complete optional Hidden Hollow side node"
+    },
+    {
+      "id": "ink-swirl-glyph",
+      "title": "Ink-Swirl Glyph",
+      "caption": "A patterned glyph copied after evading the western sweep perfectly.",
+      "unlockRule": "Perfect Shadow of the West run"
+    },
+    {
+      "id": "lions-resolve",
+      "title": "Lion's Resolve",
+      "caption": "The Lion plants his paws and promises not to break formation.",
+      "unlockRule": "Complete Pack #6 cliffhanger beat"
+    },
+    {
+      "id": "tins-footsteps",
+      "title": "Tin's Footsteps",
+      "caption": "Even, measured steps cut across dust as the march turns west.",
+      "unlockRule": "Complete Westward Departure chapter"
+    },
+    {
+      "id": "scarecrows-plan",
+      "title": "Scarecrow's Plan",
+      "caption": "Quick lane marks showing where to hide between sweeps.",
+      "unlockRule": "Complete witch-interference route planning beat"
+    },
+    {
+      "id": "golden-cap",
+      "title": "Golden Cap",
+      "caption": "Cap rim and script marks copied in haste inside the hold.",
+      "unlockRule": "Acquire the Golden Cap in story"
+    },
+    {
+      "id": "winged-monkeys",
+      "title": "Winged Monkeys",
+      "caption": "Swift figures descending under a lawful cap command.",
+      "unlockRule": "Use the first Golden Cap command"
+    },
+    {
+      "id": "western-hold",
+      "title": "Western Hold",
+      "caption": "Tall walls, narrow courts, and guarded western gates.",
+      "unlockRule": "Reach capture in Winkie Country"
+    },
+    {
+      "id": "quiet-plan",
+      "title": "Quiet Plan",
+      "caption": "Short route notes hidden in work ledgers and dust marks.",
+      "unlockRule": "Complete Golden Cap planning node"
+    },
+    {
+      "id": "servants-of-winkie-country",
+      "title": "Servants of Winkie Country",
+      "caption": "Winkie workers exchanging brief signs of help.",
+      "unlockRule": "Complete western hold workdays beat"
+    },
+    {
+      "id": "latch-and-token",
+      "title": "Latch and Token",
+      "caption": "Three latch tokens marked beside a narrow exit mechanism.",
+      "unlockRule": "Complete command carry moment or token latch node"
+    },
+    {
+      "id": "a-narrow-corridor",
+      "title": "A Narrow Corridor",
+      "caption": "A tight corridor where one wrong turn would raise alarm.",
+      "unlockRule": "Perfect Western Hold Escape run"
+    },
+    {
+      "id": "hands-unbound",
+      "title": "Hands Unbound",
+      "caption": "Companions regrouped after breaking clear of the hold.",
+      "unlockRule": "Complete Pack #7 cliffhanger"
+    },
+    {
+      "id": "ink-shadow-swell",
+      "title": "Ink Shadow Swell",
+      "caption": "Layered swells and lane marks traced during the western confrontation.",
+      "unlockRule": "Perfect Dousing the Shadow run"
+    },
+    {
+      "id": "bowl-of-water",
+      "title": "A Bowl of Water",
+      "caption": "A simple bowl and spill line noted before the decisive moment.",
+      "unlockRule": "Complete Western Reckoning setup"
+    },
+    {
+      "id": "quiet-courage",
+      "title": "Quiet Courage",
+      "caption": "Dorothy keeps her hands steady while companions hold their line.",
+      "unlockRule": "Choose the steady option in the Pack #8 opening beat"
+    },
+    {
+      "id": "winkie-lanterns",
+      "title": "Winkie Lanterns",
+      "caption": "Lantern rows lit in thanks after the western hold is freed.",
+      "unlockRule": "Complete Winkie gratitude aftermath node"
+    },
+    {
+      "id": "freedom-banner",
+      "title": "Freedom Banner",
+      "caption": "A simple cloth sign raised by Winkies after liberation.",
+      "unlockRule": "Complete western liberation banner beat"
+    },
+    {
+      "id": "road-back-east",
+      "title": "Road Back East",
+      "caption": "A long roadline turning from western ridges toward the city.",
+      "unlockRule": "Set Return to Emerald City objective"
+    },
+    {
+      "id": "silver-road-turning",
+      "title": "Silver Road Turning",
+      "caption": "Trail marks and shoeprints where the party turns toward Emerald City.",
+      "unlockRule": "Reach silver road turning reward node"
+    },
+    {
+      "id": "promise-kept",
+      "title": "A Promise Kept",
+      "caption": "Companions step out together after finishing the westward charge.",
+      "unlockRule": "Complete Pack #8 return departure beat"
+    },
+    {
+      "id": "back-to-the-green-city",
+      "title": "Back to the Green City",
+      "caption": "Dorothy and companions return through the city gates in measured lines.",
+      "unlockRule": "Complete Emerald return arrival node"
+    },
+    {
+      "id": "plain-mans-tale",
+      "title": "A Plain Man's Tale",
+      "caption": "A quiet chamber sketch marking the Wizard's ordinary confession.",
+      "unlockRule": "Complete Wizard revelation node"
+    },
+    {
+      "id": "token-of-brains",
+      "title": "Token of Brains",
+      "caption": "A symbolic emblem recorded beside Scarecrow's notes.",
+      "unlockRule": "Receive Scarecrow gift node"
+    },
+    {
+      "id": "token-of-heart",
+      "title": "Token of Heart",
+      "caption": "A polished token set next to Tin Woodman's care ledger.",
+      "unlockRule": "Receive Tin gift node"
+    },
+    {
+      "id": "token-of-courage",
+      "title": "Token of Courage",
+      "caption": "A marked token noted after the Lion's ceremony.",
+      "unlockRule": "Receive Lion gift node"
+    },
+    {
+      "id": "rigging-lines",
+      "title": "Rigging Lines",
+      "caption": "Rope geometry and knot order copied from balloon prep.",
+      "unlockRule": "Perfect Balloon Rigging run"
+    },
+    {
+      "id": "wind-vane",
+      "title": "Wind Vane",
+      "caption": "A vane angle sketch used to judge launch direction.",
+      "unlockRule": "Complete balloon preparation node"
+    },
+    {
+      "id": "departure-missed",
+      "title": "Departure Missed",
+      "caption": "A final line showing the balloon lifting while Dorothy remains below.",
+      "unlockRule": "Complete balloon mishap node"
+    }
+  ]
+}

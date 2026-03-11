@@ -1,0 +1,6 @@
+{
+  "outputPath": "ops/logs/model-output-provenance.json",
+  "requiredInputKinds": ["prompt", "policy", "context"],
+  "requiredDecisionFields": ["decisionId", "decisionSource"],
+  "maxEntries": 500
+}

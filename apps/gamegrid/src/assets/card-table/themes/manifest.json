@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "textures": [
+    {
+      "id": "felt-classic",
+      "path": "src/assets/card-table/themes/felt-classic.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "id": "felt-midnight",
+      "path": "src/assets/card-table/themes/felt-midnight.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "id": "felt-crimson",
+      "path": "src/assets/card-table/themes/felt-crimson.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "id": "felt-neon",
+      "path": "src/assets/card-table/themes/felt-neon.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "id": "felt-light",
+      "path": "src/assets/card-table/themes/felt-light.png",
+      "width": 128,
+      "height": 128
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "requireIkIntegration": true,
+  "requireCollisionConstraints": true,
+  "maxStepError": 0.06
+}

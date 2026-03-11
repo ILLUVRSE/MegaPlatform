@@ -1,0 +1,36 @@
+[
+  {
+    "id": "classic",
+    "name": "Classic",
+    "bounds": { "x": 80, "y": 40, "width": 1120, "height": 640 },
+    "goals": {
+      "top": { "x": 510, "width": 260, "lineY": 40 },
+      "bottom": { "x": 510, "width": 260, "lineY": 680 }
+    },
+    "obstacles": []
+  },
+  {
+    "id": "narrow-goals",
+    "name": "Narrow Goals",
+    "bounds": { "x": 80, "y": 40, "width": 1120, "height": 640 },
+    "goals": {
+      "top": { "x": 555, "width": 170, "lineY": 40 },
+      "bottom": { "x": 555, "width": 170, "lineY": 680 }
+    },
+    "obstacles": []
+  },
+  {
+    "id": "obstacles",
+    "name": "Obstacle Clash",
+    "bounds": { "x": 80, "y": 40, "width": 1120, "height": 640 },
+    "goals": {
+      "top": { "x": 510, "width": 260, "lineY": 40 },
+      "bottom": { "x": 510, "width": 260, "lineY": 680 }
+    },
+    "obstacles": [
+      { "kind": "circle", "x": 480, "y": 320, "radius": 30 },
+      { "kind": "circle", "x": 800, "y": 360, "radius": 26 },
+      { "kind": "rect", "x": 620, "y": 270, "width": 44, "height": 110 }
+    ]
+  }
+]

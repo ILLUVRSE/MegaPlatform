@@ -1,0 +1,5 @@
+{
+  "requiredStageStateFields": ["sceneId", "cueId", "timelineTick"],
+  "requiredAudienceStateFields": ["segmentLoads", "engagementMode"],
+  "requiredHostControlCapabilities": ["cue_dispatch", "safety_override", "audience_sync"]
+}

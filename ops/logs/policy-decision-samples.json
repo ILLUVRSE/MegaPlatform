@@ -1,0 +1,16 @@
+[
+  {
+    "scope": "deployment",
+    "action": "prod.promote",
+    "expectedEffect": "allow",
+    "observedEffect": "deny",
+    "sampleCount": 2
+  },
+  {
+    "scope": "optimization",
+    "action": "simulation.run",
+    "expectedEffect": "allow",
+    "observedEffect": "allow",
+    "sampleCount": 18
+  }
+]

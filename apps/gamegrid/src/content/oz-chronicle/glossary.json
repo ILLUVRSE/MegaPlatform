@@ -1,0 +1,304 @@
+{
+  "entries": [
+    {
+      "id": "dorothy-gale",
+      "term": "Dorothy Gale",
+      "note": "A Kansas girl carried by cyclone to Oz in the 1900 novel."
+    },
+    {
+      "id": "toto",
+      "term": "Toto",
+      "note": "Dorothy's small dog and steady companion."
+    },
+    {
+      "id": "munchkins",
+      "term": "Munchkins",
+      "note": "People of the eastern country in Oz, freed from the Witch of the East."
+    },
+    {
+      "id": "good-witch-north",
+      "term": "Good Witch of the North",
+      "note": "The northern witch who greets Dorothy and gives guidance."
+    },
+    {
+      "id": "witch-of-east",
+      "term": "Witch of the East",
+      "note": "The eastern ruler whose silver slippers pass to Dorothy."
+    },
+    {
+      "id": "silver-slippers",
+      "term": "Silver Slippers",
+      "note": "Shoes taken from the Witch of the East and worn by Dorothy in the book."
+    },
+    {
+      "id": "protection-kiss",
+      "term": "Protective Kiss",
+      "note": "A mark placed by the Good Witch of the North to shield Dorothy from harm."
+    },
+    {
+      "id": "scarecrow",
+      "term": "Scarecrow",
+      "note": "A straw-filled companion who seeks brains from the Wizard."
+    },
+    {
+      "id": "tin-woodman",
+      "term": "Tin Woodman",
+      "note": "A man of tin who rusted in place and needs oil for movement."
+    },
+    {
+      "id": "oil-can",
+      "term": "Oil Can",
+      "note": "Used to free the Tin Woodman's joints after standing in rain."
+    },
+    {
+      "id": "cowardly-lion",
+      "term": "Cowardly Lion",
+      "note": "A great beast who asks for courage despite his fearful heart."
+    },
+    {
+      "id": "forest-road",
+      "term": "Forest Road",
+      "note": "A shaded stretch of road with branches, roots, and narrow clearings."
+    },
+    {
+      "id": "emerald-city",
+      "term": "Emerald City",
+      "note": "The city where Dorothy seeks the Wizard's help."
+    },
+    {
+      "id": "kalidahs",
+      "term": "Kalidahs",
+      "note": "Monstrous beasts of Oz, with bear-like bodies and tiger-like heads, that hunt in packs."
+    },
+    {
+      "id": "poppy-field-effect",
+      "term": "Poppy Field Effect",
+      "note": "Heavy poppy fragrance that sends Dorothy and the Lion to sleep while Scarecrow and the Tin Woodman remain unaffected."
+    },
+    {
+      "id": "field-mice-queen",
+      "term": "Queen of the Field Mice",
+      "note": "Leader of the field mice who gathers her people to help rescue Dorothy's company from the poppy field danger."
+    },
+    {
+      "id": "guardian-of-the-gates",
+      "term": "Guardian of the Gates",
+      "note": "The official gatekeeper of the Emerald City who admits visitors under city rules."
+    },
+    {
+      "id": "green-spectacles",
+      "term": "Green Spectacles",
+      "note": "Eyewear fastened on every visitor before entering the Emerald City and not removed while inside."
+    },
+    {
+      "id": "emerald-city-entry-protocol",
+      "term": "Emerald City Entry Protocol",
+      "note": "Visitors declare their business, submit to spectacle fastening, and then pass the gate."
+    },
+    {
+      "id": "palace-approach",
+      "term": "Palace Approach",
+      "note": "The route to the Wizard's palace where petitions are recorded before an audience."
+    },
+    {
+      "id": "soldier-with-green-whiskers",
+      "term": "Soldier with Green Whiskers",
+      "note": "A city guard stationed near the Emerald City gate in Baum's account."
+    },
+    {
+      "id": "emerald-city-inn",
+      "term": "Emerald City Inn",
+      "note": "A resting place in the city where travelers are directed while waiting for palace instructions."
+    },
+    {
+      "id": "the-wizard",
+      "term": "The Wizard",
+      "note": "Ruler of the Emerald City who hears each petition separately."
+    },
+    {
+      "id": "palace-audience",
+      "term": "Palace Audience",
+      "note": "Formal meetings granted one by one inside the Wizard's palace chambers."
+    },
+    {
+      "id": "four-requests",
+      "term": "Four Requests",
+      "note": "Dorothy asks for home, Scarecrow for brains, Tin Woodman for a heart, and Lion for courage."
+    },
+    {
+      "id": "westward-journey",
+      "term": "Westward Journey",
+      "note": "The new objective given after the first audience: travel west before rewards are granted."
+    },
+    {
+      "id": "witch-of-west",
+      "term": "Witch of the West",
+      "note": "Western ruler named in the Wizard's condition for granting the party's requests."
+    },
+    {
+      "id": "audience-ledger",
+      "term": "Audience Ledger",
+      "note": "A palace record book used to log petitions and sequence of appointments."
+    },
+    {
+      "id": "winkie-country",
+      "term": "Country of the Winkies",
+      "note": "The western region of Oz, described as yellow and ruled by the Witch of the West."
+    },
+    {
+      "id": "witch-of-the-west",
+      "term": "Witch of the West",
+      "note": "The western witch who commands the Winkie country and opposes Dorothy's party."
+    },
+    {
+      "id": "westward-quest",
+      "term": "Westward Quest",
+      "note": "The quest-card directive to travel west before the Wizard grants any request."
+    },
+    {
+      "id": "enchanted-constraint",
+      "term": "Enchanted Constraint",
+      "note": "A magical compulsion used by the western witch to hold labor and obedience."
+    },
+    {
+      "id": "silver-slippers-power",
+      "term": "Silver Slippers Power",
+      "note": "The Witch of the West covets Dorothy's silver slippers, sensing power in them."
+    },
+    {
+      "id": "witch-scouts",
+      "term": "Witch Scouts",
+      "note": "Watchers and signal keepers set along western routes to report travelers."
+    },
+    {
+      "id": "palace-of-the-west",
+      "term": "Western Stronghold",
+      "note": "The high western dwelling where the Witch of the West keeps command."
+    },
+    {
+      "id": "western-watch-eye",
+      "term": "Western Watch Eye",
+      "note": "The Witch of the West's far-seeing eye used to watch distant roads."
+    },
+    {
+      "id": "golden-cap",
+      "term": "Golden Cap",
+      "note": "A cap that can command the Winged Monkeys for a limited number of uses."
+    },
+    {
+      "id": "winged-monkeys",
+      "term": "Winged Monkeys",
+      "note": "A powerful airborne host that must obey a lawful Golden Cap command."
+    },
+    {
+      "id": "command-limit",
+      "term": "Commands Remaining",
+      "note": "The Golden Cap grants three commands to its holder, tracked and spent one at a time."
+    },
+    {
+      "id": "winkie-servants",
+      "term": "Winkie Servants",
+      "note": "Winkies kept to work under the western witch, represented respectfully in brief story beats."
+    },
+    {
+      "id": "western-hold",
+      "term": "Western Hold",
+      "note": "The fortified western dwelling where Dorothy is confined during the rescue arc."
+    },
+    {
+      "id": "rescue-plan",
+      "term": "Rescue Plan",
+      "note": "A coordinated plan by Dorothy and companions to break from the western hold."
+    },
+    {
+      "id": "courage-under-duress",
+      "term": "Courage Under Duress",
+      "note": "Steadiness and care maintained while under guard and pressure."
+    },
+    {
+      "id": "vow-to-return-home",
+      "term": "Vow to Return Home",
+      "note": "Dorothy's repeated resolve to reach Kansas after surviving western trials."
+    },
+    {
+      "id": "water-against-witch",
+      "term": "Water Against the West",
+      "note": "Dorothy defeats the western witch by throwing water in the decisive encounter."
+    },
+    {
+      "id": "winkie-gratitude",
+      "term": "Winkie Gratitude",
+      "note": "Freed Winkies thank Dorothy and her companions and offer practical aid."
+    },
+    {
+      "id": "western-liberation",
+      "term": "Western Liberation",
+      "note": "The western hold and surrounding Winkie country are released from the witch's rule."
+    },
+    {
+      "id": "return-to-emerald-city",
+      "term": "Return to Emerald City",
+      "note": "The next road objective after the western arc: seek the Wizard again."
+    },
+    {
+      "id": "promise-to-help",
+      "term": "Promise to Help",
+      "note": "Winkies offer guidance and supplies to support the party's eastward travel."
+    },
+    {
+      "id": "melted-remains",
+      "term": "Melted Remains",
+      "note": "A brief, careful account of what is left when the western witch is undone by water."
+    },
+    {
+      "id": "silver-slippers-note",
+      "term": "Silver Slippers Note",
+      "note": "Dorothy keeps the silver slippers and records their importance before leaving the west."
+    },
+    {
+      "id": "journey-west-complete",
+      "term": "Journey West Complete",
+      "note": "A chapter marker that closes the westward mission and turns the road eastward."
+    },
+    {
+      "id": "humbug-revelation",
+      "term": "Humbug Revelation",
+      "note": "The Wizard is revealed as an ordinary man using devices rather than true power."
+    },
+    {
+      "id": "balloon-attempt",
+      "term": "Balloon Attempt",
+      "note": "A planned balloon ascent prepared for Dorothy's return from Oz."
+    },
+    {
+      "id": "mementos-of-virtue",
+      "term": "Mementos of Virtue",
+      "note": "Symbolic gifts offered to companions for brains, heart, and courage."
+    },
+    {
+      "id": "wizard-ordinary-man",
+      "term": "Wizard as Ordinary Man",
+      "note": "The Wizard admits he is not what his public image suggested."
+    },
+    {
+      "id": "departure-mishap",
+      "term": "Departure Mishap",
+      "note": "Dorothy misses the balloon departure and remains in Oz."
+    },
+    {
+      "id": "green-spectacles-continuity",
+      "term": "Green Spectacles Continuity",
+      "note": "Emerald City entry and audience customs continue on the return visit."
+    },
+    {
+      "id": "promise-fulfilled",
+      "term": "Promise Fulfilled",
+      "note": "The Wizard gives companions symbolic rewards to honor their requests."
+    },
+    {
+      "id": "next-path-home",
+      "term": "Next Path Home",
+      "note": "After the balloon mishap, Dorothy and friends seek another route home."
+    }
+  ]
+}

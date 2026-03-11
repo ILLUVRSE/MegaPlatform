@@ -1,0 +1,21 @@
+{
+  "frames": {
+    "fish-bass-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-bass-bite": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-bass-thrash": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-bass-exhausted": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-panfish-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-catfish-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-gar-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-trout-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-walleye-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-carp-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-muskie-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}},
+    "fish-paddlefish-idle": {"frame":{"x":0,"y":0,"w":1,"h":1}}
+  },
+  "meta": {
+    "image": "fish-atlas.png",
+    "size": {"w": 1, "h": 1},
+    "scale": "1"
+  }
+}

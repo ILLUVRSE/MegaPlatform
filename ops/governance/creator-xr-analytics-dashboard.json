@@ -1,0 +1,5 @@
+{
+  "minimumTrackedMetrics": 4,
+  "requireActionableInsights": true,
+  "requireOutputAttribution": true
+}

@@ -1,0 +1,27 @@
+@tailwind components;
+
+@layer components {
+  .party-card {
+    @apply rounded-3xl border border-illuvrse-border bg-white/80 p-6 shadow-card backdrop-blur;
+  }
+
+  .party-seat {
+    @apply flex h-16 w-16 items-center justify-center rounded-2xl border text-sm font-semibold transition;
+  }
+
+  .party-seat-available {
+    @apply border-illuvrse-border bg-white text-illuvrse-text hover:-translate-y-0.5 hover:border-illuvrse-primary;
+  }
+
+  .party-seat-reserved {
+    @apply border-illuvrse-accent bg-illuvrse-accent bg-opacity-10 text-illuvrse-text;
+  }
+
+  .party-seat-locked {
+    @apply border-illuvrse-danger bg-illuvrse-danger bg-opacity-10 text-illuvrse-danger;
+  }
+
+  .party-seat-occupied {
+    @apply border-illuvrse-primary bg-illuvrse-primary bg-opacity-10 text-illuvrse-primary;
+  }
+}

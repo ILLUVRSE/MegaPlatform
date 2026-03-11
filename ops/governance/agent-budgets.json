@@ -1,0 +1,5 @@
+[
+  {"agent":"Director","window":"daily","maxActions":30,"maxTokenBudget":150000},
+  {"agent":"Quality/Analytics","window":"daily","maxActions":25,"maxTokenBudget":180000},
+  {"agent":"Ops/SRE","window":"daily","maxActions":25,"maxTokenBudget":120000}
+]

@@ -1,0 +1,6 @@
+queue/index.json
+queue/pending/*.json
+queue/in_progress/*.json
+queue/done/*.json
+queue/blocked/*.json
+logs/*.md
