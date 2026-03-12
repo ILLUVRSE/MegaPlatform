@@ -4,6 +4,9 @@ const prismaMock = vi.hoisted(() => ({
   party: {
     findUnique: vi.fn()
   },
+  platformPresence: {
+    upsert: vi.fn()
+  },
   shortPost: {
     findUnique: vi.fn()
   },
@@ -86,6 +89,7 @@ describe("party phase 6 hardening", () => {
     prismaMock.playlistItem.count.mockResolvedValue(0);
     prismaMock.playlistItem.findFirst.mockResolvedValue(null);
     prismaMock.participant.findUnique.mockResolvedValue({ displayName: "Host" });
+    prismaMock.platformPresence.upsert.mockResolvedValue({});
     getStateMock.mockResolvedValue({
       partyId: "party-1",
       seatCount: 8,

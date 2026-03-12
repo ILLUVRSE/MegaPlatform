@@ -10,6 +10,10 @@ const prismaMock = vi.hoisted(() => ({
     findUnique: vi.fn(),
     findMany: vi.fn()
   },
+  platformPresence: {
+    upsert: vi.fn(),
+    findMany: vi.fn()
+  },
   participant: {
     findUnique: vi.fn()
   }
@@ -119,6 +123,8 @@ describe("party reliability slos", () => {
       }
     ]);
     prismaMock.participant.findUnique.mockResolvedValue({ displayName: "Host" });
+    prismaMock.platformPresence.upsert.mockResolvedValue({});
+    prismaMock.platformPresence.findMany.mockResolvedValue([]);
     getStateMock.mockResolvedValue(stateFixture());
     subscribeMock.mockResolvedValue(async () => {});
     isLiveKitConfiguredMock.mockReturnValue(true);

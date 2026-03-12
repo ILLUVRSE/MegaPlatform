@@ -28,5 +28,35 @@
     "target": 2,
     "unit": "count",
     "severity": "warning"
+  },
+  {
+    "id": "party-presence-up-fraction",
+    "name": "Party Presence Up Fraction",
+    "description": "Ensures party room participants stay fresh enough to keep rooms interactive.",
+    "metricKey": "presence_up_fraction",
+    "operator": ">=",
+    "target": 0.99,
+    "unit": "ratio",
+    "severity": "critical"
+  },
+  {
+    "id": "party-median-reconnect-ms",
+    "name": "Party Median Reconnect Duration",
+    "description": "Keeps party room reconnect recovery within an acceptable median time budget.",
+    "metricKey": "median_reconnect_ms",
+    "operator": "<=",
+    "target": 5000,
+    "unit": "ms",
+    "severity": "warning"
+  },
+  {
+    "id": "party-host-availability",
+    "name": "Party Host Availability",
+    "description": "Protects host continuity for active party rooms.",
+    "metricKey": "host_availability",
+    "operator": ">=",
+    "target": 0.995,
+    "unit": "ratio",
+    "severity": "critical"
   }
 ]

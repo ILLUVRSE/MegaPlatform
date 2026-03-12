@@ -10,6 +10,11 @@ import { prisma } from "@illuvrse/db";
 import { getState, publish, setState } from "@illuvrse/world-state";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
+import {
+  estimatePresenceHeartbeatGapMs,
+  estimatePresenceReconnectMs,
+  recordPartyRoomPresence
+} from "@/lib/platformPresence";
 
 export async function POST(
   request: Request,
@@ -35,6 +40,12 @@ export async function POST(
   }
 
   const { code } = await params;
+  const body = (await request.json().catch(() => null)) as
+    | {
+        status?: string;
+        reconnectMs?: number;
+      }
+    | null;
   const party = await prisma.party.findUnique({
     where: { code },
     include: { seats: true }
@@ -59,6 +70,7 @@ export async function POST(
 
   const state = await getState(party.id, party.seats.length);
   const nowIso = new Date().toISOString();
+  const nowMs = Date.parse(nowIso);
   const current = state.participants[principal.userId];
   state.participants[principal.userId] = {
     displayName: participant?.displayName ?? current?.displayName ?? (isHost ? "Host" : null),
@@ -72,6 +84,24 @@ export async function POST(
     pingCount: (state.heartbeat?.pingCount ?? 0) + 1
   };
   await setState(party.id, state);
+  await recordPartyRoomPresence(
+    {
+      userId: principal.userId
+    },
+    {
+      partyId: party.id,
+      roomCode: party.code,
+      status: body?.status === "reconnecting" ? "reconnecting" : "active",
+      isHost,
+      heartbeatGapMs: estimatePresenceHeartbeatGapMs(current?.lastSeenAt ?? null, nowMs),
+      reconnectMs:
+        typeof body?.reconnectMs === "number"
+          ? body.reconnectMs
+          : estimatePresenceReconnectMs(current?.lastSeenAt ?? null, nowMs),
+      hostAvailability: isHost ? 1 : undefined,
+      presenceUpFraction: 1
+    }
+  );
   await publish(party.id, {
     type: "presence_update",
     userId: principal.userId,

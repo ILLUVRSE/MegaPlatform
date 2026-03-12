@@ -1,6 +1,6 @@
 {
   "scope": "apps/web/app/api",
-  "routeCount": 385,
+  "routeCount": 386,
   "routes": [
     {
       "route": "/api/admin/apps/certification/publish",
@@ -1071,6 +1071,13 @@
         "GET"
       ],
       "source": "apps/web/app/api/admin/party/health/route.ts"
+    },
+    {
+      "route": "/api/admin/party/presence-summary",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/party/presence-summary/route.ts"
     },
     {
       "route": "/api/admin/platform/edge/performance",
