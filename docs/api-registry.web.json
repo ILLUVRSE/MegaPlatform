@@ -1,6 +1,6 @@
 {
   "scope": "apps/web/app/api",
-  "routeCount": 383,
+  "routeCount": 385,
   "routes": [
     {
       "route": "/api/admin/apps/certification/publish",
@@ -1066,6 +1066,13 @@
       "source": "apps/web/app/api/admin/partners/activate/route.ts"
     },
     {
+      "route": "/api/admin/party/health",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/party/health/route.ts"
+    },
+    {
       "route": "/api/admin/platform/edge/performance",
       "methods": [
         "GET"
@@ -1258,6 +1265,13 @@
         "POST"
       ],
       "source": "apps/web/app/api/admin/shows/route.ts"
+    },
+    {
+      "route": "/api/admin/studio/queue-health",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/studio/queue-health/route.ts"
     },
     {
       "route": "/api/admin/tenancy/authorize",

@@ -18,6 +18,10 @@ const checks = [
     name: "party-slo",
     cmd: ["pnpm", ["--filter", "@illuvrse/web", "test", "--", "--run", "party-slo.test.ts"]]
   },
+  {
+    name: "studio-worker-retry",
+    cmd: ["pnpm", ["--filter", "@illuvrse/web", "test", "--", "--run", "studio-worker-retry.test.ts"]]
+  },
   { name: "unit", cmd: ["pnpm", ["test"]] },
   ...(quick ? [] : [{ name: "e2e-smoke", cmd: ["pnpm", ["test:e2e:smoke"]] }])
 ];

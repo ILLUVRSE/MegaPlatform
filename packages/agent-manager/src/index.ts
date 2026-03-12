@@ -5,6 +5,16 @@
  */
 import { Queue } from "bullmq";
 import IORedis from "ioredis";
+import {
+  buildStudioDedupeKey,
+  calculateStudioRetryDelayMs,
+  STUDIO_JOB_ATTEMPTS,
+  STUDIO_KEEP_COMPLETED_JOBS,
+  STUDIO_KEEP_FAILED_JOBS,
+  STUDIO_QUEUE_NAME,
+  STUDIO_RETRY_BASE_DELAY_MS,
+  type StudioJobPayload
+} from "./studioQueue";
 export {
   OPS_AGENTS,
   TASK_STATUSES,
@@ -23,12 +33,15 @@ export {
 } from "./ops/taskQueue";
 export { runDirectorCycle } from "./ops/director";
 export { runSpecialist } from "./ops/specialist";
-
-export const STUDIO_QUEUE_NAME = "studio-jobs";
-export const STUDIO_JOB_ATTEMPTS = Number(process.env.STUDIO_JOB_ATTEMPTS ?? "5");
-export const STUDIO_RETRY_BASE_DELAY_MS = Number(process.env.STUDIO_RETRY_BASE_DELAY_MS ?? "2000");
-export const STUDIO_KEEP_COMPLETED_JOBS = Number(process.env.STUDIO_KEEP_COMPLETED_JOBS ?? "500");
-export const STUDIO_KEEP_FAILED_JOBS = Number(process.env.STUDIO_KEEP_FAILED_JOBS ?? "2000");
+export {
+  buildStudioDedupeKey,
+  calculateStudioRetryDelayMs,
+  STUDIO_JOB_ATTEMPTS,
+  STUDIO_KEEP_COMPLETED_JOBS,
+  STUDIO_KEEP_FAILED_JOBS,
+  STUDIO_QUEUE_NAME,
+  STUDIO_RETRY_BASE_DELAY_MS
+} from "./studioQueue";
 
 let queueInstance: Queue | null = null;
 
@@ -52,7 +65,7 @@ export function getStudioQueue() {
     defaultJobOptions: {
       attempts: Math.max(1, STUDIO_JOB_ATTEMPTS),
       backoff: {
-        type: "exponential",
+        type: "studio-jitter",
         delay: Math.max(250, STUDIO_RETRY_BASE_DELAY_MS)
       },
       removeOnComplete: {
@@ -71,13 +84,18 @@ export async function enqueueStudioJob(payload: {
   projectId: string;
   type: string;
   input: Record<string, unknown>;
+  dedupeKey?: string;
 }) {
   const queue = getStudioQueue();
-  const job = await queue.add(payload.type, payload, {
+  const queuePayload: StudioJobPayload = {
+    ...payload,
+    dedupeKey: payload.dedupeKey ?? buildStudioDedupeKey(payload.projectId, payload.type)
+  };
+  const job = await queue.add(payload.type, queuePayload, {
     jobId: payload.jobId,
     attempts: Math.max(1, STUDIO_JOB_ATTEMPTS),
     backoff: {
-      type: "exponential",
+      type: "studio-jitter",
       delay: Math.max(250, STUDIO_RETRY_BASE_DELAY_MS)
     }
   });

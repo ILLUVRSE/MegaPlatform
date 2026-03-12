@@ -3,9 +3,14 @@ import { render, screen } from "@testing-library/react";
 import EmbeddedPlatformApp from "@/app/components/EmbeddedPlatformApp";
 
 const telemetryMock = vi.hoisted(() => vi.fn());
+const pushMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@/lib/platformTelemetry", () => ({
   trackPlatformEvent: telemetryMock
+}));
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: pushMock })
 }));
 
 describe("embedded platform app", () => {
