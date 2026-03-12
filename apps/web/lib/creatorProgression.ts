@@ -1,5 +1,4 @@
-import { Prisma } from "@prisma/client";
-import { prisma } from "@illuvrse/db";
+import { Prisma, prisma } from "@illuvrse/db";
 
 const XP_PER_LEVEL = 500;
 

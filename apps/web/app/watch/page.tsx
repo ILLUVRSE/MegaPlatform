@@ -63,17 +63,16 @@ export default async function WatchPage() {
   const newReleaseIds = shows.filter((item) => item.newRelease).map((item) => item.id);
   const rails: Array<{ id: string; title: string; items: typeof baseItems }> = [];
 
-  const pick = (ids: string[], fallback: typeof baseItems) =>
-    ids.map((id) => byId.get(id)).filter(Boolean) as typeof baseItems;
+  const pick = (ids: string[]) => ids.map((id) => byId.get(id)).filter(Boolean) as typeof baseItems;
 
-  const trendingItems = pick(trendingIds, []).slice(0, 8);
+  const trendingItems = pick(trendingIds).slice(0, 8);
   rails.push({
     id: "trending",
     title: "Trending",
     items: trendingItems.length > 0 ? trendingItems : baseItems.slice(0, 8)
   });
 
-  const newReleaseItems = pick(newReleaseIds, []).slice(0, 8);
+  const newReleaseItems = pick(newReleaseIds).slice(0, 8);
   rails.push({
     id: "new-releases",
     title: "New Releases",
@@ -109,9 +108,7 @@ export default async function WatchPage() {
     id: genre.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-"),
     title: genre,
     items: shows
-      .filter((show) =>
-        (show.genres ?? []).some((item) => item.toLowerCase() === genre.toLowerCase())
-      )
+      .filter((show) => (show.genres ?? []).some((item) => item.toLowerCase() === genre.toLowerCase()))
       .map((show) => byId.get(show.id))
       .filter(Boolean) as typeof baseItems
   }));
@@ -141,7 +138,6 @@ export default async function WatchPage() {
     id: string;
     showTitle: string;
     episodeTitle: string;
-    showSlug: string;
     posterUrl?: string | null;
   }> = [];
 
@@ -172,98 +168,154 @@ export default async function WatchPage() {
         id: item.episode.id,
         showTitle: item.episode.season.show.title,
         episodeTitle: item.episode.title,
-        showSlug: item.episode.season.show.slug,
         posterUrl: item.episode.season.show.posterUrl
       }));
     }
   }
 
+  const recommendationItems = rails.flatMap((rail) => rail.items).slice(0, 4);
+
   return (
-    <div className="-mx-6 space-y-10 bg-[#07070b] px-6 pb-10 text-white">
-      <div className="space-y-8">
-        <HeroCarousel items={heroShows} />
+    <div className="space-y-8 text-white">
+      <HeroCarousel items={heroShows} />
+
+      <div className="flex flex-wrap gap-2">
+        {WATCH_LOCAL_NAV.map((item) => {
+          if (item.requiresProfilePrompt && !(session?.user?.id && !profileId)) return null;
+          const active = item.href === "/watch";
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.26em] ${
+                active
+                  ? "border-cyan-300/30 bg-cyan-400/10 text-cyan-100"
+                  : "border-white/10 bg-white/5 text-white/62 hover:text-white"
+              }`}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </div>
 
-      <div className="sticky top-0 z-10 -mx-6 border-y border-white/10 bg-[#07070b]/90 px-6 py-3 backdrop-blur">
-        <nav className="flex flex-wrap gap-4 text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
-          {WATCH_LOCAL_NAV.map((item) => {
-            if (item.requiresProfilePrompt && !(session?.user?.id && !profileId)) return null;
-            const active = item.href === "/watch";
-            return (
-              <Link key={item.href} href={item.href} className={active ? "text-white" : "hover:text-white"}>
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+      <div className="grid gap-6 xl:grid-cols-[1.45fr_0.55fr]">
+        <div className="space-y-8">
+          {session?.user?.id && profileId ? (
+            progressItems.length > 0 ? (
+              <RailRow title="For You">
+                {progressItems.map((item) => (
+                  <PosterCard
+                    key={item.id}
+                    title={item.showTitle}
+                    subtitle={item.episodeTitle}
+                    imageUrl={item.posterUrl}
+                    href={`/watch/episode/${item.id}`}
+                  />
+                ))}
+              </RailRow>
+            ) : null
+          ) : (
+            <ContinueWatchingRail />
+          )}
 
-      <div className="space-y-10">
-        {session?.user?.id && profileId ? (
-          progressItems.length > 0 ? (
-            <RailRow title="Continue Watching">
-              {progressItems.map((item) => (
+          {rails.map((rail) => (
+            <RailRow key={rail.id} title={rail.title}>
+              {rail.items.map((item) => (
                 <PosterCard
                   key={item.id}
-                  title={item.showTitle}
-                  subtitle={item.episodeTitle}
+                  title={item.title}
                   imageUrl={item.posterUrl}
-                  href={`/watch/episode/${item.id}`}
+                  href={`/watch/show/${item.slug}`}
+                  showId={item.id}
+                  canSave={Boolean(session?.user?.id && profileId)}
+                  initialSaved={myListIds.has(item.id)}
                 />
               ))}
             </RailRow>
-          ) : null
-        ) : (
-          <ContinueWatchingRail />
-        )}
-
-        {session?.user?.id && profileId && myListItems.length > 0 ? (
-          <RailRow title="My List">
-            {myListItems.map((item) => (
-              <PosterCard
-                key={item.id}
-                title={item.title}
-                imageUrl={item.posterUrl}
-                href={`/watch/show/${item.slug}`}
-              />
-            ))}
-          </RailRow>
-        ) : null}
-
-        {rails.map((rail) => (
-          <RailRow key={rail.id} title={rail.title}>
-            {rail.items.map((item) => (
-              <PosterCard
-                key={item.id}
-                title={item.title}
-                imageUrl={item.posterUrl}
-                href={`/watch/show/${item.slug}`}
-                showId={item.id}
-                canSave={Boolean(session?.user?.id && profileId)}
-                initialSaved={myListIds.has(item.id)}
-              />
-            ))}
-          </RailRow>
-        ))}
-
-        <RailRow
-          title="Live Channels"
-          action={<Link href="/watch/live" className="hover:text-white">See all</Link>}
-        >
-          {channels.slice(0, 6).map((channel) => (
-            <ChannelTile
-              key={channel.id}
-              channel={{
-                id: channel.id,
-                name: channel.name,
-                logoUrl: channel.logoUrl,
-                heroUrl: channel.heroUrl,
-                category: typeof channel.category === "string" ? channel.category : null,
-                now: (programMap.get(channel.id) as string | null | undefined) ?? null
-              }}
-            />
           ))}
-        </RailRow>
+
+          {session?.user?.id && profileId && myListItems.length > 0 ? (
+            <RailRow title="My List">
+              {myListItems.map((item) => (
+                <PosterCard
+                  key={item.id}
+                  title={item.title}
+                  imageUrl={item.posterUrl}
+                  href={`/watch/show/${item.slug}`}
+                />
+              ))}
+            </RailRow>
+          ) : null}
+        </div>
+
+        <aside className="space-y-4">
+          <section className="platform-panel-dark">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Up next</p>
+                <h2 className="mt-1 text-xl font-semibold text-white">Recommendations</h2>
+              </div>
+              <Link href="/watch/live" className="text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200">
+                Live
+              </Link>
+            </div>
+            <div className="mt-4 space-y-3">
+              {recommendationItems.map((item) => (
+                <Link key={item.id} href={`/watch/show/${item.slug}`} className="flex gap-3 rounded-[22px] border border-white/10 bg-white/5 p-3">
+                  <img
+                    src={item.posterUrl ?? "https://placehold.co/280x160?text=ILLUVRSE"}
+                    alt={item.title}
+                    className="h-20 w-16 rounded-xl object-cover"
+                  />
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-white">{item.title}</p>
+                    <p className="mt-1 text-xs text-white/52">Queue this next in Watch or Party.</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="platform-panel-dark">
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Friends watching</p>
+            <div className="mt-4 space-y-3">
+              {["Ryan", "Alex", "Jamie"].map((name, index) => (
+                <div key={name} className="flex items-center justify-between rounded-[22px] border border-white/10 bg-white/5 px-3 py-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-cyan-400/90 to-fuchsia-500/80" />
+                    <div>
+                      <p className="text-sm font-semibold text-white">{name}</p>
+                      <p className="text-xs text-white/48">{index === 0 ? "Nebula Nights" : index === 1 ? "Trending shorts" : "Live recap"}</p>
+                    </div>
+                  </div>
+                  <Link href="/party" className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">
+                    Join
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="platform-panel-dark">
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Live now</p>
+            <div className="mt-4 space-y-3">
+              {channels.slice(0, 4).map((channel) => (
+                <ChannelTile
+                  key={channel.id}
+                  channel={{
+                    id: channel.id,
+                    name: channel.name,
+                    logoUrl: channel.logoUrl,
+                    heroUrl: channel.heroUrl,
+                    category: typeof channel.category === "string" ? channel.category : null,
+                    now: (programMap.get(channel.id) as string | null | undefined) ?? null
+                  }}
+                />
+              ))}
+            </div>
+          </section>
+        </aside>
       </div>
     </div>
   );

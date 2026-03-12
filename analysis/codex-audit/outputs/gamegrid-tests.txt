@@ -1,0 +1,279 @@
+
+> @illuvrse/gamegrid@0.1.0 test /home/ryan/ILLUVRSE/apps/gamegrid
+> vitest run
+
+
+ RUN  v2.1.9 /home/ryan/ILLUVRSE/apps/gamegrid
+
+ ✓ src/games/pool/rules.test.ts (8 tests) 12ms
+ ✓ src/games/throw-darts/rules.test.ts (3 tests) 6ms
+ ✓ src/games/oz-chronicle/map/mapGen.test.ts (9 tests) 13ms
+ ✓ src/games/oz-chronicle/content.test.ts (2 tests) 81ms
+ ✓ src/games/goalie-gauntlet/rules.test.ts (4 tests) 14ms
+ ✓ src/games/oz-chronicle/rules.test.ts (16 tests) 77ms
+ ✓ src/mp/adapters/goalie-gauntlet.test.ts (3 tests) 43ms
+ ✓ src/mp/minigolf.integration.test.ts (3 tests) 51ms
+ ✓ src/games/ozark-fishing/rules.test.ts (4 tests) 34ms
+ ✓ src/games/ozark-fishing/replay.test.ts (3 tests) 27ms
+ ✓ src/mp/goalie-gauntlet.integration.test.ts (2 tests) 147ms
+ ✓ src/mp/adapters/ozark-fishing.test.ts (6 tests) 137ms
+ ✓ src/mp/ozark-fishing.integration.test.ts (4 tests) 508ms
+   ✓ ozark-fishing multiplayer integration > syncs 4-player derby leaderboard and session end deterministically 470ms
+ ✓ src/mp/starlight-chronicles.integration.test.ts (9 tests) 99ms
+ ✓ src/games/oz-chronicle/minigames/westernHoldEscape.test.ts (3 tests) 18ms
+ ✓ src/games/starlight-chronicles/content.test.ts (1 test) 10ms
+ ✓ src/games/minigolf/physics.test.ts (3 tests) 32ms
+ ✓ src/games/starlight-chronicles/ship/hulls.test.ts (4 tests) 26ms
+ ✓ src/games/oz-chronicle/minigames/shadowOfTheWest.test.ts (3 tests) 16ms
+stdout | src/games/ozark-fishing/scene.integration.test.tsx > ozark fishing route boot integration > boots through game container and runs core casting logic without exceptions
+[perf] bundle:ozark-fishing ok 87ms
+
+ ✓ src/games/ozark-fishing/fish.test.ts (3 tests) 7ms
+ ✓ src/games/ozark-fishing/scene.integration.test.tsx (1 test) 3946ms
+   ✓ ozark fishing route boot integration > boots through game container and runs core casting logic without exceptions 3944ms
+ ✓ src/registry/games.test.ts (20 tests) 43ms
+ ✓ src/mp/tabletennis.integration.test.ts (1 test) 80ms
+ ✓ src/games/starlight-chronicles/world/risk.test.ts (4 tests) 23ms
+stdout | src/games/alley-bowling-blitz/scene.integration.test.tsx > alley bowling blitz route boot integration > boots through game container, loads challenges json, and runs update ticks without exceptions
+[perf] bundle:alley-bowling-blitz ok 97ms
+
+ ✓ src/games/alley-bowling-blitz/scene.integration.test.tsx (1 test) 2071ms
+   ✓ alley bowling blitz route boot integration > boots through game container, loads challenges json, and runs update ticks without exceptions 2067ms
+ ✓ src/games/ozark-fishing/content.test.ts (2 tests) 19ms
+ ✓ src/games/penalty-kick-showdown/rules.test.ts (3 tests) 22ms
+ ✓ src/games/oz-chronicle/minigames/spectacleFastening.test.ts (4 tests) 80ms
+ ✓ src/games/homerun-derby/rules.test.ts (3 tests) 76ms
+ ✓ src/mp/pixelpuck.integration.test.ts (1 test) 48ms
+stdout | src/games/pool/scene.integration.test.tsx > pool route boot integration > boots through game container and runs pool update ticks without exceptions
+[perf] bundle:pool ok 128ms
+
+ ✓ src/games/pool/scene.integration.test.tsx (1 test) 2826ms
+   ✓ pool route boot integration > boots through game container and runs pool update ticks without exceptions 2825ms
+ ✓ src/games/oz-chronicle/persistence.test.ts (3 tests) 62ms
+ ✓ src/games/freethrow-frenzy/rules.test.ts (4 tests) 25ms
+stdout | src/games/battleship/scene.integration.test.tsx > battleship route boot integration > boots through game container and runs feedback ticks without exceptions
+[perf] bundle:battleship ok 67ms
+
+ ✓ src/games/battleship/scene.integration.test.tsx (1 test) 2227ms
+   ✓ battleship route boot integration > boots through game container and runs feedback ticks without exceptions 2225ms
+stdout | src/games/oz-chronicle/scene.integration.test.tsx > oz chronicle route boot integration > boots /play/oz-chronicle without crash
+[perf] bundle:oz-chronicle ok 2494ms
+
+ ✓ src/games/oz-chronicle/scene.integration.test.tsx (1 test) 4797ms
+   ✓ oz chronicle route boot integration > boots /play/oz-chronicle without crash 4794ms
+ ✓ src/games/starlight-chronicles/crew/crew.test.ts (4 tests) 42ms
+ ✓ src/games/ozark-fishing/progression.test.ts (3 tests) 32ms
+stdout | src/games/starlight-chronicles/scene.integration.test.tsx > starlight chronicles route boot integration > boots and performs star map node selection simulation headlessly
+[perf] bundle:starlight-chronicles ok 1116ms
+
+ ✓ src/games/starlight-chronicles/scene.integration.test.tsx (1 test) 3325ms
+   ✓ starlight chronicles route boot integration > boots and performs star map node selection simulation headlessly 3323ms
+ ✓ src/mp/card-table.integration.test.ts (1 test) 30ms
+ ✓ src/games/oz-chronicle/minigames/dousingTheShadow.test.ts (3 tests) 43ms
+ ✓ src/games/starlight-chronicles/economy/marketSim.test.ts (4 tests) 28ms
+stdout | src/games/wheel-of-fortune/scene.integration.test.tsx > wheel of fortune route boot integration > boots through game container and runs scoring utilities without exceptions
+[perf] bundle:wheel-of-fortune ok 43ms
+
+ ✓ src/games/wheel-of-fortune/scene.integration.test.tsx (1 test) 2954ms
+   ✓ wheel of fortune route boot integration > boots through game container and runs scoring utilities without exceptions 2936ms
+ ✓ src/mp/throw-darts.integration.test.ts (1 test) 15ms
+ ✓ src/games/minigolf/rules.test.ts (3 tests) 45ms
+stdout | src/games/goalie-gauntlet/scene.integration.test.tsx > goalie-gauntlet route boot integration > boots through game container, loads challenges, and runs ticks without exceptions
+[perf] bundle:goalie-gauntlet ok 0ms
+
+ ✓ src/games/goalie-gauntlet/scene.integration.test.tsx (1 test) 2346ms
+   ✓ goalie-gauntlet route boot integration > boots through game container, loads challenges, and runs ticks without exceptions 2334ms
+ ✓ src/games/table-tennis/rules.test.ts (4 tests) 24ms
+ ✓ src/games/ozark-fishing/liveops.test.ts (5 tests) 26ms
+ ✓ src/games/minigolf/sim.test.ts (2 tests) 44ms
+ ✓ src/mp/foosball.integration.test.ts (1 test) 51ms
+ ✓ src/mp/freethrow-frenzy.integration.test.ts (1 test) 14ms
+stdout | src/games/foosball/scene.integration.test.tsx > foosball route boot integration > boots through game container, loads drills json, and runs update ticks without exceptions
+[perf] bundle:foosball ok 102ms
+
+ ✓ src/games/foosball/scene.integration.test.tsx (1 test) 2436ms
+   ✓ foosball route boot integration > boots through game container, loads drills json, and runs update ticks without exceptions 2434ms
+stdout | src/games/minigolf/scene.integration.test.tsx > minigolf route boot integration > boots through game container, loads holes json, and runs update ticks without exceptions
+[perf] bundle:minigolf ok 197ms
+
+ ✓ src/games/minigolf/scene.integration.test.tsx (1 test) 2135ms
+   ✓ minigolf route boot integration > boots through game container, loads holes json, and runs update ticks without exceptions 2125ms
+ ✓ src/games/starlight-chronicles/combat/coopBoss.test.ts (3 tests) 29ms
+ ✓ src/games/ozark-fishing/graphicsSettings.test.ts (3 tests) 27ms
+stdout | src/games/card-table/scene.integration.test.tsx > card-table route boot integration > boots game container and switches into two modes without exceptions
+[perf] bundle:card-table ok 0ms
+
+ ✓ src/games/card-table/scene.integration.test.tsx (1 test) 3045ms
+   ✓ card-table route boot integration > boots game container and switches into two modes without exceptions 3044ms
+ ✓ src/games/starlight-chronicles/ship/shipDamage.test.ts (3 tests) 50ms
+ ✓ src/games/ozark-fishing/tournament/tournament.test.ts (2 tests) 37ms
+ ✓ src/games/pixelpuck/physics.test.ts (4 tests) 30ms
+ ✓ src/mp/penalty-kick-showdown.integration.test.ts (1 test) 108ms
+ ✓ src/mp/homerun-derby.integration.test.ts (1 test) 35ms
+ ✓ src/mp/pool.integration.test.ts (1 test) 19ms
+ ✓ src/mp/alley-bowling-blitz.integration.test.ts (1 test) 34ms
+stdout | src/games/checkers/scene.integration.test.tsx > checkers route boot integration > boots through game container and runs basic evaluation ticks without exceptions
+[perf] bundle:checkers ok 0ms
+
+ ✓ src/games/checkers/scene.integration.test.tsx (1 test) 2449ms
+   ✓ checkers route boot integration > boots through game container and runs basic evaluation ticks without exceptions 2447ms
+stdout | src/games/penalty-kick-showdown/scene.integration.test.tsx > penalty-kick-showdown route boot integration > boots through game container and runs update ticks without exceptions
+[perf] bundle:penalty-kick-showdown ok 0ms
+
+ ✓ src/games/penalty-kick-showdown/scene.integration.test.tsx (1 test) 1779ms
+   ✓ penalty-kick-showdown route boot integration > boots through game container and runs update ticks without exceptions 1777ms
+ ✓ src/games/ozark-fishing/tournament/bracket.test.ts (4 tests) 68ms
+ ✓ src/games/oz-chronicle/minigames/audiencePerception.test.ts (3 tests) 17ms
+ ✓ src/games/snake/logic.test.ts (7 tests) 48ms
+stdout | src/games/freethrow-frenzy/scene.integration.test.tsx > freethrow-frenzy route boot integration > boots through game container and runs update ticks without exceptions
+[perf] bundle:freethrow-frenzy ok 0ms
+
+ ✓ src/games/freethrow-frenzy/scene.integration.test.tsx (1 test) 2063ms
+   ✓ freethrow-frenzy route boot integration > boots through game container and runs update ticks without exceptions 2061ms
+stdout | src/games/homerun-derby/scene.integration.test.tsx > homerun-derby route boot integration > boots through game container and runs update ticks without exceptions
+[perf] bundle:homerun-derby ok 0ms
+
+ ✓ src/games/homerun-derby/scene.integration.test.tsx (1 test) 1970ms
+   ✓ homerun-derby route boot integration > boots through game container and runs update ticks without exceptions 1968ms
+ ✓ src/games/oz-chronicle/baumCompliance.test.ts (2 tests) 37ms
+ ✓ src/games/starlight-chronicles/ship/cosmetics.test.ts (3 tests) 27ms
+stdout | src/games/table-tennis/scene.integration.test.tsx > table-tennis route boot integration > boots through game container and runs update ticks without exceptions
+[perf] bundle:table-tennis ok 4ms
+
+ ✓ src/games/table-tennis/scene.integration.test.tsx (1 test) 2243ms
+   ✓ table-tennis route boot integration > boots through game container and runs update ticks without exceptions 2242ms
+ ✓ src/games/oz-chronicle/minigames/balloonRigging.test.ts (3 tests) 34ms
+ ✓ src/mp/room.test.ts (5 tests) 53ms
+ ✓ src/games/throw-darts/scoring.test.ts (3 tests) 15ms
+ ✓ src/games/starlight-chronicles/economy/contracts.test.ts (3 tests) 81ms
+ ✓ src/games/ozark-fishing/highlights.test.ts (1 test) 3ms
+ ✓ src/games/starlight-chronicles/world/frontline.test.ts (3 tests) 30ms
+ ✓ src/systems/postMessageBridge.test.ts (2 tests) 86ms
+ ✓ src/games/goalie-gauntlet/career.integration.test.ts (1 test) 27ms
+ ✓ src/games/goalie-gauntlet/patterns.test.ts (2 tests) 17ms
+stdout | src/games/throw-darts/scene.integration.test.tsx > throw-darts route boot integration > boots through game container and runs update ticks without exceptions
+[perf] bundle:throw-darts ok 0ms
+
+ ✓ src/games/throw-darts/scene.integration.test.tsx (1 test) 2765ms
+   ✓ throw-darts route boot integration > boots through game container and runs update ticks without exceptions 2759ms
+ ✓ src/games/homerun-derby/physics/flight.test.ts (5 tests) 13ms
+ ✓ src/games/ozark-fishing/sceneCompose.test.ts (3 tests) 45ms
+ ✓ src/mp/adapters/table-tennis.test.ts (2 tests) 22ms
+ ✓ src/games/foosball/drills.test.ts (2 tests) 25ms
+ ✓ src/games/ozark-fishing/season-standings.test.ts (2 tests) 20ms
+ ✓ src/systems/progression.test.ts (4 tests) 27ms
+ ✓ src/games/goalie-gauntlet/progression.test.ts (2 tests) 10ms
+ ✓ src/games/oz-chronicle/minigames/kalidahChase.test.ts (2 tests) 9ms
+ ✓ src/games/oz-chronicle/minigames/poppyRescue.test.ts (2 tests) 13ms
+ ✓ src/games/ozark-fishing/cosmetics.test.ts (3 tests) 52ms
+ ✓ src/games/starlight-chronicles/run/nodeCrewIntegration.test.ts (4 tests) 8ms
+ ✓ src/games/starlight-chronicles/run/runGen.test.ts (5 tests) 23ms
+ ✓ src/games/penalty-kick-showdown/shotModel.test.ts (2 tests) 33ms
+ ✓ src/games/minigolf/levels.test.ts (1 test) 142ms
+ ✓ src/games/ozark-fishing/shareCard.test.ts (2 tests) 11ms
+ ✓ src/games/alley-bowling-blitz/challenges.test.ts (2 tests) 14ms
+ ✓ src/games/freethrow-frenzy/shotModel.test.ts (2 tests) 25ms
+ ✓ src/games/ozark-fishing/tournament/poster.test.ts (2 tests) 23ms
+ ✓ src/games/alley-bowling-blitz/rules.test.ts (3 tests) 18ms
+ ✓ src/games/goalie-gauntlet/replay.test.ts (1 test) 13ms
+ ✓ src/games/homerun-derby/replay/replayDeterminism.test.ts (2 tests) 34ms
+ ✓ src/mp/adapters/starlight-chronicles.coop.test.ts (2 tests) 21ms
+ ✓ src/games/penalty-kick-showdown/goalieAI.test.ts (2 tests) 34ms
+ ✓ src/games/starlight-chronicles/fleet/wingmen.test.ts (3 tests) 21ms
+stdout | src/games/pixelpuck/scene.integration.test.tsx > pixelpuck route boot integration > boots through game container and runs headless ticks without exceptions
+[perf] bundle:pixelpuck ok 0ms
+
+ ✓ src/games/pixelpuck/scene.integration.test.tsx (1 test) 730ms
+   ✓ pixelpuck route boot integration > boots through game container and runs headless ticks without exceptions 726ms
+ ✓ src/games/ozark-fishing/tournament/league.test.ts (2 tests) 15ms
+ ✓ src/games/goalie-gauntlet/challenges.test.ts (2 tests) 11ms
+ ✓ src/games/ozark-fishing/jumpMoment.test.ts (3 tests) 12ms
+ ✓ src/games/starlight-chronicles/combat/supportAbilities.test.ts (2 tests) 8ms
+ ✓ src/games/homerun-derby/pitch.test.ts (2 tests) 24ms
+ ✓ src/games/card-table/modes/solitaire/rules.test.ts (5 tests) 24ms
+ ✓ src/games/goalie-gauntlet/career.test.ts (2 tests) 12ms
+ ✓ src/games/card-table/modes/thirtyone/rules.test.ts (3 tests) 10ms
+ ✓ src/games/starlight-chronicles/run/runSnapshot.test.ts (1 test) 8ms
+ ✓ src/games/starlight-chronicles/story/storyRules.test.ts (2 tests) 33ms
+ ✓ src/games/ozark-fishing/fishRender.test.ts (3 tests) 32ms
+ ✓ src/games/starlight-chronicles/fleet/drone.test.ts (3 tests) 17ms
+ ✓ src/mp/adapters/starlight-chronicles.test.ts (2 tests) 25ms
+ ✓ src/games/starlight-chronicles/ship/showroom.test.ts (2 tests) 23ms
+ ✓ src/games/throw-darts/feedback.test.ts (2 tests) 18ms
+ ✓ src/games/card-table/modes/holdem/rules.test.ts (1 test) 18ms
+ ✓ src/games/card-table/modes/five-card-draw/rules.test.ts (2 tests) 8ms
+ ✓ src/games/oz-chronicle/ui/spectaclesOverlay.test.ts (1 test) 17ms
+ ✓ src/games/card-table/theme/assets-theme.test.ts (2 tests) 36ms
+ ✓ src/games/ozark-fishing/vfxPool.test.ts (2 tests) 12ms
+ ✓ src/games/goalie-gauntlet/ranked.test.ts (2 tests) 26ms
+ ✓ src/games/homerun-derby/pitching/pitchSequence.test.ts (2 tests) 9ms
+ ✓ src/games/card-table/engine/cards.test.ts (2 tests) 32ms
+ ✓ src/games/pool/trickshots.test.ts (2 tests) 28ms
+ ✓ src/games/starlight-chronicles/world/patrols.test.ts (2 tests) 43ms
+ ✓ src/games/starlight-chronicles/fleet/escortMissions.test.ts (2 tests) 36ms
+ ✓ src/games/ozark-fishing/cinematicSettings.test.ts (3 tests) 14ms
+ ✓ src/games/ozark-fishing/audioMix.test.ts (2 tests) 5ms
+ ✓ src/game/GameContainer.integration.test.tsx (20 tests) 1246ms
+ ✓ src/games/ozark-fishing/photoMode.test.ts (2 tests) 7ms
+ ✓ src/games/ozark-fishing/environment.test.ts (2 tests) 18ms
+ ✓ src/games/goalie-gauntlet/currency.test.ts (1 test) 13ms
+ ✓ src/scenes/starlight.integration.test.ts (2 tests) 10ms
+ ✓ src/games/ozark-fishing/slowMo.test.ts (2 tests) 20ms
+ ✓ src/mp/serializer.test.ts (3 tests) 17ms
+ ✓ src/games/battleship/feedback.test.ts (3 tests) 16ms
+ ✓ src/games/card-table/modes/blackjack/rules.test.ts (3 tests) 8ms
+ ✓ src/games/ozark-fishing/camera.test.ts (2 tests) 12ms
+ ✓ src/systems/persistence.test.ts (2 tests) 16ms
+ ✓ src/games/foosball/rules.test.ts (2 tests) 10ms
+ ✓ src/games/homerun-derby/batting.test.ts (2 tests) 16ms
+ ✓ src/games/starlight-chronicles/economy/fitting.test.ts (1 test) 34ms
+ ✓ src/mp/protocol.test.ts (3 tests) 4ms
+ ✓ src/games/card-table/modes/higher-lower/rules.test.ts (2 tests) 8ms
+ ✓ src/games/starlight-chronicles/run/factionShop.test.ts (2 tests) 38ms
+ ✓ src/games/oz-chronicle/minigames/cornfieldRescue.test.ts (2 tests) 41ms
+ ✓ src/games/goalie-gauntlet/achievements.test.ts (1 test) 10ms
+ ✓ src/games/alley-bowling-blitz/scoring.test.ts (3 tests) 45ms
+ ✓ src/games/starlight-chronicles/crew/crewDialogue.test.ts (2 tests) 14ms
+ ✓ src/games/alley-bowling-blitz/ai.test.ts (1 test) 53ms
+ ✓ src/games/oz-chronicle/visual/settings.test.ts (1 test) 7ms
+ ✓ src/games/pixelpuck/rules.test.ts (2 tests) 28ms
+ ✓ src/games/oz-chronicle/minigames/tuning.test.ts (2 tests) 19ms
+ ✓ src/games/oz-chronicle/assets/manifest.test.ts (1 test) 48ms
+ ✓ src/games/oz-chronicle/minigames/cycloneEscape.test.ts (2 tests) 7ms
+ ✓ src/games/starlight-chronicles/economy/contracts.fleet.test.ts (1 test) 29ms
+ ✓ src/games/starlight-chronicles/run/nodeOutcome.test.ts (1 test) 24ms
+ ✓ src/games/table-tennis/physics.test.ts (1 test) 15ms
+ ✓ src/games/alley-bowling-blitz/pins.test.ts (1 test) 28ms
+ ✓ src/games/freethrow-frenzy/mechanics/timing.test.ts (2 tests) 8ms
+ ✓ src/games/goalie-gauntlet/physics.test.ts (1 test) 31ms
+ ✓ src/games/ozark-fishing/uiMotion.test.ts (2 tests) 4ms
+ ✓ src/systems/thumbnail-script.test.js (1 test) 131ms
+ ✓ src/systems/icon-build.test.js (1 test) 4ms
+ ✓ src/mp/starlight-chronicles.coop-boss.integration.test.ts (1 test) 10ms
+ ✓ src/games/pixelpuck/rink.test.ts (1 test) 25ms
+ ✓ src/games/starlight-chronicles/combat/bossPhases.test.ts (1 test) 3ms
+ ✓ src/games/wheel-of-fortune/scoring.test.ts (3 tests) 19ms
+ ✓ src/games/card-table/modes/forehead-poker/rules.test.ts (2 tests) 5ms
+ ✓ src/games/foosball/physics.test.ts (1 test) 4ms
+ ✓ src/games/oz-chronicle/sketches.test.ts (1 test) 6ms
+ ✓ src/games/starlight-chronicles/world/universe.test.ts (1 test) 9ms
+ ✓ src/games/foosball/rods.test.ts (1 test) 8ms
+ ✓ src/games/oz-chronicle/minigames/courageTrial.test.ts (1 test) 4ms
+ ✓ src/games/starlight-chronicles/combat/combatRules.test.ts (1 test) 5ms
+ ✓ src/games/freethrow-frenzy/feedback.test.ts (2 tests) 14ms
+ ✓ src/games/card-table/engine/deck.test.ts (1 test) 21ms
+ ✓ src/games/goalie-gauntlet/shots.test.ts (1 test) 3ms
+ ✓ src/games/oz-chronicle/visual/sceneComposer.test.ts (1 test) 9ms
+ ✓ src/games/starlight-chronicles/world/worldContext.test.ts (1 test) 16ms
+ ✓ src/systems/themePersistence.test.ts (1 test) 14ms
+ ✓ src/games/oz-chronicle/minigames/oilAndJoints.test.ts (1 test) 5ms
+ ✓ src/games/table-tennis/spin.test.ts (1 test) 7ms
+ ✓ src/games/oz-chronicle/visual/motionPolicy.test.ts (1 test) 3ms
+ ✓ src/games/homerun-derby/scene.smoke.test.ts (1 test) 11ms
+ ✓ src/games/starlight-chronicles/scene.crew.integration.test.ts (1 test) 5ms
+
+ Test Files  193 passed (193)
+      Tests  478 passed (478)
+   Start at  11:02:21
+   Duration  43.66s (transform 20.38s, setup 87.69s, collect 43.74s, tests 52.72s, environment 287.47s, prepare 55.91s)
+

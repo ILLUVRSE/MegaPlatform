@@ -2,6 +2,8 @@ import path from "path";
 import { promises as fs } from "fs";
 import { z } from "zod";
 import { readTasks } from "@/lib/ops";
+import { evaluatePlatformRuntimeReadiness } from "@/lib/platformRuntimeReadiness";
+import { findRepoRootSync } from "@/lib/repoRoot";
 
 const sloSchema = z.object({
   id: z.string().min(1),
@@ -44,7 +46,9 @@ const launchGateSchema = z.object({
     "slo_breaches",
     "budget_breaches",
     "compliance_required_failures",
-    "prod_deployment_missing_env"
+    "prod_deployment_missing_env",
+    "runtime_readiness_failures",
+    "critical_dependency_failures"
   ]),
   maxAllowed: z.number().int().min(0),
   severity: z.enum(["warning", "critical"])
@@ -233,6 +237,22 @@ const defaultConfig: GovernanceConfig = {
       checkKey: "prod_deployment_missing_env",
       maxAllowed: 0,
       severity: "critical"
+    },
+    {
+      id: "gate-runtime-readiness",
+      name: "Platform Runtime Truth Gate",
+      description: "Launch is blocked when runtime readiness assets or APIs are missing.",
+      checkKey: "runtime_readiness_failures",
+      maxAllowed: 0,
+      severity: "critical"
+    },
+    {
+      id: "gate-critical-dependencies",
+      name: "Critical Dependency Gate",
+      description: "Launch is blocked when critical or high-blast-radius dependencies are degraded.",
+      checkKey: "critical_dependency_failures",
+      maxAllowed: 0,
+      severity: "critical"
     }
   ],
   serviceDependencies: [
@@ -289,7 +309,7 @@ type PrismaLike = {
 };
 
 function governanceRoot() {
-  return path.join(process.cwd(), "ops", "governance");
+  return path.join(findRepoRootSync(), "ops", "governance");
 }
 
 async function exists(target: string) {
@@ -518,6 +538,7 @@ export async function buildDeploymentStatus() {
 
 export async function buildComplianceStatus(prisma: PrismaLike) {
   const config = await loadGovernanceConfig();
+  const repoRoot = findRepoRootSync();
   const [oldestAuditRows, unresolvedRows] = await Promise.all([
     prisma.$queryRaw<{ oldest: Date | null; total: bigint }[]>`
       SELECT MIN("createdAt") AS oldest, COUNT(*)::bigint AS total
@@ -533,7 +554,7 @@ export async function buildComplianceStatus(prisma: PrismaLike) {
 
   const controls = await Promise.all(
     config.complianceControls.map(async (control) => {
-      const fullPath = path.join(process.cwd(), control.evidencePath);
+      const fullPath = path.join(repoRoot, control.evidencePath);
       const evidenceExists = await exists(fullPath);
       return {
         ...control,
@@ -554,21 +575,31 @@ export async function buildComplianceStatus(prisma: PrismaLike) {
 }
 
 export async function buildLaunchReadiness(prisma: PrismaLike) {
-  const [slo, budget, compliance, deployment, config] = await Promise.all([
+  const [slo, budget, compliance, deployment, config, dependencyHealth] = await Promise.all([
     buildSloStatus(prisma),
     buildBudgetStatus(prisma),
     buildComplianceStatus(prisma),
     buildDeploymentStatus(),
-    loadGovernanceConfig()
+    loadGovernanceConfig(),
+    buildServiceDependencyHealth(prisma)
   ]);
 
   const prodProfile = deployment.profiles.find((profile) => profile.env === "prod");
+  const runtimeReadiness = evaluatePlatformRuntimeReadiness();
+  const runtimeReadinessFailures =
+    runtimeReadiness.missingDocs.length + runtimeReadiness.missingApis.length + runtimeReadiness.missingRuntimeFiles.length;
+  const criticalDependencyFailures = dependencyHealth.dependencies.filter(
+    (dependency) =>
+      (dependency.criticality === "critical" || dependency.criticality === "high") && dependency.status !== "healthy"
+  ).length;
 
   const checks = {
     slo_breaches: slo.breaches.length,
     budget_breaches: budget.breaches.length,
     compliance_required_failures: compliance.requiredFailures.length,
-    prod_deployment_missing_env: prodProfile?.missingEnv.length ?? 0
+    prod_deployment_missing_env: prodProfile?.missingEnv.length ?? 0,
+    runtime_readiness_failures: runtimeReadinessFailures,
+    critical_dependency_failures: criticalDependencyFailures
   };
 
   const gates = config.launchGates.map((gate) => {
@@ -586,7 +617,9 @@ export async function buildLaunchReadiness(prisma: PrismaLike) {
     blockers: gates.filter((gate) => !gate.pass && gate.severity === "critical"),
     warnings: gates.filter((gate) => !gate.pass && gate.severity === "warning"),
     generatedAt: new Date().toISOString(),
-    checks
+    checks,
+    runtimeReadiness,
+    dependencyHealth
   };
 }
 
@@ -653,7 +686,7 @@ export async function buildServiceDependencyHealth(prisma: PrismaLike) {
 }
 
 async function readStaleInProgressTaskCount() {
-  const opsRoot = path.join(process.cwd(), "ops");
+  const opsRoot = path.join(findRepoRootSync(), "ops");
   if (!(await exists(path.join(opsRoot, "briefing.md")))) {
     return 0;
   }

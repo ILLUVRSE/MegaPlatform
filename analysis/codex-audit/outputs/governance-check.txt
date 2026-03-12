@@ -1,0 +1,248 @@
+
+> illuvrse-platform@ governance:check /home/ryan/ILLUVRSE
+> node scripts/governance-check.mjs
+
+[governance-check] PASS slos.json: 3 entries
+[governance-check] PASS budgets.json: 3 entries
+[governance-check] PASS deployment.json: 3 entries
+[governance-check] PASS compliance-controls.json: 4 entries
+[governance-check] PASS launch-gates.json: 4 entries
+[governance-check] PASS domain-map.json: 6 domains, 37 unique primary paths
+[governance-check] PASS capability-matrix.json: 9 capabilities
+[governance-check] PASS agent-roles.json: 3 entries
+[governance-check] PASS agent-capabilities.json: 7 entries
+[governance-check] PASS agent-safe-actions.json: 7 entries
+[governance-check] PASS agent-approval-checkpoints.json: 3 entries
+[governance-check] PASS agent-budgets.json: 3 entries
+[governance-check] PASS agent-slos.json: 3 entries
+[governance-check] PASS design-tokens-v2.json: 38 tokens
+[governance-check] PASS service-dependencies.json: 5 dependencies
+[governance-check] PASS failure-drills.json: 3 drills
+[governance-check] PASS incident-automation-actions.json: 3 actions
+[governance-check] PASS data-retention-policies.json: 3 policies
+[governance-check] PASS key-rotation.json: 3 policies
+[governance-check] PASS rbac-baseline.json: 4 roles
+[governance-check] PASS supply-chain-policy.json: policy shape valid
+[governance-check] PASS dsar-workflows.json: 2 workflows
+[governance-check] PASS production-certification.json: 3 rules
+[governance-check] PASS objectives.json: 3 objectives
+[governance-check] PASS hypothesis-generation.json: policy shape valid
+[governance-check] PASS simulation-policy.json: policy shape valid
+[governance-check] PASS micro-experiments.json: policy shape valid
+[governance-check] PASS rollout-guardrails.json: 3 rules
+[governance-check] PASS learning-consolidation.json: policy shape valid
+[governance-check] PASS cross-module-coordinator.json: policy shape valid
+[governance-check] PASS trust-safety-optimizer.json: policy shape valid
+[governance-check] PASS cost-aware-optimizer.json: policy shape valid
+[governance-check] PASS autonomous-loop-review.json: policy shape valid
+[governance-check] PASS external-module-sdk.json: policy shape valid
+[governance-check] PASS federation-gateway.json: policy shape valid
+[governance-check] PASS ingestion-connectors.json: 1 entries
+[governance-check] PASS creator-portability.json: policy shape valid
+[governance-check] PASS partner-governance.json: 1 entries
+[governance-check] PASS open-telemetry-bridge.json: policy shape valid
+[governance-check] PASS multi-tenant-controls.json: policy shape valid
+[governance-check] PASS i18n-foundation.json: policy shape valid
+[governance-check] PASS edge-delivery.json: policy shape valid
+[governance-check] PASS ecosystem-certification.json: policy shape valid
+[governance-check] PASS policy-engine-v2.json: policy shape valid
+[governance-check] PASS decision-journal.json: policy shape valid
+[governance-check] PASS governance-drift-monitor.json: policy shape valid
+[governance-check] PASS org-role-simulator.json: policy shape valid
+[governance-check] PASS inter-agent-conflicts.json: policy shape valid
+[governance-check] PASS executive-briefing.json: policy shape valid
+[governance-check] PASS program-portfolio-optimizer.json: policy shape valid
+[governance-check] PASS autonomous-audit-prep.json: policy shape valid
+[governance-check] PASS trustworthy-ai-score.json: policy shape valid
+[governance-check] PASS governance-stress-tests.json: 2 scenarios
+[governance-check] PASS ecosystem-state-model.json: policy shape valid
+[governance-check] PASS adaptive-goal-selection.json: policy shape valid
+[governance-check] PASS content-programming-director.json: policy shape valid
+[governance-check] PASS multi-modal-narrative.json: policy shape valid
+[governance-check] PASS community-co-creation.json: policy shape valid
+[governance-check] PASS self-healing-behaviors.json: policy shape valid
+[governance-check] PASS long-horizon-memory.json: policy shape valid
+[governance-check] PASS emergent-behavior-monitoring.json: policy shape valid
+[governance-check] PASS autonomous-maturity-certification.json: policy shape valid
+[governance-check] PASS organism-mode-v1.json: policy shape valid
+[governance-check] PASS autonomy-policy-compiler.json: policy shape valid
+[governance-check] PASS autonomy-policies.json: 3 policies
+[governance-check] PASS unified-constraint-solver.json: policy shape valid
+[governance-check] PASS strategic-intent-contract.json: policy shape valid
+[governance-check] PASS cross-loop-priority-arbiter.json: policy shape valid
+[governance-check] PASS autonomy-blast-radius-guardrails.json: policy shape valid
+[governance-check] PASS temporal-policy-windows.json: policy shape valid
+[governance-check] PASS policy-explainability.json: policy shape valid
+[governance-check] PASS autonomy-change-budgeting.json: policy shape valid
+[governance-check] PASS global-rollback-orchestrator.json: policy shape valid
+[governance-check] PASS autonomy-control-plane-v3.json: policy shape valid
+[governance-check] PASS continuous-red-team-simulator.json: policy shape valid
+[governance-check] PASS synthetic-incident-replay-grid.json: policy shape valid
+[governance-check] PASS deception-manipulation-detection.json: policy shape valid
+[governance-check] PASS autonomous-insider-risk-controls.json: policy shape valid
+[governance-check] PASS model-output-provenance-ledger.json: policy shape valid
+[governance-check] PASS governance-tamper-detection.json: policy shape valid
+[governance-check] PASS autonomous-secrets-minimization.json: policy shape valid
+[governance-check] PASS safety-regression-gate.json: policy shape valid
+[governance-check] PASS multi-region-failure-sovereignty.json: policy shape valid
+[governance-check] PASS resilience-certification-v1.json: policy shape valid
+[governance-check] PASS personalization-ethics-layer.json: policy shape valid
+[governance-check] PASS user-agency-controls-v2.json: policy shape valid
+[governance-check] PASS intent-aware-session-planner.json: policy shape valid
+[governance-check] PASS cross-format-continuity-engine.json: policy shape valid
+[governance-check] PASS narrative-coherence-scorer.json: policy shape valid
+[governance-check] PASS contextual-moderation-escalation.json: policy shape valid
+[governance-check] PASS adaptive-friction-system.json: policy shape valid
+[governance-check] PASS trust-preserving-growth-engine.json: policy shape valid
+[governance-check] PASS emotional-safety-signals-v1.json: policy shape valid
+[governance-check] PASS human-in-the-loop-experience-console.json: policy shape valid
+[governance-check] PASS creator-autonomy-contracts.json: policy shape valid
+[governance-check] PASS rights-aware-agent-editing-v2.json: policy shape valid
+[governance-check] PASS creator-ai-revenue-share-engine.json: policy shape valid
+[governance-check] PASS attribution-graph-v2.json: policy shape valid
+[governance-check] PASS autonomous-sponsorship-compliance.json: policy shape valid
+[governance-check] PASS dynamic-licensing-resolver.json: policy shape valid
+[governance-check] PASS creator-risk-score-v1.json: policy shape valid
+[governance-check] PASS reputation-weighted-distribution.json: policy shape valid
+[governance-check] PASS dispute-resolution-automation.json: policy shape valid
+[governance-check] PASS creator-governance-council-api.json: policy shape valid
+[governance-check] PASS autonomous-finance-controller.json: policy shape valid
+[governance-check] PASS forecast-vs-actual-drift-engine.json: policy shape valid
+[governance-check] PASS roi-constrained-action-planner.json: policy shape valid
+[governance-check] PASS token-economy-stabilizer.json: policy shape valid
+[governance-check] PASS capex-opex-split-optimizer.json: policy shape valid
+[governance-check] PASS carbon-aware-autonomy-scheduler.json: policy shape valid
+[governance-check] PASS marketplace-integrity-monitor.json: policy shape valid
+[governance-check] PASS fraud-adaptive-reward-guardrails.json: policy shape valid
+[governance-check] PASS revenue-stress-testing-suite.json: policy shape valid
+[governance-check] PASS financial-governance-certification-v1.json: policy shape valid
+[governance-check] PASS global-compliance-federation.json: policy shape valid
+[governance-check] PASS regulatory-change-ingestion-loop.json: policy shape valid
+[governance-check] PASS evidence-graph-for-audits.json: policy shape valid
+[governance-check] PASS automated-control-testing-v2.json: policy shape valid
+[governance-check] PASS privacy-risk-runtime-scoring.json: policy shape valid
+[governance-check] PASS sensitive-context-isolation-v1.json: policy shape valid
+[governance-check] PASS child-safety-autonomy-constraints.json: policy shape valid
+[governance-check] PASS cross-border-data-routing-policy.json: policy shape valid
+[governance-check] PASS legal-explainability-dossier-generator.json: policy shape valid
+[governance-check] PASS continuous-compliance-certification-gate.json: policy shape valid
+[governance-check] PASS meta-learning-policy-optimizer.json: policy shape valid
+[governance-check] PASS autonomous-strategy-simulator-v2.json: policy shape valid
+[governance-check] PASS institutional-memory-consolidation-v2.json: policy shape valid
+[governance-check] PASS goal-evolution-engine.json: policy shape valid
+[governance-check] PASS multi-quarter-roadmap-synthesizer.json: policy shape valid
+[governance-check] PASS unknown-unknown-discovery-loop.json: policy shape valid
+[governance-check] PASS collective-agent-deliberation-protocol.json: policy shape valid
+[governance-check] PASS autonomy-confidence-calibration-v2.json: policy shape valid
+[governance-check] PASS strategic-failure-recovery-planner.json: policy shape valid
+[governance-check] PASS long-horizon-value-alignment-monitor.json: policy shape valid
+[governance-check] PASS organism-mode-v2.json: policy shape valid
+[governance-check] PASS self-governance-charter-engine.json: policy shape valid
+[governance-check] PASS autonomous-constitutional-tests.json: policy shape valid
+[governance-check] PASS human-oversight-marketplaces.json: policy shape valid
+[governance-check] PASS socio-technical-health-index.json: policy shape valid
+[governance-check] PASS ecosystem-antifragility-loop.json: policy shape valid
+[governance-check] PASS open-autonomy-transparency-portal.json: policy shape valid
+[governance-check] PASS third-party-assurance-interface.json: policy shape valid
+[governance-check] PASS autonomous-stewardship-program.json: policy shape valid
+[governance-check] PASS organism-mode-v3-stewarded-intelligence-fabric.json: policy shape valid
+[governance-check] PASS openxr-webxr-contract-v1.json: policy shape valid
+[governance-check] PASS device-capability-matrix-xr.json: policy shape valid
+[governance-check] PASS spatial-identity-anchors.json: policy shape valid
+[governance-check] PASS scene-graph-contract-v1.json: policy shape valid
+[governance-check] PASS spatial-asset-streaming.json: policy shape valid
+[governance-check] PASS world-origin-relocalization.json: policy shape valid
+[governance-check] PASS input-abstraction-layer-xr.json: policy shape valid
+[governance-check] PASS spatial-telemetry-taxonomy-v1.json: policy shape valid
+[governance-check] PASS xr-config-contract-enforcement.json: policy shape valid
+[governance-check] PASS spatial-boundary-linting.json: policy shape valid
+[governance-check] PASS gesture-intent-runtime-v1.json: policy shape valid
+[governance-check] PASS gaze-attention-model.json: policy shape valid
+[governance-check] PASS voice-command-layer-xr.json: policy shape valid
+[governance-check] PASS haptics-orchestration-v1.json: policy shape valid
+[governance-check] PASS spatial-ui-grammar.json: policy shape valid
+[governance-check] PASS comfort-locomotion-suite.json: policy shape valid
+[governance-check] PASS co-presence-core-v1.json: policy shape valid
+[governance-check] PASS party-rooms-xr.json: policy shape valid
+[governance-check] PASS networked-object-sync-v1.json: policy shape valid
+[governance-check] PASS presence-reliability-slos.json: policy shape valid
+[governance-check] PASS animation-data-model-v1.json: policy shape valid
+[governance-check] PASS rig-contract-standardization.json: policy shape valid
+[governance-check] PASS retargeting-engine-v1.json: policy shape valid
+[governance-check] PASS blend-tree-runtime-v1.json: policy shape valid
+[governance-check] PASS ik-fk-solver-service.json: policy shape valid
+[governance-check] PASS secondary-motion-physics.json: policy shape valid
+[governance-check] PASS facial-animation-baseline.json: policy shape valid
+[governance-check] PASS lip-sync-and-viseme-runtime.json: policy shape valid
+[governance-check] PASS animation-event-timeline.json: policy shape valid
+[governance-check] PASS animation-quality-gate-v1.json: policy shape valid
+[governance-check] PASS mocap-ingestion-pipeline-v1.json: policy shape valid
+[governance-check] PASS live-mocap-streaming-runtime.json: policy shape valid
+[governance-check] PASS markerless-capture-integration.json: policy shape valid
+[governance-check] PASS mocap-cleanup-and-smoothing-toolkit.json: policy shape valid
+[governance-check] PASS performance-to-rig-mapping-layer.json: policy shape valid
+[governance-check] PASS crowd-animation-system-v1.json: policy shape valid
+[governance-check] PASS procedural-locomotion-runtime.json: policy shape valid
+[governance-check] PASS emotion-to-animation-controller.json: policy shape valid
+[governance-check] PASS character-state-machine-v2.json: policy shape valid
+[governance-check] PASS character-performance-slos.json: policy shape valid
+[governance-check] PASS world-authoring-contract-v1.json: policy shape valid
+[governance-check] PASS terrain-and-scale-governance.json: policy shape valid
+[governance-check] PASS xr-lighting-pipeline.json: policy shape valid
+[governance-check] PASS spatial-audio-runtime-v1.json: policy shape valid
+[governance-check] PASS volumetric-effects-framework.json: policy shape valid
+[governance-check] PASS cinematic-camera-rig-system.json: policy shape valid
+[governance-check] PASS cutscene-sequencer-v1.json: policy shape valid
+[governance-check] PASS story-beat-orchestrator.json: policy shape valid
+[governance-check] PASS environmental-storytelling-agent-hooks.json: policy shape valid
+[governance-check] PASS world-coherence-validator.json: policy shape valid
+[governance-check] PASS xr-creator-workspace-v1.json: policy shape valid
+[governance-check] PASS node-based-animation-graph-editor.json: policy shape valid
+[governance-check] PASS spatial-template-marketplace.json: policy shape valid
+[governance-check] PASS asset-kitbashing-toolchain.json: policy shape valid
+[governance-check] PASS in-app-rigging-assistant.json: policy shape valid
+[governance-check] PASS animation-preset-library.json: policy shape valid
+[governance-check] PASS collaborative-scene-editing.json: policy shape valid
+[governance-check] PASS publish-to-xr-pipeline.json: policy shape valid
+[governance-check] PASS creator-qa-simulation-harness.json: policy shape valid
+[governance-check] PASS creator-xr-analytics-dashboard.json: policy shape valid
+[governance-check] PASS shared-live-event-stages.json: policy shape valid
+[governance-check] PASS audience-choreography-engine.json: policy shape valid
+[governance-check] PASS virtual-production-control-room.json: policy shape valid
+[governance-check] PASS performer-avatar-switching.json: policy shape valid
+[governance-check] PASS crowd-reaction-animation-systems.json: policy shape valid
+[governance-check] PASS interactive-narrative-branching-xr.json: policy shape valid
+[governance-check] PASS real-time-event-moderation-xr.json: policy shape valid
+[governance-check] PASS replay-and-highlight-capture.json: policy shape valid
+[governance-check] PASS live-event-failover-drills.json: policy shape valid
+[governance-check] PASS event-readiness-certification-gate.json: policy shape valid
+[governance-check] PASS foveated-rendering-support.json: policy shape valid
+[governance-check] PASS dynamic-resolution-governor.json: policy shape valid
+[governance-check] PASS occlusion-culling-optimizer.json: policy shape valid
+[governance-check] PASS animation-lod-orchestration.json: policy shape valid
+[governance-check] PASS gpu-budget-controller.json: policy shape valid
+[governance-check] PASS cpu-frame-budget-controller.json: policy shape valid
+[governance-check] PASS 90-120hz-readiness-program.json: policy shape valid
+[governance-check] PASS thermal-battery-adaptation.json: policy shape valid
+[governance-check] PASS network-jitter-compensation-avatar-motion.json: policy shape valid
+[governance-check] PASS xr-performance-regression-gate.json: policy shape valid
+[governance-check] PASS youth-safe-xr-mode.json: policy shape valid
+[governance-check] PASS spatial-harassment-detection.json: policy shape valid
+[governance-check] PASS proximity-safety-envelopes.json: policy shape valid
+[governance-check] PASS comfort-motion-risk-labels.json: policy shape valid
+[governance-check] PASS motion-sickness-risk-scoring.json: policy shape valid
+[governance-check] PASS 3d-accessibility-baseline-v1.json: policy shape valid
+[governance-check] PASS consent-session-recording-controls.json: policy shape valid
+[governance-check] PASS biometric-privacy-boundaries.json: policy shape valid
+[governance-check] PASS regional-xr-compliance-overlays.json: policy shape valid
+[governance-check] PASS xr-audit-explainability-bundle.json: policy shape valid
+[governance-check] PASS avatar-economy-v1.json: policy shape valid
+[governance-check] PASS virtual-goods-ownership-physics-contract.json: policy shape valid
+[governance-check] PASS cross-platform-xr-asset-portability.json: policy shape valid
+[governance-check] PASS animation-performance-rights-automation.json: policy shape valid
+[governance-check] PASS live-performance-revenue-share-engine.json: policy shape valid
+[governance-check] PASS xr-asset-marketplace-fraud-controls.json: policy shape valid
+[governance-check] PASS xr-world-discovery-ranking.json: policy shape valid
+[governance-check] PASS distribution-orchestrator-vr-ar-endpoints.json: policy shape valid
+[governance-check] PASS xr-launch-readiness-store-compliance.json: policy shape valid
+[governance-check] PASS xr-autonomy-maturity-certification-v1.json: policy shape valid

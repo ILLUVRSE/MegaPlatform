@@ -23,6 +23,10 @@ const setStateMock = vi.hoisted(() => vi.fn());
 const publishMock = vi.hoisted(() => vi.fn());
 const requireSessionMock = vi.hoisted(() => vi.fn());
 const checkRateLimitMock = vi.hoisted(() => vi.fn());
+const insertPlatformEventMock = vi.hoisted(() => vi.fn());
+const isLiveKitConfiguredMock = vi.hoisted(() => vi.fn());
+const getLiveKitServerConfigMock = vi.hoisted(() => vi.fn());
+const createLiveKitAccessTokenMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@illuvrse/db", () => ({
   prisma: prismaMock
@@ -50,6 +54,19 @@ vi.mock("@/lib/rateLimit", () => ({
   checkRateLimit: checkRateLimitMock
 }));
 
+vi.mock("@/lib/platformEvents", () => ({
+  PLATFORM_EVENT_NAMES: {
+    partyVoiceTokenIssued: "party.voice.token.issued"
+  },
+  insertPlatformEvent: insertPlatformEventMock
+}));
+
+vi.mock("@/lib/livekitToken", () => ({
+  isLiveKitConfigured: isLiveKitConfiguredMock,
+  getLiveKitServerConfig: getLiveKitServerConfigMock,
+  createLiveKitAccessToken: createLiveKitAccessTokenMock
+}));
+
 import { POST as appendPlaylistPost } from "@/app/api/party/[code]/playlist/append/route";
 import { POST as presencePingPost } from "@/app/api/party/[code]/presence/ping/route";
 import { POST as voiceTokenPost } from "@/app/api/party/[code]/voice/token/route";
@@ -68,6 +85,7 @@ describe("party phase 6 hardening", () => {
     prismaMock.shortPost.findUnique.mockResolvedValue({ id: "short-1", mediaUrl: "https://cdn/short.m3u8" });
     prismaMock.playlistItem.count.mockResolvedValue(0);
     prismaMock.playlistItem.findFirst.mockResolvedValue(null);
+    prismaMock.participant.findUnique.mockResolvedValue({ displayName: "Host" });
     getStateMock.mockResolvedValue({
       partyId: "party-1",
       seatCount: 8,
@@ -75,6 +93,16 @@ describe("party phase 6 hardening", () => {
       playback: { currentIndex: 0, playbackState: "idle" },
       participants: {},
       updatedAt: new Date().toISOString()
+    });
+    isLiveKitConfiguredMock.mockReturnValue(false);
+    getLiveKitServerConfigMock.mockReturnValue({
+      url: "wss://livekit.example",
+      apiKey: "api-key",
+      apiSecret: "api-secret"
+    });
+    createLiveKitAccessTokenMock.mockReturnValue({
+      token: "token-123",
+      expiresInSec: 3600
     });
   });
 
@@ -90,7 +118,6 @@ describe("party phase 6 hardening", () => {
   });
 
   it("updates presence on heartbeat ping", async () => {
-    prismaMock.participant.findUnique.mockResolvedValueOnce({ displayName: "Host" });
     const request = new Request("http://localhost", { method: "POST" });
     const response = await presencePingPost(request, { params: Promise.resolve({ code: "ABC123" }) });
     expect(response.status).toBe(200);
@@ -102,12 +129,32 @@ describe("party phase 6 hardening", () => {
   });
 
   it("returns 503 for voice token when livekit is not configured", async () => {
-    delete process.env.NEXT_PUBLIC_LIVEKIT_URL;
-    delete process.env.LIVEKIT_API_KEY;
-    delete process.env.LIVEKIT_API_SECRET;
-    prismaMock.participant.findUnique.mockResolvedValueOnce({ displayName: "Host" });
+    isLiveKitConfiguredMock.mockReturnValueOnce(false);
     const request = new Request("http://localhost", { method: "POST" });
     const response = await voiceTokenPost(request, { params: Promise.resolve({ code: "ABC123" }) });
     expect(response.status).toBe(503);
+  });
+
+  it("issues voice token and emits telemetry for authorized participants", async () => {
+    isLiveKitConfiguredMock.mockReturnValueOnce(true);
+    const request = new Request("http://localhost", { method: "POST" });
+    const response = await voiceTokenPost(request, { params: Promise.resolve({ code: "ABC123" }) });
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(
+      expect.objectContaining({
+        token: "token-123",
+        url: "wss://livekit.example",
+        identity: "host-1",
+        roomName: "party-ABC123",
+        expiresInSec: 3600
+      })
+    );
+    expect(insertPlatformEventMock).toHaveBeenCalledWith({
+      event: "party.voice.token.issued",
+      module: "Party:ABC123",
+      href: "/party/ABC123",
+      surface: "party_voice"
+    });
   });
 });

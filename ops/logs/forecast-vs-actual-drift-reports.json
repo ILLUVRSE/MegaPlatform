@@ -22,6 +22,198 @@
           "mode": "immediate"
         }
       ],
+      "generatedAt": "2026-03-11T18:06:59.263Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T16:23:51.487Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T16:23:28.312Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T16:22:09.303Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T16:03:31.394Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T16:02:57.149Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T16:01:41.669Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
+      "generatedAt": "2026-03-11T15:57:24.875Z"
+    },
+    {
+      "reportId": "drift-prog-162-10000-14000",
+      "programId": "prog-162",
+      "forecastSpendCents": 10000,
+      "actualSpendCents": 14000,
+      "driftCents": 4000,
+      "driftRatio": 0.4,
+      "severity": "critical",
+      "correctiveActions": [
+        {
+          "action": "tighten_budget",
+          "mode": "immediate"
+        },
+        {
+          "action": "reduce_non_urgent_runs",
+          "mode": "immediate"
+        },
+        {
+          "action": "escalate_finance_review",
+          "mode": "immediate"
+        }
+      ],
       "generatedAt": "2026-03-11T14:30:09.034Z"
     },
     {

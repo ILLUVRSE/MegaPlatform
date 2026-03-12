@@ -76,12 +76,12 @@ export default async function ShortsPage() {
     .map(({ rankScore: _rankScore, ...item }) => item);
 
   return (
-    <div className="space-y-6">
-      <header className="party-card">
-        <p className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Shorts</p>
-        <h1 className="text-3xl font-semibold">Scroll the latest ILLUVRSE shorts</h1>
-        <p className="text-sm text-illuvrse-muted">
-          Ranked by engagement and recency, with moderation + premium access controls.
+    <div className="space-y-4">
+      <header className="platform-panel-dark">
+        <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Shorts</p>
+        <h1 className="mt-2 text-3xl font-semibold text-white">One video at a time. Full attention.</h1>
+        <p className="mt-2 max-w-2xl text-sm text-white/56">
+          Vertical, immersive, and continuous. Scroll to move forward through the current ILLUVRSE short stack.
         </p>
       </header>
       <ShortFeed items={items} />

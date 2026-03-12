@@ -15,6 +15,11 @@ export async function GET() {
   ]);
   return NextResponse.json({
     ok: true,
+    timestamp: snapshot.generatedAt,
+    runbook: "docs/ops_brain/runbooks/incident-response.md",
+    sloSummaries: snapshot.slos,
+    serviceHealth: dependencyHealth.dependencies,
+    serviceHealthSummary: dependencyHealth.summary,
     ...snapshot,
     dependencyHealth
   });

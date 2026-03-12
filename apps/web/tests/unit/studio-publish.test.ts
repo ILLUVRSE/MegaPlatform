@@ -85,6 +85,20 @@ describe("studio publish", () => {
     expect(prismaMock.feedPost.create).toHaveBeenCalled();
     expect(prismaMock.assetLineage.upsert).toHaveBeenCalled();
     expect(prismaMock.contentQaResult.create).toHaveBeenCalled();
+    expect(prismaMock.studioAsset.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          temporary: false,
+          metaJson: expect.objectContaining({
+            lifecycleState: "published",
+            projectId: "proj-1",
+            publishedById: "user-1",
+            publishedPostId: "post-1",
+            temporary: false
+          })
+        })
+      })
+    );
   });
 
   it("blocks publish when QA fails", async () => {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-11T14:30:15.654Z",
+  "generatedAt": "2026-03-11T18:07:03.718Z",
   "summary": "Governance status: drift detected; Loop review: attention required",
   "risks": [
     "Policy drift on deployment.prod.promote: review policy condition strictness and update allow rule predicates",
@@ -23,7 +23,7 @@
     "confirm approval checkpoints for high-risk actions"
   ],
   "sources": {
-    "driftGeneratedAt": "2026-03-11T14:30:15.653Z",
-    "loopReviewGeneratedAt": "2026-03-11T14:30:15.654Z"
+    "driftGeneratedAt": "2026-03-11T18:07:03.717Z",
+    "loopReviewGeneratedAt": "2026-03-11T18:07:03.718Z"
   }
 }

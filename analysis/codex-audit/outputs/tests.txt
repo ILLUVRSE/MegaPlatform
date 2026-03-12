@@ -1,0 +1,469 @@
+
+> illuvrse-platform@ test /home/ryan/ILLUVRSE
+> node scripts/run-root-test.mjs --reporter=spec
+
+
+ RUN  v2.1.9 /home/ryan/ILLUVRSE/apps/web
+
+ ✓ tests/unit/playlist-append.test.ts > playlist append API > appends a short to the end
+ ✓ tests/unit/playlist-append.test.ts > playlist append API > inserts next after current index
+ ✓ tests/unit/admin-ops-api.test.ts > admin ops api > rejects invalid briefing payload
+ ✓ tests/unit/admin-ops-api.test.ts > admin ops api > saves valid briefing and writes audit
+ ✓ tests/unit/admin-ops-api.test.ts > admin ops api > updates task status and writes audit
+ ✓ tests/unit/studio-ops.test.ts > studio ops APIs > lists jobs with filters
+ ✓ tests/unit/studio-ops.test.ts > studio ops APIs > retries failed jobs
+ ✓ tests/unit/studio-ops.test.ts > studio ops APIs > blocks retry when a matching job is already in flight
+ ✓ tests/unit/studio-ops.test.ts > studio ops APIs > cancels jobs
+ ✓ tests/unit/studio-ops.test.ts > studio ops APIs > rejects unauthorized access
+ ✓ tests/unit/party-phase6.test.ts > party phase 6 hardening > blocks non-host playlist append
+ ✓ tests/unit/party-phase6.test.ts > party phase 6 hardening > updates presence on heartbeat ping
+ ✓ tests/unit/party-phase6.test.ts > party phase 6 hardening > returns 503 for voice token when livekit is not configured
+ ✓ tests/unit/api-party.test.ts > party APIs > returns 409 when seat is already reserved
+ ✓ tests/unit/api-party.test.ts > party APIs > reserves seat when available
+ ✓ tests/unit/api-party.test.ts > party APIs > prevents non-host playback updates
+ ✓ tests/unit/api-party.test.ts > party APIs > rejects unauthenticated host actions
+ ✓ tests/unit/content-api.test.ts > content lifecycle APIs > creates draft -> request publish -> publish
+ ✓ tests/unit/shorts-feed-api.test.ts > shorts feed APIs > sorts shorts by computed score and excludes moderated entries
+ ✓ tests/unit/shorts-feed-api.test.ts > shorts feed APIs > returns 400 on invalid query
+ ✓ tests/unit/shorts-feed-api.test.ts > shorts feed APIs > hides moderated short details
+ ✓ tests/unit/uploads-api.test.ts > upload APIs > rejects unsupported content types
+ ✓ tests/unit/uploads-api.test.ts > upload APIs > rejects oversized uploads
+ ✓ tests/unit/uploads-api.test.ts > upload APIs > returns signed upload info
+ ✓ tests/unit/uploads-api.test.ts > upload APIs > rejects unauthenticated upload signing
+ ✓ tests/unit/uploads-api.test.ts > upload APIs > finalizes upload and creates asset
+ ✓ tests/unit/uploads-api.test.ts > upload APIs > rejects finalization when key does not match project namespace
+ ✓ tests/unit/shorts-paywall.test.ts > shorts paywall APIs > requires price for premium shorts
+ ✓ tests/unit/shorts-paywall.test.ts > shorts paywall APIs > requires admin for monetize endpoint
+ ✓ tests/unit/shorts-paywall.test.ts > shorts paywall APIs > creates purchase for anon buyer
+ ✓ tests/unit/shorts-paywall.test.ts > shorts paywall APIs > returns access after purchase
+ ✓ tests/unit/shorts-paywall.test.ts > shorts paywall APIs > returns free access for non-premium shorts
+ ✓ tests/unit/watch-personalization.test.ts > watch personalization helpers > parses profile cookie
+ ✓ tests/unit/watch-personalization.test.ts > watch personalization helpers > toggles my list
+ ✓ tests/unit/watch-personalization.test.ts > watch personalization helpers > removes existing my list item
+ ✓ tests/unit/watch-personalization.test.ts > watch personalization helpers > upserts progress
+ ✓ tests/unit/watch-personalization.test.ts > watch personalization helpers > clears near-complete progress entries
+ ✓ tests/unit/media-corp-production.test.ts > media corp production v2 > builds artifact review scorecards for production bundles
+ ✓ tests/unit/media-corp-production.test.ts > media corp production v2 > supports generation job state transitions
+ ✓ tests/unit/media-corp-production.test.ts > media corp production v2 > applies review decisions and promotes release candidates
+ ✓ tests/unit/media-corp-production.test.ts > media corp production v2 > feeds approved bundles back into portfolio momentum
+ ✓ tests/unit/media-corp-distribution.test.ts > media corp distribution v3 > publishes through the sandbox adapter with tracked attempt and result
+ ✓ tests/unit/media-corp-distribution.test.ts > media corp distribution v3 > builds channel rollups and strategy recommendations from snapshots
+ ✓ tests/unit/media-corp-distribution.test.ts > media corp distribution v3 > produces publish attempts, campaigns, snapshots, and recommendations in the full cycle
+ ✓ tests/unit/feed-api.test.ts > feed api > lists wall feed posts for ranking
+ ✓ tests/unit/feed-api.test.ts > feed api > returns wall feed with pagination shape
+ ✓ tests/unit/feed-api.test.ts > feed api > returns ranked shorts feed when mode=shorts
+ ✓ tests/unit/feed-api.test.ts > feed api > toggles like idempotently for anon and user
+ ✓ tests/unit/feed-api.test.ts > feed api > creates SHARE post and increments share count
+ ✓ tests/unit/feed-api.test.ts > feed api > creates comment and increments comment count
+ ✓ tests/unit/feed-api.test.ts > feed api > creates reports
+ ✓ tests/unit/gamegrid-api.test.ts > gamegrid api > creates a draft game
+ ✓ tests/unit/gamegrid-api.test.ts > gamegrid api > rejects publish with invalid specs
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > room lifecycle create/join/leave
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > deterministic spec for same seed
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > state transitions include intermission and session end
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > scoring placements award points
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > spectator input ignored
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > ready check gating
+ ✓ tests/unit/minigame-party-room.test.ts > minigame party rooms > start blocked when not all ready
+ ✓ tests/unit/remix-jobs-api.test.ts > remix jobs API > lists caller remix jobs
+ ✓ tests/unit/remix-jobs-api.test.ts > remix jobs API > blocks remix when lineage is missing
+ ✓ tests/unit/remix-jobs-api.test.ts > remix jobs API > creates remix job when lineage + QA are valid
+ ✓ tests/unit/playlist.test.ts > playlist API > rejects non-host updates
+ ✓ tests/unit/playlist.test.ts > playlist API > persists playlist in order
+ ✓ tests/unit/studio-template-api.test.ts > studio template APIs > lists published templates
+ ✓ tests/unit/studio-template-api.test.ts > studio template APIs > creates template with version 1
+ ✓ tests/unit/studio-template-api.test.ts > studio template APIs > reuses template into draft project
+ ✓ tests/unit/studio-publish.test.ts > studio publish > creates a ShortPost from render asset
+ ✓ tests/unit/studio-publish.test.ts > studio publish > blocks publish when QA fails
+ ✓ tests/unit/studio-jobs.test.ts > studio jobs > enqueues a script job
+ ✓ tests/unit/studio-jobs.test.ts > studio jobs > blocks duplicate in-flight job creation
+ ✓ tests/unit/platform-session-graph.test.ts > platform session graph > resolves user and anon session keys
+ ✓ tests/unit/platform-session-graph.test.ts > platform session graph > returns a bootstrap home session when missing
+ ✓ tests/unit/platform-session-graph.test.ts > platform session graph > appends a trail entry during upsert
+ ✓ tests/unit/platform-session-graph.test.ts > platform session graph > creates a default session state with bounded fields
+ ✓ tests/unit/decision-journal.test.ts > decision journal automation > records valid decision entries
+ ✓ tests/unit/decision-journal.test.ts > decision journal automation > blocks entries under minimum confidence
+ ✓ tests/unit/minigame-generator.test.ts > minigame generator > is deterministic for a given seed
+ ✓ tests/unit/minigame-generator.test.ts > minigame generator > validates duration and win/lose conditions
+ ✓ tests/unit/minigame-generator.test.ts > minigame generator > each template builds a valid spec
+ ✓ tests/unit/minigame-generator.test.ts > minigame generator > rejects unsafe modifier combinations
+ ✓ tests/unit/minigame-generator.test.ts > minigame generator > avoids repeating recent templates when generating without seed
+ ✓ tests/unit/failure-drills-api.test.ts > failure drills api > returns drills and reports
+ ✓ tests/unit/failure-drills-api.test.ts > failure drills api > runs a drill and writes an audit entry
+ ✓ tests/unit/storage-upload-api.test.ts > storage upload API > rejects unauthenticated upload
+ ✓ tests/unit/storage-upload-api.test.ts > storage upload API > uploads when authenticated
+ ✓ tests/unit/agent-render.test.ts > agent render helpers > renders a meme png at 800x800
+ ✓ tests/unit/api-admin-shows.test.ts > api/admin/shows > lists shows with pagination
+ ✓ tests/unit/api-admin-shows.test.ts > api/admin/shows > creates a show
+ ✓ tests/unit/api-admin-shows.test.ts > api/admin/shows > rejects non-admin access
+ ✓ tests/unit/platform-apps.test.ts > platform app registry > has unique nav routes
+ ✓ tests/unit/platform-apps.test.ts > platform app registry > has unique platform hub routes
+ ✓ tests/unit/platform-apps.test.ts > platform app registry > prefers env URL overrides for external modules
+ ✓ tests/unit/platform-apps.test.ts > platform app registry > provides default URLs for all external module keys
+ ✓ tests/unit/platform-apps.test.ts > platform app registry > builds a directory with both core and external modules
+ ✓ tests/unit/agent-render.test.ts > agent render helpers > resolves when ffmpeg exits successfully 408ms
+ ✓ tests/unit/agent-render.test.ts > agent render helpers > escapes unsafe drawtext characters
+ ✓ tests/unit/agent-render.test.ts > agent render helpers > wraps text into multiple lines
+ ✓ tests/unit/agent-render.test.ts > agent render helpers > builds slideshow filter with style-specific drawtext
+ ✓ tests/unit/task-queue.test.ts > docs task queue operations > creates, claims, completes, and blocks tasks
+ ✓ tests/unit/task-queue.test.ts > docs task queue operations > persists markdown tasks and reads them back
+ ✓ tests/unit/intelligence.test.ts > intelligence fabric baseline > builds minimal graph projection
+ ✓ tests/unit/intelligence.test.ts > intelligence fabric baseline > stores and uses online features for candidate scoring
+ ✓ tests/unit/intelligence.test.ts > intelligence fabric baseline > applies ranking policy and deterministic experiment assignment
+ ✓ tests/unit/intelligence.test.ts > intelligence fabric baseline > handles personalization cache and enrichment
+ ✓ tests/unit/watch-live.test.ts > watch live channels API > returns active channels with now/next programs
+ ✓ tests/unit/watch-scheduler.test.ts > watch scheduler > generates programs for virtual channels
+ ✓ tests/unit/watch-scheduler.test.ts > watch scheduler > computes now and next from fixed clock
+ ✓ tests/unit/data-retention-api.test.ts > data retention api > returns retention policies and evidence
+ ✓ tests/unit/data-retention-api.test.ts > data retention api > runs retention jobs and audits
+ ✓ tests/unit/platform-events-export-api.test.ts > admin platform event export api > rejects non-admin users
+ ✓ tests/unit/platform-events-export-api.test.ts > admin platform event export api > returns csv with headers and escaped values
+ ✓ tests/unit/incident-automation-api.test.ts > incident automation api > lists automation actions
+ ✓ tests/unit/incident-automation-api.test.ts > incident automation api > triggers an allowed automation action
+ ✓ tests/unit/creator-control-center-api.test.ts > creator control center api > returns control center payload
+ ✓ tests/unit/dsar-api.test.ts > dsar api > returns workflows and evidence
+ ✓ tests/unit/dsar-api.test.ts > dsar api > processes request and writes audit
+ ✓ tests/unit/rate-limit.test.ts > distributed rate limiting > uses Redis counters when available
+ ✓ tests/unit/rate-limit.test.ts > distributed rate limiting > falls back to local memory outside production when Redis is unavailable
+ ✓ tests/unit/gamegrid-validation.test.ts > gamegrid validation + autofix > clamps params and trims unsafe modifiers
+ ✓ tests/unit/gamegrid-validation.test.ts > gamegrid validation + autofix > filters compatible modifiers by template
+ ✓ tests/unit/onboarding-api.test.ts > onboarding completion API > stores onboarding completion event
+ ✓ tests/unit/onboarding-api.test.ts > onboarding completion API > rejects invalid payload
+ ✓ tests/unit/studio-ops-task-board.test.tsx > studio ops task board > renders seeded task list and details 429ms
+ ✓ tests/unit/service-dependency-health.test.ts > service dependency health > marks dependencies healthy when env and db probe are available
+ ✓ tests/unit/service-dependency-health.test.ts > service dependency health > marks dependency degraded/unhealthy when required env is missing or db probe fails
+ ✓ tests/unit/production-certification-api.test.ts > production certification api > returns certification status
+ ✓ tests/unit/production-certification-api.test.ts > production certification api > blocks certification when blockers exist
+ ✓ tests/unit/job-polling.test.ts > job polling > resolves when job reaches completed
+ ✓ tests/unit/job-polling.test.ts > job polling > throws when job fails
+ ✓ tests/unit/admin-distribution-actions-api.test.ts > admin distribution actions api > rejects unauthenticated access
+ ✓ tests/unit/admin-distribution-actions-api.test.ts > admin distribution actions api > creates manual distribution action
+ ✓ tests/unit/platform-control-deck.test.tsx > platform control deck > renders orchestrated home sections
+ ✓ tests/unit/platform-analytics.test.ts > platform analytics helpers > normalizes unknown ranges to 7d
+ ✓ tests/unit/platform-analytics.test.ts > platform analytics helpers > computes correct range offsets
+ ✓ tests/unit/platform-analytics.test.ts > platform analytics helpers > fills missing days in trend output
+ ✓ tests/unit/creator-progression.test.ts > creator progression > creates baseline progression and applies points
+ ✓ tests/unit/admin-ux-diagnostics-api.test.ts > admin ux diagnostics api > returns unauthorized for non-admin
+ ✓ tests/unit/admin-ux-diagnostics-api.test.ts > admin ux diagnostics api > returns ux diagnostics metrics
+ ✓ tests/unit/platform-search.test.ts > platform search > returns mixed search results
+ ✓ tests/unit/platform-search.test.ts > platform search > returns empty results for a blank query
+ ✓ tests/unit/admin-revenue-attribution-api.test.ts > admin revenue attribution api > returns unauthorized without admin
+ ✓ tests/unit/admin-revenue-attribution-api.test.ts > admin revenue attribution api > returns attribution aggregates
+ ✓ tests/unit/identity.test.ts > identity contract > returns authenticated_profile when principal and profile cookie exist
+ ✓ tests/unit/identity.test.ts > identity contract > returns authenticated_no_profile when signed in without profile
+ ✓ tests/unit/identity.test.ts > identity contract > returns anonymous when principal is missing
+ ✓ tests/unit/a11y-baseline.test.tsx > accessibility baseline > renders labeled global nav landmark 361ms
+ ✓ tests/unit/a11y-baseline.test.tsx > accessibility baseline > exposes feed action menu semantics 420ms
+ ✓ tests/unit/personalization-ethics-layer.test.ts > personalization ethics layer > allows policy-safe personalization decisions
+ ✓ tests/unit/personalization-ethics-layer.test.ts > personalization ethics layer > blocks personalization decisions that breach ethics constraints
+ ✓ tests/unit/platform-events-api.test.ts > platform events api > accepts valid telemetry events
+ ✓ tests/unit/platform-events-api.test.ts > platform events api > rejects invalid telemetry payloads
+ ✓ tests/unit/games-telemetry-api.test.ts > games telemetry api > accepts valid telemetry events
+ ✓ tests/unit/games-telemetry-api.test.ts > games telemetry api > rejects invalid telemetry payload
+ ✓ tests/unit/platform-telemetry.test.ts > platform telemetry > uses sendBeacon when available
+ ✓ tests/unit/platform-telemetry.test.ts > platform telemetry > falls back to fetch when sendBeacon fails
+ ✓ tests/unit/auth-config.test.ts > auth config validation > rejects production when dev credentials auth is enabled
+ ✓ tests/unit/auth-config.test.ts > auth config validation > accepts production when required auth settings are present and dev credentials are disabled
+ ✓ tests/unit/hypothesis-generator-api.test.ts > hypothesis generator api > generates hypothesis tasks from anomalies
+ ✓ tests/unit/storage.test.ts > storage helpers > builds public URL from endpoint + bucket 759ms
+ ✓ tests/unit/storage.test.ts > storage helpers > uploads buffer via S3 client
+ ✓ tests/unit/spatial-telemetry-taxonomy-v1.test.ts > spatial telemetry taxonomy v1 > is adopted across at least three xr modules
+ ✓ tests/unit/embedded-platform-app.test.tsx > embedded platform app > tracks module open on mount and renders standardized metadata
+ ✓ tests/unit/platform-routes.test.ts > platform routing contract > normalizes internal route
+ ✓ tests/unit/platform-routes.test.ts > platform routing contract > resolves embedded route from directory entry
+ ✓ tests/unit/platform-routes.test.ts > platform routing contract > resolves direct launch URL with fallback
+ ✓ tests/unit/creator-identity.test.ts > creator identity > returns existing creator profile
+ ✓ tests/unit/creator-identity.test.ts > creator identity > creates creator profile when missing
+ ✓ tests/unit/module-certification.test.ts > module certification > passes valid module manifests through required checks
+ ✓ tests/unit/module-certification.test.ts > module certification > blocks publication when required checks fail
+ ✓ tests/unit/user-agency-controls-v2.test.ts > user agency controls v2 > persists a user agency preference profile
+ ✓ tests/unit/user-agency-controls-v2.test.ts > user agency controls v2 > rejects preferences that violate policy caps
+ ✓ tests/unit/open-telemetry-bridge.test.ts > open telemetry bridge > maps external module open to canonical taxonomy event
+ ✓ tests/unit/open-telemetry-bridge.test.ts > open telemetry bridge > rejects telemetry from source not in enabled list
+ ✓ tests/unit/narrative-coherence-scorer.test.ts > narrative coherence scorer > keeps coherent sequences ungated
+ ✓ tests/unit/narrative-coherence-scorer.test.ts > narrative coherence scorer > gates incoherent sequences
+ ✓ tests/unit/watch-entitlements.test.ts > watch entitlements > requires sign-in for premium shows
+ ✓ tests/unit/watch-entitlements.test.ts > watch entitlements > blocks mature titles on kids profile
+ ✓ tests/unit/watch-entitlements.test.ts > watch entitlements > allows admin bypass
+ ✓ tests/unit/watch-entitlements.test.ts > watch entitlements > recognizes mature ratings
+ ✓ tests/unit/intent-aware-session-planner.test.ts > intent-aware session planner > prioritizes explicit and high-confidence inferred intents
+ ✓ tests/unit/intent-aware-session-planner.test.ts > intent-aware session planner > uses policy-safe fallback under low confidence and high risk
+ ✓ tests/unit/program-portfolio-optimizer.test.ts > program portfolio optimizer > returns score-ranked reprioritization with evidence
+ ✓ tests/unit/human-in-the-loop-experience-console.test.ts > human-in-the-loop experience console > stores high-impact proposed actions for review
+ ✓ tests/unit/human-in-the-loop-experience-console.test.ts > human-in-the-loop experience console > allows operator override updates
+ ✓ tests/unit/cross-format-continuity-engine.test.ts > cross-format continuity engine > keeps continuity when required context is preserved
+ ✓ tests/unit/cross-format-continuity-engine.test.ts > cross-format continuity engine > flags continuity break when required context is missing
+ ✓ tests/unit/media-corp-scoring.test.ts > media corp scoring > classifies high risk concepts as kill
+ ✓ tests/unit/media-corp-scoring.test.ts > media corp scoring > scores a canon-aware bundle into an actionable decision
+ ✓ tests/unit/content-lifecycle.test.ts > content lifecycle > enforces valid transitions
+ ✓ tests/unit/content-lifecycle.test.ts > content lifecycle > resolves request publish target state
+ ✓ tests/unit/content-lifecycle.test.ts > content lifecycle > throws on invalid transition assertion
+ ✓ tests/unit/anon.test.ts > anon cookie helpers > sets signed httpOnly cookie
+ ✓ tests/unit/anon.test.ts > anon cookie helpers > reuses existing signed cookie when valid
+ ✓ tests/unit/creator-autonomy-contracts.test.ts > creator autonomy contracts > enforces creator-specific allowed actions
+ ✓ tests/unit/creator-autonomy-contracts.test.ts > creator autonomy contracts > blocks restricted actions at contract definition time
+ ✓ tests/unit/rights-aware-agent-editing-v2.test.ts > rights-aware agent editing v2 > allows derivative edit when rights constraints are satisfied
+ ✓ tests/unit/rights-aware-agent-editing-v2.test.ts > rights-aware agent editing v2 > blocks edit when rights policy is violated
+ ✓ tests/unit/trust-preserving-growth-engine.test.ts > trust-preserving growth engine > allows growth action when trust and safety risks are within policy limits
+ ✓ tests/unit/trust-preserving-growth-engine.test.ts > trust-preserving growth engine > blocks growth action when trust constraints are exceeded
+ ✓ tests/unit/policy-engine.test.ts > policy engine v2 > denies prod promotion without approval
+ ✓ tests/unit/policy-engine.test.ts > policy engine v2 > allows prod promotion with approval and high security score
+ ✓ tests/unit/spatial-identity-anchors.test.ts > spatial identity anchors > restores anchors with deterministic identity-to-anchor mapping
+ ✓ tests/unit/adaptive-friction-system.test.ts > adaptive friction system > applies medium-tier friction interventions
+ ✓ tests/unit/adaptive-friction-system.test.ts > adaptive friction system > falls back to manual review when intervention cap is reached
+ ✓ tests/unit/navigation-contract.test.ts > navigation contract > includes admin link only for admin principals
+ ✓ tests/unit/navigation-contract.test.ts > navigation contract > defines watch and games local nav arrays
+ ✓ tests/unit/navigation-contract.test.ts > navigation contract > can localize global nav hrefs for supported locale
+ ✓ tests/unit/autonomous-sponsorship-compliance.test.ts > autonomous sponsorship compliance > passes declared sponsored content
+ ✓ tests/unit/autonomous-sponsorship-compliance.test.ts > autonomous sponsorship compliance > blocks undeclared sponsorship
+ ✓ tests/unit/worldState.test.ts > world-state > reserves and releases seats
+ ✓ tests/unit/middleware-policy.test.ts > middleware policy > protects privileged non-admin write surfaces
+ ✓ tests/unit/middleware-policy.test.ts > middleware policy > distinguishes admin authorization from generic session checks
+ ✓ tests/unit/contextual-moderation-escalation.test.ts > contextual moderation escalation > escalates when context chain amplifies severity
+ ✓ tests/unit/contextual-moderation-escalation.test.ts > contextual moderation escalation > hard blocks when severity exceeds hard block threshold
+ ✓ tests/unit/journey-bridge.test.ts > journey bridge > builds cross-module links with context query params
+ ✓ tests/unit/journey-bridge.test.ts > journey bridge > summarizes incoming context labels
+ ✓ tests/unit/meta-learning-policy-optimizer.test.ts > meta-learning policy optimizer > proposes policy updates from verified long-horizon signals
+ ✓ tests/unit/emotional-safety-signals-v1.test.ts > emotional safety signals v1 > flags controls when severity exceeds threshold
+ ✓ tests/unit/emotional-safety-signals-v1.test.ts > emotional safety signals v1 > records low-severity signals without forcing controls
+ ✓ tests/unit/compliance-scorecard.test.ts > compliance scorecard > returns machine-readable controls with evidence pointers
+ ✓ tests/unit/show-form.test.tsx > ShowForm > submits valid values 519ms
+ ✓ tests/unit/collective-agent-deliberation-protocol.test.ts > collective agent deliberation protocol > produces deterministic transcript and auditable resolution
+ ✓ tests/unit/monetization-rules.test.ts > monetization rules engine > requires sign-in for premium content
+ ✓ tests/unit/monetization-rules.test.ts > monetization rules engine > normalizes premium prices to policy bounds
+ ✓ tests/unit/monetization-rules.test.ts > monetization rules engine > validates purchasable premium items
+ ✓ tests/unit/creator-governance-council-api.test.ts > creator governance council api > tracks proposals, votes, and outcomes
+ ✓ tests/unit/autonomy-control-plane-v3.test.ts > autonomy control plane v3 > aggregates policy checks and returns block/allow state
+ ✓ tests/unit/autonomous-finance-controller.test.ts > autonomous finance controller > blocks actions that exceed dynamic financial constraints
+ ✓ tests/unit/conflict-resolver.test.ts > inter-agent conflict resolver > resolves conflicting proposals deterministically
+ ✓ tests/unit/dynamic-licensing-resolver.test.ts > dynamic licensing resolver > allows compatible license/use combinations
+ ✓ tests/unit/dynamic-licensing-resolver.test.ts > dynamic licensing resolver > blocks incompatible license/use combinations
+ ✓ tests/unit/minigame-input-lock.test.ts > minigame input lock > includes arrow keys and space
+ ✓ tests/unit/minigame-input-lock.test.ts > minigame input lock > prevents default only when focused and playing
+ ✓ tests/unit/institutional-memory-consolidation-v2.test.ts > institutional memory consolidation v2 > feeds planning and policy recommendation flows
+ ✓ tests/unit/reputation-weighted-distribution.test.ts > reputation-weighted distribution > throttles low-reputation creators
+ ✓ tests/unit/reputation-weighted-distribution.test.ts > reputation-weighted distribution > boosts high-reputation creators
+ ✓ tests/unit/cross-loop-priority-arbiter.test.ts > cross-loop priority arbiter > selects highest weighted eligible candidates
+ ✓ tests/unit/autonomous-strategy-simulator-v2.test.ts > autonomous strategy simulator v2 > scores policy-bounded strategy alternatives
+ ✓ tests/unit/agent-queue.test.ts > agent queue helpers > adds a job to BullMQ
+ ✓ tests/unit/playback.test.ts > playback > estimates playback position based on leader time
+ ✓ tests/unit/playback.test.ts > playback > applies smoothing for small drift
+ ✓ tests/unit/playback.test.ts > playback > snaps for large drift
+ ✓ tests/unit/global-rollback-orchestrator.test.ts > global rollback orchestrator > builds deterministic rollback steps with class-aware ordering
+ ✓ tests/unit/xr-audit-explainability-bundle.test.ts > xr audit explainability bundle > builds audit bundle with rationale evidence links and outcomes
+ ✓ tests/unit/strategy-memory.test.ts > long-horizon strategy memory > stores and lists strategy memory entries with required evidence
+ ✓ tests/unit/multi-tenant-controls.test.ts > multi-tenant controls > allows requests within tenant API and module boundaries
+ ✓ tests/unit/multi-tenant-controls.test.ts > multi-tenant controls > blocks cross-tenant row access at data layer
+ ✓ tests/unit/policy-explainability.test.ts > policy explainability > returns decision sections with deterministic trace payload
+ ✓ tests/unit/org-role-simulator.test.ts > org role simulator > produces coherent role outputs for core functional teams
+ ✓ tests/unit/device-capability-matrix-xr.test.ts > device capability matrix xr > drives feature gating and fallbacks
+ ✓ tests/unit/organism-mode-v3-stewarded-intelligence-fabric.test.ts > organism mode v3 stewarded intelligence fabric > verifies compliant outcomes and stewardship controls
+ ✓ tests/unit/input-abstraction-layer-xr.test.ts > input abstraction layer xr > normalizes controller, hand, gaze, and voice actions into one intent api
+ ✓ tests/unit/model-output-provenance.test.ts > model output provenance ledger > records lineage with required input and decision context
+ ✓ tests/unit/cross-module-coordinator.test.ts > cross module coordinator > ranks proposals by ecosystem-balanced score
+ ✓ tests/unit/biometric-privacy-boundaries.test.ts > biometric privacy boundaries > enforces policy-gated biometric handling with audit evidence path
+ ✓ tests/unit/lip-sync-and-viseme-runtime.test.ts > lip-sync and viseme runtime > keeps viseme timeline integration stable
+ ✓ tests/unit/surface-grammar.test.tsx > surface grammar > renders shared surface card tones
+ ✓ tests/unit/surface-grammar.test.tsx > surface grammar > renders shared section header structure
+ ✓ tests/unit/multi-modal-narrative.test.ts > multi-modal narrative layer > builds coherent trackable arc across multiple formats
+ ✓ tests/unit/media-corp-orchestrator.test.ts > media corp orchestrator > runs an end-to-end cycle with portfolio state and publish plans
+ ✓ tests/unit/platform-governance.test.ts > platform governance helpers > estimates render costs by known job type
+ ✓ tests/unit/platform-governance.test.ts > platform governance helpers > computes storage cost in cents from bytes
+ ✓ tests/unit/platform-governance.test.ts > platform governance helpers > evaluates launch gates against max allowance
+ ✓ tests/unit/virtual-goods-ownership-physics-contract.test.ts > virtual goods ownership physics contract > prevents inconsistent ownership states across lifecycle
+ ✓ tests/unit/mocap-cleanup-and-smoothing-toolkit.test.ts > mocap cleanup and smoothing toolkit > provides reusable cleanup operators with measurable diagnostics
+ ✓ tests/unit/consent-session-recording-controls.test.ts > consent and session recording controls > requires policy-compliant explicit consent state for recording
+ ✓ tests/unit/proximity-safety-envelopes.test.ts > proximity safety envelopes > triggers configurable runtime protections on envelope violations
+ ✓ tests/unit/animation-performance-rights-automation.test.ts > animation/performance rights automation > enforces rights policy automatically in publish/distribution paths
+ ✓ tests/unit/emergent-behavior.test.ts > emergent behavior monitoring > classifies emergent events into risk/opportunity channels
+ ✓ tests/unit/unified-constraint-solver.test.ts > unified constraint solver > resolves cross-scope constraints with deterministic trace order
+ ✓ tests/unit/spatial-asset-streaming.test.ts > spatial asset streaming > plans incremental hydration with bounded memory
+ ✓ tests/unit/edge-delivery.test.ts > edge delivery > resolves region to nearest configured edge pop
+ ✓ tests/unit/edge-delivery.test.ts > edge delivery > surfaces latency budget breaches from snapshots
+ ✓ tests/unit/co-presence-core-v1.test.ts > co-presence core v1 > keeps pose/state sync stable with reconnect and conflict resolution
+ ✓ tests/unit/seatMap.test.ts > seatMap > builds a sequential seat grid
+ ✓ tests/unit/seatMap.test.ts > seatMap > chunks seats into rows
+ ✓ tests/unit/cross-platform-xr-asset-portability.test.ts > cross-platform xr asset portability > validates compatibility and rights constraints for portability
+ ✓ tests/unit/distribution-orchestrator-vr-ar-endpoints.test.ts > distribution orchestrator for vr/ar endpoints > writes policy-compliant distribution actions
+ ✓ tests/unit/animation-data-model-v1.test.ts > animation data model v1 > validates centralized clip/state schemas at ingestion
+ ✓ tests/unit/apps-directory-page.test.tsx > apps directory page > renders platform directory and launch actions
+ ✓ tests/unit/xr-contract-v1.test.ts > openxr webxr contract v1 > validates shared xr contract adapters and core route coverage
+ ✓ tests/unit/rig-contract-standardization.test.ts > rig contract standardization > blocks incompatible skeleton and constraint combinations
+ ✓ tests/unit/autonomy-confidence-calibration-v2.test.ts > autonomy confidence calibration v2 > tracks calibration metrics and uses them for execution gating
+ ✓ tests/unit/comfort-motion-risk-labels.test.ts > comfort and motion risk labels > generates pre-session risk labels for session entry disclosure
+ ✓ tests/unit/live-performance-revenue-share-engine.test.ts > live performance revenue share engine > produces deterministic explainable and auditable revenue shares
+ ✓ tests/unit/character-performance-slos.test.ts > character performance slos > integrates SLO dashboard and breach reporting
+ ✓ tests/unit/3d-accessibility-baseline-v1.test.ts > 3d accessibility baseline v1 > passes baseline accessibility checks for core immersive journeys
+ ✓ tests/unit/content-programming-director.test.ts > content programming director > generates safe programming placements across surfaces
+ ✓ tests/unit/autonomy-policy-compiler.test.ts > autonomy policy compiler > compiles deterministic executable constraints
+ ✓ tests/unit/spatial-harassment-detection.test.ts > spatial harassment detection > emits enforceable moderation signal with evidence context
+ ✓ tests/unit/resilience-certification-v1.test.ts > resilience certification v1 > certifies when required resilience criteria are satisfied
+ ✓ tests/unit/app-header.test.tsx > app header > highlights the active route
+ ✓ tests/unit/spatial-audio-runtime-v1.test.ts > spatial audio runtime v1 > supports directional and distance-aware audio checks
+ ✓ tests/unit/strategic-intent-contract.test.ts > strategic intent contract > validates intent artifacts against contract requirements
+ ✓ tests/unit/story-beat-orchestrator.test.ts > story beat orchestrator > applies policy-driven transitions with interruption recovery
+ ✓ tests/unit/virtual-production-control-room.test.ts > virtual production control room > covers cues, camera, effects, and moderation with auditability
+ ✓ tests/unit/revenue-stress-testing-suite.test.ts > revenue stress testing suite > quantifies policy breach points under shock scenarios
+ ✓ tests/unit/multi-region-failure-sovereignty.test.ts > multi-region failure sovereignty > switches to degraded action limits when primary-region policy is violated
+ ✓ tests/unit/xr-autonomy-maturity-certification-v1.test.ts > xr autonomy maturity certification v1 > checks and evidences safety compliance and performance pass criteria
+ ✓ tests/unit/motion-sickness-risk-scoring.test.ts > motion sickness risk scoring > triggers mitigation prompt and safe-mode defaults for high-risk sessions
+ ✓ tests/unit/mocap-ingestion-pipeline-v1.test.ts > mocap ingestion pipeline v1 > validates, transforms, and stores deterministic outputs
+ ✓ tests/unit/attribution-graph-v2.test.ts > attribution graph v2 > stores and queries contribution edges
+ ✓ tests/unit/xr-launch-readiness-store-compliance.test.ts > xr launch readiness and store compliance > blocks non-compliant launch states
+ ✓ tests/unit/strategic-failure-recovery-planner.test.ts > strategic failure recovery planner > creates staged roll-forward and rollback-safe interventions
+ ✓ tests/unit/animation-event-timeline.test.ts > animation event timeline > keeps deterministic event ordering and action consumers
+ ✓ tests/unit/regional-xr-compliance-overlays.test.ts > regional xr compliance overlays > applies region overlays through compliance policy engine
+ ✓ tests/unit/insider-risk-controls.test.ts > autonomous insider-risk controls > enforces dual-approval or block for risky privileged actions
+ ✓ tests/unit/blend-tree-runtime-v1.test.ts > blend tree runtime v1 > drives at least two character classes
+ ✓ tests/unit/world-authoring-contract-v1.test.ts > world authoring contract v1 > validates scene composition and ownership
+ ✓ tests/unit/forecast-vs-actual-drift-engine.test.ts > forecast vs actual drift engine > triggers corrective budget actions for critical drift
+ ✓ tests/unit/audience-choreography-engine.test.ts > audience choreography engine > supports deterministic patterns within safety caps
+ ✓ tests/unit/i18n-foundation.test.ts > i18n foundation > resolves locale from region when locale is absent
+ ✓ tests/unit/i18n-foundation.test.ts > i18n foundation > builds locale-prefixed module paths
+ ✓ tests/unit/environmental-storytelling-agent-hooks.test.ts > environmental storytelling agent hooks > constrains agent hooks by storytelling safety guardrails
+ ✓ tests/unit/community-co-creation.test.ts > community co-creation protocols > validates mixed user/agent workflows with provenance
+ ✓ tests/unit/dispute-resolution-automation.test.ts > dispute resolution automation > records disputes with deterministic workflow states
+ ✓ tests/unit/permission-drift.test.ts > permission drift report > detects permission additions outside baseline
+ ✓ tests/unit/multi-quarter-roadmap-synthesizer.test.ts > multi-quarter roadmap synthesizer > returns prioritized roadmap candidates with risk/cost/impact evidence
+ ✓ tests/unit/xr-performance-regression-gate.test.ts > xr performance regression gate > enforces baseline thresholds in ci/release gating flow
+ ✓ tests/unit/thermal-battery-adaptation.test.ts > thermal battery adaptation > prevents unsafe throttling regressions through adaptation policy
+ ✓ tests/unit/network-jitter-compensation-avatar-motion.test.ts > network jitter compensation for avatar motion > improves continuity without violating authority bounds
+ ✓ tests/unit/networked-object-sync-v1.test.ts > networked object sync v1 > enforces deterministic authority and conflict policy
+ ✓ tests/unit/gesture-intent-runtime-v1.test.ts > gesture intent runtime v1 > maps gestures to stable intents deterministically
+ ✓ tests/unit/xr-lighting-pipeline.test.ts > xr lighting pipeline > enforces quality tiers tied to device capabilities
+ ✓ tests/unit/youth-safe-xr-mode.test.ts > youth-safe xr mode > enforces mandatory child/youth-safe defaults
+ ✓ tests/unit/continuous-compliance-certification-gate.test.ts > continuous compliance certification gate > constrains operations when certifications are missing
+ ✓ tests/unit/unknown-unknown-discovery-loop.test.ts > unknown-unknown discovery loop > generates latent risk/opportunity hypotheses from anomaly surfaces
+ ✓ tests/unit/xr-asset-marketplace-fraud-controls.test.ts > xr asset marketplace fraud controls > can throttle or halt high-risk asset transactions
+ ✓ tests/unit/gpu-budget-controller.test.ts > gpu budget controller > applies deterministic mitigations on gpu budget pressure
+ ✓ tests/unit/shared-live-event-stages.test.ts > shared live event stages > productionizes stage, audience, and host controls state
+ ✓ tests/unit/collaborative-scene-editing.test.ts > collaborative scene editing > enforces deterministic conflict resolution with audit trails
+ ✓ tests/unit/deception-detection.test.ts > deception manipulation detection > flags high-risk deceptive signal bundles
+ ✓ tests/unit/cinematic-camera-rig-system.test.ts > cinematic camera rig system > supports reusable camera primitives across scene and cutscene flows
+ ✓ tests/unit/xr-world-discovery-ranking.test.ts > xr world discovery and ranking > enforces configurable and governance-bounded ranking policy
+ ✓ tests/unit/cpu-frame-budget-controller.test.ts > cpu frame budget controller > uses bounded fallbacks when cpu frame budget is exceeded
+ ✓ tests/unit/autonomous-secrets-minimization.test.ts > autonomous secrets minimization > flags over-scoped or over-ttl secret requests
+ ✓ tests/unit/autonomy-blast-radius.test.ts > autonomy blast-radius guardrails > blocks actions that exceed configured blast-radius limits
+ ✓ tests/unit/roi-constrained-action-planner.test.ts > roi constrained action planner > blocks actions when modeled roi is below threshold
+ ✓ tests/unit/world-origin-relocalization.test.ts > world origin relocalization > preserves user/world continuity under reconnect recovery
+ ✓ tests/unit/synthetic-incident-replay-grid.test.ts > synthetic incident replay grid > scores replay outcomes against required response fields
+ ✓ tests/unit/animation-preset-library.test.ts > animation preset library > integrates presets with retarget, blend, and governance controls
+ ✓ tests/unit/interactive-narrative-branching-xr.test.ts > interactive narrative branching xr > keeps branching deterministic and replay-auditable
+ ✓ tests/unit/facial-animation-baseline.test.ts > facial animation baseline > maps baseline expressions to reusable controllers
+ ✓ tests/unit/terrain-and-scale-governance.test.ts > terrain and scale governance > catches out-of-policy world terrain and scale changes
+ ✓ tests/unit/self-healing.test.ts > self-healing behaviors > triggers rollback-safe healing actions when regressions breach thresholds
+ ✓ tests/unit/volumetric-effects-framework.test.ts > volumetric effects framework > exposes reusable presets with performance caps
+ ✓ tests/unit/node-based-animation-graph-editor.test.ts > node-based animation graph editor > serializes to shared blend/state runtime contracts
+ ✓ tests/unit/performer-avatar-switching.test.ts > performer avatar switching > preserves identity and session continuity during switches
+ ✓ tests/unit/foveated-rendering-support.test.ts > foveated rendering support > requires capability gating and quality validation
+ ✓ tests/unit/capex-opex-split-optimizer.test.ts > capex opex split optimizer > returns policy-driven execution plan splits
+ ✓ tests/unit/procedural-locomotion-runtime.test.ts > procedural locomotion runtime > integrates with IK and collision constraints
+ ✓ tests/unit/replay-and-highlight-capture.test.ts > replay and highlight capture > ensures replay artifacts are queryable with deterministic timeline refs
+ ✓ tests/unit/emotion-to-animation-controller.test.ts > emotion-to-animation controller > produces coherent transitions with bounded intensity
+ ✓ tests/unit/avatar-economy-v1.test.ts > avatar economy v1 > enforces policy-driven and auditable avatar economy flows
+ ✓ tests/unit/autonomous-stewardship-program.test.ts > autonomous stewardship program > checks stewardship responsibilities cadence and controls
+ ✓ tests/unit/creator-xr-analytics-dashboard.test.ts > creator xr analytics dashboard > exposes actionable metrics tied to creator outputs
+ ✓ tests/unit/markerless-capture-integration.test.ts > markerless capture integration > normalizes markerless inputs and enforces quality thresholds
+ ✓ tests/unit/open-autonomy-transparency-portal.test.ts > open autonomy transparency portal > generates exposed transparency snapshots with evidence links
+ ✓ tests/unit/animation-lod-orchestration.test.ts > animation lod orchestration > preserves quality while reducing animation runtime cost
+ ✓ tests/unit/evidence-graph-for-audits.test.ts > evidence graph for audits > supports control-to-evidence traversal
+ ✓ tests/unit/event-readiness-certification-gate.test.ts > event readiness certification gate > constrains go-live actions for non-certified event states
+ ✓ tests/unit/real-time-event-moderation-xr.test.ts > real-time event moderation xr > enforces low-latency policy-bound and auditable moderation actions
+ ✓ tests/unit/creator-qa-simulation-harness.test.ts > creator qa simulation harness > provides reproducible scenario tests with pass/fail outputs
+ ✓ tests/unit/retargeting-engine-v1.test.ts > retargeting engine v1 > outputs consistent motion with quality checks
+ ✓ tests/unit/continuous-red-team-simulator.test.ts > continuous red-team simulator > surfaces high-severity adversarial findings
+ ✓ tests/unit/live-event-failover-drills.test.ts > live event failover drills > produces measurable recovery evidence and runbook coverage
+ ✓ tests/unit/crowd-reaction-animation-systems.test.ts > crowd reaction animation systems > maintains fidelity while staying inside frame budgets
+ ✓ tests/unit/spatial-template-marketplace.test.ts > spatial template marketplace > supports publish/version/reuse template lifecycle
+ ✓ tests/unit/long-horizon-value-alignment-monitor.test.ts > long-horizon value alignment monitor > measures drift and triggers correction workflow
+ ✓ tests/unit/autonomy-change-budgeting.test.ts > autonomy change budgeting > reports warning/blocked states from projected budget usage
+ ✓ tests/unit/xr-config-contract-enforcement.test.ts > xr config contract enforcement > fails fast on invalid xr config with actionable errors
+ ✓ tests/unit/gaze-attention-model.test.ts > gaze and attention model > computes canonical gaze context with policy controls
+ ✓ tests/unit/financial-governance-certification-v1.test.ts > financial governance certification v1 > certifies when required controls pass
+ ✓ tests/unit/cutscene-sequencer-v1.test.ts > cutscene sequencer v1 > supports deterministic and versioned sequence playback
+ ✓ tests/unit/asset-kitbashing-toolchain.test.ts > asset kitbashing toolchain > preserves provenance and compatibility constraints
+ ✓ tests/unit/platform-hub.test.tsx > platform hub > renders module launch links
+ ✓ tests/unit/performance-to-rig-mapping-layer.test.ts > performance-to-rig mapping layer > validates mapping constraints and fallback behavior with fixtures
+ ✓ tests/unit/crowd-animation-system-v1.test.ts > crowd animation system v1 > handles density targets within frame budgets
+ ✓ tests/unit/presence-reliability-slos.test.ts > presence reliability slos > emits SLO breaches and alert surfaces
+ ✓ tests/unit/executive-briefing.test.ts > executive briefing generator > builds briefing with required strategic sections
+ ✓ tests/unit/xr-creator-workspace-v1.test.ts > xr creator workspace v1 > supports unified assemble-preview-validate flow
+ ✓ tests/unit/socio-technical-health-index.test.ts > socio-technical health index > influences autonomy bounds from combined health index
+ ✓ tests/unit/federation-gateway.test.ts > federation gateway > grants only policy-allowed scopes for trusted issuers
+ ✓ tests/unit/in-app-rigging-assistant.test.ts > in-app rigging assistant > requires valid rig output with review checkpoints
+ ✓ tests/unit/publish-to-xr-pipeline.test.ts > publish to xr pipeline > requires quality and compliance checks before XR distribution
+ ✓ tests/unit/dynamic-resolution-governor.test.ts > dynamic resolution governor > keeps frame time inside control band via bounded scaling
+ ✓ tests/unit/animation-quality-gate-v1.test.ts > animation quality gate v1 > enforces quality thresholds in CI and publish contexts
+ ✓ tests/unit/occlusion-culling-optimizer.test.ts > occlusion culling optimizer > reduces overdraw while preserving visibility correctness
+ ✓ tests/unit/spatial-boundary-linting.test.ts > spatial boundary linting > blocks forbidden xr cross-module coupling
+ ✓ tests/unit/comfort-locomotion-suite.test.ts > comfort locomotion suite > enforces teleport/snap-turn/vignette comfort-safe movement modes
+ ✓ tests/unit/ik-fk-solver-service.test.ts > ik/fk solver service > applies deterministic fallback behavior
+ ✓ tests/unit/self-governance-charter-engine.test.ts > self-governance charter engine > machine-evaluates charter constraints for high-impact decisions
+ ✓ tests/unit/goal-evolution-engine.test.ts > goal evolution engine > revises objective sets with evidence-backed rationale
+ ✓ tests/unit/world-coherence-validator.test.ts > world coherence validator > emits actionable diagnostics in publish checks
+ ✓ tests/unit/scene-graph-contract-v1.test.ts > scene graph contract v1 > guards invalid state transitions
+ ✓ tests/unit/simulation-sandbox.test.ts > simulation sandbox > produces simulation report and preflight decision
+ ✓ tests/unit/fraud-adaptive-reward-guardrails.test.ts > fraud adaptive reward guardrails > halts rewards when fraud indicators are critical
+ ✓ tests/unit/marketplace-integrity-monitor.test.ts > marketplace integrity monitor > surfaces remediation actions for high fraud risk
+ ✓ tests/unit/safety-regression-gate.test.ts > safety regression gate > fails when metrics exceed configured thresholds
+ ✓ tests/unit/90-120hz-readiness-program.test.ts > 90/120hz readiness program > certifies designated refresh rates with stability criteria
+ ✓ tests/unit/creator-ai-revenue-share-engine.test.ts > creator-ai revenue share engine > computes deterministic payout split
+ ✓ tests/unit/distribution-orchestrator.test.ts > distribution orchestrator > plans scheduled actions from ranked candidates
+ ✓ tests/unit/character-state-machine-v2.test.ts > character state machine v2 > blocks invalid transitions and shares transition contract
+ ✓ tests/unit/voice-command-layer-xr.test.ts > voice command layer xr > parses and routes validated hands-free commands
+ ✓ tests/unit/global-compliance-federation.test.ts > global compliance federation > enforces region overlays in runtime decisions
+ ✓ tests/unit/autonomous-constitutional-tests.test.ts > autonomous constitutional tests > runs invariants and gates unsafe actions
+ ✓ tests/unit/human-oversight-marketplaces.test.ts > human oversight marketplaces > routes reviews by policy with traceability and sla bounds
+ ✓ tests/unit/carbon-aware-autonomy-scheduler.test.ts > carbon aware autonomy scheduler > defers eligible non-urgent jobs under high carbon intensity
+ ✓ tests/unit/sensitive-context-isolation-v1.test.ts > sensitive context isolation v1 > requires elevated controls for sensitive contexts
+ ✓ tests/unit/governance-drift.test.ts > governance drift monitor > produces drift alerts with remediation proposals
+ ✓ tests/unit/ecosystem-antifragility-loop.test.ts > ecosystem antifragility loop > turns incidents into validated resilience upgrades
+ ✓ tests/unit/cost-aware-optimizer.test.ts > cost aware optimizer > blocks plans exceeding configured budget caps
+ ✓ tests/unit/live-mocap-streaming-runtime.test.ts > live mocap streaming runtime > feeds runtime with bounded lag behavior
+ ✓ tests/unit/child-safety-autonomy-constraints.test.ts > child safety autonomy constraints > blocks restricted youth-context actions
+ ✓ tests/unit/migration-lint.test.ts > migration lint policy > documents destructive migration markers in the lint script
+ ✓ tests/unit/livekit-token.test.ts > livekit token helper > creates a jwt-like token with bounded ttl
+ ✓ tests/unit/platform-runtime-readiness.test.ts > platform runtime readiness > passes when the required phase 301-310 assets exist
+ ✓ tests/unit/temporal-policy-windows.test.ts > temporal policy windows > applies deterministic time-window decisions
+ ✓ tests/unit/automated-control-testing-v2.test.ts > automated control testing v2 > emits pass/fail evidence outputs
+ ✓ tests/unit/third-party-assurance-interface.test.ts > third-party assurance interface > allows safe external assurance queries
+ ✓ tests/unit/creator-risk-score-v1.test.ts > creator risk score v1 > assigns high risk tier for high combined risk inputs
+ ✓ tests/unit/adaptive-goal-selection.test.ts > adaptive goal selection > selects explainable goals within policy bounds
+ ✓ tests/unit/haptics-orchestration-v1.test.ts > haptics orchestration v1 > maps reusable haptic profiles by capability and context
+ ✓ tests/unit/token-economy-stabilizer.test.ts > token economy stabilizer > flags out-of-band token variance and suggests corrections
+ ✓ tests/unit/trust-safety-optimizer.test.ts > trust safety optimizer > rejects unsafe gain patterns
+ ✓ tests/unit/trustworthy-ai-score.test.ts > trustworthy ai operations score > computes bounded score with action limit output
+ ✓ tests/unit/party-rooms-xr.test.ts > party rooms xr > validates room join, voice, playlist, and host controls flow
+ ✓ tests/unit/governance-tamper-detection.test.ts > governance tamper detection > returns integrity scan output with tamper indicators
+ ✓ tests/unit/legal-explainability-dossier-generator.test.ts > legal explainability dossier generator > produces regulator-ready explainability packets
+ ✓ tests/unit/secondary-motion-physics.test.ts > secondary motion physics > runs within defined performance budgets
+ ✓ tests/unit/autonomous-maturity.test.ts > autonomous maturity certification > computes maturity score and certification status
+ ✓ tests/unit/creator-portability.test.ts > creator portability > accepts valid import payload under safeguards
+ ✓ tests/unit/spatial-ui-grammar.test.ts > spatial ui grammar > validates shared 3d ui primitives and tokens
+ ✓ tests/unit/organism-mode.test.ts > organism mode v1 > evaluates bounded activation with governance and maturity gates
+ ✓ tests/unit/privacy-risk-runtime-scoring.test.ts > privacy risk runtime scoring > blocks high-risk actions
+ ✓ tests/unit/audit-preparation.test.ts > autonomous audit preparation > builds evidence bundle status on demand
+ ✓ tests/unit/ecosystem-state-model.test.ts > ecosystem state model > produces health and momentum outputs from multi-module signals
+ ✓ tests/unit/governance-stress-tests.test.ts > governance stress test suite > executes scenarios and reports control pass/fail
+ ✓ tests/unit/cross-border-data-routing-policy.test.ts > cross-border data routing policy > enforces transfer constraints
+ ✓ tests/unit/organism-mode-v2.test.ts > organism mode v2 > adaptively tunes autonomy bounds by confidence and risk
+ ✓ tests/unit/autonomous-loop-review.test.ts > autonomous loop reliability review > evaluates loop checks and override runbook presence
+ ✓ tests/unit/partner-governance.test.ts > partner governance > blocks module activation without required agreement
+ ✓ tests/unit/regulatory-change-ingestion-loop.test.ts > regulatory change ingestion loop > records policy deltas for regulatory updates
+ ✓ tests/unit/motion-system.test.ts > motion system > defines reduced-motion-safe primitives
+ ✓ tests/unit/typography.test.ts > typography utility > defines shared text classes for shell surfaces
+ ✓ tests/unit/key-rotation.test.ts > key rotation status > detects overdue key rotation entries
+ ✓ tests/unit/learning-consolidation.test.ts > learning consolidation > promotes winning patterns into learning memory
+ ✓ tests/unit/micro-experiments.test.ts > micro experiment runner > blocks high-risk auto experiments
+ ✓ tests/unit/layout-framework.test.ts > layout framework > defines shared responsive primitives
+ ✓ tests/unit/objectives.test.ts > objective registry > loads versioned objective entries
+ ✓ tests/unit/rollout-guardrails.test.ts > rollout guardrails > triggers rollback for excessive regression
+ ✓ tests/unit/connectors.test.ts > ingestion connectors > runs enabled production-grade connector
+ ✓ tests/unit/supply-chain.test.ts > supply chain evaluation > returns pass when no unresolved critical blockers exist
+ ✓ tests/unit/video-player.test.ts > VideoPlayer > detects HLS sources
+
+ Test Files  311 passed (311)
+      Tests  456 passed (456)
+   Start at  11:02:22
+   Duration  48.85s (transform 24.31s, setup 4.93s, collect 79.96s, tests 12.03s, environment 403.37s, prepare 79.06s)
+

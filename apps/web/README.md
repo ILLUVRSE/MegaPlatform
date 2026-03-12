@@ -84,12 +84,13 @@ limit 20;
 ```
 
 ## Upload Stubs
-Uploads are stubbed in `apps/web/lib/uploads.ts`. The UI still uses placeholders.
+Studio uses the signed upload flow in `apps/web/lib/uploads.ts` via `/api/uploads/sign` and `/api/uploads/finalize`.
+The legacy raw `data:` upload endpoint at `/api/storage/upload` is deprecated.
 
 TODO plan:
-1. Add S3 signed URL endpoint in `/api/uploads`.
-2. Store asset metadata in DB.
-3. Invalidate CDN cache on update.
+1. Enforce lifecycle promotion from temporary uploads to published media records.
+2. Invalidate CDN cache on update/delete flows.
+3. Add operational accounting around storage usage and retention.
 
 ## Tests
 Unit tests:

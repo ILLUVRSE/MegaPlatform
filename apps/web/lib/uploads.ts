@@ -5,18 +5,20 @@
 import type { UploadKind } from "./uploadRules";
 
 type SignResponse = {
-  key: string;
+  objectKey: string;
   uploadUrl: string;
+  expiresInSec: number;
+  signedAt: string;
   publicUrl: string;
   headers?: Record<string, string>;
 };
 
 export async function signUpload(payload: {
-  projectId?: string;
-  kind: UploadKind;
+  projectId: string;
   filename: string;
   contentType: string;
-  contentLength: number;
+  uploadId: string;
+  contentLength?: number;
 }) {
   const response = await fetch("/api/uploads/sign", {
     method: "POST",

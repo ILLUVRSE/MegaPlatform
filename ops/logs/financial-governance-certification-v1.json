@@ -15,6 +15,142 @@
         "fraud_controls",
         "audit_evidence"
       ],
+      "generatedAt": "2026-03-11T18:07:03.585Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T16:23:55.560Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T16:23:32.637Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T16:22:13.786Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T16:03:36.555Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T16:03:06.000Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T16:01:54.296Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "generatedAt": "2026-03-11T15:57:29.668Z"
+    },
+    {
+      "certified": true,
+      "passRatio": 1,
+      "requiredChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
+      "passedChecks": [
+        "budget_controls",
+        "roi_controls",
+        "fraud_controls",
+        "audit_evidence"
+      ],
       "generatedAt": "2026-03-11T14:30:15.137Z"
     },
     {

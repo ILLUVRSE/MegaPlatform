@@ -102,7 +102,7 @@ export default function ShortCard({ item }: { item: ShortPostItem }) {
   };
 
   return (
-    <div className="rounded-3xl border border-illuvrse-border bg-white shadow-card">
+    <section className="relative flex min-h-[calc(100vh-13.5rem)] snap-start items-center justify-center rounded-[30px] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.1),transparent_26%),linear-gradient(180deg,rgba(15,23,42,0.55),rgba(2,6,23,0.92))] p-4">
       {toast ? (
         <div
           className={`fixed right-6 top-6 z-[60] rounded-2xl px-4 py-3 text-xs font-semibold shadow-card ${
@@ -114,55 +114,68 @@ export default function ShortCard({ item }: { item: ShortPostItem }) {
           {toast.message}
         </div>
       ) : null}
-      <Link href={`/shorts/${item.id}`} className="block">
-        {item.mediaType === "VIDEO" ? (
-          <video
-            ref={videoRef}
-            className="h-48 w-full rounded-t-3xl object-cover"
-            src={item.mediaUrl.endsWith(".m3u8") ? undefined : item.mediaUrl}
-            controls={false}
-          />
-        ) : (
-          <img
-            className="h-48 w-full rounded-t-3xl object-cover"
-            src={item.mediaUrl}
-            alt={item.title}
-          />
-        )}
-      </Link>
-      <div className="space-y-2 p-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-sm font-semibold">{item.title}</h3>
-          {item.isPremium ? (
-            <span className="rounded-full bg-illuvrse-primary px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.3em] text-white">
-              Premium {item.price != null ? `· $${(item.price / 100).toFixed(2)}` : ""}
-            </span>
-          ) : null}
-        </div>
-        <p className="text-xs text-illuvrse-muted">{item.caption}</p>
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-illuvrse-muted">
-          <span>{new Date(item.createdAt).toLocaleDateString()}</span>
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setPartyOpen(true);
-                setPartyStatus("idle");
-                setPartyError(null);
-              }}
-              className="rounded-full border border-illuvrse-border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em]"
-            >
-              Send to Party
-            </button>
-            <button
-              type="button"
-              onClick={handleMeme}
-              className="rounded-full border border-illuvrse-border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em]"
-              disabled={status === "pending"}
-            >
-              {status === "pending" ? "Memeing" : status === "done" ? "Queued" : "Meme This"}
-            </button>
+      <div className="grid w-full max-w-5xl gap-4 lg:grid-cols-[minmax(0,420px)_120px]">
+        <div className="relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[32px] border border-white/10 bg-black shadow-2xl shadow-cyan-950/20">
+          <Link href={`/shorts/${item.id}`} className="block">
+            {item.mediaType === "VIDEO" ? (
+              <video
+                ref={videoRef}
+                className="aspect-[9/16] w-full object-cover"
+                src={item.mediaUrl.endsWith(".m3u8") ? undefined : item.mediaUrl}
+                controls={false}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <img
+                className="aspect-[9/16] w-full object-cover"
+                src={item.mediaUrl}
+                alt={item.title}
+              />
+            )}
+          </Link>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/55 to-transparent p-5 text-white">
+            <div className="max-w-[85%] space-y-2">
+              <p className="text-sm font-semibold">@{item.title.toLowerCase().replace(/\s+/g, "")}</p>
+              <p className="text-sm text-white/84">{item.caption}</p>
+              <p className="text-xs uppercase tracking-[0.26em] text-white/54">Soundtrack live cut</p>
+            </div>
           </div>
+        </div>
+
+        <div className="mx-auto flex flex-row gap-3 lg:flex-col lg:justify-end">
+          <button type="button" className="rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white">
+            Like
+          </button>
+          <Link href={`/shorts/${item.id}`} className="rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white">
+            Comment
+          </Link>
+          <button
+            type="button"
+            onClick={() => {
+              setPartyOpen(true);
+              setPartyStatus("idle");
+              setPartyError(null);
+            }}
+            className="rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white"
+          >
+            Share
+          </button>
+          <button
+            type="button"
+            onClick={handleMeme}
+            className="rounded-full border border-white/10 bg-cyan-400/12 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100"
+            disabled={status === "pending"}
+          >
+            {status === "pending" ? "Queueing" : status === "done" ? "Queued" : "Meme"}
+          </button>
+          {item.isPremium ? (
+            <div className="rounded-full border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-amber-100">
+              Premium {item.price != null ? `$${(item.price / 100).toFixed(2)}` : ""}
+            </div>
+          ) : null}
         </div>
       </div>
       {partyOpen ? (
@@ -215,6 +228,6 @@ export default function ShortCard({ item }: { item: ShortPostItem }) {
           </div>
         </div>
       ) : null}
-    </div>
+    </section>
   );
 }

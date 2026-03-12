@@ -33,9 +33,9 @@ export default function UploadWidget({ projectId, kind, onUploaded }: UploadWidg
     try {
       const signPayload = await signUpload({
         projectId,
-        kind,
         filename: file.name,
         contentType: file.type,
+        uploadId: crypto.randomUUID(),
         contentLength: file.size
       });
 
@@ -51,7 +51,7 @@ export default function UploadWidget({ projectId, kind, onUploaded }: UploadWidg
       const result = await finalizeUpload({
         projectId,
         kind,
-        key: signPayload.key,
+        key: signPayload.objectKey,
         publicUrl: signPayload.publicUrl,
         contentType: file.type,
         contentLength: file.size

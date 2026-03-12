@@ -122,10 +122,14 @@ export async function POST(request: Request) {
       sizeBytes: parsed.data.contentLength,
       temporary: true,
       metaJson: {
+        lifecycleState: "uploaded",
+        projectId: parsed.data.projectId,
         key: parsed.data.key,
+        uploadKind: parsed.data.kind,
         contentType: parsed.data.contentType,
         contentLength: parsed.data.contentLength,
         uploadedAt: new Date().toISOString(),
+        uploadedById: principal.userId,
         temporary: true
       }
     }

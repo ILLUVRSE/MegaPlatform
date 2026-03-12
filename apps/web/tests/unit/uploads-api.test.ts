@@ -19,6 +19,8 @@ const getSignedUploadUrlMock = vi.hoisted(() => vi.fn());
 const getPublicUrlMock = vi.hoisted(() => vi.fn());
 const headObjectMock = vi.hoisted(() => vi.fn());
 const requireSessionMock = vi.hoisted(() => vi.fn());
+const checkRateLimitMock = vi.hoisted(() => vi.fn());
+const resolveClientKeyMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@illuvrse/db", () => ({
   prisma: prismaMock
@@ -41,6 +43,11 @@ vi.mock("@/lib/authz", () => ({
   requireSession: requireSessionMock
 }));
 
+vi.mock("@/lib/rateLimit", () => ({
+  checkRateLimit: checkRateLimitMock,
+  resolveClientKey: resolveClientKeyMock
+}));
+
 import { POST as signUpload } from "@/app/api/uploads/sign/route";
 import { POST as finalizeUpload } from "@/app/api/uploads/finalize/route";
 
@@ -50,20 +57,25 @@ describe("upload APIs", () => {
     requireSessionMock.mockResolvedValue({ userId: "creator-1", role: "user", permissions: [] });
     prismaMock.studioProject.findUnique.mockResolvedValue({ id: "project-1", createdById: "creator-1" });
     prismaMock.studioAsset.findFirst.mockResolvedValue(null);
-    getSignedUploadUrlMock.mockResolvedValue("https://signed-upload");
+    resolveClientKeyMock.mockReturnValue("creator-1");
+    checkRateLimitMock.mockResolvedValue({ ok: true });
+    getSignedUploadUrlMock.mockResolvedValue({
+      uploadUrl: "https://signed-upload",
+      signedAt: "2026-03-11T00:00:00.000Z",
+      expiresInSec: 600
+    });
     getPublicUrlMock.mockImplementation((key: string) => `https://public/${key}`);
   });
 
-  it("rejects unsupported content types", async () => {
+  it("rejects invalid upload ids", async () => {
     const request = new Request("http://localhost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         projectId: "project-1",
-        kind: "IMAGE_UPLOAD",
         filename: "test.gif",
         contentType: "image/gif",
-        contentLength: 1024
+        uploadId: "!!!"
       })
     });
 
@@ -71,21 +83,21 @@ describe("upload APIs", () => {
     expect(response.status).toBe(400);
   });
 
-  it("rejects oversized uploads", async () => {
+  it("rejects missing projects", async () => {
+    prismaMock.studioProject.findUnique.mockResolvedValue(null);
     const request = new Request("http://localhost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         projectId: "project-1",
-        kind: "IMAGE_UPLOAD",
         filename: "big.png",
         contentType: "image/png",
-        contentLength: 20 * 1024 * 1024
+        uploadId: "upload-123"
       })
     });
 
     const response = await signUpload(request);
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
   });
 
   it("returns signed upload info", async () => {
@@ -94,19 +106,27 @@ describe("upload APIs", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         projectId: "project-1",
-        kind: "IMAGE_UPLOAD",
         filename: "image.png",
         contentType: "image/png",
+        uploadId: "upload-123",
         contentLength: 1024
       })
     });
 
     const response = await signUpload(request);
     expect(response.status).toBe(200);
-    const payload = (await response.json()) as { key: string; uploadUrl: string; publicUrl: string };
-    expect(payload.key).toContain("studio/uploads/project-1/");
+    const payload = (await response.json()) as {
+      objectKey: string;
+      uploadUrl: string;
+      publicUrl: string;
+      signedAt: string;
+      expiresInSec: number;
+    };
+    expect(payload.objectKey).toBe("projects/project-1/uploads/upload-123/image.png");
     expect(payload.uploadUrl).toBe("https://signed-upload");
-    expect(payload.publicUrl).toContain(payload.key);
+    expect(payload.publicUrl).toContain(payload.objectKey);
+    expect(payload.signedAt).toBe("2026-03-11T00:00:00.000Z");
+    expect(payload.expiresInSec).toBe(600);
   });
 
   it("rejects unauthenticated upload signing", async () => {
@@ -116,10 +136,9 @@ describe("upload APIs", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         projectId: "project-1",
-        kind: "IMAGE_UPLOAD",
         filename: "image.png",
         contentType: "image/png",
-        contentLength: 1024
+        uploadId: "upload-123"
       })
     });
     const response = await signUpload(request);
@@ -155,7 +174,14 @@ describe("upload APIs", () => {
         data: expect.objectContaining({
           projectId: "project-1",
           kind: "IMAGE_UPLOAD",
-          url: `https://public/${key}`
+          url: `https://public/${key}`,
+          metaJson: expect.objectContaining({
+            lifecycleState: "uploaded",
+            projectId: "project-1",
+            uploadKind: "IMAGE_UPLOAD",
+            uploadedById: "creator-1",
+            temporary: true
+          })
         })
       })
     );

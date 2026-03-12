@@ -1,0 +1,43 @@
+name: Audit and Gates
+
+on:
+  push:
+  schedule:
+    - cron: "0 9 * * 1"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare audit directories
+        run: mkdir -p analysis/codex-audit/implement/{branches,issues,patches,tests,ci,logs}
+
+      - name: Shipcheck quick
+        run: pnpm shipcheck:quick 2>&1 | tee analysis/codex-audit/implement/logs/shipcheck-quick-ci.txt
+
+      - name: Workspace tests
+        run: pnpm -w test --reporter=spec 2>&1 | tee analysis/codex-audit/implement/logs/tests-ci.txt
+
+      - name: Persist workflow copy
+        run: cp .github/workflows/audit-and-gates.yml analysis/codex-audit/implement/ci/audit-and-gates.yml
+
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-audit-implement
+          path: analysis/codex-audit/implement

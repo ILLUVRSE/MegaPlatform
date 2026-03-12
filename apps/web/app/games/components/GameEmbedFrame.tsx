@@ -15,7 +15,7 @@ type Props = {
 export default function GameEmbedFrame({ slug, title, description, embedPath, playPath }: Props) {
   useEffect(() => {
     void trackGameEvent({
-      event: "game_open",
+      event: "games.open",
       surface: "games_detail",
       gameSlug: slug,
       href: `/games/${slug}`
@@ -33,7 +33,7 @@ export default function GameEmbedFrame({ slug, title, description, embedPath, pl
           href={playPath}
           onClick={() =>
             void trackGameEvent({
-              event: "game_open_direct",
+              event: "games.open.direct",
               surface: "games_detail",
               gameSlug: slug,
               href: playPath
@@ -52,7 +52,7 @@ export default function GameEmbedFrame({ slug, title, description, embedPath, pl
           loading="lazy"
           onLoad={() =>
             void trackGameEvent({
-              event: "embed_loaded",
+              event: "game.embed.load",
               surface: "games_detail",
               gameSlug: slug,
               href: embedPath

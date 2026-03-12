@@ -1,0 +1,18 @@
+[
+  {
+    "id": "alert-slo-critical",
+    "name": "Critical SLO Breach",
+    "trigger": "evaluate-slos.mjs exits non-zero for critical SLO",
+    "route": "ops-primary",
+    "severity": "critical",
+    "runbook": "docs/ops_brain/runbooks/incident-response.md"
+  },
+  {
+    "id": "alert-runtime-readiness",
+    "name": "Runtime Readiness Regression",
+    "trigger": "check-platform-runtime-readiness.mjs exits non-zero",
+    "route": "platform-release",
+    "severity": "critical",
+    "runbook": "docs/ops_brain/runbooks/incident-response.md"
+  }
+]

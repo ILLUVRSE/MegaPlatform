@@ -47,9 +47,10 @@ docker run --name illuvrse-minio -p 9000:9000 -p 9001:9001 \
 - Uploads use S3-compatible storage; local dev should use MinIO.
 
 ## Upload Flow (Signed URLs)
-1. Client requests `/api/uploads/sign` with file metadata and upload kind.
+1. Client requests `/api/uploads/sign` with `{ projectId, uploadId, filename, contentType }`.
 2. Client uploads directly to S3/MinIO using the presigned PUT URL.
-3. Client calls `/api/uploads/finalize`, which validates, optionally HEADs the object, and creates a `StudioAsset`.
+3. The sign response includes deterministic `objectKey = projects/<projectId>/uploads/<uploadId>/<filename>`.
+4. Client calls `/api/uploads/finalize`, which validates, optionally HEADs the object, and creates a `StudioAsset`.
 
 Allowed types & sizes:
 - IMAGE_UPLOAD: `image/png`, `image/jpeg`, `image/webp` (<= 10MB)
@@ -58,7 +59,8 @@ Allowed types & sizes:
 
 ## Cleanup (MVP)
 - Uploads are created with `metaJson.temporary=true` and `metaJson.uploadedAt`.
-- When a project is published, assets are marked `temporary=false`.
+- Upload assets finalized through `/api/uploads/finalize` carry lifecycle metadata (`uploaded`, uploader, project).
+- When a project is published, assets are marked `temporary=false` and promoted to `metaJson.lifecycleState=published`.
 - Admin cleanup endpoint supports storage-aware deletion:
   - `POST /api/admin/assets/cleanup`
   - Payload: `{ days, dryRun, deleteFromStorage, continueOnStorageError, maxBatch }`

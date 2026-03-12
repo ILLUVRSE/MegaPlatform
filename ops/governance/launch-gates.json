@@ -30,5 +30,21 @@
     "checkKey": "prod_deployment_missing_env",
     "maxAllowed": 0,
     "severity": "critical"
+  },
+  {
+    "id": "gate-runtime-readiness",
+    "name": "Platform Runtime Truth Gate",
+    "description": "Launch is blocked when runtime readiness assets or APIs are missing.",
+    "checkKey": "runtime_readiness_failures",
+    "maxAllowed": 0,
+    "severity": "critical"
+  },
+  {
+    "id": "gate-critical-dependencies",
+    "name": "Critical Dependency Gate",
+    "description": "Launch is blocked when critical or high-blast-radius dependencies are degraded.",
+    "checkKey": "critical_dependency_failures",
+    "maxAllowed": 0,
+    "severity": "critical"
   }
 ]

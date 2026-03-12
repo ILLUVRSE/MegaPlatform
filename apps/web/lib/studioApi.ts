@@ -90,14 +90,3 @@ export async function publishProject(projectId: string, payload: { title?: strin
     body: JSON.stringify(payload)
   });
 }
-
-export async function createAsset(
-  projectId: string,
-  payload: { kind: string; url: string; metaJson?: Record<string, unknown> }
-) {
-  return requestJson<{ asset: StudioAsset }>(`/api/studio/projects/${projectId}/assets`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-}

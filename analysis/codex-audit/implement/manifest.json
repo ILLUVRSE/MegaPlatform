@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-03-11",
+  "mode": "patch-only",
+  "centerOfGravity": "apps/web",
+  "artifacts": {
+    "patch": "analysis/codex-audit/implement/patches/codex-implement.patch",
+    "workflow": "analysis/codex-audit/implement/ci/audit-and-gates.yml",
+    "observability": "analysis/codex-audit/implement/observability.md",
+    "verificationLog": "analysis/codex-audit/implement/logs/verification-summary.txt"
+  },
+  "implemented": [
+    {
+      "phase": 2,
+      "summary": "Auth boot-time enforcement exported through auth module and executed in middleware; auth config tests expanded."
+    },
+    {
+      "phase": 3,
+      "summary": "packages/db now exposes migrations:lint and migrations:guard scripts; local migration wrapper scripts added."
+    },
+    {
+      "phase": 4,
+      "summary": "Storage signed upload helper now returns signed metadata and uploads/sign forwards signedAt plus expiresInSec."
+    },
+    {
+      "phase": 6,
+      "summary": "Voice token endpoint now emits party.voice.token.issued telemetry with unit coverage."
+    },
+    {
+      "phase": 9,
+      "summary": "Games telemetry moved to canonical event names while preserving legacy aliases at ingestion."
+    },
+    {
+      "phase": 10,
+      "summary": "Existing embed shell and module-open telemetry paths were retained; no new shell component was required."
+    },
+    {
+      "phase": 14,
+      "summary": "Runnable GitHub Actions workflow added for install, shipcheck, tests, and artifact upload."
+    },
+    {
+      "phase": 15,
+      "summary": "Root layout now emits platform.page_load telemetry and observability notes were added."
+    }
+  ],
+  "filesChanged": [
+    "apps/web/lib/auth.ts",
+    "apps/web/middleware.ts",
+    "packages/storage/src/index.ts",
+    "apps/web/app/api/uploads/sign/route.ts",
+    "apps/web/lib/platformEvents.ts",
+    "apps/web/app/api/party/[code]/voice/token/route.ts",
+    "apps/web/app/games/components/GamesCatalog.tsx",
+    "apps/web/app/games/components/GameEmbedFrame.tsx",
+    "apps/web/app/games/create/page.tsx",
+    "apps/web/app/layout.tsx",
+    "apps/web/components/PlatformPageLoadTelemetry.tsx",
+    "apps/web/tests/unit/auth-config.test.ts",
+    "apps/web/tests/unit/uploads-api.test.ts",
+    "apps/web/tests/unit/games-telemetry-api.test.ts",
+    "apps/web/tests/unit/party-phase6.test.ts",
+    "packages/db/package.json",
+    "packages/db/scripts/migration-lint.js",
+    "packages/db/scripts/migration-guard.js",
+    ".github/workflows/audit-and-gates.yml"
+  ],
+  "verification": {
+    "dbMigrationsLint": "pass",
+    "webTypecheck": "pass",
+    "webUnitTests": "pass",
+    "shipcheckQuick": "pass"
+  },
+  "residuals": [
+    "No branches, commits, or PRs were created because the repository already had unrelated local modifications and no GitHub credential flow was available in this run.",
+    "The prompt's Playwright/WebRTC smoke and load harness work was not implemented in this pass; see issue drafts.",
+    "No new shared telemetry workspace package was extracted; canonicalization was implemented in apps/web to avoid larger cross-workspace churn in a dirty tree."
+  ]
+}

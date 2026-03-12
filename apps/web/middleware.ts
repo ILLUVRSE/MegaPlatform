@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
+import { assertAuthSecurityConfig } from "@/lib/env";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import {
   getAdminDecision,
@@ -8,9 +9,10 @@ import {
   isAdminPath,
   isProfileExemptPath,
   isSessionProtectedPath,
-  isWatchPath,
-  privilegedRouteMatcher
+  isWatchPath
 } from "@/src/domains/platform-core/auth/middlewarePolicy";
+
+assertAuthSecurityConfig();
 
 function withSecurityHeaders(response: NextResponse) {
   response.headers.set("X-Frame-Options", "DENY");

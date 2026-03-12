@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { findRepoRootSync } from "@/lib/repoRoot";
 
 export const PLATFORM_RUNTIME_TRUTH = {
   phases: [301, 302, 303, 304, 305, 306, 307, 308, 309, 310],
@@ -27,7 +28,7 @@ export const PLATFORM_RUNTIME_TRUTH = {
   ]
 } as const;
 
-export function evaluatePlatformRuntimeReadiness(root = process.cwd()) {
+export function evaluatePlatformRuntimeReadiness(root = findRepoRootSync()) {
   const apiRegistryPath = path.join(root, "docs", "api-registry.web.json");
   const registry = existsSync(apiRegistryPath)
     ? (JSON.parse(readFileSync(apiRegistryPath, "utf8")) as { routes?: Array<{ route: string }> })

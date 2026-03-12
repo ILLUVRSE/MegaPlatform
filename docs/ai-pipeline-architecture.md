@@ -10,7 +10,7 @@ AI Studio uses a Redis-backed queue to execute asynchronous jobs for Shorts and 
 - Retries: 3 attempts with exponential backoff
 
 ## Storage Flow
-1. Client uploads images via `/api/storage/upload` (data URL → S3).
+1. Client requests a signed upload URL via `/api/uploads/sign`, uploads directly to S3-compatible storage, and finalizes the asset via `/api/uploads/finalize`.
 2. Worker uploads rendered assets to S3-compatible storage.
 3. `StudioAsset` records reference every stored output.
 

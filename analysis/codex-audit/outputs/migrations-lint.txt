@@ -1,0 +1,5 @@
+
+> illuvrse-platform@ db:migrations:lint /home/ryan/ILLUVRSE
+> node scripts/check-db-migrations.mjs
+
+[db:migrations:lint] Checked 35 migration directories.

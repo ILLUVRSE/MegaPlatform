@@ -1,0 +1,84 @@
+diff --git a/apps/web/app/api/admin/distribution/actions/route.ts b/apps/web/app/api/admin/distribution/actions/route.ts
+index 9324c72..7a9230f 100644
+--- a/apps/web/app/api/admin/distribution/actions/route.ts
++++ b/apps/web/app/api/admin/distribution/actions/route.ts
+@@ -1,9 +1,8 @@
+ export const dynamic = "force-dynamic";
+ 
+ import { NextResponse } from "next/server";
+-import { Prisma } from "@prisma/client";
+ import { z } from "zod";
+-import { prisma } from "@illuvrse/db";
++import { Prisma, prisma } from "@illuvrse/db";
+ import { requireAdmin } from "@/lib/rbac";
+ import { planDistributionActions } from "@/lib/distributionOrchestrator";
+ 
+diff --git a/apps/web/app/api/studio/projects/[id]/publish/route.ts b/apps/web/app/api/studio/projects/[id]/publish/route.ts
+index d00978c..0f5a4e3 100644
+--- a/apps/web/app/api/studio/projects/[id]/publish/route.ts
++++ b/apps/web/app/api/studio/projects/[id]/publish/route.ts
+@@ -6,9 +6,8 @@ export const dynamic = "force-dynamic";
+  * Guard: authenticated owner/admin.
+  */
+ import { NextResponse } from "next/server";
+-import { Prisma } from "@prisma/client";
+ import { z } from "zod";
+-import { prisma } from "@illuvrse/db";
++import { Prisma, prisma } from "@illuvrse/db";
+ import { AuthzError, requireSession } from "@/lib/authz";
+ import { ensureCreatorProfile } from "@/lib/creatorIdentity";
+ import { evaluateContentQa } from "@/lib/contentQa";
+diff --git a/apps/web/app/api/studio/templates/[id]/versions/route.ts b/apps/web/app/api/studio/templates/[id]/versions/route.ts
+index a945400..f631d44 100644
+--- a/apps/web/app/api/studio/templates/[id]/versions/route.ts
++++ b/apps/web/app/api/studio/templates/[id]/versions/route.ts
+@@ -1,9 +1,8 @@
+ export const dynamic = "force-dynamic";
+ 
+ import { NextResponse } from "next/server";
+-import { Prisma } from "@prisma/client";
+ import { z } from "zod";
+-import { prisma } from "@illuvrse/db";
++import { Prisma, prisma } from "@illuvrse/db";
+ import { AuthzError, requireSession } from "@/lib/authz";
+ import { ensureCreatorProfile } from "@/lib/creatorIdentity";
+ 
+diff --git a/apps/web/app/api/studio/templates/route.ts b/apps/web/app/api/studio/templates/route.ts
+index 1e4deea..fe6a596 100644
+--- a/apps/web/app/api/studio/templates/route.ts
++++ b/apps/web/app/api/studio/templates/route.ts
+@@ -1,9 +1,8 @@
+ export const dynamic = "force-dynamic";
+ 
+ import { NextResponse } from "next/server";
+-import { Prisma } from "@prisma/client";
+ import { z } from "zod";
+-import { prisma } from "@illuvrse/db";
++import { Prisma, prisma } from "@illuvrse/db";
+ import { AuthzError, requireSession } from "@/lib/authz";
+ import { ensureCreatorProfile } from "@/lib/creatorIdentity";
+ 
+diff --git a/apps/web/lib/creatorProgression.ts b/apps/web/lib/creatorProgression.ts
+index d146d6e..d422324 100644
+--- a/apps/web/lib/creatorProgression.ts
++++ b/apps/web/lib/creatorProgression.ts
+@@ -1,5 +1,4 @@
+-import { Prisma } from "@prisma/client";
+-import { prisma } from "@illuvrse/db";
++import { Prisma, prisma } from "@illuvrse/db";
+ 
+ const XP_PER_LEVEL = 500;
+ 
+diff --git a/package.json b/package.json
+index 89514b0..07647b2 100644
+--- a/package.json
++++ b/package.json
+@@ -11,7 +11,7 @@
+     "start": "pnpm --filter @illuvrse/web start",
+     "lint": "pnpm --filter @illuvrse/web lint",
+     "typecheck": "pnpm --filter @illuvrse/web lint",
+-    "test": "pnpm --filter @illuvrse/web test",
++    "test": "node scripts/run-root-test.mjs",
+     "test:platform": "pnpm --filter @illuvrse/web --filter @illuvrse/news --filter @illuvrse/gamegrid --filter @illuvrse/pixelbrawl --filter @illuvrse/art-atlas test",
+     "test:e2e": "pnpm --filter @illuvrse/web test:e2e",
+     "test:e2e:smoke": "pnpm --filter @illuvrse/web exec playwright test -c tests/e2e/playwright.config.ts tests/e2e/homepage.spec.ts",

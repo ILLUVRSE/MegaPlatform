@@ -1,9 +1,9 @@
 export const dynamic = "force-dynamic";
 
 /**
- * Studio asset creation API (upload stub).
+ * Studio asset creation API for generated/render outputs.
  * POST: { kind, url, metaJson? } -> { asset }
- * Guard: none; MVP uses placeholder URLs.
+ * Guard: authenticated owner/admin. Upload assets must use /api/uploads/finalize.
  */
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -11,8 +11,10 @@ import { prisma } from "@illuvrse/db";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
 
+const DIRECT_ASSET_KINDS = ["SHORT_MP4", "MEME_PNG", "THUMBNAIL", "TEXT", "HLS_MANIFEST"] as const;
+
 const assetSchema = z.object({
-  kind: z.enum(["SHORT_MP4", "MEME_PNG", "IMAGE_UPLOAD", "THUMBNAIL", "TEXT"]),
+  kind: z.enum(DIRECT_ASSET_KINDS),
   url: z.string().min(4),
   metaJson: z.record(z.any()).optional()
 });
@@ -61,7 +63,11 @@ export async function POST(
       kind: parsed.data.kind,
       url: parsed.data.url,
       temporary: true,
-      ...(parsed.data.metaJson ? { metaJson: parsed.data.metaJson } : {})
+      metaJson: {
+        lifecycleState: "draft_asset",
+        projectId: project.id,
+        ...(parsed.data.metaJson ?? {})
+      }
     }
   });
 

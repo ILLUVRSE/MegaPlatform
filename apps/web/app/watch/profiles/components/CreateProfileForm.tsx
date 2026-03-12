@@ -23,7 +23,10 @@ export default function CreateProfileForm() {
       body: JSON.stringify({ name, avatarUrl, isKids })
     });
     if (!response.ok) {
-      setStatus("Unable to create profile.");
+      const payload = (await response.json().catch(() => ({ error: "Unable to create profile." }))) as {
+        error?: string;
+      };
+      setStatus(payload.error ?? "Unable to create profile.");
       return;
     }
     const payload = (await response.json()) as { profile: { id: string } };

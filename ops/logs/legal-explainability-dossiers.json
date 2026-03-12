@@ -7,6 +7,78 @@
         "ev-1"
       ],
       "outcome": "blocked",
+      "generatedAt": "2026-03-11T18:07:06.668Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T16:23:58.840Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T16:23:36.077Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T16:22:17.110Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T16:03:40.437Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T16:03:10.419Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T16:02:00.217Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
+      "generatedAt": "2026-03-11T15:57:33.202Z"
+    },
+    {
+      "decisionId": "d-179",
+      "policyRationale": "policy threshold met",
+      "evidenceLinks": [
+        "ev-1"
+      ],
+      "outcome": "blocked",
       "generatedAt": "2026-03-11T14:30:19.696Z"
     },
     {

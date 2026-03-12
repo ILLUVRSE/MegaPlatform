@@ -6,6 +6,70 @@
       "controlMapping": [
         "audit_log"
       ],
+      "ingestedAt": "2026-03-11T18:07:07.493Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T16:23:59.535Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T16:23:37.109Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T16:22:18.023Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T16:03:41.410Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T16:03:11.619Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T16:02:01.534Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
+      "ingestedAt": "2026-03-11T15:57:34.072Z"
+    },
+    {
+      "regulation": "DMA",
+      "changeSummary": "new transparency rule",
+      "controlMapping": [
+        "audit_log"
+      ],
       "ingestedAt": "2026-03-11T14:30:21.111Z"
     },
     {

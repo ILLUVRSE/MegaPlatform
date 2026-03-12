@@ -1,0 +1,4 @@
+shipcheck:quick PASS
+web lint PASS
+db migrations:lint PASS
+web unit PASS

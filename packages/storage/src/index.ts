@@ -59,7 +59,7 @@ function getClient() {
 export async function getSignedUploadUrl(payload: {
   key: string;
   contentType: string;
-  contentLength: number;
+  contentLength?: number;
   expiresInSec?: number;
 }) {
   const client = getClient();
@@ -71,9 +71,13 @@ export async function getSignedUploadUrl(payload: {
     Bucket: S3_BUCKET,
     Key: key,
     ContentType: contentType,
-    ContentLength: contentLength
+    ...(typeof contentLength === "number" ? { ContentLength: contentLength } : {})
   });
-  return getSignedUrl(client, command, { expiresIn: ttl });
+  return {
+    uploadUrl: await getSignedUrl(client, command, { expiresIn: ttl }),
+    signedAt: new Date().toISOString(),
+    expiresInSec: ttl
+  };
 }
 
 export async function uploadBuffer(key: string, buffer: Buffer, contentType: string) {

@@ -6,6 +6,8 @@ import { assertAuthSecurityConfig, isDevCredentialsAuthAllowed } from "@/lib/env
 
 assertAuthSecurityConfig();
 
+export const ensureAuthConfig = assertAuthSecurityConfig;
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {

@@ -1,0 +1,8 @@
+
+> illuvrse-platform@ typecheck /home/ryan/ILLUVRSE
+> pnpm --filter @illuvrse/web lint
+
+
+> @illuvrse/web@0.1.0 lint /home/ryan/ILLUVRSE/apps/web
+> tsc --noEmit
+

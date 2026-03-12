@@ -21,48 +21,86 @@ export default async function PartyLandingPage({
   });
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-      <section className="party-card space-y-4">
+    <div className="space-y-6">
+      <section className="platform-panel-dark">
         {context ? (
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-illuvrse-muted">{context.label}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200/62">{context.label}</p>
         ) : null}
-        <h2 className="text-3xl font-semibold">Launch a synchronized watch party in seconds.</h2>
-        <p className="text-illuvrse-muted">
-          Party Core lets hosts spin up seat-based lobbies with real-time presence and
-          shared playback control. Invite friends, lock seats, and keep playback in sync
-          while LiveKit support is wired in.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/party/create"
-            className="rounded-full bg-illuvrse-primary px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white"
-          >
-            Create Party
-          </Link>
-          <Link
-            href="/party/minigames"
-            className="rounded-full border border-illuvrse-border px-5 py-2 text-xs font-semibold uppercase tracking-widest"
-          >
-            Party Minigames
-          </Link>
-          <Link
-            href={buildPartyToStudioHref(typeof params.partyCode === "string" ? params.partyCode : undefined)}
-            className="rounded-full border border-amber-300/60 bg-amber-100 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-amber-900"
-          >
-            Continue in Studio
-          </Link>
-          <JoinPartyForm />
+        <div className="mt-2 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="space-y-4">
+            <h1 className="text-4xl font-semibold text-white">Enter the room, not a workflow.</h1>
+            <p className="max-w-2xl text-sm text-white/58">
+              Party is the social layer of ILLUVRSE: shared playback, seats, live chat, and quick pivots into minigames or studio remixes.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/party/create" className="rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-widest text-slate-950">
+                Create party
+              </Link>
+              <Link href="/party/minigames" className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-white">
+                Party minigames
+              </Link>
+              <Link
+                href={buildPartyToStudioHref(typeof params.partyCode === "string" ? params.partyCode : undefined)}
+                className="rounded-full border border-amber-300/40 bg-amber-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-amber-100"
+              >
+                Continue in studio
+              </Link>
+              <JoinPartyForm />
+            </div>
+          </div>
+
+          <div className="rounded-[28px] border border-white/10 bg-white/5 p-4">
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Room preview</p>
+            <div className="mt-4 rounded-[24px] border border-white/10 bg-black/40 p-4">
+              <p className="text-sm font-semibold text-white">Nebula Nights</p>
+              <div className="mt-4 h-44 rounded-[20px] bg-[linear-gradient(135deg,rgba(34,211,238,0.18),rgba(15,23,42,0.34),rgba(217,70,239,0.16))]" />
+              <div className="mt-4 flex gap-3">
+                {["Ryan", "Alex", "Jamie", "Seat"].map((seat) => (
+                  <div key={seat} className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-3 py-4 text-center text-xs font-semibold uppercase tracking-[0.24em] text-white/68">
+                    {seat}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <section className="party-card space-y-4">
-        <h3 className="text-lg font-semibold">What is included</h3>
-        <ul className="space-y-3 text-sm text-illuvrse-muted">
-          <li>Seat grid with reservation TTL, lock states, and visual presence.</li>
-          <li>Leader-based playback sync with drift correction every 2 seconds.</li>
-          <li>Redis-backed world-state and SSE updates for seat & playback changes.</li>
-          <li>LiveKit-ready UI controls with stubbed hooks for future wiring.</li>
-        </ul>
-      </section>
+
+      <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <section className="platform-section">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/45">Social layout</p>
+          <div className="grid gap-4 lg:grid-cols-[1fr_0.72fr]">
+            <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+              <h2 className="text-xl font-semibold text-white">Chat</h2>
+              <div className="mt-4 space-y-3 text-sm text-white/72">
+                <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-3">Ryan: this is crazy</div>
+                <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-3">Alex: queue the next one</div>
+                <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-3">Jamie: clip this for shorts</div>
+              </div>
+            </div>
+            <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+              <h2 className="text-xl font-semibold text-white">Participants</h2>
+              <div className="mt-4 space-y-3">
+                {["Ryan", "Alex", "Jamie", "Open Seat"].map((name) => (
+                  <div key={name} className="rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-sm text-white/72">
+                    {name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="platform-section">
+          <h2 className="text-xl font-semibold text-white">What is included</h2>
+          <ul className="space-y-3 text-sm text-white/62">
+            <li>Seat grid with reservation TTL, lock states, and visual presence.</li>
+            <li>Leader-based playback sync with drift correction every 2 seconds.</li>
+            <li>Redis-backed world-state and SSE updates for seat and playback changes.</li>
+            <li>Voice, chat, invites, and playlist hooks wired for room-based behavior.</li>
+          </ul>
+        </section>
+      </div>
     </div>
   );
 }

@@ -21,7 +21,7 @@ describe("games telemetry api", () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          event: "creator_publish",
+          event: "game.publish",
           surface: "games_create",
           gameId: "game-1",
           templateId: "BREAKOUT_MICRO"

@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "timestamp": "2026-03-11T00:00:00.000Z",
+  "runbook": "docs/ops_brain/runbooks/incident-response.md",
+  "sloSummaries": [
+    {
+      "id": "studio-failure-rate-24h",
+      "name": "Studio Failure Rate (24h)",
+      "actual": 0.01,
+      "target": 0.08,
+      "operator": "<=",
+      "unit": "ratio",
+      "severity": "critical",
+      "pass": true
+    },
+    {
+      "id": "live-channel-health",
+      "name": "Live Channel Healthy Ratio",
+      "actual": 0.99,
+      "target": 0.95,
+      "operator": ">=",
+      "unit": "ratio",
+      "severity": "critical",
+      "pass": true
+    },
+    {
+      "id": "ops-stale-tasks",
+      "name": "Ops Stale In-Progress Tasks",
+      "actual": 1,
+      "target": 2,
+      "operator": "<=",
+      "unit": "count",
+      "severity": "warning",
+      "pass": true
+    }
+  ],
+  "serviceHealth": [],
+  "serviceHealthSummary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "unhealthy": 0,
+    "degraded": 0
+  }
+}

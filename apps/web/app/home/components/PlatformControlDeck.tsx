@@ -65,8 +65,12 @@ export default function PlatformControlDeck({ overview }: DeckProps) {
           Current module: <span className="font-semibold capitalize">{overview.sessionGraph.currentModule}</span>
           {overview.sessionGraph.activeTask ? ` · ${overview.sessionGraph.activeTask}` : ""}
         </p>
-        {lastTrail.map((entry) => (
-          <Link key={`${entry.module}-${entry.at}`} href={entry.href} className="block rounded-2xl border border-illuvrse-border px-4 py-3">
+        {lastTrail.map((entry, index) => (
+          <Link
+            key={`${entry.module}-${entry.at}-${entry.href}-${index}`}
+            href={entry.href}
+            className="block rounded-2xl border border-illuvrse-border px-4 py-3"
+          >
             <p className={TYPOGRAPHY_CLASS.eyebrow}>{entry.module}</p>
             <p className={TYPOGRAPHY_CLASS.body}>{entry.action ?? "Continue previous activity"}</p>
           </Link>

@@ -10,6 +10,7 @@ import { prisma } from "@illuvrse/db";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
 import { createLiveKitAccessToken, getLiveKitServerConfig, isLiveKitConfigured } from "@/lib/livekitToken";
+import { insertPlatformEvent, PLATFORM_EVENT_NAMES } from "@/lib/platformEvents";
 
 export async function POST(
   request: Request,
@@ -75,6 +76,13 @@ export async function POST(
     identity,
     roomName,
     metadata: JSON.stringify({ code: party.code, displayName, isHost })
+  });
+
+  await insertPlatformEvent({
+    event: PLATFORM_EVENT_NAMES.partyVoiceTokenIssued,
+    module: `Party:${party.code}`,
+    href: `/party/${party.code}`,
+    surface: "party_voice"
   });
 
   return NextResponse.json({

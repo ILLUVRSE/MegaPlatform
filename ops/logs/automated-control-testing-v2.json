@@ -9,6 +9,94 @@
         "retention_control"
       ],
       "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T18:07:06.182Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T16:23:58.366Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T16:23:35.579Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T16:22:16.557Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T16:03:39.840Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T16:03:09.797Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T16:01:59.310Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
+      "generatedAt": "2026-03-11T15:57:32.620Z"
+    },
+    {
+      "pass": [
+        "access_control",
+        "audit_logging"
+      ],
+      "fail": [
+        "retention_control"
+      ],
+      "passRate": 0.6666666666666666,
       "generatedAt": "2026-03-11T14:30:19.079Z"
     },
     {

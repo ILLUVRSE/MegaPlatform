@@ -441,8 +441,16 @@ model AgentJob {
 }
 
 model StudioAsset {
-  id            String          @id @default(cuid())
+  id            String          @id @default(uuid())
   projectId     String
+  uploadId      String          @unique @default(uuid())
+  jobId         String?
+  s3Key         String?
+  checksum      String?
+  size          Int?
+  status        String          @default("pending")
+  costEstimate  Decimal?        @db.Decimal(12, 6)
+  ttlAt         DateTime?
   kind          StudioAssetKind
   url           String
   storageKey    String?
@@ -455,10 +463,12 @@ model StudioAsset {
   metaJson      Json?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  finalizedAt   DateTime?
   project       StudioProject   @relation(fields: [projectId], references: [id])
   lineage       AssetLineage?
 
   @@index([kind, createdAt])
+  @@index([projectId, status])
   @@index([temporary, createdAt])
 }
 

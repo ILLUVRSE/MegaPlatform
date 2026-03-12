@@ -36,6 +36,10 @@ export function assertAuthSecurityConfig() {
     throw new Error("NEXTAUTH_SECRET must be set to a strong value in production.");
   }
 
+  if (env.ALLOW_DEV_CREDENTIALS_AUTH === "true") {
+    throw new Error("ALLOW_DEV_CREDENTIALS_AUTH must be disabled in production.");
+  }
+
   if (env.RATE_LIMIT_STORE !== "memory" && !env.REDIS_URL) {
     throw new Error("REDIS_URL must be set for distributed rate limiting in production.");
   }

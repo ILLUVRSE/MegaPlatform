@@ -1,0 +1,28 @@
+diff --git a/.env.example b/.env.example
+index 4bb30fe..0210fa2 100644
+--- a/.env.example
++++ b/.env.example
+@@ -10,7 +10,7 @@ S3_FORCE_PATH_STYLE="true"
+ S3_SIGNED_UPLOAD_TTL_SEC="300"
+ NEXTAUTH_SECRET="changeme"
+ NEXTAUTH_URL="http://localhost:3000"
+-ALLOW_DEV_CREDENTIALS_AUTH="true"
++ALLOW_DEV_CREDENTIALS_AUTH="false"
+ NEXT_PUBLIC_LIVEKIT_URL="https://livekit.invalid"
+ LIVEKIT_API_KEY="test"
+ LIVEKIT_API_SECRET="replace-with-livekit-secret"
+diff --git a/apps/web/lib/env.ts b/apps/web/lib/env.ts
+index 49bc4d5..d9428f5 100644
+--- a/apps/web/lib/env.ts
++++ b/apps/web/lib/env.ts
+@@ -36,6 +36,10 @@ export function assertAuthSecurityConfig() {
+     throw new Error("NEXTAUTH_SECRET must be set to a strong value in production.");
+   }
+ 
++  if (env.ALLOW_DEV_CREDENTIALS_AUTH === "true") {
++    throw new Error("ALLOW_DEV_CREDENTIALS_AUTH must be disabled in production.");
++  }
++
+   if (env.RATE_LIMIT_STORE !== "memory" && !env.REDIS_URL) {
+     throw new Error("REDIS_URL must be set for distributed rate limiting in production.");
+   }

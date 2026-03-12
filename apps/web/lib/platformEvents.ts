@@ -1,40 +1,20 @@
 import { prisma } from "@illuvrse/db";
 import { z } from "zod";
+import {
+  normalizeTelemetryEventName,
+  PLATFORM_EVENT_NAMES,
+  PLATFORM_EVENT_SURFACES
+} from "@/lib/platformEventTaxonomy";
 
-export const PLATFORM_EVENT_NAMES = {
-  navClick: "nav_click",
-  moduleOpen: "module_open",
-  moduleOpenDirect: "module_open_direct",
-  uxHesitation: "ux_hesitation",
-  uxRageClick: "ux_rage_click",
-  uxDropoff: "ux_dropoff",
-  gamesCatalogView: "catalog_view",
-  gamesOpen: "game_open",
-  gamesOpenDirect: "game_open_direct",
-  gamesEmbedLoaded: "embed_loaded",
-  gamesCreatorPublish: "creator_publish"
-} as const;
-
-export const PLATFORM_EVENT_SURFACES = {
-  headerDesktop: "header_desktop",
-  headerMobile: "header_mobile",
-  homeHub: "home_hub",
-  appsDirectory: "apps_directory",
-  embeddedApp: "embedded_app",
-  onboardingJourney: "onboarding_journey",
-  homeWall: "home_wall",
-  gamesHome: "games_home",
-  gamesCatalog: "games_catalog",
-  gamesDetail: "games_detail",
-  gamesEmbed: "games_embed",
-  gamesCreate: "games_create"
-} as const;
+export { normalizeTelemetryEventName, PLATFORM_EVENT_NAMES, PLATFORM_EVENT_SURFACES } from "@/lib/platformEventTaxonomy";
 
 const platformAppEventSchema = z.object({
   event: z.enum([
+    PLATFORM_EVENT_NAMES.platformPageLoad,
     PLATFORM_EVENT_NAMES.navClick,
     PLATFORM_EVENT_NAMES.moduleOpen,
     PLATFORM_EVENT_NAMES.moduleOpenDirect,
+    PLATFORM_EVENT_NAMES.embedInteraction,
     PLATFORM_EVENT_NAMES.uxHesitation,
     PLATFORM_EVENT_NAMES.uxRageClick,
     PLATFORM_EVENT_NAMES.uxDropoff
@@ -47,6 +27,7 @@ const platformAppEventSchema = z.object({
     PLATFORM_EVENT_SURFACES.homeHub,
     PLATFORM_EVENT_SURFACES.appsDirectory,
     PLATFORM_EVENT_SURFACES.embeddedApp,
+    PLATFORM_EVENT_SURFACES.platformShell,
     PLATFORM_EVENT_SURFACES.onboardingJourney,
     PLATFORM_EVENT_SURFACES.homeWall
   ]),
@@ -55,6 +36,11 @@ const platformAppEventSchema = z.object({
 
 const gamesEventSchema = z.object({
   event: z.enum([
+    "catalog_view",
+    "game_open",
+    "game_open_direct",
+    "embed_loaded",
+    "creator_publish",
     PLATFORM_EVENT_NAMES.gamesCatalogView,
     PLATFORM_EVENT_NAMES.gamesOpen,
     PLATFORM_EVENT_NAMES.gamesOpenDirect,
@@ -108,6 +94,6 @@ export async function insertPlatformEvent(input: PlatformEventInsert) {
   const parsed = platformEventInsertSchema.parse(input);
   await prisma.$executeRaw`
     INSERT INTO "PlatformEvent" ("id", "event", "module", "href", "surface", "createdAt")
-    VALUES (${crypto.randomUUID()}, ${parsed.event}, ${parsed.module}, ${parsed.href}, ${parsed.surface}, NOW())
+    VALUES (${crypto.randomUUID()}, ${normalizeTelemetryEventName(parsed.event)}, ${parsed.module}, ${parsed.href}, ${parsed.surface}, NOW())
   `;
 }

@@ -9,7 +9,12 @@ const SESSION_PROTECTED_PATH_PREFIXES = [
   "/api/studio",
   "/api/uploads"
 ] as const;
-const PROFILE_EXEMPT_PATHS = ["/watch/profiles", "/watch/profiles/new", "/watch/movies"] as const;
+const PROFILE_EXEMPT_PATHS = [
+  "/watch/profiles",
+  "/watch/profiles/new",
+  "/watch/movies",
+  "/api/watch/profiles"
+] as const;
 
 type TokenLike = { role?: unknown; permissions?: unknown; disabled?: unknown } | null;
 

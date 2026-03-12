@@ -6,9 +6,8 @@ export const dynamic = "force-dynamic";
  * Guard: authenticated owner/admin.
  */
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { prisma } from "@illuvrse/db";
+import { Prisma, prisma } from "@illuvrse/db";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { ensureCreatorProfile } from "@/lib/creatorIdentity";
 import { evaluateContentQa } from "@/lib/contentQa";
@@ -159,6 +158,11 @@ export async function POST(
             temporary: false,
             metaJson: {
               ...meta,
+              lifecycleState: "published",
+              projectId: project.id,
+              publishedAt: new Date().toISOString(),
+              publishedById: principal.userId,
+              publishedPostId: post.id,
               temporary: false
             } as Prisma.InputJsonValue
           }

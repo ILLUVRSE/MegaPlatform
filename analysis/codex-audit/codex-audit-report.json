@@ -1,0 +1,225 @@
+[
+  {
+    "id": "AUDIT-P0-001",
+    "title": "Restore shipcheck baseline reliability",
+    "description": "Fix root quality-gate reproducibility by routing Prisma imports through @illuvrse/db and normalizing the root test reporter path used by the audit commands.",
+    "phase": 1,
+    "vision_anchor": "Platform hub (Roku)",
+    "impact": "Unblocks lint, root test execution, and shipcheck:quick from a clean audit path.",
+    "estimated_size": "M",
+    "priority": "P0",
+    "blocking": true,
+    "commands_to_reproduce": [
+      "pnpm -w lint",
+      "pnpm -w test --reporter=spec",
+      "pnpm shipcheck:quick"
+    ],
+    "proposed_changes": [
+      "Update direct Prisma type imports in apps/web to use @illuvrse/db",
+      "Add scripts/run-root-test.mjs and route root test through it"
+    ],
+    "files_to_edit": [
+      "package.json",
+      "scripts/run-root-test.mjs",
+      "apps/web/app/api/admin/distribution/actions/route.ts",
+      "apps/web/app/api/studio/projects/[id]/publish/route.ts",
+      "apps/web/app/api/studio/templates/[id]/versions/route.ts",
+      "apps/web/app/api/studio/templates/route.ts",
+      "apps/web/lib/creatorProgression.ts"
+    ],
+    "tests_to_add": [
+      "Validate with pnpm -w lint",
+      "Validate with pnpm -w test --reporter=spec",
+      "Validate with pnpm shipcheck:quick"
+    ]
+  },
+  {
+    "id": "AUDIT-P0-002",
+    "title": "Enforce production auth gating",
+    "description": "Block ALLOW_DEV_CREDENTIALS_AUTH from being enabled in production and make the root env template default safe.",
+    "phase": 2,
+    "vision_anchor": "Platform hub (Roku)",
+    "impact": "Closes a production auth bypass path.",
+    "estimated_size": "S",
+    "priority": "P0",
+    "blocking": true,
+    "commands_to_reproduce": [
+      "NODE_ENV=production NEXTAUTH_URL=https://illuvrse.example NEXTAUTH_SECRET=0123456789abcdef0123456789abcdef REDIS_URL=redis://localhost:6379 ALLOW_DEV_CREDENTIALS_AUTH=true pnpm --filter @illuvrse/web exec vitest run --config tests/vitest.config.ts tests/unit/auth-config.test.ts"
+    ],
+    "proposed_changes": [
+      "Throw from assertAuthSecurityConfig when ALLOW_DEV_CREDENTIALS_AUTH=true in production",
+      "Set ALLOW_DEV_CREDENTIALS_AUTH=false in .env.example",
+      "Add unit coverage for reject and accept paths"
+    ],
+    "files_to_edit": [
+      "apps/web/lib/env.ts",
+      ".env.example",
+      "apps/web/tests/unit/auth-config.test.ts"
+    ],
+    "tests_to_add": [
+      "apps/web/tests/unit/auth-config.test.ts"
+    ]
+  },
+  {
+    "id": "AUDIT-P0-003",
+    "title": "Repair lockfile truth for frozen installs",
+    "description": "Refresh the root lockfile so pnpm install --frozen-lockfile succeeds against current workspace manifests.",
+    "phase": 1,
+    "vision_anchor": "Platform hub (Roku)",
+    "impact": "Restores deterministic bootstrap and CI parity.",
+    "estimated_size": "M",
+    "priority": "P0",
+    "blocking": true,
+    "commands_to_reproduce": [
+      "pnpm install --frozen-lockfile"
+    ],
+    "proposed_changes": [
+      "Regenerate pnpm-lock.yaml",
+      "Verify packages/media-corp-agents/package.json is fully reflected in the lockfile"
+    ],
+    "files_to_edit": [
+      "pnpm-lock.yaml"
+    ],
+    "tests_to_add": [
+      "CI frozen-install check",
+      "pnpm shipcheck:quick after lockfile refresh"
+    ]
+  },
+  {
+    "id": "AUDIT-P1-004",
+    "title": "Tighten migration safety workflow",
+    "description": "Move beyond inline destructive markers by requiring explicit non-dev approval artifacts while keeping migration policy docs accurate.",
+    "phase": 3,
+    "vision_anchor": "Platform hub (Roku)",
+    "impact": "Reduces destructive migration risk in promoted environments.",
+    "estimated_size": "M",
+    "priority": "P1",
+    "blocking": false,
+    "commands_to_reproduce": [
+      "pnpm db:migrations:lint",
+      "sed -n '1,220p' scripts/check-db-migrations.mjs"
+    ],
+    "proposed_changes": [
+      "Add stricter destructive migration approval workflow",
+      "Keep packages/db/MIGRATIONS.md aligned with enforcement"
+    ],
+    "files_to_edit": [
+      "scripts/check-db-migrations.mjs",
+      "packages/db/MIGRATIONS.md"
+    ],
+    "tests_to_add": [
+      "Reject destructive path without approval artifact",
+      "Accept destructive path with explicit approval artifact"
+    ]
+  },
+  {
+    "id": "AUDIT-P1-005",
+    "title": "Expand telemetry and SLO coverage for watch/live/party",
+    "description": "Add typed persisted telemetry for watch, live, and party/voice flows so Phase 15 can evaluate the minimum SLO set needed for production.",
+    "phase": 15,
+    "vision_anchor": "Live (Twitch)",
+    "impact": "Makes production health measurable across core entertainment flows.",
+    "estimated_size": "L",
+    "priority": "P1",
+    "blocking": false,
+    "commands_to_reproduce": [
+      "sed -n '1,260p' apps/web/lib/platformEvents.ts",
+      "sed -n '1,220p' apps/web/app/api/platform/events/route.ts",
+      "sed -n '1,220p' apps/web/app/api/games/telemetry/route.ts"
+    ],
+    "proposed_changes": [
+      "Extend telemetry schemas with watch/live/party events",
+      "Persist those events to PlatformEvent",
+      "Bind them to ops/governance/slos.json and admin summary surfaces"
+    ],
+    "files_to_edit": [
+      "apps/web/lib/platformEvents.ts",
+      "apps/web/app/api/platform/events/route.ts",
+      "apps/web/app/api/admin/observability/summary/route.ts",
+      "ops/governance/slos.json"
+    ],
+    "tests_to_add": [
+      "Telemetry validation tests for watch/live/party",
+      "Admin observability summary tests"
+    ]
+  },
+  {
+    "id": "AUDIT-P1-006",
+    "title": "Make security scans runnable in local and CI flows",
+    "description": "Provision or document gitleaks and trivy so repo audits fail on findings, not on missing scanner binaries.",
+    "phase": 19,
+    "vision_anchor": "Platform hub (Roku)",
+    "impact": "Raises the floor on secrets and filesystem vulnerability detection.",
+    "estimated_size": "M",
+    "priority": "P1",
+    "blocking": false,
+    "commands_to_reproduce": [
+      "gitleaks detect --source . --report-path analysis/codex-audit/outputs/gitleaks.json",
+      "trivy fs --no-progress --output analysis/codex-audit/outputs/trivy.txt ."
+    ],
+    "proposed_changes": [
+      "Add documented install path or wrappers for gitleaks and trivy",
+      "Wire scanners into CI artifact outputs"
+    ],
+    "files_to_edit": [
+      "README.md",
+      ".github/workflows/*",
+      "analysis/codex-audit/README.md"
+    ],
+    "tests_to_add": [
+      "CI execution proof for gitleaks",
+      "CI execution proof for trivy"
+    ]
+  },
+  {
+    "id": "AUDIT-P1-007",
+    "title": "Extend release gates to satellite products",
+    "description": "Promote GameGrid and selected satellite apps into the root promotion path so the monorepo is tested as shipped, not only as the web shell.",
+    "phase": 14,
+    "vision_anchor": "UGC worlds (Roblox)",
+    "impact": "Improves confidence that platform releases reflect the real monorepo footprint.",
+    "estimated_size": "L",
+    "priority": "P1",
+    "blocking": false,
+    "commands_to_reproduce": [
+      "sed -n '1,240p' package.json",
+      "pnpm --filter @illuvrse/gamegrid test"
+    ],
+    "proposed_changes": [
+      "Add platform-wide build and test scripts with verified workspace filters",
+      "Document which apps block promotion"
+    ],
+    "files_to_edit": [
+      "package.json",
+      "docs/shipcheck.md",
+      "analysis/codex-audit/README.md"
+    ],
+    "tests_to_add": [
+      "Platform-wide CI gate execution"
+    ]
+  },
+  {
+    "id": "AUDIT-P1-008",
+    "title": "Add CODEOWNERS-backed backlog routing",
+    "description": "Add repo ownership metadata so automated issue/PR routing does not fall back to a single default reviewer for every task.",
+    "phase": 1,
+    "vision_anchor": "Platform hub (Roku)",
+    "impact": "Improves review quality and task routing across the monorepo.",
+    "estimated_size": "S",
+    "priority": "P1",
+    "blocking": false,
+    "commands_to_reproduce": [
+      "rg --files -g 'CODEOWNERS' -g '.github/**'"
+    ],
+    "proposed_changes": [
+      "Add a root CODEOWNERS file",
+      "Map apps/web, apps/gamegrid, packages/db, packages/storage, and ops ownership"
+    ],
+    "files_to_edit": [
+      "CODEOWNERS"
+    ],
+    "tests_to_add": [
+      "Ownership lint or manual review routing check"
+    ]
+  }
+]
