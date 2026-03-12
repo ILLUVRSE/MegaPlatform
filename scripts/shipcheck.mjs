@@ -14,6 +14,10 @@ const checks = [
   { name: "supply-chain", cmd: ["pnpm", ["security:supply-chain:check"]] },
   { name: "lint", cmd: ["pnpm", ["lint"]] },
   { name: "typecheck", cmd: ["pnpm", ["typecheck"]] },
+  {
+    name: "party-slo",
+    cmd: ["pnpm", ["--filter", "@illuvrse/web", "test", "--", "--run", "party-slo.test.ts"]]
+  },
   { name: "unit", cmd: ["pnpm", ["test"]] },
   ...(quick ? [] : [{ name: "e2e-smoke", cmd: ["pnpm", ["test:e2e:smoke"]] }])
 ];

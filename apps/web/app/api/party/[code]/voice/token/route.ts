@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * Party voice token API.
- * POST: -> { token, url, roomName, identity, expiresInSec }
+ * POST: -> token payload or graceful token-only fallback payload
  * Guard: authenticated participant/host only.
  */
 import { NextResponse } from "next/server";
@@ -11,6 +11,7 @@ import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
 import { createLiveKitAccessToken, getLiveKitServerConfig, isLiveKitConfigured } from "@/lib/livekitToken";
 import { insertPlatformEvent, PLATFORM_EVENT_NAMES } from "@/lib/platformEvents";
+import type { PartyVoiceTokenResponse } from "@/lib/partyVoice";
 
 export async function POST(
   request: Request,
@@ -29,16 +30,12 @@ export async function POST(
   const rateLimit = await checkRateLimit({
     key: `party:voice-token:${resolveClientKey(request, principal.userId)}`,
     windowMs: 60_000,
-    limit: 30
+    limit: 12
   });
   if (!rateLimit.ok) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
-  }
-
-  if (!isLiveKitConfigured()) {
     return NextResponse.json(
-      { error: "LiveKit is not configured on this deployment." },
-      { status: 503 }
+      { error: "Too many requests", retryAfterSec: rateLimit.retryAfterSec },
+      { status: 429 }
     );
   }
 
@@ -69,27 +66,49 @@ export async function POST(
   const identity = principal.userId;
   const displayName = participant?.displayName ?? (isHost ? "Host" : principal.name ?? "Guest");
   const roomName = `party-${party.code}`;
-  const { apiKey, apiSecret, url } = getLiveKitServerConfig();
-  const token = createLiveKitAccessToken({
-    apiKey,
-    apiSecret,
-    identity,
-    roomName,
-    metadata: JSON.stringify({ code: party.code, displayName, isHost })
-  });
+  if (!isLiveKitConfigured()) {
+    return NextResponse.json<PartyVoiceTokenResponse>({
+      mode: "token-only",
+      fallback: true,
+      reason: "livekit_not_configured",
+      roomName,
+      identity
+    });
+  }
 
-  await insertPlatformEvent({
-    event: PLATFORM_EVENT_NAMES.partyVoiceTokenIssued,
-    module: `Party:${party.code}`,
-    href: `/party/${party.code}`,
-    surface: "party_voice"
-  });
+  try {
+    const { apiKey, apiSecret, url } = getLiveKitServerConfig();
+    const token = createLiveKitAccessToken({
+      apiKey,
+      apiSecret,
+      identity,
+      roomName,
+      metadata: JSON.stringify({ code: party.code, displayName, isHost })
+    });
 
-  return NextResponse.json({
-    token: token.token,
-    url,
-    roomName,
-    identity,
-    expiresInSec: token.expiresInSec
-  });
+    await insertPlatformEvent({
+      event: PLATFORM_EVENT_NAMES.partyVoiceTokenIssued,
+      module: `Party:${party.code}`,
+      href: `/party/${party.code}`,
+      surface: "party_voice"
+    });
+
+    return NextResponse.json<PartyVoiceTokenResponse>({
+      mode: "token",
+      fallback: false,
+      token: token.token,
+      url,
+      roomName,
+      identity,
+      expiresInSec: token.expiresInSec
+    });
+  } catch {
+    return NextResponse.json<PartyVoiceTokenResponse>({
+      mode: "token-only",
+      fallback: true,
+      reason: "token_issue_failed",
+      roomName,
+      identity
+    });
+  }
 }

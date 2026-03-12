@@ -31,7 +31,7 @@ Party Core delivers seat-based lobbies, real-time presence, and leader-synced pl
   - Body: `{ action, leaderTime, playbackPositionMs, currentIndex, playbackState }`
   - Response: playback snapshot
 - `GET /api/party/[code]/events`
-  - SSE stream of `seat_update`, `playback_update`, and `presence_update` events.
+  - SSE stream of `snapshot`, `seat_update`, `playback_update`, `presence_update`, and `keepalive` events.
 - `GET /api/party/[code]/playlist`
   - Response: `{ items: [{ episodeId, order, episode: { title, assetUrl } }] }`
 - `PUT /api/party/[code]/playlist`
@@ -40,10 +40,12 @@ Party Core delivers seat-based lobbies, real-time presence, and leader-synced pl
   - Body: `{ shortPostId, position?: "append" | "next" }` (host-only)
 - `POST /api/party/[code]/presence/ping`
   - Body: none (participant/host heartbeat)
-  - Response: `{ ok, lastSeenAt }`
+  - Response: `{ ok, lastSeenAt, pingCount, lastHostHeartbeatAt }`
 - `POST /api/party/[code]/voice/token`
   - Body: none (participant/host only)
-  - Response: `{ token, url, roomName, identity, expiresInSec }`
+  - Response: token payload or graceful token-only fallback payload
+- `GET /api/admin/party/health`
+  - Response: presence SLO summary per party including heartbeat freshness and last host heartbeat
 - `GET /api/media/shows`
 - `GET /api/media/shows/[id]/seasons`
 - `GET /api/media/seasons/[id]/episodes`
@@ -68,6 +70,7 @@ The world-state helper lives in `packages/world-state` and is imported directly 
 Seat reservations expire after 30 seconds unless refreshed (clients refresh every 10 seconds while holding).
 
 Playlist changes publish `playlist_update` SSE events and clients refetch `/api/party/[code]/playlist`.
+Presence heartbeats update party-level heartbeat counters in Redis-backed world-state and emit `keepalive` plus host `snapshot` events for reconnect reconciliation.
 
 ## Playback Sync Algorithm (Leader Model)
 1. Host sends a heartbeat every 2 seconds with `{ leaderTime, playbackPositionMs }`.
@@ -109,7 +112,12 @@ pnpm test:e2e
 ```
 
 ## LiveKit Notes
-`apps/web/app/party/lib/livekit.ts` now requests server-issued tokens from `/api/party/[code]/voice/token`. If `livekit-client` is installed, it connects through the SDK; otherwise it runs token-only mode and surfaces status.
+`apps/web/app/party/lib/livekit.ts` now requests server-issued tokens from `/api/party/[code]/voice/token`. If `livekit-client` is installed, it connects through the SDK; otherwise it runs token-only mode and surfaces status. If the deployment cannot issue LiveKit credentials, the API returns a graceful token-only fallback instead of hard failing.
+
+## Reliability Controls
+- `PARTY_HEARTBEAT_TIMEOUT_MS` controls when presence heartbeats are considered stale on the server.
+- `NEXT_PUBLIC_PARTY_PRESENCE_PING_MS` controls the browser heartbeat cadence.
+- `NEXT_PUBLIC_PARTY_RECONNECT_BASE_MS`, `NEXT_PUBLIC_PARTY_RECONNECT_MAX_MS`, and `NEXT_PUBLIC_PARTY_RECONNECT_ATTEMPTS` control exponential SSE reconnect behavior.
 
 ## Permissions
 Playlist editing and playback controls are host-only and enforced server-side from the authenticated session.

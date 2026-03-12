@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * Party presence heartbeat API.
- * POST: -> { ok: true, lastSeenAt }
+ * POST: -> { ok: true, lastSeenAt, pingCount, lastHostHeartbeatAt }
  * Guard: authenticated participant/host.
  */
 import { NextResponse } from "next/server";
@@ -66,6 +66,11 @@ export async function POST(
     lastSeenAt: nowIso,
     seatIndex: current?.seatIndex ?? null
   };
+  state.heartbeat = {
+    lastSeenAt: nowIso,
+    lastHostHeartbeatAt: isHost ? nowIso : (state.heartbeat?.lastHostHeartbeatAt ?? null),
+    pingCount: (state.heartbeat?.pingCount ?? 0) + 1
+  };
   await setState(party.id, state);
   await publish(party.id, {
     type: "presence_update",
@@ -74,6 +79,25 @@ export async function POST(
     lastSeenAt: nowIso,
     status: "updated"
   });
+  await publish(party.id, {
+    type: "keepalive",
+    ts: nowIso,
+    lastSeenAt: state.heartbeat.lastSeenAt,
+    lastHostHeartbeatAt: state.heartbeat.lastHostHeartbeatAt,
+    pingCount: state.heartbeat.pingCount
+  });
+  if (isHost) {
+    await publish(party.id, {
+      type: "snapshot",
+      state,
+      reason: "heartbeat"
+    });
+  }
 
-  return NextResponse.json({ ok: true, lastSeenAt: nowIso });
+  return NextResponse.json({
+    ok: true,
+    lastSeenAt: nowIso,
+    pingCount: state.heartbeat.pingCount,
+    lastHostHeartbeatAt: state.heartbeat.lastHostHeartbeatAt
+  });
 }

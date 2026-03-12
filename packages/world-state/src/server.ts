@@ -39,11 +39,27 @@ export type PresenceUpdatePayload = {
   status: "joined" | "left" | "updated";
 };
 
+export type KeepalivePayload = {
+  type: "keepalive";
+  ts: string;
+  lastSeenAt?: string | null;
+  lastHostHeartbeatAt?: string | null;
+  pingCount: number;
+};
+
+export type SnapshotPayload = {
+  type: "snapshot";
+  state: PartyState;
+  reason: "initial" | "reconnect" | "heartbeat";
+};
+
 export type PartyEventPayload =
   | SeatUpdatePayload
   | PlaybackUpdatePayload
   | PlaylistUpdatePayload
-  | PresenceUpdatePayload;
+  | PresenceUpdatePayload
+  | KeepalivePayload
+  | SnapshotPayload;
 
 export type PartySeatSnapshot = {
   state: SeatState;
@@ -65,12 +81,19 @@ export type PartyPresenceSnapshot = {
   seatIndex?: number | null;
 };
 
+export type PartyHeartbeatSnapshot = {
+  lastSeenAt: string | null;
+  lastHostHeartbeatAt: string | null;
+  pingCount: number;
+};
+
 export type PartyState = {
   partyId: string;
   seatCount: number;
   seats: Record<string, PartySeatSnapshot>;
   playback: PartyPlaybackSnapshot;
   participants: Record<string, PartyPresenceSnapshot>;
+  heartbeat: PartyHeartbeatSnapshot;
   updatedAt: string;
 };
 
@@ -207,10 +230,20 @@ export async function getState(partyId: string, seatCount: number): Promise<Part
       playbackState: "idle"
     },
     participants: {},
+    heartbeat: {
+      lastSeenAt: null,
+      lastHostHeartbeatAt: null,
+      pingCount: 0
+    },
     updatedAt: new Date().toISOString()
   };
 
   state.seatCount = seatCount;
+  state.heartbeat = {
+    lastSeenAt: state.heartbeat?.lastSeenAt ?? null,
+    lastHostHeartbeatAt: state.heartbeat?.lastHostHeartbeatAt ?? null,
+    pingCount: state.heartbeat?.pingCount ?? 0
+  };
   await syncReservationState(redis, state);
   return state;
 }

@@ -80,6 +80,14 @@ export async function POST(
     joinedAt: state.participants[principal.userId]?.joinedAt ?? nowIso,
     lastSeenAt: nowIso
   };
+  state.heartbeat = {
+    lastSeenAt: state.heartbeat?.lastSeenAt ?? nowIso,
+    lastHostHeartbeatAt:
+      party.hostId === principal.userId
+        ? nowIso
+        : (state.heartbeat?.lastHostHeartbeatAt ?? null),
+    pingCount: state.heartbeat?.pingCount ?? 0
+  };
   await setState(party.id, state);
 
   await publish(party.id, {
@@ -88,6 +96,11 @@ export async function POST(
     displayName: parsed.data.displayName ?? null,
     lastSeenAt: nowIso,
     status: "joined"
+  });
+  await publish(party.id, {
+    type: "snapshot",
+    state,
+    reason: "reconnect"
   });
 
   return NextResponse.json({ status: "ok" });

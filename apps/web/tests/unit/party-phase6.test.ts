@@ -92,6 +92,7 @@ describe("party phase 6 hardening", () => {
       seats: {},
       playback: { currentIndex: 0, playbackState: "idle" },
       participants: {},
+      heartbeat: { lastSeenAt: null, lastHostHeartbeatAt: null, pingCount: 0 },
       updatedAt: new Date().toISOString()
     });
     isLiveKitConfiguredMock.mockReturnValue(false);
@@ -128,11 +129,14 @@ describe("party phase 6 hardening", () => {
     );
   });
 
-  it("returns 503 for voice token when livekit is not configured", async () => {
+  it("returns graceful fallback for voice token when livekit is not configured", async () => {
     isLiveKitConfiguredMock.mockReturnValueOnce(false);
     const request = new Request("http://localhost", { method: "POST" });
     const response = await voiceTokenPost(request, { params: Promise.resolve({ code: "ABC123" }) });
-    expect(response.status).toBe(503);
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(
+      expect.objectContaining({ mode: "token-only", fallback: true, reason: "livekit_not_configured" })
+    );
   });
 
   it("issues voice token and emits telemetry for authorized participants", async () => {
@@ -143,6 +147,7 @@ describe("party phase 6 hardening", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(
       expect.objectContaining({
+        mode: "token",
         token: "token-123",
         url: "wss://livekit.example",
         identity: "host-1",
