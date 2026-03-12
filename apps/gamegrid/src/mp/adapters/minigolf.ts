@@ -1,4 +1,6 @@
 import type { MpAdapter, MpAdapterInitContext } from '../mpAdapter';
+import { loadMinigolfCourse } from '../../games/minigolf/levels';
+import { simulateShotForServer } from '../../games/minigolf/serverSim';
 import {
   clamp,
   normalizePlayers,
@@ -10,6 +12,8 @@ import {
 } from './common';
 
 type MinigolfMode = 'turn-order' | 'async';
+
+const SERVER_VALIDATE_TOLERANCE = 8;
 
 type MinigolfInput =
   | {
@@ -86,6 +90,12 @@ function toShotPayload(input: MinigolfInput | null): Extract<MinigolfInput, { ty
   return input;
 }
 
+function distanceSq(ax: number, ay: number, bx: number, by: number): number {
+  const dx = ax - bx;
+  const dy = ay - by;
+  return dx * dx + dy * dy;
+}
+
 export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, MinigolfSnapshot, MinigolfEvent, MinigolfResult> {
   readonly isTurnBased = true;
 
@@ -115,6 +125,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
   private forceResync = false;
   private checksumEverySteps = 8;
   private stepCounter = 0;
+  private readonly course = loadMinigolfCourse();
 
   init(context: MpAdapterInitContext): void {
     this.role = context.role;
@@ -159,6 +170,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     const angle = readNumber(input.angle, Number.NaN);
     const endX = readNumber(input.endX, Number.NaN);
     const endY = readNumber(input.endY, Number.NaN);
+    const currentHole = this.course.holes[Math.max(0, Math.min(this.course.holes.length - 1, this.hole - 1))];
     if (!Number.isFinite(power) || !Number.isFinite(angle) || !Number.isFinite(endX) || !Number.isFinite(endY)) {
       this.forceResync = true;
       return;
@@ -170,8 +182,8 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
         playerIndex: byPayload ?? undefined,
         power: clamp(power, 0, 1),
         angle: clamp(angle, -Math.PI, Math.PI),
-        endX: clamp(endX, -480, 480),
-        endY: clamp(endY, -280, 280),
+        endX: clamp(endX, currentHole.bounds.x, currentHole.bounds.x + currentHole.bounds.width),
+        endY: clamp(endY, currentHole.bounds.y, currentHole.bounds.y + currentHole.bounds.height),
         expectedTurn: typeof input.expectedTurn === 'number' ? input.expectedTurn : undefined
       }
     });
@@ -282,12 +294,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     this.stepCounter += 1;
 
     if (this.forceResync) {
-      this.lastEventId += 1;
-      this.outEvents.push({
-        type: 'state_resync',
-        eventId: this.lastEventId,
-        snapshot: this.getSnapshot()
-      });
+      this.emitStateResync();
       this.forceResync = false;
       return this.outEvents;
     }
@@ -323,13 +330,42 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     const normalizedAngle = Number.isFinite(shot.angle) ? shot.angle : 0;
     const computedStrokes = clamp(shot.declaredStrokes ?? Math.max(1, Math.round((1 - normalizedPower) * 4) + 1), 1, 12);
     const penalty = clamp(shot.declaredPenalty ?? 0, 0, 5);
+    const currentHole = this.course.holes[Math.max(0, Math.min(this.course.holes.length - 1, this.hole - 1))];
+    const normalizedEndX = clamp(shot.endX, currentHole.bounds.x, currentHole.bounds.x + currentHole.bounds.width);
+    const normalizedEndY = clamp(shot.endY, currentHole.bounds.y, currentHole.bounds.y + currentHole.bounds.height);
+    const declaredOutOfBounds = normalizedEndX !== shot.endX || normalizedEndY !== shot.endY;
+    const serverSummary = simulateShotForServer(currentHole, { angle: normalizedAngle, power: normalizedPower });
+    const mismatchDistanceSq = distanceSq(serverSummary.finalX, serverSummary.finalY, normalizedEndX, normalizedEndY);
+
+    // TODO: tune this tolerance with telemetry after we have enough live mismatch samples.
+    if (
+      declaredOutOfBounds ||
+      serverSummary.reason === 'invalid' ||
+      serverSummary.reason === 'limit' ||
+      !Number.isFinite(mismatchDistanceSq) ||
+      mismatchDistanceSq > SERVER_VALIDATE_TOLERANCE * SERVER_VALIDATE_TOLERANCE
+    ) {
+      this.forceResync = true;
+      this.debugAdmin('server rejected minigolf shot', {
+        player: action.player,
+        hole: this.hole,
+        declaredEnd: { x: normalizedEndX, y: normalizedEndY },
+        serverFinal: { x: serverSummary.finalX, y: serverSummary.finalY },
+        declaredOutOfBounds,
+        reason: serverSummary.reason,
+        mismatchDistanceSq
+      });
+      this.emitStateResync();
+      this.forceResync = false;
+      return this.outEvents;
+    }
 
     this.strokes[action.player] = computedStrokes;
     this.penalties[action.player] = penalty;
     this.totals[action.player] += computedStrokes + penalty;
     this.ballEnd[action.player] = {
-      x: clamp(shot.endX + normalizedAngle * 12, -320, 320),
-      y: clamp(shot.endY + normalizedPower * 20, -180, 180)
+      x: serverSummary.finalX,
+      y: serverSummary.finalY
     };
     this.holePlayed[action.player] = true;
 
@@ -406,6 +442,19 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     hash = (hash * 31 + Math.round(this.ballEnd[1].x * 10)) | 0;
     hash = (hash * 31 + Math.round(this.ballEnd[1].y * 10)) | 0;
     return hash >>> 0;
+  }
+
+  private debugAdmin(message: string, details: Record<string, unknown>) {
+    console.debug(`[minigolf-mp][admin] ${message}`, details);
+  }
+
+  private emitStateResync() {
+    this.lastEventId += 1;
+    this.outEvents.push({
+      type: 'state_resync',
+      eventId: this.lastEventId,
+      snapshot: this.getSnapshot()
+    });
   }
 
   private reset() {

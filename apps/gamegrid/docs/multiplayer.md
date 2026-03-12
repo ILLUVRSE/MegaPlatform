@@ -67,6 +67,8 @@ Turn-based authoritative event log + reconciliation:
 - `alley-bowling-blitz`
 - `card-table` (`blackjack`, `higher-lower`, `31`, `5-card-draw`, `forehead-poker`, `solitaire`, `texas-holdem`)
 
+Minigolf now performs host-side deterministic shot replay before accepting `stroke_result`. If a client-declared endpoint drifts beyond tolerance or the host sees an invalid replay path, the adapter emits `state_resync` instead of accepting the shot. For checksum mismatch triage, use the minigolf replay runbook in [minigolf.md](/home/ryan/ILLUVRSE/apps/gamegrid/docs/minigolf.md).
+
 ## Ozark Fishing Multiplayer
 
 - Status: `FULL MP IMPLEMENTED (event-log host authority)`.
