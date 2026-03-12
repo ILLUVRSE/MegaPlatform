@@ -61,6 +61,31 @@ pnpm shipcheck
 
 Runs full shipcheck including e2e smoke.
 
+```bash
+pnpm api:registry:check
+```
+
+Regenerates `docs/api-registry.web.json` and fails if the committed registry is stale.
+
+## API registry CI wiring
+
+Maintain the API registry check in CI with the local script below instead of editing untracked workflow files in feature branches.
+
+Run locally:
+
+```bash
+node scripts/ci/check-api-registry.mjs
+```
+
+Add this step to `.github/workflows/ci.yml` after checkout, Node setup, and `pnpm install`:
+
+```yaml
+- name: Check API registry
+  run: node scripts/ci/check-api-registry.mjs
+```
+
+The script runs `pnpm api:registry:generate`, compares the generated output against the committed [`docs/api-registry.web.json`](/home/ryan/ILLUVRSE/docs/api-registry.web.json), restores the committed file contents after comparison, and exits non-zero when the registry diff has not been committed.
+
 ## Data services commonly needed locally
 
 - Postgres (platform data via Prisma)
