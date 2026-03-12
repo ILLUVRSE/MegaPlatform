@@ -294,9 +294,9 @@ export default function GameGridCreatePage() {
         setAutoFixChanges(data.changes as AutoFixChange[]);
       }
       void trackGameEvent({
-        event: "game.publish",
+        eventType: "game.publish",
         surface: "games_create",
-        gameId: data.game?.id,
+        gameId: data.game?.id ?? ensuredId,
         templateId: data.game?.templateId,
         href: data.game?.id ? `/games/user/${data.game.id}` : "/games/community"
       });
