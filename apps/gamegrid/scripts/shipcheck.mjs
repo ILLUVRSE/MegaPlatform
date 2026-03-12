@@ -203,6 +203,7 @@ function main() {
     'src/mp/throw-darts.integration.test.ts',
     'src/mp/minigolf.integration.test.ts',
     'src/mp/minigolf.replay.test.ts',
+    'src/mp/minigolf.hosting.test.ts',
     'src/mp/freethrow-frenzy.integration.test.ts',
     'src/mp/homerun-derby.integration.test.ts',
     'src/mp/pool.integration.test.ts',

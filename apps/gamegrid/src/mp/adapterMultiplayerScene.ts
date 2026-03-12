@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import type { GameRuntimeHooks } from '../game/modules';
 import { getMpAdapterDescriptor } from './adapters';
 import { createProtocolMessage } from './protocol';
-import { WebRtcDataTransport } from './transport';
+import { WebRtcDataTransport, type TransportPeerState } from './transport';
 import { triggerBlobDownload } from '../games/ozark-fishing/shareCard';
 import { renderTournamentPosterPng } from '../games/ozark-fishing/tournament/poster';
 
@@ -16,10 +16,99 @@ type StepCapable = {
 };
 
 const TURN_STEP = 1 / 20;
+const DEFAULT_HOST_HEARTBEAT_TIMEOUT_MS = 8000;
 
 function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
+
+type HostAuthorityDecision =
+  | { accepted: true }
+  | { accepted: false; reason: string; hostWaiting: boolean };
+
+export class HostAuthorityController {
+  private authorizedHostId: string;
+  private hostConnected = false;
+  private waitingForHost = false;
+  private hostStale = false;
+  private lastHostHeartbeatAtMs = 0;
+
+  constructor(
+    private readonly role: 'host' | 'client',
+    initialHostId: string,
+    private readonly heartbeatTimeoutMs = DEFAULT_HOST_HEARTBEAT_TIMEOUT_MS
+  ) {
+    this.authorizedHostId = initialHostId;
+  }
+
+  getHostPlayerId() {
+    return this.authorizedHostId;
+  }
+
+  isWaitingForHost() {
+    return this.role === 'client' && this.waitingForHost;
+  }
+
+  noteSignalingHost(hostId: string, nowMs: number) {
+    const changed = hostId.length > 0 && hostId !== this.authorizedHostId;
+    if (hostId.length > 0) {
+      this.authorizedHostId = hostId;
+    }
+    this.hostStale = false;
+    this.waitingForHost = this.role === 'client' && !this.hostConnected;
+    if (!this.waitingForHost) {
+      this.lastHostHeartbeatAtMs = nowMs;
+    }
+    return changed;
+  }
+
+  notePeerState(states: TransportPeerState[], nowMs: number) {
+    if (this.role !== 'client') return null;
+    const hostPeer = states.find((peer) => peer.peerId === this.authorizedHostId);
+    const ghostPeer = states.find((peer) => peer.connected && peer.peerId !== this.authorizedHostId);
+    this.hostConnected = hostPeer?.connected === true;
+    if (ghostPeer && !this.hostConnected) {
+      this.waitingForHost = true;
+      return `ghost-peer:${ghostPeer.peerId}`;
+    }
+    if (!this.hostConnected) {
+      this.waitingForHost = true;
+      return `host-disconnected:${this.authorizedHostId}`;
+    }
+    if (!this.hostStale) {
+      this.waitingForHost = false;
+      this.lastHostHeartbeatAtMs = nowMs;
+    }
+    return null;
+  }
+
+  noteHostHeartbeat(fromPlayerId: string, nowMs: number): HostAuthorityDecision {
+    if (this.role !== 'client') return { accepted: true };
+    if (fromPlayerId !== this.authorizedHostId) {
+      this.waitingForHost = true;
+      return { accepted: false, reason: `unexpected-host:${fromPlayerId}`, hostWaiting: true };
+    }
+    if (this.waitingForHost || this.hostStale) {
+      return { accepted: false, reason: `waiting-for-host:${fromPlayerId}`, hostWaiting: true };
+    }
+    this.lastHostHeartbeatAtMs = nowMs;
+    return { accepted: true };
+  }
+
+  update(nowMs: number): string | null {
+    if (this.role !== 'client' || this.waitingForHost) return null;
+    if (this.lastHostHeartbeatAtMs <= 0) return null;
+    if (nowMs - this.lastHostHeartbeatAtMs <= this.heartbeatTimeoutMs) return null;
+    this.hostStale = true;
+    this.waitingForHost = true;
+    return `heartbeat-timeout:${this.authorizedHostId}`;
+  }
+}
+
+type HostAuthoritativeAdapter = {
+  reconcileHostAuthority?: (context: { peerId?: string; reason: string; snapshotTick?: number }) => unknown;
+  updateHostPlayerId?: (hostPlayerId: string) => void;
+};
 
 export class AdapterMultiplayerScene extends Phaser.Scene {
   private readonly hooks: GameRuntimeHooks;
@@ -34,6 +123,8 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
   private inputAccumulator = 0;
   private seq = 0;
   private localInput: Record<string, unknown> = {};
+  private hostAuthority: HostAuthorityController | null = null;
+  private hostHeartbeatTimeoutMs = DEFAULT_HOST_HEARTBEAT_TIMEOUT_MS;
 
   private statusText!: Phaser.GameObjects.Text;
   private scoreText!: Phaser.GameObjects.Text;
@@ -61,10 +152,15 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
     }
 
     this.descriptor = descriptor;
-    this.role = mp.role;
+    this.role = mp.role === 'host' && mp.playerId === mp.hostId ? 'host' : 'client';
+    this.hostHeartbeatTimeoutMs = clamp(Number(mp.options?.hostHeartbeatTimeoutMs ?? DEFAULT_HOST_HEARTBEAT_TIMEOUT_MS), 1000, 60000);
+    this.hostAuthority = new HostAuthorityController(this.role, mp.hostId, this.hostHeartbeatTimeoutMs);
+    if (mp.role === 'host' && this.role !== 'host') {
+      this.auditHostAuth('HOST_AUTH_RECONCILE', { reason: 'ghost-host-init', peerId: mp.playerId, expectedHostId: mp.hostId });
+    }
 
     descriptor.adapter.init({
-      role: mp.role,
+      role: this.role,
       playerId: mp.playerId,
       seed: mp.seed,
       options: {
@@ -80,8 +176,9 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
     this.createHud(mp.roomCode);
 
     this.transport = new WebRtcDataTransport({
-      role: mp.role,
+      role: this.role,
       playerId: mp.playerId,
+      hostPlayerId: mp.hostId,
       roomCode: mp.roomCode,
       signalingUrl: mp.signalingUrl,
       reconnectToken: mp.reconnectToken
@@ -89,6 +186,7 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
 
     this.transport.onMessage((packet) => {
       if (!this.descriptor) return;
+      const nowMs = performance.now();
 
       if (packet.message.type === 'input' && this.role === 'host') {
         this.descriptor.adapter.onRemoteMessage({ fromPlayerId: packet.fromPlayerId, input: packet.message.input });
@@ -96,18 +194,39 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
       }
 
       if (packet.message.type === 'snapshot' && this.role === 'client') {
+        if (!this.acceptAuthoritativePacket(packet.fromPlayerId, nowMs, 'snapshot', packet.message.tick)) return;
         this.descriptor.adapter.applySnapshot(packet.message.state);
         return;
       }
 
       if (packet.message.type === 'event') {
+        if (this.role === 'client' && !this.acceptAuthoritativePacket(packet.fromPlayerId, nowMs, 'event')) return;
         this.descriptor.adapter.applyEvent(packet.message.event as never);
         return;
       }
 
       if (packet.message.type === 'ping' && this.role === 'client') {
+        if (!this.acceptAuthoritativePacket(packet.fromPlayerId, nowMs, 'ping')) return;
         this.transport?.sendToHost(createProtocolMessage('pong', { pingId: packet.message.pingId }));
       }
+    });
+
+    this.transport.onState((state) => {
+      if (!this.hostAuthority) return;
+      const reason = this.hostAuthority.notePeerState(state, performance.now());
+      if (!reason) return;
+      this.auditHostAuth('HOST_AUTH_RECONCILE', { reason, peerState: state.map((peer) => `${peer.peerId}:${peer.connected ? 'up' : 'down'}`).join(',') });
+      this.reconcileHostAuth(reason);
+    });
+
+    this.transport.onHostChange((hostId) => {
+      if (!this.hostAuthority) return;
+      const changed = this.hostAuthority.noteSignalingHost(hostId, performance.now());
+      const adapter = this.descriptor?.adapter as HostAuthoritativeAdapter | undefined;
+      adapter?.updateHostPlayerId?.(hostId);
+      if (!changed) return;
+      this.auditHostAuth('HOST_AUTH_RECONCILE', { reason: 'host-id-mismatch', peerId: hostId });
+      this.reconcileHostAuth('host-id-mismatch');
     });
 
     this.transport.connect();
@@ -195,6 +314,11 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
 
   update(_time: number, deltaMs: number) {
     if (!this.descriptor || !this.transport) return;
+    const heartbeatReason = this.hostAuthority?.update(performance.now());
+    if (heartbeatReason) {
+      this.auditHostAuth('HOST_AUTH_RECONCILE', { reason: heartbeatReason });
+      this.reconcileHostAuth(heartbeatReason);
+    }
 
     const dtS = Math.max(0, Math.min(0.05, deltaMs / 1000));
     const stepper = this.descriptor.adapter as StepCapable;
@@ -249,7 +373,8 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
     const match = snapshot.match as Record<string, unknown> | undefined;
     const phase = (snapshot.phase as string | undefined) ?? (match?.phase as string | undefined) ?? 'live';
 
-    this.phaseText.setText(`Phase: ${phase} | ${this.descriptor.mode} | ${this.role}`);
+    const hostStatus = this.hostAuthority?.isWaitingForHost() ? ' | waiting-for-host' : '';
+    this.phaseText.setText(`Phase: ${phase} | ${this.descriptor.mode} | ${this.role}${hostStatus}`);
     if (this.hooks.gameId === 'ozark-fishing') {
       const leaderboard = Array.isArray(snapshot.leaderboard) ? (snapshot.leaderboard as Array<Record<string, unknown>>) : [];
       const catchFeed = Array.isArray(snapshot.catchFeed) ? (snapshot.catchFeed as Array<Record<string, unknown>>) : [];
@@ -329,6 +454,23 @@ export class AdapterMultiplayerScene extends Phaser.Scene {
       fontSize: '18px',
       color: '#bfd5e3'
     });
+  }
+
+  private acceptAuthoritativePacket(fromPlayerId: string, nowMs: number, kind: string, snapshotTick?: number): boolean {
+    const decision = this.hostAuthority?.noteHostHeartbeat(fromPlayerId, nowMs) ?? { accepted: true as const };
+    if (decision.accepted) return true;
+    this.auditHostAuth('HOST_AUTH_RECONCILE', { reason: `${kind}:${decision.reason}`, peerId: fromPlayerId, snapshotTick: snapshotTick ?? null });
+    this.reconcileHostAuth(`${kind}:${decision.reason}`, fromPlayerId, snapshotTick);
+    return false;
+  }
+
+  private reconcileHostAuth(reason: string, peerId?: string, snapshotTick?: number) {
+    const adapter = this.descriptor?.adapter as HostAuthoritativeAdapter | undefined;
+    adapter?.reconcileHostAuthority?.({ peerId, reason, snapshotTick });
+  }
+
+  private auditHostAuth(message: string, details: Record<string, unknown>) {
+    console.warn(`[mp][${message}]`, details);
   }
 
   private readModeFromQuery(): string {

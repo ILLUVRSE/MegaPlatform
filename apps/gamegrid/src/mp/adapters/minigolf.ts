@@ -8,6 +8,7 @@ import {
   readNumber,
   resolveSlotByPlayerId,
   safePlayerIndex,
+  validateRemoteFromKnownPlayer,
   type PlayerIndex
 } from './common';
 
@@ -100,6 +101,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
   readonly isTurnBased = true;
 
   private role: 'host' | 'client' = 'client';
+  private hostPlayerId = '';
   private playerIdsByIndex: [string, string] = ['', ''];
   private localPlayerIndex = -1;
 
@@ -123,16 +125,25 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
   private pending: Array<{ player: PlayerIndex; input: MinigolfInput }> = [];
   private outEvents: MinigolfEvent[] = [];
   private forceResync = false;
+  private queuedResync = false;
   private checksumEverySteps = 8;
   private stepCounter = 0;
   private readonly course = loadMinigolfCourse();
 
   init(context: MpAdapterInitContext): void {
-    this.role = context.role;
     const players = normalizePlayers(context);
+    this.role = context.role === 'host' && context.playerId === players.hostPlayerId ? 'host' : 'client';
+    this.hostPlayerId = players.hostPlayerId;
     this.playerIdsByIndex = players.playerIdsByIndex;
     this.localPlayerIndex = players.localPlayerIndex;
     this.mode = toMode(context.options?.mode);
+    if (context.role === 'host' && this.role !== 'host') {
+      this.debugAdmin('HOST_AUTH_RECONCILE', {
+        peerId: context.playerId,
+        reason: 'ghost-host-init',
+        snapshotTick: 0
+      });
+    }
     this.reset();
   }
 
@@ -148,6 +159,10 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     const env = readInputEnvelope(msg);
     if (!env) return;
     const input = env.input as Record<string, unknown> & MinigolfInput;
+    if (!validateRemoteFromKnownPlayer(this.playerIdsByIndex, env.fromPlayerId, this.hostPlayerId)) {
+      this.reconcileHostAuthority({ peerId: env.fromPlayerId, reason: 'unknown-remote-input' });
+      return;
+    }
 
     const byIdentity = typeof env.fromPlayerId === 'string' ? resolveSlotByPlayerId(this.playerIdsByIndex, env.fromPlayerId) : null;
     const byPayload = safePlayerIndex((input as { playerIndex?: number }).playerIndex);
@@ -157,11 +172,11 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     if (input.type === 'checksum_mismatch') {
       const checksum = readNumber(input.checksum, Number.NaN);
       if (!Number.isFinite(checksum)) {
-        this.forceResync = true;
+        this.reconcileHostAuthority({ peerId: env.fromPlayerId, reason: 'invalid-checksum-payload' });
         return;
       }
       if (Math.abs(checksum - this.computeChecksum()) > 0) {
-        this.forceResync = true;
+        this.reconcileHostAuthority({ peerId: env.fromPlayerId, reason: 'checksum-mismatch' });
       }
       return;
     }
@@ -172,7 +187,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     const endY = readNumber(input.endY, Number.NaN);
     const currentHole = this.course.holes[Math.max(0, Math.min(this.course.holes.length - 1, this.hole - 1))];
     if (!Number.isFinite(power) || !Number.isFinite(angle) || !Number.isFinite(endX) || !Number.isFinite(endY)) {
-      this.forceResync = true;
+      this.reconcileHostAuthority({ peerId: env.fromPlayerId, reason: 'invalid-shot-payload' });
       return;
     }
 
@@ -247,7 +262,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
 
     if (event.type === 'state_checksum') {
       if (event.checksum !== this.computeChecksum()) {
-        this.forceResync = true;
+        this.reconcileHostAuthority({ peerId: this.hostPlayerId, reason: 'unexpected-event-stream' });
       }
       return;
     }
@@ -294,8 +309,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     this.stepCounter += 1;
 
     if (this.forceResync) {
-      this.emitStateResync();
-      this.forceResync = false;
+      this.flushQueuedResync();
       return this.outEvents;
     }
 
@@ -309,7 +323,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     }
 
     if (action.input.type === 'checksum_mismatch') {
-      this.forceResync = true;
+      this.reconcileHostAuthority({ peerId: this.playerIdsByIndex[action.player], reason: 'checksum-mismatch' });
       return this.outEvents;
     }
 
@@ -317,12 +331,12 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     if (!shot) return this.outEvents;
 
     if (this.mode === 'turn-order' && action.player !== this.turn) {
-      this.forceResync = true;
+      this.reconcileHostAuthority({ peerId: this.playerIdsByIndex[action.player], reason: 'turn-order-violation' });
       return this.outEvents;
     }
 
     if (typeof shot.expectedTurn === 'number' && this.mode === 'turn-order' && shot.expectedTurn !== this.turn) {
-      this.forceResync = true;
+      this.reconcileHostAuthority({ peerId: this.playerIdsByIndex[action.player], reason: 'expected-turn-mismatch' });
       return this.outEvents;
     }
 
@@ -345,7 +359,10 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
       !Number.isFinite(mismatchDistanceSq) ||
       mismatchDistanceSq > SERVER_VALIDATE_TOLERANCE * SERVER_VALIDATE_TOLERANCE
     ) {
-      this.forceResync = true;
+      this.reconcileHostAuthority({
+        peerId: this.playerIdsByIndex[action.player],
+        reason: 'server-shot-validation-failed'
+      });
       this.debugAdmin('server rejected minigolf shot', {
         player: action.player,
         hole: this.hole,
@@ -355,8 +372,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
         reason: serverSummary.reason,
         mismatchDistanceSq
       });
-      this.emitStateResync();
-      this.forceResync = false;
+      this.flushQueuedResync();
       return this.outEvents;
     }
 
@@ -448,13 +464,47 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     console.debug(`[minigolf-mp][admin] ${message}`, details);
   }
 
+  reconcileHostAuthority(context: { peerId?: string; reason: string; snapshotTick?: number }) {
+    this.pending = [];
+    this.forceResync = true;
+    this.queuedResync = true;
+    this.debugAdmin('HOST_AUTH_RECONCILE', {
+      peerId: context.peerId ?? 'unknown',
+      reason: context.reason,
+      snapshotTick: context.snapshotTick ?? this.stepCounter
+    });
+    return {
+      type: 'state_resync' as const,
+      eventId: this.lastEventId + 1,
+      snapshot: this.getSnapshot()
+    };
+  }
+
+  updateHostPlayerId(hostPlayerId: string) {
+    if (typeof hostPlayerId !== 'string' || hostPlayerId.length === 0) return;
+    this.hostPlayerId = hostPlayerId;
+    if (!this.playerIdsByIndex.includes(hostPlayerId)) {
+      this.playerIdsByIndex[0] = hostPlayerId;
+    }
+  }
+
   private emitStateResync() {
     this.lastEventId += 1;
-    this.outEvents.push({
+    const event: MinigolfEvent = {
       type: 'state_resync',
       eventId: this.lastEventId,
       snapshot: this.getSnapshot()
-    });
+    };
+    this.outEvents.push(event);
+    return event;
+  }
+
+  private flushQueuedResync() {
+    if (!this.queuedResync) return null;
+    this.queuedResync = false;
+    const event = this.emitStateResync();
+    this.forceResync = false;
+    return event;
   }
 
   private reset() {
@@ -475,6 +525,7 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     this.result = null;
     this.pending = [];
     this.forceResync = false;
+    this.queuedResync = false;
     this.stepCounter = 0;
   }
 }
