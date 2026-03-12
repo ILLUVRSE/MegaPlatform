@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const cwd = process.cwd();
+const quick = process.argv.includes('--quick');
 
 function run(cmd) {
   console.log(`\n$ ${cmd}`);
@@ -19,6 +20,17 @@ function exists(relPath) {
   return fs.existsSync(path.join(cwd, relPath));
 }
 
+function runMinigolfQuickSmoke() {
+  // Keep the quick gate focused on deterministic multiplayer regressions that are
+  // too easy to miss in local UI work. To skip them locally, run `npm test` or
+  // the individual Vitest command directly instead of `npm run shipcheck:quick`.
+  const smokePatterns = ['minigolf.replay.test.ts', 'minigolf.integration.test.ts'];
+
+  for (const pattern of smokePatterns) {
+    run(`pnpm test -- --run "${pattern}"`);
+  }
+}
+
 function main() {
   const packageJsonPath = path.join(cwd, 'package.json');
   const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
@@ -29,8 +41,14 @@ function main() {
     console.log('Skipping lint: no lint script present.');
   }
 
-  run('npm test');
-  run('npm run build');
+  if (quick) {
+    runMinigolfQuickSmoke();
+    console.log('\nShipcheck quick passed.');
+    return;
+  } else {
+    run('npm test');
+    run('npm run build');
+  }
 
   const requiredDocs = [
     'docs/embed.md',
@@ -328,7 +346,7 @@ function main() {
 try {
   main();
 } catch (error) {
-  console.error('\nShipcheck failed.');
+  console.error(`\nShipcheck${quick ? ' quick' : ''} failed.`);
   console.error(error instanceof Error ? error.message : error);
   process.exit(1);
 }

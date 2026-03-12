@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "shipcheck": "node scripts/shipcheck.mjs"
+    "shipcheck": "node scripts/shipcheck.mjs",
+    "shipcheck:quick": "node scripts/shipcheck.mjs --quick"
   },
   "dependencies": {
     "phaser": "^3.90.0",
