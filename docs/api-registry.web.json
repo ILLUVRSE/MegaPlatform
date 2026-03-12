@@ -1,6 +1,6 @@
 {
   "scope": "apps/web/app/api",
-  "routeCount": 386,
+  "routeCount": 387,
   "routes": [
     {
       "route": "/api/admin/apps/certification/publish",
@@ -1272,6 +1272,13 @@
         "POST"
       ],
       "source": "apps/web/app/api/admin/shows/route.ts"
+    },
+    {
+      "route": "/api/admin/studio/qa-results",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/studio/qa-results/route.ts"
     },
     {
       "route": "/api/admin/studio/queue-health",

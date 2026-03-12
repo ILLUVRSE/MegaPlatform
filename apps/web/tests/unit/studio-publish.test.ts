@@ -84,7 +84,25 @@ describe("studio publish", () => {
     expect(prismaMock.shortPost.create).toHaveBeenCalled();
     expect(prismaMock.feedPost.create).toHaveBeenCalled();
     expect(prismaMock.assetLineage.upsert).toHaveBeenCalled();
-    expect(prismaMock.contentQaResult.create).toHaveBeenCalled();
+    expect(prismaMock.contentQaResult.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          projectId: "proj-1",
+          status: "PASS",
+          issuesJson: expect.objectContaining({
+            issues: [],
+            outcome: expect.objectContaining({
+              status: "PASS",
+              passed: true,
+              reporterId: "user-1",
+              checksRun: ["asset-presence", "asset-kind", "caption-policy"],
+              timestamp: expect.any(String)
+            })
+          }),
+          createdAt: expect.any(Date)
+        })
+      })
+    );
     expect(prismaMock.studioAsset.update).toHaveBeenCalledWith(
       expect.objectContaining({
         data: expect.objectContaining({
@@ -111,5 +129,22 @@ describe("studio publish", () => {
     const response = await publishProject(request, { params: { id: "proj-1" } });
     expect(response.status).toBe(409);
     expect(prismaMock.shortPost.create).not.toHaveBeenCalled();
+    expect(prismaMock.contentQaResult.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          status: "FAIL",
+          issuesJson: expect.objectContaining({
+            outcome: expect.objectContaining({
+              status: "FAIL",
+              passed: false,
+              reporterId: "user-1"
+            }),
+            issues: expect.arrayContaining([
+              expect.stringContaining("extremist")
+            ])
+          })
+        })
+      })
+    );
   });
 });
