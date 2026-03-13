@@ -1,20 +1,36 @@
-import { promises as fs } from "fs";
-import path from "path";
-import type { AgentMemoryRecord } from "./memory";
+import { listAgentMemory } from "./memory";
 
-export async function replayAgentRun(repoRoot: string, actor: string, runId: string) {
-  const file = path.join(repoRoot, "docs", "ops_brain", "memory", `${actor.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.jsonl`);
-  const content = await fs.readFile(file, "utf-8");
-  const rows = content
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => JSON.parse(line) as AgentMemoryRecord)
-    .filter((row) => row.runId === runId);
+export type ReplayAgentRunOptions = {
+  last?: number;
+  namespace?: string;
+  namespaces?: string[];
+};
+
+export async function replayAgentRun(repoRoot: string, actor: string, runId: string, options: ReplayAgentRunOptions = {}) {
+  const rows = await listAgentMemory(repoRoot, actor, {
+    runId,
+    namespace: options.namespace,
+    namespaces: options.namespaces,
+    last: options.last
+  });
 
   return {
     actor,
     runId,
     steps: rows
+  };
+}
+
+export async function replayAgentInteractions(repoRoot: string, actor: string, options: ReplayAgentRunOptions = {}) {
+  const steps = await listAgentMemory(repoRoot, actor, {
+    namespace: options.namespace,
+    namespaces: options.namespaces,
+    last: options.last
+  });
+
+  return {
+    actor,
+    last: options.last ?? steps.length,
+    steps
   };
 }

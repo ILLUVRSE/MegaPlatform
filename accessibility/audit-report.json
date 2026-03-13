@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-03-13T13:59:50.290Z",
+  "auditMode": "axe-component-smoke",
+  "pages": [
+    "top"
+  ],
+  "command": "pnpm --filter @illuvrse/web exec vitest run --config tests/vitest.config.ts tests/accessibility/a11y.top-flows.test.ts --reporter=json --outputFile=/home/ryan/ILLUVRSE/accessibility/.top-flows-vitest.json",
+  "passed": true,
+  "summary": {
+    "numTotalTests": 5,
+    "numPassedTests": 5,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "testResults": [
+      {
+        "name": "/home/ryan/ILLUVRSE/apps/web/tests/accessibility/a11y.top-flows.test.ts",
+        "status": "passed",
+        "assertionResults": [
+          {
+            "title": "keeps watch hero and cards accessible",
+            "status": "passed"
+          },
+          {
+            "title": "keeps party entry controls labeled",
+            "status": "passed"
+          },
+          {
+            "title": "keeps studio creator flow labeled and keyboard friendly",
+            "status": "passed"
+          },
+          {
+            "title": "keeps play generator accessible before first seed",
+            "status": "passed"
+          },
+          {
+            "title": "keeps party mode lobby labels accessible",
+            "status": "passed"
+          }
+        ]
+      }
+    ]
+  },
+  "fixedIssues": [
+    "Labeled party and game lobby form controls",
+    "Removed nested button-inside-link pattern from watch poster cards",
+    "Raised low-contrast helper text on watch, party, and studio surfaces",
+    "Added stronger focus-visible treatment for core interactive elements",
+    "Added status live regions for copy, studio, and publish feedback",
+    "Added explicit carousel control labels and current-state semantics",
+    "Added aria-current on active watch local navigation link",
+    "Added link/button labels for recommendations and channel tiles",
+    "Added accessible labels for studio publish and media controls",
+    "Added automated top-flow axe coverage"
+  ]
+}

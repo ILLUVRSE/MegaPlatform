@@ -5,6 +5,7 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
+    "test": "node --import tsx tests/run-tests.ts",
     "dev": "tsx src/worker.ts",
     "director:once": "node --import tsx src/ops/directorRunner.ts",
     "specialist": "node --import tsx src/ops/specialistRunner.ts",

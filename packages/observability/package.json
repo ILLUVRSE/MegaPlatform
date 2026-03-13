@@ -1,0 +1,7 @@
+{
+  "name": "@illuvrse/observability",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "opentelemetry-init.ts"
+}

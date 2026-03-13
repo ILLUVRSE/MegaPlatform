@@ -1,4 +1,9 @@
-import type { MpAdapter, MpAdapterInitContext } from '../mpAdapter';
+import type {
+  MpAdapter,
+  MpAdapterInitContext,
+  MpSpectatorSnapshotOptions,
+  MpSpectatorSnapshotPayload
+} from '../mpAdapter';
 import { createPhysicsScratch, DEFAULT_PHYSICS, stepPixelPuckPhysics } from '../../games/pixelpuck/physics';
 import { readInputEnvelope, readNumber } from './common';
 
@@ -24,6 +29,18 @@ export interface PixelPuckEvent {
   type: 'goal' | 'match_end' | 'rematch';
   scorer?: 'bottom' | 'top';
   winner?: 'bottom' | 'top' | 'none';
+}
+
+export interface PixelPuckSpectatorSnapshot {
+  tick: number;
+  puck: { x: number; y: number; vx?: number; vy?: number };
+  paddles: {
+    bottom: { x: number; y: number; vx?: number; vy?: number };
+    top: { x: number; y: number; vx?: number; vy?: number };
+  };
+  score: { bottom: number; top: number };
+  ended: boolean;
+  winner: 'bottom' | 'top' | 'none';
 }
 
 interface PixelPuckResult {
@@ -102,6 +119,12 @@ function createInitialState(context: MpAdapterInitContext): SimulationState {
 
 export class PixelPuckMultiplayerAdapter implements MpAdapter<PixelPuckInput, PixelPuckSnapshot, PixelPuckEvent, PixelPuckResult> {
   readonly isTurnBased = false;
+  readonly capabilities = {
+    spectator: {
+      readOnlySnapshots: true as const,
+      bandwidthModes: ['full', 'minimal'] as const
+    }
+  };
 
   private state: SimulationState | null = null;
   private started = false;
@@ -165,6 +188,74 @@ export class PixelPuckMultiplayerAdapter implements MpAdapter<PixelPuckInput, Pi
     this.state.score = { ...snapshot.score };
     this.state.ended = snapshot.ended;
     this.state.winner = snapshot.winner;
+  }
+
+  getSpectatorSnapshot(
+    options?: MpSpectatorSnapshotOptions
+  ): MpSpectatorSnapshotPayload<PixelPuckSpectatorSnapshot> {
+    const snapshot = this.getSnapshot();
+    const bandwidthMode = options?.bandwidthMode ?? 'full';
+    if (bandwidthMode === 'minimal') {
+      return {
+        bandwidthMode,
+        snapshot: {
+          tick: snapshot.tick,
+          puck: { x: snapshot.puck.x, y: snapshot.puck.y },
+          paddles: {
+            bottom: { x: snapshot.paddles.bottom.x, y: snapshot.paddles.bottom.y },
+            top: { x: snapshot.paddles.top.x, y: snapshot.paddles.top.y }
+          },
+          score: snapshot.score,
+          ended: snapshot.ended,
+          winner: snapshot.winner
+        }
+      };
+    }
+
+    return {
+      bandwidthMode,
+      snapshot: {
+        tick: snapshot.tick,
+        puck: { ...snapshot.puck },
+        paddles: {
+          bottom: { ...snapshot.paddles.bottom },
+          top: { ...snapshot.paddles.top }
+        },
+        score: snapshot.score,
+        ended: snapshot.ended,
+        winner: snapshot.winner
+      }
+    };
+  }
+
+  applySpectatorSnapshot(payload: MpSpectatorSnapshotPayload<PixelPuckSpectatorSnapshot>): void {
+    const { snapshot } = payload;
+    this.applySnapshot({
+      tick: snapshot.tick,
+      puck: {
+        x: snapshot.puck.x,
+        y: snapshot.puck.y,
+        vx: snapshot.puck.vx ?? 0,
+        vy: snapshot.puck.vy ?? 0
+      },
+      paddles: {
+        bottom: {
+          x: snapshot.paddles.bottom.x,
+          y: snapshot.paddles.bottom.y,
+          vx: snapshot.paddles.bottom.vx ?? 0,
+          vy: snapshot.paddles.bottom.vy ?? 0
+        },
+        top: {
+          x: snapshot.paddles.top.x,
+          y: snapshot.paddles.top.y,
+          vx: snapshot.paddles.top.vx ?? 0,
+          vy: snapshot.paddles.top.vy ?? 0
+        }
+      },
+      score: snapshot.score,
+      ended: snapshot.ended,
+      winner: snapshot.winner
+    });
   }
 
   serializeEvent(event: PixelPuckEvent): unknown {

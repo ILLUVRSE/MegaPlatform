@@ -12,6 +12,13 @@ import sharp from "sharp";
 export type CaptionStyle = "clean" | "impact" | "tiktok";
 export type SceneSpec = { text: string; durationMs: number };
 export type RenderQuality = "draft" | "standard" | "high";
+export type MobileFastPassVariant = {
+  name: "mobile-360" | "mobile-540";
+  width: number;
+  height: number;
+  outputPath: string;
+  contentType: "video/mp4";
+};
 
 type RenderPreset = {
   crf: string;
@@ -19,6 +26,12 @@ type RenderPreset = {
   bitrate: string;
   maxrate: string;
   bufsize: string;
+};
+
+type TranscodeContentProfile = {
+  preset: string;
+  crf: string;
+  audioBitrate: string;
 };
 
 const RENDER_PRESETS: Record<RenderQuality, RenderPreset> = {
@@ -42,6 +55,29 @@ const RENDER_PRESETS: Record<RenderQuality, RenderPreset> = {
     bitrate: "5200k",
     maxrate: "6800k",
     bufsize: "9800k"
+  }
+};
+
+const TRANSCODE_CONTENT_PROFILES: Record<string, TranscodeContentProfile> = {
+  "video/mp4": {
+    preset: "faster",
+    crf: "21",
+    audioBitrate: "128k"
+  },
+  "video/quicktime": {
+    preset: "fast",
+    crf: "22",
+    audioBitrate: "128k"
+  },
+  "video/webm": {
+    preset: "veryfast",
+    crf: "24",
+    audioBitrate: "96k"
+  },
+  default: {
+    preset: "faster",
+    crf: "21",
+    audioBitrate: "128k"
   }
 };
 
@@ -235,6 +271,58 @@ export async function transcodeToHls(inputPath: string) {
   ]);
 
   return { manifest, dir };
+}
+
+export async function generateMobileFastPasses(
+  inputPath: string,
+  options?: {
+    contentType?: string;
+    prioritizeMobile?: boolean;
+  }
+) {
+  if (options?.prioritizeMobile === false) return [];
+
+  const dir = join(tmpdir(), `illuvrse-fastpass-${Date.now()}`);
+  await mkdir(dir, { recursive: true });
+  const profile = TRANSCODE_CONTENT_PROFILES[options?.contentType ?? ""] ?? TRANSCODE_CONTENT_PROFILES.default;
+  const variants: Omit<MobileFastPassVariant, "outputPath" | "contentType">[] = [
+    { name: "mobile-360", width: 360, height: 640 },
+    { name: "mobile-540", width: 540, height: 960 }
+  ];
+
+  const outputs: MobileFastPassVariant[] = [];
+  for (const variant of variants) {
+    const outputPath = join(dir, `${variant.name}.mp4`);
+    await runFfmpeg([
+      "-y",
+      "-i",
+      inputPath,
+      "-vf",
+      `scale=${variant.width}:${variant.height}:flags=lanczos:force_original_aspect_ratio=increase,crop=${variant.width}:${variant.height}`,
+      "-codec:v",
+      "libx264",
+      "-preset",
+      profile.preset,
+      "-crf",
+      profile.crf,
+      "-movflags",
+      "+faststart",
+      "-codec:a",
+      "aac",
+      "-b:a",
+      profile.audioBitrate,
+      "-ar",
+      "48000",
+      outputPath
+    ]);
+    outputs.push({
+      ...variant,
+      outputPath,
+      contentType: "video/mp4"
+    });
+  }
+
+  return outputs;
 }
 
 export async function generateThumbnail(inputPath: string) {

@@ -60,6 +60,9 @@
       "@illuvrse/media-corp-orchestrator": [
         "../../packages/media-corp-orchestrator/src/index.ts"
       ],
+      "@illuvrse/observability": [
+        "../../packages/observability/opentelemetry-init.ts"
+      ],
       "@illuvrse/ui": [
         "../../packages/ui/src/index.ts"
       ],

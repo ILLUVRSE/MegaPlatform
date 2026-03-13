@@ -11,11 +11,16 @@ import { prisma } from "@illuvrse/db";
 import { getState, publish, setState } from "@illuvrse/world-state";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
+import {
+  PLAYBACK_SOFT_LOCK_MS,
+  resolveAuthoritativePlaybackSnapshot,
+  shouldSoftLockTimeline
+} from "@/app/party/lib/playback";
 
 const playbackSchema = z.object({
-  action: z.enum(["heartbeat", "play", "pause", "resume", "advance"]),
+  action: z.enum(["heartbeat", "play", "pause", "resume", "advance", "seek"]),
   leaderTime: z.number(),
-  playbackPositionMs: z.number(),
+  playbackPositionMs: z.number().nonnegative(),
   currentIndex: z.number().int().min(0),
   playbackState: z.enum(["idle", "playing", "paused"])
 });
@@ -66,41 +71,61 @@ export async function POST(
   const playlistCount = await prisma.playlistItem.count({ where: { partyId: party.id } });
   const maxIndex = Math.max(0, playlistCount - 1);
   const clampedIndex = Math.min(parsed.data.currentIndex, maxIndex);
+  const now = Date.now();
+  const currentPlayback = resolveAuthoritativePlaybackSnapshot(await getState(party.id, party.seats.length).then((state) => state.playback), now, {
+    currentIndex: party.currentIndex,
+    playbackState: party.playbackState,
+    leaderId: principal.userId
+  });
+
+  const requestedPlaybackState =
+    parsed.data.action === "resume" ? currentPlayback.playbackState : parsed.data.playbackState;
+  const requestedIndex = parsed.data.action === "resume" ? currentPlayback.currentIndex : clampedIndex;
+  const requestedPositionMs =
+    parsed.data.action === "resume"
+      ? currentPlayback.playbackPositionMs
+      : parsed.data.action === "advance"
+        ? 0
+        : parsed.data.playbackPositionMs;
+  const shouldSoftLock =
+    parsed.data.action === "seek" ||
+    parsed.data.action === "advance" ||
+    shouldSoftLockTimeline(currentPlayback, {
+      currentIndex: requestedIndex,
+      playbackPositionMs: requestedPositionMs
+    });
+  const timelineRevision = currentPlayback.timelineRevision + (shouldSoftLock ? 1 : 0);
+  const nextPlayback = {
+    currentIndex: requestedIndex,
+    playbackState: requestedPlaybackState,
+    leaderTime: now,
+    playbackPositionMs: requestedPositionMs,
+    leaderId: principal.userId,
+    timelineRevision,
+    syncSequence: currentPlayback.syncSequence + 1,
+    softLockUntil: shouldSoftLock ? now + PLAYBACK_SOFT_LOCK_MS : undefined,
+    lastAction: parsed.data.action,
+    lastHeartbeatAt: now
+  };
 
   if (parsed.data.action !== "heartbeat") {
     await prisma.party.update({
       where: { id: party.id },
       data: {
-        currentIndex: clampedIndex,
-        playbackState: parsed.data.playbackState
+        currentIndex: requestedIndex,
+        playbackState: requestedPlaybackState
       }
     });
   }
 
   const state = await getState(party.id, party.seats.length);
-  state.playback = {
-    currentIndex: clampedIndex,
-    playbackState: parsed.data.playbackState,
-    leaderTime: parsed.data.leaderTime,
-    playbackPositionMs: parsed.data.playbackPositionMs,
-    leaderId: principal.userId
-  };
+  state.playback = nextPlayback;
   await setState(party.id, state);
 
   await publish(party.id, {
     type: "playback_update",
-    leaderTime: parsed.data.leaderTime,
-    playbackPositionMs: parsed.data.playbackPositionMs,
-    currentIndex: clampedIndex,
-    playbackState: parsed.data.playbackState,
-    leaderId: principal.userId
+    ...nextPlayback
   });
 
-  return NextResponse.json({
-    currentIndex: clampedIndex,
-    playbackState: parsed.data.playbackState,
-    leaderTime: parsed.data.leaderTime,
-    playbackPositionMs: parsed.data.playbackPositionMs,
-    leaderId: principal.userId
-  });
+  return NextResponse.json(nextPlayback);
 }

@@ -9,13 +9,21 @@ const dryRun = args.has("--dry-run") || process.env.CI === "true" || !process.en
 
 const manifestPath = path.join(rootDir, "ops", "governance", "key-rotation.json");
 const deploymentPath = path.join(rootDir, "ops", "governance", "deployment.json");
-const runbookPath = path.join(rootDir, "docs", "ops_brain", "runbooks", "key-rotation.md");
+const documentedPaths = [
+  path.join(rootDir, "docs", "security-rotation.md"),
+  path.join(rootDir, "docs", "ops_brain", "runbooks", "key-rotation.md")
+];
 
 const requiredSecretRefs = ["NEXTAUTH_SECRET", "LIVEKIT_API_SECRET"];
 const requiredConfigRefs = ["NEXTAUTH_SECRET", "LIVEKIT_API_KEY", "LIVEKIT_API_SECRET"];
 const rotationWindowByRef = {
   NEXTAUTH_SECRET: 90,
   LIVEKIT_API_SECRET: 60
+};
+const minimumLengthByRef = {
+  NEXTAUTH_SECRET: 32,
+  LIVEKIT_API_SECRET: 24,
+  LIVEKIT_API_KEY: 12
 };
 
 function fail(message) {
@@ -39,15 +47,15 @@ function assert(condition, message) {
   if (!condition) fail(message);
 }
 
-function base64UrlEncode(value) {
+export function base64UrlEncode(value) {
   return Buffer.from(typeof value === "string" ? value : JSON.stringify(value), "utf8").toString("base64url");
 }
 
-function base64UrlDecode(value) {
+export function base64UrlDecode(value) {
   return Buffer.from(value, "base64url").toString("utf8");
 }
 
-function createHs256Token(payload, secret, header = { alg: "HS256", typ: "JWT" }) {
+export function createHs256Token(payload, secret, header = { alg: "HS256", typ: "JWT" }) {
   const encodedHeader = base64UrlEncode(header);
   const encodedPayload = base64UrlEncode(payload);
   const body = `${encodedHeader}.${encodedPayload}`;
@@ -55,30 +63,40 @@ function createHs256Token(payload, secret, header = { alg: "HS256", typ: "JWT" }
   return `${body}.${signature}`;
 }
 
-function verifyHs256Token(token, candidateSecrets) {
+export function decodeJwtWithoutVerify(token) {
   const parts = token.split(".");
   if (parts.length !== 3) return null;
 
-  const [encodedHeader, encodedPayload, encodedSignature] = parts;
-  const header = JSON.parse(base64UrlDecode(encodedHeader));
-  const payload = JSON.parse(base64UrlDecode(encodedPayload));
+  try {
+    return {
+      header: JSON.parse(base64UrlDecode(parts[0])),
+      payload: JSON.parse(base64UrlDecode(parts[1])),
+      signature: parts[2]
+    };
+  } catch {
+    return null;
+  }
+}
 
-  if (header.alg !== "HS256") return null;
+export function verifyHs256Token(token, candidateSecrets) {
+  const decoded = decodeJwtWithoutVerify(token);
+  if (!decoded || decoded.header.alg !== "HS256") return null;
 
+  const [encodedHeader, encodedPayload, encodedSignature] = token.split(".");
   const body = `${encodedHeader}.${encodedPayload}`;
   const signature = Buffer.from(encodedSignature, "base64url");
 
   for (const secret of candidateSecrets) {
     const expected = Buffer.from(createHmac("sha256", secret).update(body).digest("base64url"), "base64url");
     if (expected.length === signature.length && timingSafeEqual(expected, signature)) {
-      return { header, payload };
+      return decoded;
     }
   }
 
   return null;
 }
 
-function createJwtSessionToken(secret, nowSec) {
+export function createJwtSessionToken(secret, nowSec) {
   return createHs256Token(
     {
       sub: "rotation-user",
@@ -92,7 +110,7 @@ function createJwtSessionToken(secret, nowSec) {
   );
 }
 
-function createLiveKitToken({ apiKey, apiSecret, nowSec }) {
+export function createLiveKitToken({ apiKey, apiSecret, nowSec }) {
   return createHs256Token(
     {
       iss: apiKey,
@@ -111,31 +129,42 @@ function createLiveKitToken({ apiKey, apiSecret, nowSec }) {
   );
 }
 
-function verifyLiveKitToken(token, keyRing) {
-  const untrusted = token.split(".");
-  if (untrusted.length !== 3) return null;
-  const payload = JSON.parse(base64UrlDecode(untrusted[1]));
-  const secret = keyRing.get(payload.iss);
+export function verifyLiveKitToken(token, keyRing) {
+  const decoded = decodeJwtWithoutVerify(token);
+  if (!decoded) return null;
+
+  const secret = keyRing.get(decoded.payload.iss);
   if (!secret) return null;
   return verifyHs256Token(token, [secret]);
 }
 
+export function validateSecretMaterial(refName, value) {
+  assert(typeof value === "string" && value.trim().length > 0, `${refName} is empty`);
+  assert(value === value.trim(), `${refName} must not include leading or trailing whitespace`);
+  assert(
+    value.length >= (minimumLengthByRef[refName] ?? 24),
+    `${refName} must be at least ${minimumLengthByRef[refName] ?? 24} characters`
+  );
+  assert(!/^(test|dummy|example|replace|changeme)/i.test(value), `${refName} must not use placeholder material`);
+  return value;
+}
+
 function getSecret(refName) {
   const configured = process.env[refName]?.trim();
-  if (configured) return configured;
+  if (configured) return validateSecretMaterial(refName, configured);
   if (!dryRun) {
     fail(`${refName} is required when not running in dry-run mode`);
   }
-  return `${refName.toLowerCase()}-${randomBytes(24).toString("hex")}`;
+  return validateSecretMaterial(refName, `${refName.toLowerCase()}-${randomBytes(24).toString("hex")}`);
 }
 
 function getLiveKitKey() {
   const configured = process.env.LIVEKIT_API_KEY?.trim();
-  if (configured) return configured;
+  if (configured) return validateSecretMaterial("LIVEKIT_API_KEY", configured);
   if (!dryRun) {
     fail("LIVEKIT_API_KEY is required when not running in dry-run mode");
   }
-  return `lk_${randomBytes(8).toString("hex")}`;
+  return validateSecretMaterial("LIVEKIT_API_KEY", `lk_${randomBytes(10).toString("hex")}`);
 }
 
 function validateManifest() {
@@ -189,9 +218,9 @@ function validateConfigReferences(entriesByRef) {
     assert(prod.requiredEnv.includes(refName), `prod deployment config must require ${refName}`);
   }
 
-  const runbook = readText(runbookPath);
+  const docs = documentedPaths.map(readText).join("\n");
   for (const refName of requiredConfigRefs) {
-    assert(runbook.includes(refName), `runbook must document ${refName}`);
+    assert(docs.includes(refName), `rotation docs must document ${refName}`);
   }
 
   for (const secretRef of requiredSecretRefs) {
@@ -199,15 +228,20 @@ function validateConfigReferences(entriesByRef) {
   }
 }
 
-function simulateJwtRotation(nextAuthSecret) {
+export function simulateJwtRotation(nextAuthSecret) {
   const nowSec = Math.floor(Date.now() / 1000);
-  const rotatedSecret = `${nextAuthSecret}.rotated`;
+  const rotatedSecret = validateSecretMaterial("NEXTAUTH_SECRET", `${nextAuthSecret}.rotated-material`);
 
   const currentToken = createJwtSessionToken(nextAuthSecret, nowSec);
-  assert(verifyHs256Token(currentToken, [nextAuthSecret]), "current JWT token did not validate with current secret");
-
   const rotatedToken = createJwtSessionToken(rotatedSecret, nowSec);
-  assert(verifyHs256Token(rotatedToken, [rotatedSecret]), "rotated JWT token did not validate with rotated secret");
+
+  const currentDecoded = verifyHs256Token(currentToken, [nextAuthSecret]);
+  const rotatedDecoded = verifyHs256Token(rotatedToken, [rotatedSecret]);
+  assert(currentDecoded, "current JWT token did not validate with current secret");
+  assert(rotatedDecoded, "rotated JWT token did not validate with rotated secret");
+
+  assert(currentDecoded.payload.sub === "rotation-user", "current JWT token payload shape changed unexpectedly");
+  assert(Array.isArray(currentDecoded.payload.permissions), "current JWT permissions claim must remain an array");
 
   assert(
     verifyHs256Token(currentToken, [rotatedSecret, nextAuthSecret]),
@@ -223,23 +257,27 @@ function simulateJwtRotation(nextAuthSecret) {
   );
 }
 
-function simulateLiveKitRotation({ apiKey, apiSecret }) {
+export function simulateLiveKitRotation({ apiKey, apiSecret }) {
   const nowSec = Math.floor(Date.now() / 1000);
-  const rotatedApiKey = `${apiKey}_rotated`;
-  const rotatedApiSecret = `${apiSecret}.rotated`;
+  const rotatedApiKey = validateSecretMaterial("LIVEKIT_API_KEY", `${apiKey}_rotated`);
+  const rotatedApiSecret = validateSecretMaterial("LIVEKIT_API_SECRET", `${apiSecret}.rotated-material`);
 
   const currentToken = createLiveKitToken({ apiKey, apiSecret, nowSec });
+  const rotatedToken = createLiveKitToken({ apiKey: rotatedApiKey, apiSecret: rotatedApiSecret, nowSec });
   const currentKeyRing = new Map([[apiKey, apiSecret]]);
-  assert(verifyLiveKitToken(currentToken, currentKeyRing), "current LiveKit token did not validate with current key pair");
-
   const overlapKeyRing = new Map([
     [apiKey, apiSecret],
     [rotatedApiKey, rotatedApiSecret]
   ]);
-  const rotatedToken = createLiveKitToken({ apiKey: rotatedApiKey, apiSecret: rotatedApiSecret, nowSec });
+
+  const currentDecoded = verifyLiveKitToken(currentToken, currentKeyRing);
+  const rotatedDecoded = verifyLiveKitToken(rotatedToken, overlapKeyRing);
+  assert(currentDecoded, "current LiveKit token did not validate with current key pair");
+  assert(rotatedDecoded, "rotated LiveKit token did not validate with rotated key pair");
+  assert(rotatedDecoded.payload.video?.roomJoin === true, "rotated LiveKit token lost roomJoin permissions");
+  assert(rotatedDecoded.payload.iss === rotatedApiKey, "rotated LiveKit token did not carry the new issuer key");
 
   assert(verifyLiveKitToken(currentToken, overlapKeyRing), "current LiveKit token must validate during rotation overlap");
-  assert(verifyLiveKitToken(rotatedToken, overlapKeyRing), "rotated LiveKit token did not validate with rotated key pair");
   assert(
     !verifyLiveKitToken(currentToken, new Map([[rotatedApiKey, rotatedApiSecret]])),
     "LiveKit rotation simulation did not prove the old key pair can be retired"
@@ -258,8 +296,12 @@ function main() {
   simulateLiveKitRotation({ apiKey: liveKitApiKey, apiSecret: liveKitApiSecret });
 
   pass(
-    `${requiredConfigRefs.length} key references validated; JWT and LiveKit rotation dry-run ${dryRun ? "simulated" : "verified"}`
+    `${requiredConfigRefs.length} key references validated; token signing and overlap verification ${
+      dryRun ? "simulated" : "verified"
+    }`
   );
 }
 
-main();
+if (process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname) {
+  main();
+}

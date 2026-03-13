@@ -18,7 +18,8 @@ export default function ChannelTile({
   return (
     <Link
       href={`/watch/live/${channel.id}`}
-      className="group relative flex w-56 flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 text-white"
+      className="interactive-focus group relative flex w-56 flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 text-white"
+      aria-label={channel.now ? `${channel.name}, live now: ${channel.now}` : `${channel.name}, live channel`}
     >
       <div className="relative overflow-hidden rounded-xl">
         <img
@@ -38,10 +39,10 @@ export default function ChannelTile({
         />
         <div>
           <p className="text-sm font-semibold">{channel.name}</p>
-          <p className="text-xs text-white/60">{channel.category ?? "Live"}</p>
+          <p className="text-xs text-white/78">{channel.category ?? "Live"}</p>
         </div>
       </div>
-      {channel.now ? <p className="text-xs text-white/60">Now: {channel.now}</p> : null}
+      {channel.now ? <p className="text-xs text-white/78">Now: {channel.now}</p> : null}
     </Link>
   );
 }

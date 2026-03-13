@@ -285,7 +285,13 @@ async function act(repoRoot: string, plans: DirectorTaskPlan[]) {
   const existing = await listTasks(path.join(repoRoot, "docs", "queue"));
   const todayPrefix = new Date().toISOString().slice(0, 10);
   const actionsToday = existing.filter((task) => task.created_at.startsWith(todayPrefix)).length;
-  await assertAgentBudget(repoRoot, "Director", { actionsToday });
+  const budget = await assertAgentBudget(repoRoot, "Director", {
+    actionsToday,
+    estimatedTokens: Math.max(250, plans.length * 350)
+  });
+  if (budget.softFail) {
+    return { created, budget };
+  }
 
   for (const plan of plans) {
     const task = await createTask(
@@ -304,7 +310,7 @@ async function act(repoRoot: string, plans: DirectorTaskPlan[]) {
     );
     created.push(task);
   }
-  return created;
+  return { created, budget };
 }
 
 export async function runDirectorCycle(options: RunDirectorOptions = {}) {
@@ -336,7 +342,25 @@ export async function runDirectorCycle(options: RunDirectorOptions = {}) {
   }
 
   const plans = await think(repoRoot, sensed, Math.max(1, Math.min(maxTasks, 3)));
-  const createdTasks = await act(repoRoot, plans);
+  const { created: createdTasks, budget } = await act(repoRoot, plans);
+
+  if (budget.softFail) {
+    await appendDecision(repoRoot, `Director soft-failed due to token budget threshold. ${budget.alerts[0] ?? ""}`.trim());
+    await appendAgentMemory(repoRoot, "Director", {
+      runId,
+      actor: "Director",
+      ok: false,
+      action: "run_cycle",
+      summary: "Soft-failed due to daily token budget threshold.",
+      tokenUsage: 0,
+      metadata: { reason: "token_budget_threshold", budget }
+    });
+    return {
+      ok: false,
+      reason: "token_budget_threshold",
+      createdTasks: [] as TaskRecord[]
+    };
+  }
 
   await appendDecision(
     repoRoot,
@@ -344,12 +368,13 @@ export async function runDirectorCycle(options: RunDirectorOptions = {}) {
   );
   await appendAgentMemory(repoRoot, "Director", {
     runId,
-    actor: "Director",
-    ok: true,
-    action: "run_cycle",
-    summary: `Created ${createdTasks.length} task(s).`,
-    metadata: { shipcheckOk: sensed.shipcheckOk, createdTasks: createdTasks.length }
-  });
+      actor: "Director",
+      ok: true,
+      action: "run_cycle",
+      summary: `Created ${createdTasks.length} task(s).`,
+      tokenUsage: Math.max(250, plans.length * 350),
+      metadata: { shipcheckOk: sensed.shipcheckOk, createdTasks: createdTasks.length, budget }
+    });
 
   return {
     ok: true,

@@ -100,7 +100,11 @@ export async function POST(request: Request) {
     playback: {
       currentIndex: party.currentIndex,
       playbackState: party.playbackState as PartyState["playback"]["playbackState"],
-      leaderId: principal.userId
+      leaderId: principal.userId,
+      timelineRevision: 0,
+      syncSequence: 0,
+      lastAction: "heartbeat",
+      lastHeartbeatAt: Date.now()
     },
     participants: {
       [principal.userId]: {

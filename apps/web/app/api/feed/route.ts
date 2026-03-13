@@ -9,7 +9,7 @@ import { attachAnonCookie, ensureAnonId } from "@/lib/anon";
 import { serializeFeedPost } from "@/lib/feed";
 import { scoreShort, shouldHideShortByModeration } from "@/lib/shortsRanking";
 import { FEED_TRUST_POLICY, WALL_RANKING_POLICY } from "@/lib/feedPolicy";
-import { clampAffinityBoost, scoreWallPost } from "@/lib/feedRanking";
+import { clampAffinityBoost, deriveWallFreshnessSignals, scoreWallPost } from "@/lib/feedRanking";
 import { apiInvalidPayload } from "@/lib/apiError";
 
 const createFeedPostSchema = z
@@ -244,6 +244,12 @@ export async function GET(request: Request) {
       }
 
       const affinityBoost = clampAffinityBoost(affinityByType.get(post.type) ?? 0);
+      const freshnessSignals = deriveWallFreshnessSignals({
+        createdAt: post.createdAt,
+        likeCount: post.likeCount,
+        commentCount: post.commentCount,
+        shareCount: post.shareCount
+      });
       const score = scoreWallPost({
         createdAt: post.createdAt,
         likeCount: post.likeCount,
@@ -254,6 +260,9 @@ export async function GET(request: Request) {
         featuredRank: post.featuredRank,
         unresolvedReports,
         affinityBoost
+      }, {
+        allowSurge: !freshnessSignals.lowQualityRapidPost,
+        maxFreshnessBoost: freshnessSignals.lowQualityRapidPost ? WALL_RANKING_POLICY.lowQualityFreshnessCap : undefined
       });
 
       return { post, score };

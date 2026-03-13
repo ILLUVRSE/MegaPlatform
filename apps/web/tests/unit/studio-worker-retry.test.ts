@@ -57,7 +57,8 @@ function createDeps() {
         const updated = { ...(state.assets[index] ?? { id: where.id }), ...data };
         state.assets[index] = updated;
         return updated;
-      })
+      }),
+      updateMany: vi.fn(async () => ({ count: 0 }))
     },
     shortPost: {
       updateMany: vi.fn(async () => ({ count: 0 }))
@@ -77,6 +78,7 @@ function createDeps() {
     loadBrollImages: vi.fn(async () => ["/tmp/frame-1.png"]),
     generateShortSlideshowMp4: vi.fn(async () => "/tmp/render.mp4"),
     transcodeToHls: vi.fn(async () => ({ manifest: "/tmp/master.m3u8", dir: "/tmp/hls" })),
+    generateMobileFastPasses: vi.fn(async () => []),
     generateThumbnail: vi.fn(async () => "/tmp/thumb.jpg"),
     generateMemePng: vi.fn(async () => Buffer.from("png")),
     extractClip: vi.fn(async () => "/tmp/clip.mp4"),

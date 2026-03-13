@@ -26,6 +26,7 @@
     "@illuvrse/media-corp-orchestrator": "workspace:*",
     "@illuvrse/media-corp-scoring": "workspace:*",
     "@illuvrse/media-corp-workflows": "workspace:*",
+    "@illuvrse/observability": "workspace:*",
     "@illuvrse/storage": "workspace:*",
     "@illuvrse/ui": "workspace:*",
     "@illuvrse/world-state": "workspace:*",

@@ -1,4 +1,9 @@
-import type { MpAdapter, MpAdapterInitContext } from '../mpAdapter';
+import type {
+  MpAdapter,
+  MpAdapterInitContext,
+  MpSpectatorSnapshotOptions,
+  MpSpectatorSnapshotPayload
+} from '../mpAdapter';
 import { loadMinigolfCourse } from '../../games/minigolf/levels';
 import { simulateShotForServer } from '../../games/minigolf/serverSim';
 import {
@@ -47,6 +52,26 @@ interface MinigolfSnapshot {
   ghostReplay: 'optional';
   checksum: number;
   lastEventId: number;
+}
+
+export interface MinigolfSpectatorSnapshot {
+  mode: MinigolfMode;
+  phase: 'live' | 'end';
+  hole: number;
+  totalHoles: number;
+  turn: PlayerIndex;
+  totals: { p0: number; p1: number };
+  strokes: { p0: number; p1: number };
+  penalties: { p0: number; p1: number };
+  ballEnd: { p0: { x: number; y: number }; p1: { x: number; y: number } };
+  checksum?: number;
+  lastEventId: number;
+}
+
+export interface MinigolfGhostPlayback {
+  hole: number;
+  lastEventId: number;
+  ballEnd: { p0: { x: number; y: number }; p1: { x: number; y: number } };
 }
 
 type MinigolfEvent =
@@ -99,6 +124,13 @@ function distanceSq(ax: number, ay: number, bx: number, by: number): number {
 
 export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, MinigolfSnapshot, MinigolfEvent, MinigolfResult> {
   readonly isTurnBased = true;
+  readonly capabilities = {
+    spectator: {
+      readOnlySnapshots: true as const,
+      ghostPlayback: 'optional' as const,
+      bandwidthModes: ['full', 'minimal'] as const
+    }
+  };
 
   private role: 'host' | 'client' = 'client';
   private hostPlayerId = '';
@@ -236,6 +268,65 @@ export class MinigolfMultiplayerAdapter implements MpAdapter<MinigolfInput, Mini
     this.ballEnd[0] = { ...snapshot.ballEnd.p0 };
     this.ballEnd[1] = { ...snapshot.ballEnd.p1 };
     this.lastEventId = snapshot.lastEventId;
+  }
+
+  getSpectatorSnapshot(
+    options?: MpSpectatorSnapshotOptions
+  ): MpSpectatorSnapshotPayload<MinigolfSpectatorSnapshot, MinigolfGhostPlayback> {
+    const snapshot = this.getSnapshot();
+    const bandwidthMode = options?.bandwidthMode ?? 'full';
+    return {
+      bandwidthMode,
+      snapshot: {
+        mode: snapshot.mode,
+        phase: snapshot.phase,
+        hole: snapshot.hole,
+        totalHoles: snapshot.totalHoles,
+        turn: snapshot.turn,
+        totals: { ...snapshot.totals },
+        strokes: { ...snapshot.strokes },
+        penalties: { ...snapshot.penalties },
+        ballEnd: {
+          p0: { ...snapshot.ballEnd.p0 },
+          p1: { ...snapshot.ballEnd.p1 }
+        },
+        checksum: bandwidthMode === 'minimal' ? undefined : snapshot.checksum,
+        lastEventId: snapshot.lastEventId
+      },
+      ghostPlayback: options?.includeGhostPlayback
+        ? {
+            hole: snapshot.hole,
+            lastEventId: snapshot.lastEventId,
+            ballEnd: {
+              p0: { ...snapshot.ballEnd.p0 },
+              p1: { ...snapshot.ballEnd.p1 }
+            }
+          }
+        : undefined
+    };
+  }
+
+  applySpectatorSnapshot(
+    payload: MpSpectatorSnapshotPayload<MinigolfSpectatorSnapshot, MinigolfGhostPlayback>
+  ): void {
+    const { snapshot } = payload;
+    this.applySnapshot({
+      mode: snapshot.mode,
+      phase: snapshot.phase,
+      hole: snapshot.hole,
+      totalHoles: snapshot.totalHoles,
+      turn: snapshot.turn,
+      strokes: { ...snapshot.strokes },
+      penalties: { ...snapshot.penalties },
+      totals: { ...snapshot.totals },
+      ballEnd: {
+        p0: { ...snapshot.ballEnd.p0 },
+        p1: { ...snapshot.ballEnd.p1 }
+      },
+      ghostReplay: 'optional',
+      checksum: snapshot.checksum ?? this.computeChecksum(),
+      lastEventId: snapshot.lastEventId
+    });
   }
 
   serializeEvent(event: MinigolfEvent): unknown {

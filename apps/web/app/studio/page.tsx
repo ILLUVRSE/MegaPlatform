@@ -24,27 +24,27 @@ export default async function StudioPage({
   return (
     <div className="space-y-6">
       {context ? (
-        <div className="rounded-[24px] border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/58">
+        <div className="rounded-[24px] border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
           Journey context preserved: {context.label}
         </div>
       ) : null}
       <section className="platform-panel-dark">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Studio</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">Studio</p>
             <h1 className="mt-2 text-3xl font-semibold text-white">Creator cockpit</h1>
-            <p className="mt-2 max-w-2xl text-sm text-white/56">
+            <p className="mt-2 max-w-2xl text-sm text-white/80">
               Create shorts, upload long-form video, start streams, and track what is actually moving.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Link href="/studio/short" className="rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950">
+            <Link href="/studio/short" className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950">
               Create short
             </Link>
-            <Link href="/watch/live" className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white">
+            <Link href="/watch/live" className="interactive-focus rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white">
               Start stream
             </Link>
-            <Link href="/studio/control-center" className="rounded-full border border-cyan-300/35 bg-cyan-400/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
+            <Link href="/studio/control-center" className="interactive-focus rounded-full border border-cyan-300/35 bg-cyan-400/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-50">
               Control center
             </Link>
           </div>
@@ -57,7 +57,7 @@ export default async function StudioPage({
             ["Engagement", "8.9%"]
           ].map(([label, value]) => (
             <div key={label} className="rounded-[24px] border border-white/10 bg-white/5 p-4">
-              <p className="text-xs uppercase tracking-[0.24em] text-white/46">{label}</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-white/76">{label}</p>
               <p className="mt-2 text-3xl font-semibold text-white">{value}</p>
             </div>
           ))}

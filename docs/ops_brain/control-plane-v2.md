@@ -21,9 +21,10 @@ This is a baseline control-surface document, not a claim that the repo contains 
 
 5. Runtime hooks
 - Capability/safe-action/budget assertions in Director/Specialist execution paths.
-- Agent memory append to `docs/ops_brain/memory/*.jsonl`.
+- Agent memory append to `docs/ops_brain/memory/<agent>/<namespace>.jsonl` with TTL/eviction.
 - Handoff artifacts in `docs/ops_brain/handoff/*.md`.
-- Replay tool: `pnpm --filter @illuvrse/agent-manager replay -- --actor <actor> --run-id <id>`.
+- Replay tool: `pnpm --filter @illuvrse/agent-manager replay -- --actor <actor> --run-id <id>` or `--last <n>`.
+- Token budget warnings and soft-fail alerts in `docs/ops_brain/alerts/agent-cost-controls.jsonl`.
 
 ## Notes
 

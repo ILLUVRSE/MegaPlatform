@@ -9,6 +9,10 @@
   ],
   "scripts": {
     "build": "npm run build -w api && npm run build -w workers && npm run build -w web",
+    "ci:cache:check": "node tooling/ci/cache-helpers.mjs --check",
+    "ci:cache:docker": "node tooling/ci/cache-helpers.mjs docker",
+    "ci:cache:key": "node tooling/ci/cache-helpers.mjs key",
+    "ci:cache:restore": "node tooling/ci/cache-helpers.mjs restore",
     "dev": "concurrently \"npm run dev -w api\" \"npm run dev -w workers\" \"npm run dev -w web\"",
     "test": "vitest run",
     "test:watch": "vitest",

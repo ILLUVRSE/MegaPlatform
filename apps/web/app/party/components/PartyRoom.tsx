@@ -44,6 +44,7 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
   const [error, setError] = useState<string | null>(null);
   const [playlistRefreshKey, setPlaylistRefreshKey] = useState(0);
   const [presenceStatus, setPresenceStatus] = useState<"online" | "reconnecting">("online");
+  const [syncGeneration, setSyncGeneration] = useState(0);
 
   const userId = useMemo(() => getOrCreateUserId(), []);
 
@@ -143,6 +144,8 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
     let attempt = 0;
     let source: EventSource | null = null;
     let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    let connectedOnce = false;
+    let waitingForResume = false;
 
     const scheduleReconnect = () => {
       if (closed || attempt >= PARTY_RECONNECT_ATTEMPTS) {
@@ -159,6 +162,11 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
       if (closed) return;
       source = new EventSource(`/api/party/${code}/events`);
       source.onopen = () => {
+        if (connectedOnce && waitingForResume) {
+          setSyncGeneration((current) => current + 1);
+        }
+        connectedOnce = true;
+        waitingForResume = false;
         attempt = 0;
         setPresenceStatus("online");
       };
@@ -173,6 +181,11 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
             currentIndex?: number;
             playbackState?: PlaybackSnapshot["playbackState"];
             leaderId?: string;
+            timelineRevision?: number;
+            syncSequence?: number;
+            softLockUntil?: number;
+            lastAction?: PlaybackSnapshot["lastAction"];
+            lastHeartbeatAt?: number;
             state?: unknown;
           };
 
@@ -201,7 +214,20 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
               playbackPositionMs: payload.playbackPositionMs,
               currentIndex: payload.currentIndex ?? prev.currentIndex,
               playbackState: payload.playbackState ?? prev.playbackState,
-              leaderId: payload.leaderId ?? prev.leaderId
+              leaderId: payload.leaderId ?? prev.leaderId,
+              timelineRevision:
+                typeof payload.timelineRevision === "number"
+                  ? payload.timelineRevision
+                  : prev.timelineRevision,
+              syncSequence:
+                typeof payload.syncSequence === "number" ? payload.syncSequence : prev.syncSequence,
+              softLockUntil:
+                typeof payload.softLockUntil === "number" ? payload.softLockUntil : prev.softLockUntil,
+              lastAction: payload.lastAction ?? prev.lastAction,
+              lastHeartbeatAt:
+                typeof payload.lastHeartbeatAt === "number"
+                  ? payload.lastHeartbeatAt
+                  : prev.lastHeartbeatAt
             }));
           }
 
@@ -215,6 +241,7 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
 
       source.onerror = () => {
         setPresenceStatus("reconnecting");
+        waitingForResume = connectedOnce;
         source?.close();
         source = null;
         scheduleReconnect();
@@ -372,6 +399,7 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
           playback={playback}
           onPlaybackChange={setPlayback}
           refreshKey={playlistRefreshKey}
+          syncGeneration={syncGeneration}
         />
       </section>
       <section className="space-y-6">

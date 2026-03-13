@@ -44,7 +44,10 @@ export async function GET(
       playback: {
         currentIndex: party.currentIndex,
         playbackState: party.playbackState,
-        leaderId: fallbackLeader
+        leaderId: fallbackLeader,
+        timelineRevision: 0,
+        syncSequence: 0,
+        lastAction: "heartbeat"
       }
     },
     state

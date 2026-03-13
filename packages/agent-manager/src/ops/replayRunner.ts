@@ -1,5 +1,4 @@
-import path from "path";
-import { replayAgentRun } from "./replay";
+import { replayAgentInteractions, replayAgentRun } from "./replay";
 
 function parseArg(name: string) {
   const idx = process.argv.findIndex((arg) => arg === name);
@@ -9,12 +8,17 @@ function parseArg(name: string) {
 async function main() {
   const actor = parseArg("--actor");
   const runId = parseArg("--run-id");
+  const last = parseArg("--last");
   if (!actor || !runId) {
-    throw new Error("Usage: --actor <agent|Director> --run-id <id>");
+    if (!actor || !last) {
+      throw new Error("Usage: --actor <agent|Director> --run-id <id> [--last <n>] OR --actor <agent|Director> --last <n>");
+    }
   }
 
   const repoRoot = process.cwd();
-  const replay = await replayAgentRun(repoRoot, actor, runId);
+  const replay = runId
+    ? await replayAgentRun(repoRoot, actor, runId, { last: last ? Number(last) : undefined })
+    : await replayAgentInteractions(repoRoot, actor, { last: Number(last) });
   console.log(JSON.stringify(replay, null, 2));
 }
 

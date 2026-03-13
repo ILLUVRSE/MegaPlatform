@@ -129,14 +129,14 @@ export default function MinigameGenerator() {
         <p className="text-sm text-illuvrse-muted">
           30-second arcade chaos. Deterministic seeds. Endless rerolls.
         </p>
-        <Link className="party-button inline-flex w-fit" href="/games/party">
+        <Link className="party-button interactive-focus inline-flex w-fit" href="/games/party">
           🎉 Start Party Mode
         </Link>
       </header>
 
       {!spec ? (
         <div className="party-card flex flex-col items-start gap-4">
-          <button className="party-button text-lg" onClick={handleGenerate}>
+          <button className="party-button interactive-focus text-lg" onClick={handleGenerate}>
             🎲 Generate Random Minigame
           </button>
           <p className="text-sm text-illuvrse-muted">
@@ -156,7 +156,7 @@ export default function MinigameGenerator() {
               onReplay={handleReplay}
               onCopySeed={handleCopySeed}
             />
-            {copyStatus ? <p className="text-sm text-illuvrse-primary">{copyStatus}</p> : null}
+            {copyStatus ? <p className="text-sm text-illuvrse-primary" role="status" aria-live="polite">{copyStatus}</p> : null}
             <div className="space-y-2 text-sm text-illuvrse-muted">
               {instructions.map((line) => (
                 <p key={line}>{line}</p>
@@ -170,7 +170,7 @@ export default function MinigameGenerator() {
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Recent Seeds</h2>
           {spec ? (
-            <button className="text-xs uppercase tracking-[0.3em] text-illuvrse-primary" onClick={handleGenerate}>
+            <button className="interactive-focus text-xs uppercase tracking-[0.3em] text-illuvrse-primary" onClick={handleGenerate}>
               🎲 Reroll Fresh
             </button>
           ) : null}
@@ -182,8 +182,9 @@ export default function MinigameGenerator() {
             {recentSeeds.map((seed) => (
               <button
                 key={seed}
-                className="rounded-full border border-illuvrse-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                className="interactive-focus rounded-full border border-illuvrse-border bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]"
                 onClick={() => handleLoadSeed(seed)}
+                aria-label={`Load seed ${seed}`}
               >
                 {seed}
               </button>

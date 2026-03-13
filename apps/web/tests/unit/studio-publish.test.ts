@@ -29,7 +29,13 @@ const prismaMock = vi.hoisted(() => ({
   },
   user: {
     findUnique: vi.fn()
-  }
+  },
+  $transaction: vi.fn(async (arg: unknown) => {
+    if (typeof arg === "function") {
+      return arg(prismaMock);
+    }
+    return Promise.all(arg as Promise<unknown>[]);
+  })
 }));
 
 vi.mock("@illuvrse/db", () => ({
@@ -51,21 +57,32 @@ const ensureCreatorProfileMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/creatorIdentity", () => ({
   ensureCreatorProfile: ensureCreatorProfileMock
 }));
+const invalidateCdnKeysWithRetryMock = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/cdnInvalidation", () => ({
+  invalidateCdnKeysWithRetry: invalidateCdnKeysWithRetryMock
+}));
 
 import { POST as publishProject } from "@/app/api/studio/projects/[id]/publish/route";
 
 describe("studio publish", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    prismaMock.$transaction.mockImplementation(async (arg: unknown) => {
+      if (typeof arg === "function") {
+        return arg(prismaMock);
+      }
+      return Promise.all(arg as Promise<unknown>[]);
+    });
     requireSessionMock.mockResolvedValue({ userId: "user-1", role: "user", permissions: [] });
     ensureCreatorProfileMock.mockResolvedValue({ id: "cp-1", displayName: "Creator" });
+    invalidateCdnKeysWithRetryMock.mockResolvedValue({ ok: true, attempts: 1 });
     prismaMock.studioProject.findUnique.mockResolvedValue({
       id: "proj-1",
       createdById: "user-1",
       type: "SHORT",
       title: "Test",
       description: "Caption",
-      assets: [{ id: "asset-1", kind: "SHORT_MP4", url: "https://cdn/short.mp4", metaJson: null }]
+      assets: [{ id: "asset-1", kind: "SHORT_MP4", url: "https://cdn/short.mp4", storageKey: "shorts/proj-1/render.mp4", metaJson: null }]
     });
     prismaMock.user.findUnique.mockResolvedValue({ id: "user-1", name: "Creator", email: "c@x.com" });
     prismaMock.shortPost.create.mockResolvedValue({ id: "post-1" });
@@ -79,7 +96,7 @@ describe("studio publish", () => {
       body: JSON.stringify({ title: "Test", caption: "Caption" })
     });
 
-    const response = await publishProject(request, { params: { id: "proj-1" } });
+    const response = await publishProject(request, { params: Promise.resolve({ id: "proj-1" }) });
     expect(response.status).toBe(200);
     expect(prismaMock.shortPost.create).toHaveBeenCalled();
     expect(prismaMock.feedPost.create).toHaveBeenCalled();
@@ -106,6 +123,7 @@ describe("studio publish", () => {
     expect(prismaMock.studioAsset.update).toHaveBeenCalledWith(
       expect.objectContaining({
         data: expect.objectContaining({
+          status: "published",
           temporary: false,
           metaJson: expect.objectContaining({
             lifecycleState: "published",
@@ -117,6 +135,11 @@ describe("studio publish", () => {
         })
       })
     );
+    expect(invalidateCdnKeysWithRetryMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        keys: ["shorts/proj-1/render.mp4"]
+      })
+    );
   });
 
   it("blocks publish when QA fails", async () => {
@@ -126,7 +149,7 @@ describe("studio publish", () => {
       body: JSON.stringify({ caption: "extremist content" })
     });
 
-    const response = await publishProject(request, { params: { id: "proj-1" } });
+    const response = await publishProject(request, { params: Promise.resolve({ id: "proj-1" }) });
     expect(response.status).toBe(409);
     expect(prismaMock.shortPost.create).not.toHaveBeenCalled();
     expect(prismaMock.contentQaResult.create).toHaveBeenCalledWith(

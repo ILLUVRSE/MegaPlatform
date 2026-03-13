@@ -1,0 +1,119 @@
+{
+  "name": "watch-home-diversity",
+  "now": "2026-03-13T12:00:00.000Z",
+  "policy": {
+    "categoryPenalty": 10,
+    "topicalSeedWeight": 1.2
+  },
+  "diversity": {
+    "categoryPenalty": 10,
+    "topicalSeed": ["festival", "live"],
+    "topicalSeedWeight": 1.2
+  },
+  "items": [
+    {
+      "id": "music-live-headliner",
+      "createdAt": "2026-03-13T10:30:00.000Z",
+      "likeCount": 14,
+      "commentCount": 5,
+      "shareCount": 3,
+      "editorial": 0.5,
+      "affinityBoost": 0.6,
+      "unresolvedReports": 0,
+      "categories": ["music", "live"],
+      "topics": ["festival", "headline"],
+      "relevance": 0.98
+    },
+    {
+      "id": "music-backstage-recap",
+      "createdAt": "2026-03-13T09:45:00.000Z",
+      "likeCount": 12,
+      "commentCount": 4,
+      "shareCount": 2,
+      "editorial": 0.3,
+      "affinityBoost": 0.5,
+      "unresolvedReports": 0,
+      "categories": ["music"],
+      "topics": ["festival", "behind-the-scenes"],
+      "relevance": 0.95
+    },
+    {
+      "id": "music-fan-cam",
+      "createdAt": "2026-03-13T09:15:00.000Z",
+      "likeCount": 11,
+      "commentCount": 4,
+      "shareCount": 2,
+      "editorial": 0.1,
+      "affinityBoost": 0.5,
+      "unresolvedReports": 0,
+      "categories": ["music"],
+      "topics": ["festival", "fan-cam"],
+      "relevance": 0.91
+    },
+    {
+      "id": "sports-playoff-preview",
+      "createdAt": "2026-03-13T08:00:00.000Z",
+      "likeCount": 9,
+      "commentCount": 5,
+      "shareCount": 2,
+      "editorial": 0.4,
+      "affinityBoost": 0.4,
+      "unresolvedReports": 0,
+      "categories": ["sports"],
+      "topics": ["playoffs", "analysis"],
+      "relevance": 0.83
+    },
+    {
+      "id": "gaming-indie-launch",
+      "createdAt": "2026-03-13T07:00:00.000Z",
+      "likeCount": 8,
+      "commentCount": 4,
+      "shareCount": 2,
+      "editorial": 0.5,
+      "affinityBoost": 0.4,
+      "unresolvedReports": 0,
+      "categories": ["gaming"],
+      "topics": ["indie", "launch"],
+      "relevance": 0.78
+    },
+    {
+      "id": "film-awards-roundup",
+      "createdAt": "2026-03-13T06:30:00.000Z",
+      "likeCount": 7,
+      "commentCount": 4,
+      "shareCount": 2,
+      "editorial": 0.6,
+      "affinityBoost": 0.3,
+      "unresolvedReports": 0,
+      "categories": ["film"],
+      "topics": ["awards", "analysis"],
+      "relevance": 0.73
+    },
+    {
+      "id": "creator-business-breakdown",
+      "createdAt": "2026-03-13T05:30:00.000Z",
+      "likeCount": 6,
+      "commentCount": 3,
+      "shareCount": 1,
+      "editorial": 0.7,
+      "affinityBoost": 0.2,
+      "unresolvedReports": 0,
+      "categories": ["business"],
+      "topics": ["creator-economy", "breakdown"],
+      "relevance": 0.62
+    },
+    {
+      "id": "music-merch-drop",
+      "createdAt": "2026-03-13T04:45:00.000Z",
+      "likeCount": 8,
+      "commentCount": 2,
+      "shareCount": 1,
+      "editorial": 0.2,
+      "affinityBoost": 0.3,
+      "unresolvedReports": 0,
+      "categories": ["music"],
+      "topics": ["merch", "drop"],
+      "relevance": 0.69
+    }
+  ]
+}

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 import { assertAuthSecurityConfig } from "@/lib/env";
+import { TRACE_BAGGAGE_HEADER, TRACE_PARENT_HEADER } from "@illuvrse/observability";
+import { buildTraceHeaders } from "@/lib/traceMiddleware";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import {
   getAdminDecision,
@@ -25,6 +27,10 @@ function withSecurityHeaders(response: NextResponse) {
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const traceHeaders = buildTraceHeaders(req.url, req.headers);
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set(TRACE_PARENT_HEADER, traceHeaders.get(TRACE_PARENT_HEADER) ?? "");
+  requestHeaders.set(TRACE_BAGGAGE_HEADER, traceHeaders.get(TRACE_BAGGAGE_HEADER) ?? "");
   const adminPath = isAdminPath(pathname);
   const watchPath = isWatchPath(pathname);
   const sessionProtectedPath = isSessionProtectedPath(pathname);
@@ -63,7 +69,16 @@ export async function middleware(req: NextRequest) {
       }
     }
 
-    return withSecurityHeaders(NextResponse.next());
+    const response = withSecurityHeaders(
+      NextResponse.next({
+        request: {
+          headers: requestHeaders
+        }
+      })
+    );
+    response.headers.set(TRACE_PARENT_HEADER, traceHeaders.get(TRACE_PARENT_HEADER) ?? "");
+    response.headers.set(TRACE_BAGGAGE_HEADER, traceHeaders.get(TRACE_BAGGAGE_HEADER) ?? "");
+    return response;
   }
 
   const decision = getAdminDecision(token);
@@ -82,7 +97,16 @@ export async function middleware(req: NextRequest) {
     return withSecurityHeaders(NextResponse.redirect(signInUrl));
   }
 
-  return withSecurityHeaders(NextResponse.next());
+  const response = withSecurityHeaders(
+    NextResponse.next({
+      request: {
+        headers: requestHeaders
+      }
+    })
+  );
+  response.headers.set(TRACE_PARENT_HEADER, traceHeaders.get(TRACE_PARENT_HEADER) ?? "");
+  response.headers.set(TRACE_BAGGAGE_HEADER, traceHeaders.get(TRACE_BAGGAGE_HEADER) ?? "");
+  return response;
 }
 
 export const config = {
@@ -95,7 +119,10 @@ export const config = {
     "/api/creator/portability/:path*",
     "/api/onboarding/complete/:path*",
     "/api/party/:path*",
+    "/games/:path*",
+    "/api/games/:path*",
     "/api/storage/upload/:path*",
+    "/studio/:path*",
     "/api/studio/:path*",
     "/api/uploads/:path*"
   ]
