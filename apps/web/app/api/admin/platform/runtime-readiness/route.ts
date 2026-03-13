@@ -9,5 +9,14 @@ export async function GET() {
   }
 
   const readiness = evaluatePlatformRuntimeReadiness();
-  return NextResponse.json({ ok: readiness.ok, readiness }, { status: readiness.ok ? 200 : 503 });
+  return NextResponse.json(
+    {
+      ok: readiness.ok,
+      summary: readiness.summary,
+      blockers: readiness.blockers,
+      apiRegistry: readiness.apiRegistry,
+      readiness
+    },
+    { status: readiness.ok ? 200 : 503 }
+  );
 }

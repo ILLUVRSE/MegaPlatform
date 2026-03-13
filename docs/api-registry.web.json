@@ -1,6 +1,6 @@
 {
   "scope": "apps/web/app/api",
-  "routeCount": 387,
+  "routeCount": 388,
   "routes": [
     {
       "route": "/api/admin/apps/certification/publish",
@@ -1092,6 +1092,13 @@
         "GET"
       ],
       "source": "apps/web/app/api/admin/platform/events/export/route.ts"
+    },
+    {
+      "route": "/api/admin/platform/personalization/cache",
+      "methods": [
+        "GET"
+      ],
+      "source": "apps/web/app/api/admin/platform/personalization/cache/route.ts"
     },
     {
       "route": "/api/admin/platform/runtime-readiness",
