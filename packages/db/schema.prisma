@@ -28,6 +28,7 @@ model User {
   contentItems       ContentItem[]            @relation("ContentCreator")
   contentTransitions ContentStateTransition[] @relation("ContentTransitionActor")
   creatorProfile     CreatorProfile?
+  showProjects       ShowProject[]
 }
 
 model Role {
@@ -146,6 +147,18 @@ enum StudioProjectStatus {
   PROCESSING
   COMPLETED
   FAILED
+  PUBLISHED
+}
+
+enum ShowProjectFormat {
+  SERIES
+  MOVIE
+}
+
+enum ShowProjectStatus {
+  DRAFT
+  IN_PRODUCTION
+  READY_TO_PUBLISH
   PUBLISHED
 }
 
@@ -329,6 +342,24 @@ model StudioProject {
   qaResults        ContentQaResult[]
   remixJobs        RemixJob[]
   assetLineages    AssetLineage[]
+}
+
+model ShowProject {
+  id             String            @id @default(cuid())
+  slug           String            @unique
+  title          String
+  description    String?
+  format         ShowProjectFormat
+  status         ShowProjectStatus @default(DRAFT)
+  ownerId        String
+  posterImageUrl String?
+  bannerImageUrl String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  owner          User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([ownerId, createdAt])
+  @@index([status, updatedAt])
 }
 
 model CreatorProfile {

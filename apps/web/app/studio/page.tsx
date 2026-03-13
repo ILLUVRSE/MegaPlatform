@@ -41,6 +41,9 @@ export default async function StudioPage({
             <Link href="/studio/short" className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950">
               Create short
             </Link>
+            <Link href="/studio/show-projects" className="interactive-focus rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white">
+              Show projects
+            </Link>
             <Link href="/watch/live" className="interactive-focus rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white">
               Start stream
             </Link>
