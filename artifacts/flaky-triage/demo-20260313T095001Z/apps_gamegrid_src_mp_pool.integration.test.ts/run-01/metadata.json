@@ -1,0 +1,25 @@
+{
+  "seed": 1658624516,
+  "runIndex": 1,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/pool.integration.test.ts",
+  "startedAt": "2026-03-13T09:50:21.829Z",
+  "finishedAt": "2026-03-13T09:50:23.361Z",
+  "durationMs": 1531.412802,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "1658624516",
+    "TEST_RANDOM_SEED": "1658624516",
+    "FLAKY_TRIAGE_RUN_INDEX": "1",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

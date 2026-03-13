@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1728.4692164,
+  "minDurationMs": 1654.131328,
+  "maxDurationMs": 1791.007893,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 2405459444,
+      "status": "passed",
+      "durationMs": 1722.205848,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 2288018093,
+      "status": "passed",
+      "durationMs": 1784.13374,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 2304794842,
+      "status": "passed",
+      "durationMs": 1695.824748,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 2455791931,
+      "status": "passed",
+      "durationMs": 1731.4955,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 2472570792,
+      "status": "passed",
+      "durationMs": 1700.423198,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 2355127393,
+      "status": "passed",
+      "durationMs": 1751.670627,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 2371906190,
+      "status": "passed",
+      "durationMs": 1791.007893,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 2522903279,
+      "status": "passed",
+      "durationMs": 1764.299955,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 2539680028,
+      "status": "passed",
+      "durationMs": 1689.499327,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 2363604428,
+      "status": "passed",
+      "durationMs": 1654.131328,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

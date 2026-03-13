@@ -15,6 +15,11 @@ export type AgentJob = {
   id: string;
   type: string;
   status: string;
+  attempts?: number;
+  maxAttempts?: number;
+  retryable?: boolean;
+  lastError?: string | null;
+  dedupeKey?: string | null;
   inputJson: Record<string, unknown>;
   outputJson?: Record<string, unknown> | null;
   error?: string | null;

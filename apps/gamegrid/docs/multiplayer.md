@@ -67,6 +67,25 @@ Turn-based authoritative event log + reconciliation:
 - `alley-bowling-blitz`
 - `card-table` (`blackjack`, `higher-lower`, `31`, `5-card-draw`, `forehead-poker`, `solitaire`, `texas-holdem`)
 
+Minigolf now performs host-side deterministic shot replay before accepting `stroke_result`. If a client-declared endpoint drifts beyond tolerance or the host sees an invalid replay path, the adapter emits `state_resync` instead of accepting the shot. For checksum mismatch triage, use the minigolf replay runbook in [minigolf.md](/home/ryan/ILLUVRSE/apps/gamegrid/docs/minigolf.md).
+
+## Host-authoritative Hardening
+
+- Host identity is signaling-authoritative:
+  - only `hostPlayerId` may drive host-only event and snapshot flows
+  - non-host peers attempting to broadcast authoritative packets are rejected, logged, and reconciled
+- Heartbeat and stale-host handling:
+  - clients track authoritative host heartbeats from `snapshot`, `event`, and `ping`
+  - default timeout is `8000ms` and may be overridden with `hostHeartbeatTimeoutMs`
+  - once the host is stale or disconnected, the client enters `waiting-for-host` and refuses further authoritative transitions until signaling reaffirms the host
+- Reconciliation flow:
+  - checksum mismatch, unexpected event stream, ghost-host packets, and unknown remote inputs trigger `HOST_AUTH_RECONCILE`
+  - adapters clear pending hostile inputs, mark resync required, and emit `state_resync` from the current authoritative snapshot
+- Troubleshooting:
+  - inspect `HOST_AUTH_RECONCILE` warnings for `peerId`, `reason`, and `snapshotTick`
+  - verify signaling `hostId` matches the connected authoritative peer
+  - if clients remain in `waiting-for-host`, confirm a fresh `room_joined`/host affirmation arrived after transport recovery
+
 ## Ozark Fishing Multiplayer
 
 - Status: `FULL MP IMPLEMENTED (event-log host authority)`.

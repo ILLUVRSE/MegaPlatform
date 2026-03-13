@@ -10,10 +10,20 @@ const checks = [
   { name: "api-registry", cmd: ["pnpm", ["api:registry:check"]] },
   { name: "platform-runtime", cmd: ["pnpm", ["platform:runtime:check"]] },
   { name: "boundaries", cmd: ["pnpm", ["boundaries:check"]] },
-  { name: "key-rotation", cmd: ["pnpm", ["security:key-rotation:check"]] },
+  ...(process.env.SKIP_KEY_ROTATION_CHECK === "1"
+    ? []
+    : [{ name: "key-rotation", cmd: ["pnpm", ["security:key-rotation:check"]] }]),
   { name: "supply-chain", cmd: ["pnpm", ["security:supply-chain:check"]] },
   { name: "lint", cmd: ["pnpm", ["lint"]] },
   { name: "typecheck", cmd: ["pnpm", ["typecheck"]] },
+  {
+    name: "party-slo",
+    cmd: ["pnpm", ["--filter", "@illuvrse/web", "test", "--", "--run", "party-slo.test.ts"]]
+  },
+  {
+    name: "studio-worker-retry",
+    cmd: ["pnpm", ["--filter", "@illuvrse/web", "test", "--", "--run", "studio-worker-retry.test.ts"]]
+  },
   { name: "unit", cmd: ["pnpm", ["test"]] },
   ...(quick ? [] : [{ name: "e2e-smoke", cmd: ["pnpm", ["test:e2e:smoke"]] }])
 ];

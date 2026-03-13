@@ -31,6 +31,36 @@
       "unit": "count",
       "severity": "warning",
       "pass": true
+    },
+    {
+      "id": "party-presence-up-fraction",
+      "name": "Party Presence Up Fraction",
+      "actual": 0.995,
+      "target": 0.99,
+      "operator": ">=",
+      "unit": "ratio",
+      "severity": "critical",
+      "pass": true
+    },
+    {
+      "id": "party-median-reconnect-ms",
+      "name": "Party Median Reconnect Duration",
+      "actual": 2500,
+      "target": 5000,
+      "operator": "<=",
+      "unit": "ms",
+      "severity": "warning",
+      "pass": true
+    },
+    {
+      "id": "party-host-availability",
+      "name": "Party Host Availability",
+      "actual": 0.998,
+      "target": 0.995,
+      "operator": ">=",
+      "unit": "ratio",
+      "severity": "critical",
+      "pass": true
     }
   ]
 }

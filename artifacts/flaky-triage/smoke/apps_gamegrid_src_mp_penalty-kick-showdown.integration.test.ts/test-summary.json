@@ -1,0 +1,36 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+  "iterations": 2,
+  "passCount": 2,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1546.6616655,
+  "minDurationMs": 1501.970026,
+  "maxDurationMs": 1591.353305,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 1613742793,
+      "status": "passed",
+      "durationMs": 1501.970026,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 2100282896,
+      "status": "passed",
+      "durationMs": 1591.353305,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

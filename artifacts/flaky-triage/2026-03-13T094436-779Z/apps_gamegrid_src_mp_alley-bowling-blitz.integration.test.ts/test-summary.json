@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1592.5011877,
+  "minDurationMs": 1503.99391,
+  "maxDurationMs": 1693.084943,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 46968586,
+      "status": "passed",
+      "durationMs": 1564.605015,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 63745463,
+      "status": "passed",
+      "durationMs": 1591.226547,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 13413412,
+      "status": "passed",
+      "durationMs": 1507.728925,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 30192209,
+      "status": "passed",
+      "durationMs": 1658.2044,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 114077950,
+      "status": "passed",
+      "durationMs": 1574.66052,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 130856811,
+      "status": "passed",
+      "durationMs": 1618.866806,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 80524696,
+      "status": "passed",
+      "durationMs": 1621.167033,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 97301509,
+      "status": "passed",
+      "durationMs": 1693.084943,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 181189298,
+      "status": "passed",
+      "durationMs": 1503.99391,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 1214229966,
+      "status": "passed",
+      "durationMs": 1591.473778,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

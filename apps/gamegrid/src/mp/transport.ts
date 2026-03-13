@@ -40,6 +40,7 @@ type SignalMessage = SignalEnvelope | PeerJoinedEnvelope | RoomJoinedEnvelope | 
 export interface WebRtcTransportOptions {
   role: MpRole;
   playerId: string;
+  hostPlayerId?: string;
   roomCode: string;
   signalingUrl: string;
   reconnectToken: string;
@@ -57,6 +58,7 @@ export interface TransportPeerState {
 
 export type TransportMessageHandler = (packet: TransportPacket) => void;
 export type TransportStateHandler = (state: TransportPeerState[]) => void;
+export type TransportHostChangeHandler = (hostId: string, reason: 'room_joined') => void;
 
 function parseSignal(data: string): SignalMessage | null {
   try {
@@ -82,12 +84,15 @@ export class WebRtcDataTransport {
   private readonly dataChannels = new Map<string, RTCDataChannel>();
   private onMessageHandler: TransportMessageHandler | null = null;
   private onStateHandler: TransportStateHandler | null = null;
+  private onHostChangeHandler: TransportHostChangeHandler | null = null;
   private socket: WebSocket | null = null;
   private reconnectTimer = 0;
   private disconnected = false;
+  private authorizedHostId: string;
 
   constructor(options: WebRtcTransportOptions) {
     this.options = options;
+    this.authorizedHostId = options.role === 'host' ? options.playerId : options.hostPlayerId ?? 'host';
   }
 
   onMessage(handler: TransportMessageHandler) {
@@ -96,6 +101,14 @@ export class WebRtcDataTransport {
 
   onState(handler: TransportStateHandler) {
     this.onStateHandler = handler;
+  }
+
+  onHostChange(handler: TransportHostChangeHandler) {
+    this.onHostChangeHandler = handler;
+  }
+
+  getAuthorizedHostId(): string {
+    return this.authorizedHostId;
   }
 
   connect() {
@@ -127,7 +140,7 @@ export class WebRtcDataTransport {
       return;
     }
 
-    const channel = this.dataChannels.get('host');
+    const channel = this.dataChannels.get(this.authorizedHostId);
     if (!channel || channel.readyState !== 'open') return;
 
     channel.send(serializeMessage(message));
@@ -195,6 +208,8 @@ export class WebRtcDataTransport {
   private async handleSignal(signal: SignalMessage) {
     switch (signal.type) {
       case 'room_joined':
+        this.authorizedHostId = signal.hostId;
+        this.onHostChangeHandler?.(signal.hostId, 'room_joined');
         if (this.options.role === 'host') {
           this.ensureHostPeer(this.options.playerId);
         }
@@ -247,7 +262,7 @@ export class WebRtcDataTransport {
     if (this.options.role === 'client') {
       pc.ondatachannel = (event) => {
         const channel = event.channel;
-        this.installDataChannel('host', channel);
+        this.installDataChannel(this.authorizedHostId, channel);
       };
     }
 
@@ -283,7 +298,7 @@ export class WebRtcDataTransport {
 
   private async applyRemoteSignal(fromPeerId: string, data: unknown) {
     const payload = data as { sdp?: RTCSessionDescriptionInit; candidate?: RTCIceCandidateInit };
-    const peerKey = this.options.role === 'host' ? fromPeerId : 'host';
+    const peerKey = this.options.role === 'host' ? fromPeerId : this.authorizedHostId;
     const pc = this.peerConnections.get(peerKey) ?? this.createPeerConnection(peerKey);
 
     if (payload.sdp) {
@@ -344,8 +359,13 @@ export class WebRtcDataTransport {
 export class MockLoopbackTransport {
   private peer: MockLoopbackTransport | null = null;
   private onMessageHandler: TransportMessageHandler | null = null;
+  private onStateHandler: TransportStateHandler | null = null;
+  private onHostChangeHandler: TransportHostChangeHandler | null = null;
+  private authorizedHostId: string;
 
-  constructor(private readonly playerId: string) {}
+  constructor(private readonly playerId: string, initialHostId?: string) {
+    this.authorizedHostId = initialHostId ?? playerId;
+  }
 
   connectPeer(peer: MockLoopbackTransport) {
     this.peer = peer;
@@ -353,6 +373,27 @@ export class MockLoopbackTransport {
 
   onMessage(handler: TransportMessageHandler) {
     this.onMessageHandler = handler;
+  }
+
+  onState(handler: TransportStateHandler) {
+    this.onStateHandler = handler;
+  }
+
+  onHostChange(handler: TransportHostChangeHandler) {
+    this.onHostChangeHandler = handler;
+  }
+
+  getAuthorizedHostId() {
+    return this.authorizedHostId;
+  }
+
+  simulatePeerState(states: TransportPeerState[]) {
+    this.onStateHandler?.(states);
+  }
+
+  simulateRoomJoined(hostId: string) {
+    this.authorizedHostId = hostId;
+    this.onHostChangeHandler?.(hostId, 'room_joined');
   }
 
   sendToHost(message: MpProtocolMessage) {

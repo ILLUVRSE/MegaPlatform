@@ -20,7 +20,12 @@ export default function GamesCatalog() {
   const [communityGames, setCommunityGames] = useState<CommunityGame[]>([]);
 
   useEffect(() => {
-    void trackGameEvent({ event: "games.catalog.view", surface: "games_catalog", href: "/games" });
+    void trackGameEvent({
+      eventType: "games.catalog.view",
+      gameId: "games-catalog",
+      surface: "games_catalog",
+      href: "/games"
+    });
 
     let active = true;
     fetch("/api/gamegrid/games/community")
@@ -63,7 +68,8 @@ export default function GamesCatalog() {
                 href={`/games/${game.slug}`}
                 onClick={() =>
                   void trackGameEvent({
-                    event: "games.open",
+                    eventType: "games.open",
+                    gameId: game.slug,
                     surface: "games_catalog",
                     gameSlug: game.slug,
                     href: `/games/${game.slug}`

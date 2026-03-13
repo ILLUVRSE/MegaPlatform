@@ -1,0 +1,27 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/pool.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/pool.integration.test.ts",
+  "iterations": 1,
+  "passCount": 1,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1531.412802,
+  "minDurationMs": 1531.412802,
+  "maxDurationMs": 1531.412802,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 1658624516,
+      "status": "passed",
+      "durationMs": 1531.412802,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

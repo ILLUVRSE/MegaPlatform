@@ -73,6 +73,7 @@ export async function GET(request: Request) {
     const retryable = outputJson?.retryable === true;
     const nextRetryAt = typeof outputJson?.nextRetryAt === "string" ? outputJson.nextRetryAt : null;
     const durationMs = job.updatedAt.getTime() - job.createdAt.getTime();
+    const lastError = typeof outputJson?.lastError === "string" ? outputJson.lastError : job.error;
 
     return {
       id: job.id,
@@ -87,7 +88,7 @@ export async function GET(request: Request) {
       createdAt: job.createdAt.toISOString(),
       updatedAt: job.updatedAt.toISOString(),
       durationMs: durationMs > 0 ? durationMs : null,
-      error: job.error ?? null
+      error: lastError ?? null
     };
   });
 

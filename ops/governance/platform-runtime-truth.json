@@ -12,6 +12,18 @@
     "docs/home-surface-orchestrated-control-deck.md",
     "docs/platform-runtime-truth-readiness-gate.md"
   ],
+  "requiredRuntimeFiles": [
+    "apps/web/lib/platformSessionGraph.ts",
+    "apps/web/lib/platformInbox.ts",
+    "apps/web/lib/platformSearch.ts",
+    "apps/web/lib/platformCommands.ts",
+    "apps/web/lib/platformSquads.ts",
+    "apps/web/lib/platformEconomy.ts",
+    "apps/web/lib/platformRecommendations.ts",
+    "apps/web/app/home/components/PlatformControlDeck.tsx",
+    "scripts/check-platform-runtime-readiness.mjs",
+    "apps/web/app/api/admin/platform/runtime-readiness/route.ts"
+  ],
   "requiredApis": [
     "/api/platform/session",
     "/api/platform/presence",
@@ -21,5 +33,24 @@
     "/api/social/squads",
     "/api/economy/summary",
     "/api/admin/platform/runtime-readiness"
+  ],
+  "requiredGovernanceManifests": [
+    "ops/governance/platform-runtime-truth.json",
+    "ops/governance/slos.json",
+    "ops/governance/launch-gates.json",
+    "ops/governance/service-dependencies.json",
+    "ops/governance/deployment.json",
+    "ops/governance/compliance-controls.json",
+    "ops/governance/alerts/slo-breach-alerts.json"
+  ],
+  "requiredSloIds": [
+    "studio-failure-rate-24h",
+    "live-channel-health",
+    "ops-stale-tasks"
+  ],
+  "requiredLaunchGateIds": [
+    "gate-slo",
+    "gate-runtime-readiness",
+    "gate-critical-dependencies"
   ]
 }

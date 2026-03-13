@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@illuvrse/db";
-import { enqueueStudioJob } from "@illuvrse/agent-manager";
+import { buildStudioDedupeKey, enqueueStudioJob, STUDIO_JOB_ATTEMPTS } from "@illuvrse/agent-manager";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
 
@@ -68,10 +68,13 @@ export async function POST(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
+  const dedupeKey = buildStudioDedupeKey(project.id, parsed.data.type);
   const duplicateInFlight = await prisma.agentJob.findFirst({
     where: {
-      projectId: project.id,
-      type: parsed.data.type,
+      inputJson: {
+        path: ["dedupeKey"],
+        equals: dedupeKey
+      },
       status: { in: ["QUEUED", "PROCESSING"] }
     },
     orderBy: { createdAt: "desc" },
@@ -93,7 +96,13 @@ export async function POST(
       projectId: project.id,
       type: parsed.data.type,
       status: "QUEUED",
-      inputJson: parsed.data.input ?? {}
+      inputJson: {
+        ...(parsed.data.input ?? {}),
+        dedupeKey,
+        attempts: 0,
+        maxAttempts: Math.max(1, STUDIO_JOB_ATTEMPTS),
+        retryable: false
+      }
     }
   });
 
@@ -106,7 +115,8 @@ export async function POST(
     jobId: job.id,
     projectId: project.id,
     type: parsed.data.type,
-    input: parsed.data.input ?? {}
+    input: parsed.data.input ?? {},
+    dedupeKey
   });
 
   const freshJob = await prisma.agentJob.findUnique({ where: { id: job.id } });

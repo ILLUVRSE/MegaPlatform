@@ -1,0 +1,1969 @@
+{
+  "generatedAt": "2026-03-13T09:44:36.841Z",
+  "repoRoot": "/home/ryan/ILLUVRSE",
+  "options": {
+    "pattern": "gamegrid/**/.*integration.test.ts",
+    "iterations": 10,
+    "outputDir": "/home/ryan/ILLUVRSE/artifacts/flaky-triage/2026-03-13T094436-779Z",
+    "baseSeed": 2110864416
+  },
+  "environment": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  },
+  "totals": {
+    "matchedTests": 18,
+    "totalRuns": 180,
+    "totalFailures": 0,
+    "overallFlakeRate": 0
+  },
+  "tests": [
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/games/goalie-gauntlet/career.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/games/goalie-gauntlet/career.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1613.2324023,
+      "minDurationMs": 1490.67237,
+      "maxDurationMs": 1787.134639,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2862772039,
+          "status": "passed",
+          "durationMs": 1787.134639,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 2778884314,
+          "status": "passed",
+          "durationMs": 1490.67237,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 2762107565,
+          "status": "passed",
+          "durationMs": 1594.832569,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 2946660264,
+          "status": "passed",
+          "durationMs": 1645.974624,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 2929881403,
+          "status": "passed",
+          "durationMs": 1668.693744,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 2845995662,
+          "status": "passed",
+          "durationMs": 1535.064603,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 2829216865,
+          "status": "passed",
+          "durationMs": 1511.765582,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 3013769500,
+          "status": "passed",
+          "durationMs": 1670.749498,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 2996992751,
+          "status": "passed",
+          "durationMs": 1604.243303,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 4233956821,
+          "status": "passed",
+          "durationMs": 1623.193091,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/games/starlight-chronicles/scene.crew.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/games/starlight-chronicles/scene.crew.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 2269.3582125,
+      "minDurationMs": 2154.610242,
+      "maxDurationMs": 2397.129052,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 4190869443,
+          "status": "passed",
+          "durationMs": 2205.624703,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 4174090582,
+          "status": "passed",
+          "durationMs": 2154.610242,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 4224422697,
+          "status": "passed",
+          "durationMs": 2338.548975,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 4207643836,
+          "status": "passed",
+          "durationMs": 2322.398,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 4123758095,
+          "status": "passed",
+          "durationMs": 2320.287307,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 4106981346,
+          "status": "passed",
+          "durationMs": 2319.766549,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 4157311349,
+          "status": "passed",
+          "durationMs": 2297.680552,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 4140534472,
+          "status": "passed",
+          "durationMs": 2397.129052,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 4056646747,
+          "status": "passed",
+          "durationMs": 2182.664274,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 3039641865,
+          "status": "passed",
+          "durationMs": 2154.872471,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1592.5011877,
+      "minDurationMs": 1503.99391,
+      "maxDurationMs": 1693.084943,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 46968586,
+          "status": "passed",
+          "durationMs": 1564.605015,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 63745463,
+          "status": "passed",
+          "durationMs": 1591.226547,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 13413412,
+          "status": "passed",
+          "durationMs": 1507.728925,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 30192209,
+          "status": "passed",
+          "durationMs": 1658.2044,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 114077950,
+          "status": "passed",
+          "durationMs": 1574.66052,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 130856811,
+          "status": "passed",
+          "durationMs": 1618.866806,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 80524696,
+          "status": "passed",
+          "durationMs": 1621.167033,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 97301509,
+          "status": "passed",
+          "durationMs": 1693.084943,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 181189298,
+          "status": "passed",
+          "durationMs": 1503.99391,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 1214229966,
+          "status": "passed",
+          "durationMs": 1591.473778,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/card-table.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/card-table.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1629.8305258,
+      "minDurationMs": 1557.603296,
+      "maxDurationMs": 1691.713236,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 4137264927,
+          "status": "passed",
+          "durationMs": 1691.713236,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 4053377266,
+          "status": "passed",
+          "durationMs": 1637.039332,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 4036600389,
+          "status": "passed",
+          "durationMs": 1588.732605,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 4221153088,
+          "status": "passed",
+          "durationMs": 1607.690045,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 4204374227,
+          "status": "passed",
+          "durationMs": 1651.350076,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 4120488614,
+          "status": "passed",
+          "durationMs": 1674.457935,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 4103709753,
+          "status": "passed",
+          "durationMs": 1627.013563,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 4019821156,
+          "status": "passed",
+          "durationMs": 1557.603296,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 4003044343,
+          "status": "passed",
+          "durationMs": 1596.018969,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 798827709,
+          "status": "passed",
+          "durationMs": 1666.686201,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/foosball.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/foosball.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1618.1330262,
+      "minDurationMs": 1495.580509,
+      "maxDurationMs": 1746.770193,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1672477568,
+          "status": "passed",
+          "durationMs": 1584.736998,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 1555034233,
+          "status": "passed",
+          "durationMs": 1495.580509,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 1571813094,
+          "status": "passed",
+          "durationMs": 1673.368332,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 1588589407,
+          "status": "passed",
+          "durationMs": 1621.086224,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 1605366220,
+          "status": "passed",
+          "durationMs": 1623.025926,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 1487924869,
+          "status": "passed",
+          "durationMs": 1624.510483,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 1504701746,
+          "status": "passed",
+          "durationMs": 1746.770193,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 1521478123,
+          "status": "passed",
+          "durationMs": 1554.03085,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 1538254872,
+          "status": "passed",
+          "durationMs": 1637.446947,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 3963952016,
+          "status": "passed",
+          "durationMs": 1620.7738,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/freethrow-frenzy.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/freethrow-frenzy.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1582.0306784,
+      "minDurationMs": 1503.218113,
+      "maxDurationMs": 1643.127185,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 790822903,
+          "status": "passed",
+          "durationMs": 1540.234732,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 774043978,
+          "status": "passed",
+          "durationMs": 1576.229438,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 690158301,
+          "status": "passed",
+          "durationMs": 1591.029967,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 807569368,
+          "status": "passed",
+          "durationMs": 1590.530852,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 857899435,
+          "status": "passed",
+          "durationMs": 1642.726722,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 841122622,
+          "status": "passed",
+          "durationMs": 1616.149172,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 757267601,
+          "status": "passed",
+          "durationMs": 1503.218113,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 874678668,
+          "status": "passed",
+          "durationMs": 1643.127185,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 925010719,
+          "status": "passed",
+          "durationMs": 1541.281588,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 23877765,
+          "status": "passed",
+          "durationMs": 1575.779015,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/goalie-gauntlet.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/goalie-gauntlet.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1685.6716706,
+      "minDurationMs": 1607.443961,
+      "maxDurationMs": 1751.316169,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1591315630,
+          "status": "passed",
+          "durationMs": 1607.443961,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 1608094427,
+          "status": "passed",
+          "durationMs": 1751.316169,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 1557762376,
+          "status": "passed",
+          "durationMs": 1692.837357,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 1440318541,
+          "status": "passed",
+          "durationMs": 1695.585791,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 1524206330,
+          "status": "passed",
+          "durationMs": 1642.7511,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 1540983143,
+          "status": "passed",
+          "durationMs": 1698.463018,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 1490653076,
+          "status": "passed",
+          "durationMs": 1632.172565,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 1641650601,
+          "status": "passed",
+          "durationMs": 1710.411601,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 1725538262,
+          "status": "passed",
+          "durationMs": 1683.503767,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 2575238970,
+          "status": "passed",
+          "durationMs": 1742.231377,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1582.4402894999998,
+      "minDurationMs": 1534.957022,
+      "maxDurationMs": 1631.021205,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3885165463,
+          "status": "passed",
+          "durationMs": 1560.117576,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 3868386666,
+          "status": "passed",
+          "durationMs": 1534.957022,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 3784500989,
+          "status": "passed",
+          "durationMs": 1578.583386,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 3901944824,
+          "status": "passed",
+          "durationMs": 1621.135153,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 3952274763,
+          "status": "passed",
+          "durationMs": 1542.761692,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 3935497950,
+          "status": "passed",
+          "durationMs": 1569.649882,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 3851610289,
+          "status": "passed",
+          "durationMs": 1623.815703,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 3969054124,
+          "status": "passed",
+          "durationMs": 1631.021205,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 4019386175,
+          "status": "passed",
+          "durationMs": 1576.719523,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 572356005,
+          "status": "passed",
+          "durationMs": 1585.641753,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/minigolf.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/minigolf.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1752.3282255,
+      "minDurationMs": 1658.540884,
+      "maxDurationMs": 1797.650408,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3128215611,
+          "status": "passed",
+          "durationMs": 1753.048938,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 3044329870,
+          "status": "passed",
+          "durationMs": 1797.650408,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 3027553121,
+          "status": "passed",
+          "durationMs": 1755.483304,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 3077883124,
+          "status": "passed",
+          "durationMs": 1793.670561,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 3061106247,
+          "status": "passed",
+          "durationMs": 1771.500767,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 2977220570,
+          "status": "passed",
+          "durationMs": 1740.524465,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 2960441773,
+          "status": "passed",
+          "durationMs": 1695.448083,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 3279215056,
+          "status": "passed",
+          "durationMs": 1658.540884,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 3262438307,
+          "status": "passed",
+          "durationMs": 1781.095592,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 149840785,
+          "status": "passed",
+          "durationMs": 1776.319253,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1728.4692164,
+      "minDurationMs": 1654.131328,
+      "maxDurationMs": 1791.007893,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2405459444,
+          "status": "passed",
+          "durationMs": 1722.205848,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 2288018093,
+          "status": "passed",
+          "durationMs": 1784.13374,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 2304794842,
+          "status": "passed",
+          "durationMs": 1695.824748,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 2455791931,
+          "status": "passed",
+          "durationMs": 1731.4955,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 2472570792,
+          "status": "passed",
+          "durationMs": 1700.423198,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 2355127393,
+          "status": "passed",
+          "durationMs": 1751.670627,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 2371906190,
+          "status": "passed",
+          "durationMs": 1791.007893,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 2522903279,
+          "status": "passed",
+          "durationMs": 1764.299955,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 2539680028,
+          "status": "passed",
+          "durationMs": 1689.499327,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 2363604428,
+          "status": "passed",
+          "durationMs": 1654.131328,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1607.5595942999998,
+      "minDurationMs": 1502.105488,
+      "maxDurationMs": 1664.278382,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3525551668,
+          "status": "passed",
+          "durationMs": 1608.820819,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 3475219181,
+          "status": "passed",
+          "durationMs": 1605.46788,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 3424887066,
+          "status": "passed",
+          "durationMs": 1605.957,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 3508775291,
+          "status": "passed",
+          "durationMs": 1610.900214,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 3592663016,
+          "status": "passed",
+          "durationMs": 1571.728055,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 3542328481,
+          "status": "passed",
+          "durationMs": 1502.105488,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 3491998414,
+          "status": "passed",
+          "durationMs": 1664.278382,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 3575886639,
+          "status": "passed",
+          "durationMs": 1647.367981,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 3659772252,
+          "status": "passed",
+          "durationMs": 1638.222161,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 1664719500,
+          "status": "passed",
+          "durationMs": 1620.747963,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/pixelpuck.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/pixelpuck.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1598.265673,
+      "minDurationMs": 1525.64161,
+      "maxDurationMs": 1686.118529,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1624002637,
+          "status": "passed",
+          "durationMs": 1569.060642,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 1741446036,
+          "status": "passed",
+          "durationMs": 1587.249533,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 1724667239,
+          "status": "passed",
+          "durationMs": 1576.536483,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 1707890862,
+          "status": "passed",
+          "durationMs": 1552.176258,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 1691113985,
+          "status": "passed",
+          "durationMs": 1525.64161,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 1808555336,
+          "status": "passed",
+          "durationMs": 1686.118529,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 1791778523,
+          "status": "passed",
+          "durationMs": 1657.898412,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 1775002210,
+          "status": "passed",
+          "durationMs": 1609.933145,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 1758225397,
+          "status": "passed",
+          "durationMs": 1630.415521,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 1333832263,
+          "status": "passed",
+          "durationMs": 1587.626597,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/pool.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/pool.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1589.6920569000001,
+      "minDurationMs": 1523.085848,
+      "maxDurationMs": 1667.445996,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1109172810,
+          "status": "passed",
+          "durationMs": 1575.554057,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 1125949687,
+          "status": "passed",
+          "durationMs": 1667.445996,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 1075619684,
+          "status": "passed",
+          "durationMs": 1630.985026,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 1092396433,
+          "status": "passed",
+          "durationMs": 1571.502274,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 1176282174,
+          "status": "passed",
+          "durationMs": 1536.219638,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 1193061035,
+          "status": "passed",
+          "durationMs": 1586.716594,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 1142728920,
+          "status": "passed",
+          "durationMs": 1523.085848,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 1159507781,
+          "status": "passed",
+          "durationMs": 1653.748556,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 1243393522,
+          "status": "passed",
+          "durationMs": 1597.4458,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 3076619150,
+          "status": "passed",
+          "durationMs": 1554.21678,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/starlight-chronicles.coop-boss.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/starlight-chronicles.coop-boss.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1784.5706023999999,
+      "minDurationMs": 1684.806219,
+      "maxDurationMs": 1916.350992,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2487837474,
+          "status": "passed",
+          "durationMs": 1792.658127,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 2504614223,
+          "status": "passed",
+          "durationMs": 1781.237727,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 2588502012,
+          "status": "passed",
+          "durationMs": 1731.169627,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 2605278825,
+          "status": "passed",
+          "durationMs": 1802.312914,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 2554946710,
+          "status": "passed",
+          "durationMs": 1805.949428,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 2571725571,
+          "status": "passed",
+          "durationMs": 1751.639076,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 2655611312,
+          "status": "passed",
+          "durationMs": 1684.806219,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 2403946765,
+          "status": "passed",
+          "durationMs": 1916.350992,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 2353616826,
+          "status": "passed",
+          "durationMs": 1702.547897,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 2433542038,
+          "status": "passed",
+          "durationMs": 1877.034017,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/starlight-chronicles.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/starlight-chronicles.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1811.5199673,
+      "minDurationMs": 1758.021834,
+      "maxDurationMs": 1867.678213,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1455304641,
+          "status": "passed",
+          "durationMs": 1817.248841,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 1438528264,
+          "status": "passed",
+          "durationMs": 1833.701229,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 1421749403,
+          "status": "passed",
+          "durationMs": 1758.021834,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 1404970170,
+          "status": "passed",
+          "durationMs": 1764.903693,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 1388193293,
+          "status": "passed",
+          "durationMs": 1782.877599,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 1371416916,
+          "status": "passed",
+          "durationMs": 1867.678213,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 1354640167,
+          "status": "passed",
+          "durationMs": 1829.668842,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 1606302102,
+          "status": "passed",
+          "durationMs": 1821.713546,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 1589525353,
+          "status": "passed",
+          "durationMs": 1836.179004,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 1292701219,
+          "status": "passed",
+          "durationMs": 1803.206872,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/tabletennis.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/tabletennis.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1623.7227105999998,
+      "minDurationMs": 1549.815235,
+      "maxDurationMs": 1726.750275,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 4077981615,
+          "status": "passed",
+          "durationMs": 1624.863316,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 4061202690,
+          "status": "passed",
+          "durationMs": 1626.267169,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 3977317013,
+          "status": "passed",
+          "durationMs": 1618.075857,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 4094760848,
+          "status": "passed",
+          "durationMs": 1549.815235,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 4145090915,
+          "status": "passed",
+          "durationMs": 1616.58038,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 4128314102,
+          "status": "passed",
+          "durationMs": 1726.750275,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 4044426313,
+          "status": "passed",
+          "durationMs": 1581.620107,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 3893428916,
+          "status": "passed",
+          "durationMs": 1697.524311,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 3943791623,
+          "status": "passed",
+          "durationMs": 1582.039248,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 171985293,
+          "status": "passed",
+          "durationMs": 1613.691208,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/throw-darts.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/throw-darts.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1589.4302099000001,
+      "minDurationMs": 1549.558755,
+      "maxDurationMs": 1647.625354,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 4271020763,
+          "status": "passed",
+          "durationMs": 1586.031651,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 4187133102,
+          "status": "passed",
+          "durationMs": 1573.07225,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 4170356225,
+          "status": "passed",
+          "durationMs": 1575.746917,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 4220688276,
+          "status": "passed",
+          "durationMs": 1606.138728,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 4203909479,
+          "status": "passed",
+          "durationMs": 1637.059374,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 4120023802,
+          "status": "passed",
+          "durationMs": 1565.274767,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 4103244877,
+          "status": "passed",
+          "durationMs": 1562.190247,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 127050992,
+          "status": "passed",
+          "durationMs": 1591.604056,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 110274115,
+          "status": "passed",
+          "durationMs": 1549.558755,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 330214833,
+          "status": "passed",
+          "durationMs": 1647.625354,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/scenes/starlight.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/scenes/starlight.integration.test.ts",
+      "iterations": 10,
+      "passCount": 10,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1529.7028993,
+      "minDurationMs": 1474.288636,
+      "maxDurationMs": 1680.750373,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 659386568,
+          "status": "passed",
+          "durationMs": 1477.796567,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 2,
+          "seed": 541945217,
+          "status": "passed",
+          "durationMs": 1474.288636,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 3,
+          "seed": 558722094,
+          "status": "passed",
+          "durationMs": 1507.859822,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 4,
+          "seed": 575498471,
+          "status": "passed",
+          "durationMs": 1506.294037,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 5,
+          "seed": 592277268,
+          "status": "passed",
+          "durationMs": 1680.750373,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 6,
+          "seed": 474835917,
+          "status": "passed",
+          "durationMs": 1523.04964,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 7,
+          "seed": 491612794,
+          "status": "passed",
+          "durationMs": 1537.160853,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 8,
+          "seed": 776830403,
+          "status": "passed",
+          "durationMs": 1576.997534,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 9,
+          "seed": 793607280,
+          "status": "passed",
+          "durationMs": 1514.304289,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        },
+        {
+          "runIndex": 10,
+          "seed": 31310888,
+          "status": "passed",
+          "durationMs": 1498.527242,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    }
+  ]
+}

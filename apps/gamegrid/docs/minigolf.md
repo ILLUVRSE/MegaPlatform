@@ -76,6 +76,7 @@ Pre-match menu includes:
 - Host authoritative behavior:
   - only host processes stroke inputs
   - host validates current player turn and input payload
+  - host replays each shot with the deterministic minigolf sim before accepting it
   - host computes canonical end-of-stroke result and broadcasts it
 - Canonical stroke result event includes:
   - final ball positions
@@ -87,6 +88,23 @@ Pre-match menu includes:
   - host emits periodic lightweight checksum events
   - client compares local checksum
   - on mismatch report, host emits full state resync snapshot
+
+## Server-side Validation & Replay
+- Host validation flow:
+  - clamp incoming `power`, `angle`, `endX`, and `endY`
+  - run `simulateShotForServer(...)` against the current hole using `stepFixedSimulation`, `DEFAULT_PHYSICS_CONFIG`, and the shared collision tuning path
+  - compare the server-computed final ball position against the client-declared endpoint
+- Validation tolerance:
+  - current default is `8px`
+  - shots beyond tolerance are rejected and logged for later telemetry tuning
+  - TODO: tune tolerance after enough live mismatch samples are collected
+- Resync behavior:
+  - invalid shots, out-of-bounds declarations, or replay mismatches do not emit `stroke_result`
+  - host emits `state_resync` immediately with the authoritative snapshot instead
+  - clients should treat repeated checksum mismatches as a signal to inspect local replay drift
+- Deterministic replay tests:
+  - `pnpm --filter @illuvrse/gamegrid test -- --run "minigolf.replay.test.ts"`
+  - `pnpm --filter @illuvrse/gamegrid test -- --run "games/minigolf/physics.test.ts"`
 
 ## Level JSON Format
 File: `src/content/minigolf-holes.json`

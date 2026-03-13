@@ -10,8 +10,13 @@ import SeatGrid, { type SeatSnapshot } from "./SeatGrid";
 import PartyPlayer, { type PlaybackSnapshot } from "./PartyPlayer";
 import VoicePanel from "./VoicePanel";
 import { getOrCreateUserId } from "../lib/storage";
+import {
+  getPartyReconnectDelayMs,
+  PARTY_RECONNECT_ATTEMPTS
+} from "@/lib/partyPresence";
 
 const RESERVATION_REFRESH_MS = 10_000;
+const PRESENCE_PING_MS = Number(process.env.NEXT_PUBLIC_PARTY_PRESENCE_PING_MS ?? 10_000);
 
 type PartyMeta = {
   partyId: string;
@@ -42,6 +47,18 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
 
   const userId = useMemo(() => getOrCreateUserId(), []);
 
+  const applySnapshot = (snapshot: {
+    seats?: Record<string, SeatSnapshot>;
+    playback?: PlaybackSnapshot;
+  }) => {
+    setSeatStates(snapshot.seats ?? {});
+    setPlayback((current) => snapshot.playback ?? current);
+    const held = Object.entries(snapshot.seats ?? {}).find(
+      ([, seat]) => seat.state === "reserved" && seat.userId === userId
+    );
+    setHeldSeat(held ? Number(held[0]) : null);
+  };
+
   useEffect(() => {
     let mounted = true;
     const load = async () => {
@@ -57,12 +74,10 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
       };
       if (!mounted) return;
       setMeta(payload.party);
-      setSeatStates(payload.state.seats ?? {});
-      setPlayback(payload.state.playback ?? payload.party.playback);
-      const held = Object.entries(payload.state.seats ?? {}).find(
-        ([, seat]) => seat.state === "reserved" && seat.userId === userId
-      );
-      setHeldSeat(held ? Number(held[0]) : null);
+      applySnapshot({
+        seats: payload.state.seats ?? {},
+        playback: payload.state.playback ?? payload.party.playback
+      });
       setSelectedSeat(1);
     };
 
@@ -81,8 +96,10 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
         party: PartyMeta;
         state: { seats: Record<string, SeatSnapshot>; playback: PlaybackSnapshot };
       };
-      setSeatStates(payload.state.seats ?? {});
-      setPlayback(payload.state.playback ?? payload.party.playback);
+      applySnapshot({
+        seats: payload.state.seats ?? {},
+        playback: payload.state.playback ?? payload.party.playback
+      });
     }, 15_000);
     return () => clearInterval(interval);
   }, [code]);
@@ -113,7 +130,7 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
     void ping();
     const interval = setInterval(() => {
       void ping();
-    }, 10_000);
+    }, PRESENCE_PING_MS);
     return () => {
       cancelled = true;
       clearInterval(interval);
@@ -122,64 +139,98 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
 
   useEffect(() => {
     if (!code) return;
-    const source = new EventSource(`/api/party/${code}/events`);
-    source.onopen = () => {
-      setPresenceStatus("online");
+    let closed = false;
+    let attempt = 0;
+    let source: EventSource | null = null;
+    let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const scheduleReconnect = () => {
+      if (closed || attempt >= PARTY_RECONNECT_ATTEMPTS) {
+        return;
+      }
+      const delayMs = getPartyReconnectDelayMs(attempt);
+      attempt += 1;
+      reconnectTimer = setTimeout(() => {
+        connect();
+      }, delayMs);
     };
-    source.onmessage = (event) => {
-      try {
+
+    const connect = () => {
+      if (closed) return;
+      source = new EventSource(`/api/party/${code}/events`);
+      source.onopen = () => {
+        attempt = 0;
+        setPresenceStatus("online");
+      };
+      source.onmessage = (event) => {
+        try {
           const payload = JSON.parse(event.data) as {
             type: string;
             seatIndex?: number;
-            state?: SeatSnapshot["state"];
             userId?: string | null;
             leaderTime?: number;
             playbackPositionMs?: number;
             currentIndex?: number;
             playbackState?: PlaybackSnapshot["playbackState"];
             leaderId?: string;
-            playlistLength?: number;
-            updatedAt?: string;
+            state?: unknown;
           };
 
-        if (payload.type === "seat_update" && payload.seatIndex) {
-          setSeatStates((prev) => ({
-            ...prev,
-            [String(payload.seatIndex)]: {
-              state: payload.state ?? "available",
-              userId: payload.userId ?? null
-            }
-          }));
-        }
+          if (payload.type === "snapshot") {
+            applySnapshot(
+              (payload.state as { seats?: Record<string, SeatSnapshot>; playback?: PlaybackSnapshot }) ?? {}
+            );
+            return;
+          }
 
-        if (payload.type === "playback_update") {
-          setPlayback((prev) => ({
-            ...prev,
-            leaderTime: payload.leaderTime,
-            playbackPositionMs: payload.playbackPositionMs,
-            currentIndex: payload.currentIndex ?? prev.currentIndex,
-            playbackState: payload.playbackState ?? prev.playbackState,
-            leaderId: payload.leaderId ?? prev.leaderId
-          }));
-        }
+          if (payload.type === "seat_update" && payload.seatIndex) {
+            const seatState = payload.state as SeatSnapshot["state"] | undefined;
+            setSeatStates((prev) => ({
+              ...prev,
+              [String(payload.seatIndex)]: {
+                state: seatState ?? "available",
+                userId: payload.userId ?? null
+              }
+            }));
+          }
 
-        if (payload.type === "playlist_update") {
-          setPlaylistRefreshKey((prev) => prev + 1);
+          if (payload.type === "playback_update") {
+            setPlayback((prev) => ({
+              ...prev,
+              leaderTime: payload.leaderTime,
+              playbackPositionMs: payload.playbackPositionMs,
+              currentIndex: payload.currentIndex ?? prev.currentIndex,
+              playbackState: payload.playbackState ?? prev.playbackState,
+              leaderId: payload.leaderId ?? prev.leaderId
+            }));
+          }
+
+          if (payload.type === "playlist_update") {
+            setPlaylistRefreshKey((prev) => prev + 1);
+          }
+        } catch {
+          // ignore malformed events
         }
-      } catch {
-        // ignore malformed events
-      }
+      };
+
+      source.onerror = () => {
+        setPresenceStatus("reconnecting");
+        source?.close();
+        source = null;
+        scheduleReconnect();
+      };
     };
 
-    source.onerror = () => {
-      setPresenceStatus("reconnecting");
-      source.close();
-    };
+    connect();
 
     return () => {
-      source.close();
+      closed = true;
+      source?.close();
+      if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+      }
     };
-  }, [code]);
+  }, [code, userId]);
 
   useEffect(() => {
     if (!heldSeat) return;

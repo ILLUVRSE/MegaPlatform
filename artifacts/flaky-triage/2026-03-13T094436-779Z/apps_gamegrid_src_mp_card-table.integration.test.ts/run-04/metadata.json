@@ -1,0 +1,25 @@
+{
+  "seed": 4221153088,
+  "runIndex": 4,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/card-table.integration.test.ts",
+  "startedAt": "2026-03-13T09:45:36.552Z",
+  "finishedAt": "2026-03-13T09:45:38.160Z",
+  "durationMs": 1607.690045,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "4221153088",
+    "TEST_RANDOM_SEED": "4221153088",
+    "FLAKY_TRIAGE_RUN_INDEX": "4",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "seed": 3977317013,
+  "runIndex": 3,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/tabletennis.integration.test.ts",
+  "startedAt": "2026-03-13T09:48:54.727Z",
+  "finishedAt": "2026-03-13T09:48:56.345Z",
+  "durationMs": 1618.075857,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "3977317013",
+    "TEST_RANDOM_SEED": "3977317013",
+    "FLAKY_TRIAGE_RUN_INDEX": "3",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { applyShot, createPhysicsScratch, createPhysicsStepResult, DEFAULT_PHYSICS_CONFIG, findNearestSafeRespawn, resetBall, stepBallPhysics } from './physics';
 import { applyWaterPenalty, createInitialSession, registerStroke } from './rules';
+import { simulateShotForServer } from './serverSim';
 import type { BallState, MinigolfHole } from './types';
 
 function makeHole(overrides?: Partial<MinigolfHole>): MinigolfHole {
@@ -99,5 +100,53 @@ describe('minigolf physics', () => {
     expect(ball.vx).toBeGreaterThan(0);
     expect(ball.vy).toBeGreaterThan(0);
     expect(speed).toBeLessThanOrEqual(DEFAULT_PHYSICS_CONFIG.maxSlopeAccel * 0.1 + 1);
+  });
+
+  it('replays server shots deterministically through water, sand, and moving obstacle geometry', () => {
+    const waterHole = makeHole({
+      hazards: {
+        water: [{ kind: 'rect', x: 150, y: 0, width: 70, height: 220 }],
+        surfaces: [],
+        slopes: []
+      }
+    });
+    const water = simulateShotForServer(waterHole, { angle: 0, power: 0.42 });
+    expect(water.reason).toBe('water');
+    expect(water.enteredWater).toBe(true);
+
+    const sandHole = makeHole({
+      hazards: {
+        water: [],
+        surfaces: [{ kind: 'rect', x: 100, y: 40, width: 140, height: 120, material: 'sand' }],
+        slopes: []
+      }
+    });
+    const sandA = simulateShotForServer(sandHole, { angle: 0.15, power: 0.36 });
+    const sandB = simulateShotForServer(sandHole, { angle: 0.15, power: 0.36 });
+    expect(sandA.hitSand).toBe(true);
+    expect(sandA.finalX).toBeCloseTo(sandB.finalX, 6);
+    expect(sandA.finalY).toBeCloseTo(sandB.finalY, 6);
+
+    const obstacleHole = makeHole({
+      walls: [],
+      bumpers: [],
+      movingObstacles: [
+        {
+          id: 'sweeper',
+          kind: 'rect',
+          x: 120,
+          y: 80,
+          width: 40,
+          height: 80,
+          axis: 'x',
+          range: 24,
+          speed: 0,
+          phase: 0
+        }
+      ]
+    });
+    const obstacle = simulateShotForServer(obstacleHole, { angle: 0.04, power: 0.5 });
+    expect(obstacle.hitWall).toBe(true);
+    expect(obstacle.reason).toBe('rest');
   });
 });

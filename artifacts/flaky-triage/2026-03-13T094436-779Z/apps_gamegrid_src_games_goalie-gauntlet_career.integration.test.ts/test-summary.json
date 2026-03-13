@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/games/goalie-gauntlet/career.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/games/goalie-gauntlet/career.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1613.2324023,
+  "minDurationMs": 1490.67237,
+  "maxDurationMs": 1787.134639,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 2862772039,
+      "status": "passed",
+      "durationMs": 1787.134639,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 2778884314,
+      "status": "passed",
+      "durationMs": 1490.67237,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 2762107565,
+      "status": "passed",
+      "durationMs": 1594.832569,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 2946660264,
+      "status": "passed",
+      "durationMs": 1645.974624,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 2929881403,
+      "status": "passed",
+      "durationMs": 1668.693744,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 2845995662,
+      "status": "passed",
+      "durationMs": 1535.064603,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 2829216865,
+      "status": "passed",
+      "durationMs": 1511.765582,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 3013769500,
+      "status": "passed",
+      "durationMs": 1670.749498,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 2996992751,
+      "status": "passed",
+      "durationMs": 1604.243303,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 4233956821,
+      "status": "passed",
+      "durationMs": 1623.193091,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

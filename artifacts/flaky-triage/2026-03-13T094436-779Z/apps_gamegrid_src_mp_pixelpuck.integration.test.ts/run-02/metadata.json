@@ -1,0 +1,25 @@
+{
+  "seed": 1741446036,
+  "runIndex": 2,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/pixelpuck.integration.test.ts",
+  "startedAt": "2026-03-13T09:47:45.159Z",
+  "finishedAt": "2026-03-13T09:47:46.746Z",
+  "durationMs": 1587.249533,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "1741446036",
+    "TEST_RANDOM_SEED": "1741446036",
+    "FLAKY_TRIAGE_RUN_INDEX": "2",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

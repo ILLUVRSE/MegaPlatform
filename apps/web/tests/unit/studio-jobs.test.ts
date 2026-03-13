@@ -22,10 +22,13 @@ vi.mock("@illuvrse/db", () => ({
 }));
 
 const enqueueStudioJob = vi.hoisted(() => vi.fn());
+const buildStudioDedupeKey = vi.hoisted(() => vi.fn((projectId: string, type: string) => `${projectId}:${type}`));
 const requireSessionMock = vi.hoisted(() => vi.fn());
 const checkRateLimitMock = vi.hoisted(() => vi.fn());
 vi.mock("@illuvrse/agent-manager", () => ({
-  enqueueStudioJob
+  enqueueStudioJob,
+  buildStudioDedupeKey,
+  STUDIO_JOB_ATTEMPTS: 5
 }));
 vi.mock("@/lib/authz", () => ({
   AuthzError: class AuthzError extends Error {
@@ -47,6 +50,7 @@ import { POST as createJob } from "@/app/api/studio/projects/[id]/jobs/route";
 describe("studio jobs", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    buildStudioDedupeKey.mockImplementation((projectId: string, type: string) => `${projectId}:${type}`);
     requireSessionMock.mockResolvedValue({ userId: "user-1", role: "user", permissions: [] });
     checkRateLimitMock.mockResolvedValue({ ok: true, remaining: 29, retryAfterSec: 60 });
     prismaMock.studioProject.findUnique.mockResolvedValue({ id: "proj-1", createdById: "user-1" });
@@ -65,7 +69,21 @@ describe("studio jobs", () => {
     const response = await createJob(request, { params: Promise.resolve({ id: "proj-1" }) });
 
     expect(response.status).toBe(200);
-    expect(enqueueStudioJob).toHaveBeenCalled();
+    expect(enqueueStudioJob).toHaveBeenCalledWith({
+      jobId: "job-1",
+      projectId: "proj-1",
+      type: "SHORT_SCRIPT",
+      input: { prompt: "Test" },
+      dedupeKey: "proj-1:SHORT_SCRIPT"
+    });
+    expect(prismaMock.agentJob.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        inputJson: expect.objectContaining({
+          dedupeKey: "proj-1:SHORT_SCRIPT",
+          maxAttempts: 5
+        })
+      })
+    });
   });
 
   it("blocks duplicate in-flight job creation", async () => {

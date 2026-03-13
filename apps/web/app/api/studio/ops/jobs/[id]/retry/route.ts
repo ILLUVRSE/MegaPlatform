@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
  */
 import { NextResponse } from "next/server";
 import { prisma } from "@illuvrse/db";
-import { enqueueStudioJob } from "@illuvrse/agent-manager";
+import { buildStudioDedupeKey, enqueueStudioJob, STUDIO_JOB_ATTEMPTS } from "@illuvrse/agent-manager";
 import { AuthzError, requireAdmin } from "@/lib/authz";
 
 export async function POST(
@@ -36,10 +36,13 @@ export async function POST(
     return NextResponse.json({ error: "Only failed jobs can be retried" }, { status: 409 });
   }
 
+  const dedupeKey = buildStudioDedupeKey(job.projectId, job.type);
   const duplicateInFlight = await prisma.agentJob.findFirst({
     where: {
-      projectId: job.projectId,
-      type: job.type,
+      inputJson: {
+        path: ["dedupeKey"],
+        equals: dedupeKey
+      },
       status: { in: ["QUEUED", "PROCESSING"] }
     },
     orderBy: { createdAt: "desc" },
@@ -64,6 +67,10 @@ export async function POST(
       status: "QUEUED",
       inputJson: {
         ...previousInput,
+        dedupeKey,
+        attempts: 0,
+        maxAttempts: Math.max(1, STUDIO_JOB_ATTEMPTS),
+        retryable: false,
         retriedFromJobId: job.id,
         retryRequestedAt: new Date().toISOString()
       }
@@ -79,7 +86,8 @@ export async function POST(
     jobId: newJob.id,
     projectId: newJob.projectId,
     type: newJob.type,
-    input: (newJob.inputJson as Record<string, unknown>) ?? {}
+    input: (newJob.inputJson as Record<string, unknown>) ?? {},
+    dedupeKey
   });
 
   return NextResponse.json({ ok: true, newJobId: newJob.id });

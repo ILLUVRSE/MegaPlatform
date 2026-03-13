@@ -1,0 +1,36 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+  "iterations": 2,
+  "passCount": 2,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1545.225398,
+  "minDurationMs": 1521.540676,
+  "maxDurationMs": 1568.91012,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 1436454762,
+      "status": "passed",
+      "durationMs": 1568.91012,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 1419674007,
+      "status": "passed",
+      "durationMs": 1521.540676,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

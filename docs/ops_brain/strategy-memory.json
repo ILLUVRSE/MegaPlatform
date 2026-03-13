@@ -1818,5 +1818,1425 @@
         "ref": "ops/logs/micro-experiment-outcomes.json"
       }
     ]
+  },
+  {
+    "id": "strategy-memory-ae516924-9026-46fd-b65a-82c35a7aa1c2",
+    "createdAt": "2026-03-12T15:23:42.069Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-15190cb6-b650-40a1-a30a-d63733f299bf",
+    "createdAt": "2026-03-12T15:24:41.996Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-b0d1cad7-934b-451d-88ad-bcae7d445097",
+    "createdAt": "2026-03-12T15:25:46.126Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-c6110937-2794-453a-8be4-ff2d85ac4301",
+    "createdAt": "2026-03-12T15:26:44.383Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-7d015c32-958e-481c-af71-84bdfd6c5d90",
+    "createdAt": "2026-03-12T15:27:08.172Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-b3932145-c850-4ef5-8ccd-5116d6331784",
+    "createdAt": "2026-03-12T15:27:32.642Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-2e137c6c-bcaf-4c52-98a9-fe4bd3966ee9",
+    "createdAt": "2026-03-12T15:30:25.223Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-735fefe7-4149-42b9-9a17-6353704b949c",
+    "createdAt": "2026-03-12T15:31:08.275Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-e1e0e88d-0e0a-4e00-89f4-55c1a15628a1",
+    "createdAt": "2026-03-12T15:32:05.832Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-fc5b0850-b462-4296-bd18-38b21824b629",
+    "createdAt": "2026-03-12T15:32:29.934Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-4e152a0a-0eea-412e-ab37-35ccf739c90a",
+    "createdAt": "2026-03-12T15:32:54.384Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-688237b1-212b-4e9e-a983-0df7415e24b4",
+    "createdAt": "2026-03-12T15:33:39.156Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-0cc457bc-5189-4bd4-8895-d6ee0a0c5a58",
+    "createdAt": "2026-03-12T15:34:04.294Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-997a30a5-090a-46f8-90b6-f5324b7eb808",
+    "createdAt": "2026-03-12T15:34:30.890Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-ac2961f1-676d-471b-92e7-b0c40bcfcfe0",
+    "createdAt": "2026-03-12T15:58:35.085Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-7aa91421-feda-41fc-835e-16e9d4d3b580",
+    "createdAt": "2026-03-12T15:58:35.838Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-39eda176-2b21-4ff2-ad2a-b29c8b055c0d",
+    "createdAt": "2026-03-12T15:59:33.579Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-c185d0e6-5a7e-4fcd-af3d-852643a06c9c",
+    "createdAt": "2026-03-12T16:00:20.052Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-437d5dd0-6e68-4ce6-9ee7-a8aced445845",
+    "createdAt": "2026-03-12T16:00:46.601Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-1f0a35c2-6549-4fa6-b33f-8814cf6f752e",
+    "createdAt": "2026-03-12T16:01:10.189Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-4ec83ef3-3e7e-4b01-8c98-0c502d25ed51",
+    "createdAt": "2026-03-12T16:01:32.636Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-13dbc3aa-9ca8-408f-a501-e35a27149785",
+    "createdAt": "2026-03-12T16:01:58.708Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-227e2f6a-33cc-4589-98d5-c07d08893130",
+    "createdAt": "2026-03-12T16:02:22.807Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-5db55735-8217-4afa-930e-4bab36eda4ac",
+    "createdAt": "2026-03-12T16:02:45.801Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-208fc88a-0ba9-4a09-9e4a-7d5b3cfddd39",
+    "createdAt": "2026-03-12T16:03:09.789Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-275a09be-dab0-479d-adda-3e4cc7ebe9b0",
+    "createdAt": "2026-03-12T16:03:36.996Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-cf806e60-a2b2-44fe-af21-edf4313571df",
+    "createdAt": "2026-03-12T16:14:10.875Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-6a774e83-2490-4d7b-bf34-e44666cca3fe",
+    "createdAt": "2026-03-12T16:14:47.771Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-08ce4df1-f7dd-4490-8016-f0e3e6a12da9",
+    "createdAt": "2026-03-12T16:15:11.610Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-1f28c0ca-e711-475f-a5e3-9db657459400",
+    "createdAt": "2026-03-12T16:15:38.903Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-9d218642-38c4-4e52-bd0c-251850eb2a9c",
+    "createdAt": "2026-03-12T16:15:56.302Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-1fcdf345-dd2f-4411-85f5-3423b6a72703",
+    "createdAt": "2026-03-12T16:16:25.140Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-0f5ecd18-b80c-49bf-8a5f-7a0b1486d3f9",
+    "createdAt": "2026-03-12T16:16:48.739Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-082ad6df-11c4-41df-a3c0-42b8b25251fd",
+    "createdAt": "2026-03-12T16:31:56.018Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-076f1f83-f569-4e0f-843b-65b8124ab577",
+    "createdAt": "2026-03-12T16:32:39.604Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-fc126327-1aeb-4f71-9bfa-834c1338fb9d",
+    "createdAt": "2026-03-12T16:33:08.407Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-e26d6c69-28f7-470b-8752-6730082ce953",
+    "createdAt": "2026-03-12T16:33:35.948Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-01af9737-85b2-4a23-82d4-3826f2154a0f",
+    "createdAt": "2026-03-12T16:36:00.704Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-70436bed-f1c9-4c2f-9125-1c27d701a2bc",
+    "createdAt": "2026-03-12T16:36:34.828Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-a7100615-e24f-4208-8d1a-22347786f19e",
+    "createdAt": "2026-03-12T16:37:04.866Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-8e656e5c-b090-47b1-afa3-94513ab4f0dc",
+    "createdAt": "2026-03-12T16:37:25.349Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-a8cde6a3-776d-4a90-abe5-446e34988d51",
+    "createdAt": "2026-03-12T16:37:58.619Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-19121b3e-ccb6-4f2a-921b-70f7b6f25ba3",
+    "createdAt": "2026-03-12T16:38:19.462Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-8c44d54f-e021-44ce-97bf-dff9e216a8e3",
+    "createdAt": "2026-03-12T16:38:53.642Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-140e3008-f0de-4389-87c4-d400c84d56c0",
+    "createdAt": "2026-03-13T09:54:26.744Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-0c8f0d4d-9b2e-4f34-92a5-deb918349c6d",
+    "createdAt": "2026-03-13T09:55:13.401Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-696753f3-0d30-4507-8aad-22124316c7d2",
+    "createdAt": "2026-03-13T09:55:38.068Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-c4c40b1b-c577-4083-8809-2db010aebc7f",
+    "createdAt": "2026-03-13T09:56:03.090Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-e4ecd1f5-f9dc-49a3-8cfa-a0216bbad6af",
+    "createdAt": "2026-03-13T10:08:05.450Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-a9e6114d-9dc6-49ae-b6c8-7038b31f3b8f",
+    "createdAt": "2026-03-13T10:09:21.823Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-5b8b47c4-0ef8-4476-995a-c06e02cf7495",
+    "createdAt": "2026-03-13T10:09:50.637Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-118fee1a-2646-4228-8a0b-a4bde6a20937",
+    "createdAt": "2026-03-13T10:10:17.241Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-08223f95-d814-4857-aad2-2e98bcea975b",
+    "createdAt": "2026-03-13T10:10:42.337Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-6f98a130-8880-4c7e-94fb-0b574ac0ab1a",
+    "createdAt": "2026-03-13T10:11:00.289Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-33336c39-41ff-427c-9c8c-be57880e46b6",
+    "createdAt": "2026-03-13T10:11:29.145Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-3f7668da-1104-4fe0-b5cb-a36e72a1a111",
+    "createdAt": "2026-03-13T10:11:54.622Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-da66f5e3-f0e4-409b-a8af-d8d6fa870ba4",
+    "createdAt": "2026-03-13T10:12:19.786Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-8bbcd850-c8a6-47d3-9ff3-f31dd091548f",
+    "createdAt": "2026-03-13T10:23:39.466Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-77ff3873-7b21-4985-970e-ef0ea70e46c9",
+    "createdAt": "2026-03-13T10:24:04.541Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-c77723ab-6249-4571-855c-93aac2f2455c",
+    "createdAt": "2026-03-13T10:24:30.102Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-bcd50e0c-d52e-487e-8be6-9f40bcdad7c4",
+    "createdAt": "2026-03-13T10:26:37.965Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-9af027fa-8d4d-42a3-838d-46f63dc578d1",
+    "createdAt": "2026-03-13T10:27:03.114Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-f4fce193-aaf7-41bc-b24f-182ac72e5482",
+    "createdAt": "2026-03-13T10:27:28.470Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-165efa97-248f-477d-90e1-5cc4de8cbdcc",
+    "createdAt": "2026-03-13T10:32:59.451Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-d0c670be-9f28-4c6e-9503-f642ec2bebb4",
+    "createdAt": "2026-03-13T10:33:25.817Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-d36f6379-fcc3-4cff-a8e7-e8b10b91e6ab",
+    "createdAt": "2026-03-13T10:33:53.877Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-d0a6357f-fe5d-40e2-bdbc-dabcb090805d",
+    "createdAt": "2026-03-13T10:40:57.867Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-b8c2b5d0-0c2a-48fe-bae4-6a0378dbb169",
+    "createdAt": "2026-03-13T10:41:51.386Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-1ca5c57f-08bb-42af-93ad-cffd2fcd582c",
+    "createdAt": "2026-03-13T10:47:04.083Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-00c1210e-cae0-4f8d-9e46-322e1dca2602",
+    "createdAt": "2026-03-13T10:47:29.114Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
+  },
+  {
+    "id": "strategy-memory-78dd0c13-8b62-493a-8fe5-dbe3ead255d7",
+    "createdAt": "2026-03-13T10:47:53.597Z",
+    "theme": "quarterly reliability",
+    "summary": "stabilize watch and party during peak windows",
+    "evidence": [
+      {
+        "kind": "metric",
+        "ref": "ops/logs/autonomous-loop-runs.json"
+      },
+      {
+        "kind": "decision",
+        "ref": "docs/ops_brain/decision-journal.json"
+      },
+      {
+        "kind": "experiment",
+        "ref": "ops/logs/micro-experiment-outcomes.json"
+      }
+    ]
   }
 ]

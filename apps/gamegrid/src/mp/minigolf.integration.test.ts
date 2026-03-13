@@ -1,7 +1,22 @@
 import { describe, expect, it } from 'vitest';
+import { loadMinigolfCourse } from '../games/minigolf/levels';
+import { simulateShotForServer } from '../games/minigolf/serverSim';
 import { MinigolfMultiplayerAdapter } from './adapters/minigolf';
 import { createStartedRoom, sendEventFromHost, sendInputToHost, sendSnapshotFromHost, wireLoopback } from './integrationHarness';
 import { MockLoopbackTransport } from './transport';
+
+const course = loadMinigolfCourse();
+
+function makeHonestShot(holeIndex: number, power: number, angle: number) {
+  const hole = course.holes[holeIndex];
+  const summary = simulateShotForServer(hole, { power, angle });
+  return {
+    power,
+    angle,
+    endX: summary.finalX,
+    endY: summary.finalY
+  };
+}
 
 describe('minigolf multiplayer integration', () => {
   it('syncs hole progression and canonical score state', () => {
@@ -28,18 +43,19 @@ describe('minigolf multiplayer integration', () => {
       }
     );
 
-    for (let step = 0; step < 24; step += 1) {
-      const power = ((step % 5) + 3) / 10;
-      hostAdapter.onInput({ power, angle: 0.1 * step, endX: step * 8, endY: step * 3, playerIndex: 0, expectedTurn: 0 });
-      for (const event of hostAdapter.step()) sendEventFromHost(hostTransport, event);
-      sendSnapshotFromHost(hostTransport, step * 2, hostAdapter.getSnapshot());
+    const hostShot = makeHonestShot(0, 0.42, -0.08);
+    hostAdapter.onInput({ ...hostShot, playerIndex: 0, expectedTurn: 0 });
+    const hostEvents = hostAdapter.step();
+    expect(hostEvents.some((event) => event.type === 'stroke_result')).toBe(true);
+    for (const event of hostEvents) sendEventFromHost(hostTransport, event);
+    sendSnapshotFromHost(hostTransport, 0, hostAdapter.getSnapshot());
 
-      sendInputToHost(clientTransport, step, { power: power - 0.1, angle: -0.07 * step, endX: -step * 7, endY: step * 2, playerIndex: 1, expectedTurn: 1 });
-      for (const event of hostAdapter.step()) sendEventFromHost(hostTransport, event);
-      sendSnapshotFromHost(hostTransport, step * 2 + 1, hostAdapter.getSnapshot());
-
-      if (hostAdapter.getResult()) break;
-    }
+    const clientShot = makeHonestShot(0, 0.39, -0.04);
+    sendInputToHost(clientTransport, 1, { ...clientShot, playerIndex: 1, expectedTurn: 1 });
+    const clientEvents = hostAdapter.step();
+    expect(clientEvents.some((event) => event.type === 'stroke_result')).toBe(true);
+    for (const event of clientEvents) sendEventFromHost(hostTransport, event);
+    sendSnapshotFromHost(hostTransport, 1, hostAdapter.getSnapshot());
 
     expect(clientAdapter.getSnapshot().hole).toBe(hostAdapter.getSnapshot().hole);
     expect(clientAdapter.getSnapshot().totals).toEqual(hostAdapter.getSnapshot().totals);

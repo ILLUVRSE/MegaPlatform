@@ -2,17 +2,20 @@ export const dynamic = "force-dynamic";
 
 /**
  * Party events SSE endpoint.
- * GET: SSE stream of { type, ... } events for seat/playback updates.
+ * GET: SSE stream of { type, ... } events for snapshot, seat, playback, and keepalive updates.
  * Guard: none; public read-only stream.
  */
 import { prisma } from "@illuvrse/db";
-import { subscribe } from "@illuvrse/world-state";
+import { getState, subscribe } from "@illuvrse/world-state";
 
 export async function GET(
   request: Request,
   { params }: { params: { code: string } }
 ) {
-  const party = await prisma.party.findUnique({ where: { code: params.code } });
+  const party = await prisma.party.findUnique({
+    where: { code: params.code },
+    include: { seats: true }
+  });
   if (!party) {
     return new Response("Party not found", { status: 404 });
   }
@@ -22,6 +25,10 @@ export async function GET(
   const stream = new ReadableStream({
     async start(controller) {
       controller.enqueue(encoder.encode(`event: ready\ndata: {"ok":true}\n\n`));
+      const state = await getState(party.id, party.seats.length);
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ type: "snapshot", state, reason: "initial" })}\n\n`)
+      );
       const heartbeat = setInterval(() => {
         controller.enqueue(
           encoder.encode(`event: heartbeat\ndata: {"ts":"${new Date().toISOString()}"}\n\n`)

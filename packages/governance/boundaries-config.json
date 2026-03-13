@@ -1,0 +1,35 @@
+{
+  "sourceRoots": ["apps", "packages"],
+  "groups": [
+    {
+      "name": "gamegrid-runtime",
+      "prefixes": ["apps/gamegrid/src/"],
+      "excludePrefixes": ["apps/gamegrid/src/adapters/xr/"]
+    },
+    {
+      "name": "gamegrid-xr-adapters",
+      "prefixes": ["apps/gamegrid/src/adapters/xr/"]
+    },
+    {
+      "name": "xr-runtime",
+      "prefixes": ["apps/web/lib/", "apps/web/app/api/admin/xr/"],
+      "excludePrefixes": ["apps/web/lib/adapters/gamegrid/"]
+    },
+    {
+      "name": "xr-gamegrid-adapters",
+      "prefixes": ["apps/web/lib/adapters/gamegrid/"]
+    }
+  ],
+  "rules": [
+    {
+      "from": "gamegrid-runtime",
+      "to": "xr-runtime",
+      "message": "GameGrid runtime must not import XR runtime code directly; use an approved adapter interface instead"
+    },
+    {
+      "from": "xr-runtime",
+      "to": "gamegrid-runtime",
+      "message": "XR runtime must not import GameGrid runtime code directly; use an approved adapter interface instead"
+    }
+  ]
+}

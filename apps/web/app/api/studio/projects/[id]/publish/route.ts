@@ -12,6 +12,8 @@ import { AuthzError, requireSession } from "@/lib/authz";
 import { ensureCreatorProfile } from "@/lib/creatorIdentity";
 import { evaluateContentQa } from "@/lib/contentQa";
 
+const QA_CHECKS_RUN = ["asset-presence", "asset-kind", "caption-policy"];
+
 const publishSchema = z.object({
   title: z.string().optional(),
   caption: z.string().optional()
@@ -72,14 +74,27 @@ export async function POST(
     assetKinds: project.assets.map((item) => item.kind),
     assetCount: project.assets.length
   });
+  const qaTimestamp = new Date();
+  const qaOutcome = {
+    status: qaResult.status,
+    passed: qaResult.status === "PASS",
+    checksRun: QA_CHECKS_RUN,
+    reporterId: principal.userId,
+    timestamp: qaTimestamp.toISOString()
+  } satisfies Prisma.InputJsonObject;
+  const qaAuditRecord = {
+    issues: qaResult.issues,
+    outcome: qaOutcome
+  } satisfies Prisma.InputJsonObject;
 
   await prisma.contentQaResult.create({
-      data: {
+    data: {
       projectId: project.id,
       status: qaResult.status as "PASS" | "FAIL",
       technicalScore: qaResult.technicalScore,
       policyScore: qaResult.policyScore,
-      issuesJson: qaResult.issues
+      issuesJson: qaAuditRecord,
+      createdAt: qaTimestamp
     }
   });
 

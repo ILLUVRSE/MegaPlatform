@@ -89,6 +89,19 @@ export function resolveSlotByPlayerId(playerIdsByIndex: [string, string], player
   return null;
 }
 
+export function validateRemoteFromKnownPlayer(
+  playerIdsByIndex: [string, string],
+  fromPlayerId: string | undefined,
+  hostPlayerId?: string,
+  requireHostPlayer = false
+): boolean {
+  if (typeof fromPlayerId !== 'string' || fromPlayerId.length === 0) return false;
+  if (requireHostPlayer) {
+    return typeof hostPlayerId === 'string' && hostPlayerId.length > 0 && fromPlayerId === hostPlayerId;
+  }
+  return resolveSlotByPlayerId(playerIdsByIndex, fromPlayerId) !== null;
+}
+
 export function readStringOption(options: Record<string, unknown> | undefined, key: string, fallback: string): string {
   const raw = options?.[key];
   return typeof raw === 'string' && raw.trim().length > 0 ? raw : fallback;

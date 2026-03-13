@@ -108,6 +108,11 @@ export async function POST(request: Request) {
         joinedAt: new Date().toISOString()
       }
     },
+    heartbeat: {
+      lastSeenAt: new Date().toISOString(),
+      lastHostHeartbeatAt: new Date().toISOString(),
+      pingCount: 1
+    },
     updatedAt: new Date().toISOString()
   };
 

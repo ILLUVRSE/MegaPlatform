@@ -1,0 +1,27 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+  "iterations": 1,
+  "passCount": 1,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1542.197233,
+  "minDurationMs": 1542.197233,
+  "maxDurationMs": 1542.197233,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 571250500,
+      "status": "passed",
+      "durationMs": 1542.197233,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "seed": 3424887066,
+  "runIndex": 3,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/penalty-kick-showdown.integration.test.ts",
+  "startedAt": "2026-03-13T09:47:30.719Z",
+  "finishedAt": "2026-03-13T09:47:32.325Z",
+  "durationMs": 1605.957,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "3424887066",
+    "TEST_RANDOM_SEED": "3424887066",
+    "FLAKY_TRIAGE_RUN_INDEX": "3",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

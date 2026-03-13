@@ -5,7 +5,7 @@ import process from "node:process";
 
 const packageRoot = process.cwd();
 const repoRoot = path.resolve(packageRoot, "..", "..");
-const scriptPath = path.join(repoRoot, "scripts", "check-db-migrations.mjs");
+const scriptPath = path.join(repoRoot, "scripts", "db", "migrations-lint.mjs");
 
 const result = spawnSync(process.execPath, [scriptPath], {
   stdio: "inherit",

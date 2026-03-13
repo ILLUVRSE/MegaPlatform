@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-03-13T10:41:41.339Z",
+  "roomId": "party-room-smoke",
+  "roomCode": "SMOKE",
+  "simulation": {
+    "simultaneousConnections": 20,
+    "durationSeconds": 30,
+    "presencePingIntervalMs": 5000,
+    "totalPresencePings": 120,
+    "simulatedPacketCount": 1440,
+    "seed": 1337
+  },
+  "metrics": {
+    "connectSetupMs": {
+      "min": 384.02,
+      "median": 545.62,
+      "p95": 777.76,
+      "max": 826.87,
+      "successRatioUnder1s": 1
+    },
+    "jitterMs": {
+      "min": 9.63,
+      "median": 26.08,
+      "p95": 38.49,
+      "max": 41.37
+    },
+    "packetLoss": {
+      "lostPackets": 34,
+      "totalPackets": 1440,
+      "ratio": 0.0236
+    },
+    "reconnectLatencyMs": {
+      "min": 134.19,
+      "median": 257.47,
+      "p95": 353.07,
+      "max": 399.73
+    }
+  },
+  "slos": [
+    {
+      "id": "party-voice-connect-under-1s",
+      "name": "95% of connects under 1s",
+      "actual": 1,
+      "target": 0.95,
+      "unit": "ratio",
+      "operator": ">=",
+      "pass": true
+    },
+    {
+      "id": "party-voice-median-reconnect-under-500ms",
+      "name": "Median reconnect under 500ms",
+      "actual": 257.47,
+      "target": 500,
+      "unit": "ms",
+      "operator": "<=",
+      "pass": true
+    },
+    {
+      "id": "party-voice-median-jitter-under-40ms",
+      "name": "Median jitter under 40ms",
+      "actual": 26.08,
+      "target": 40,
+      "unit": "ms",
+      "operator": "<=",
+      "pass": true
+    },
+    {
+      "id": "party-voice-packet-loss-under-3pct",
+      "name": "Packet loss under 3%",
+      "actual": 0.0236,
+      "target": 0.03,
+      "unit": "ratio",
+      "operator": "<=",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

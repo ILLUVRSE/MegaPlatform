@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/throw-darts.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/throw-darts.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1589.4302099000001,
+  "minDurationMs": 1549.558755,
+  "maxDurationMs": 1647.625354,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 4271020763,
+      "status": "passed",
+      "durationMs": 1586.031651,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 4187133102,
+      "status": "passed",
+      "durationMs": 1573.07225,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 4170356225,
+      "status": "passed",
+      "durationMs": 1575.746917,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 4220688276,
+      "status": "passed",
+      "durationMs": 1606.138728,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 4203909479,
+      "status": "passed",
+      "durationMs": 1637.059374,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 4120023802,
+      "status": "passed",
+      "durationMs": 1565.274767,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 4103244877,
+      "status": "passed",
+      "durationMs": 1562.190247,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 127050992,
+      "status": "passed",
+      "durationMs": 1591.604056,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 110274115,
+      "status": "passed",
+      "durationMs": 1549.558755,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 330214833,
+      "status": "passed",
+      "durationMs": 1647.625354,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

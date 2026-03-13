@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/games/starlight-chronicles/scene.crew.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/games/starlight-chronicles/scene.crew.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 2269.3582125,
+  "minDurationMs": 2154.610242,
+  "maxDurationMs": 2397.129052,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 4190869443,
+      "status": "passed",
+      "durationMs": 2205.624703,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 4174090582,
+      "status": "passed",
+      "durationMs": 2154.610242,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 4224422697,
+      "status": "passed",
+      "durationMs": 2338.548975,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 4207643836,
+      "status": "passed",
+      "durationMs": 2322.398,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 4123758095,
+      "status": "passed",
+      "durationMs": 2320.287307,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 4106981346,
+      "status": "passed",
+      "durationMs": 2319.766549,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 4157311349,
+      "status": "passed",
+      "durationMs": 2297.680552,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 4140534472,
+      "status": "passed",
+      "durationMs": 2397.129052,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 4056646747,
+      "status": "passed",
+      "durationMs": 2182.664274,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 3039641865,
+      "status": "passed",
+      "durationMs": 2154.872471,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

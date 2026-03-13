@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * Party presence heartbeat API.
- * POST: -> { ok: true, lastSeenAt }
+ * POST: -> { ok: true, lastSeenAt, pingCount, lastHostHeartbeatAt }
  * Guard: authenticated participant/host.
  */
 import { NextResponse } from "next/server";
@@ -10,6 +10,11 @@ import { prisma } from "@illuvrse/db";
 import { getState, publish, setState } from "@illuvrse/world-state";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
+import {
+  estimatePresenceHeartbeatGapMs,
+  estimatePresenceReconnectMs,
+  recordPartyRoomPresence
+} from "@/lib/platformPresence";
 
 export async function POST(
   request: Request,
@@ -35,6 +40,12 @@ export async function POST(
   }
 
   const { code } = await params;
+  const body = (await request.json().catch(() => null)) as
+    | {
+        status?: string;
+        reconnectMs?: number;
+      }
+    | null;
   const party = await prisma.party.findUnique({
     where: { code },
     include: { seats: true }
@@ -59,6 +70,7 @@ export async function POST(
 
   const state = await getState(party.id, party.seats.length);
   const nowIso = new Date().toISOString();
+  const nowMs = Date.parse(nowIso);
   const current = state.participants[principal.userId];
   state.participants[principal.userId] = {
     displayName: participant?.displayName ?? current?.displayName ?? (isHost ? "Host" : null),
@@ -66,7 +78,30 @@ export async function POST(
     lastSeenAt: nowIso,
     seatIndex: current?.seatIndex ?? null
   };
+  state.heartbeat = {
+    lastSeenAt: nowIso,
+    lastHostHeartbeatAt: isHost ? nowIso : (state.heartbeat?.lastHostHeartbeatAt ?? null),
+    pingCount: (state.heartbeat?.pingCount ?? 0) + 1
+  };
   await setState(party.id, state);
+  await recordPartyRoomPresence(
+    {
+      userId: principal.userId
+    },
+    {
+      partyId: party.id,
+      roomCode: party.code,
+      status: body?.status === "reconnecting" ? "reconnecting" : "active",
+      isHost,
+      heartbeatGapMs: estimatePresenceHeartbeatGapMs(current?.lastSeenAt ?? null, nowMs),
+      reconnectMs:
+        typeof body?.reconnectMs === "number"
+          ? body.reconnectMs
+          : estimatePresenceReconnectMs(current?.lastSeenAt ?? null, nowMs),
+      hostAvailability: isHost ? 1 : undefined,
+      presenceUpFraction: 1
+    }
+  );
   await publish(party.id, {
     type: "presence_update",
     userId: principal.userId,
@@ -74,6 +109,25 @@ export async function POST(
     lastSeenAt: nowIso,
     status: "updated"
   });
+  await publish(party.id, {
+    type: "keepalive",
+    ts: nowIso,
+    lastSeenAt: state.heartbeat.lastSeenAt,
+    lastHostHeartbeatAt: state.heartbeat.lastHostHeartbeatAt,
+    pingCount: state.heartbeat.pingCount
+  });
+  if (isHost) {
+    await publish(party.id, {
+      type: "snapshot",
+      state,
+      reason: "heartbeat"
+    });
+  }
 
-  return NextResponse.json({ ok: true, lastSeenAt: nowIso });
+  return NextResponse.json({
+    ok: true,
+    lastSeenAt: nowIso,
+    pingCount: state.heartbeat.pingCount,
+    lastHostHeartbeatAt: state.heartbeat.lastHostHeartbeatAt
+  });
 }

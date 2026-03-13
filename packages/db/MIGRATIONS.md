@@ -17,19 +17,21 @@ This package is the canonical source for Prisma schema and SQL migrations.
 
 ## Destructive SQL policy
 
-Destructive statements are blocked by default by `scripts/check-db-migrations.mjs`.
+Destructive statements are blocked by default by `scripts/db/migrations-lint.mjs`.
 
 If a migration must contain destructive SQL:
 
 1. Add an in-file justification comment in `migration.sql`:
    `-- MIGRATION_ALLOW_DESTRUCTIVE: <reason>`
-2. Record the rollout and rollback plan in the pull request or issue.
-3. Use `prisma:migrate:deploy` for non-dev deployment flows.
+2. If the destructive change is in the recent migration window (defaults to the latest 10 migrations), CI also requires `ALLOW_DESTRUCTIVE=true`.
+3. Record the rollout and rollback plan in the pull request or issue.
+4. Use `prisma:migrate:deploy` for non-dev deployment flows.
 
 Current linted destructive patterns include:
 
 - `DROP TABLE`
 - `DROP COLUMN`
+- `ALTER ... DROP` except for non-destructive cases like `DROP DEFAULT` and `DROP NOT NULL`
 - `DROP SCHEMA`
 - `TRUNCATE`
 - `ALTER TABLE ... DROP CONSTRAINT`

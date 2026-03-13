@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-03-13T12:00:00.000Z",
+  "roomId": "party-room-123",
+  "roomCode": "ROOM123",
+  "simulation": {
+    "simultaneousConnections": 12,
+    "durationSeconds": 15,
+    "presencePingIntervalMs": 5000,
+    "totalPresencePings": 36,
+    "simulatedPacketCount": 432,
+    "seed": 42
+  },
+  "metrics": {
+    "connectSetupMs": {
+      "min": 299.5,
+      "median": 486.72,
+      "p95": 760.03,
+      "max": 760.03,
+      "successRatioUnder1s": 1
+    },
+    "jitterMs": {
+      "min": 8.46,
+      "median": 26.94,
+      "p95": 36.55,
+      "max": 39.87
+    },
+    "packetLoss": {
+      "lostPackets": 7,
+      "totalPackets": 432,
+      "ratio": 0.0162
+    },
+    "reconnectLatencyMs": {
+      "min": 208.79,
+      "median": 257.16,
+      "p95": 390.74,
+      "max": 390.74
+    }
+  },
+  "slos": [
+    {
+      "id": "party-voice-connect-under-1s",
+      "name": "95% of connects under 1s",
+      "actual": 1,
+      "target": 0.95,
+      "unit": "ratio",
+      "operator": ">=",
+      "pass": true
+    },
+    {
+      "id": "party-voice-median-reconnect-under-500ms",
+      "name": "Median reconnect under 500ms",
+      "actual": 257.16,
+      "target": 500,
+      "unit": "ms",
+      "operator": "<=",
+      "pass": true
+    },
+    {
+      "id": "party-voice-median-jitter-under-40ms",
+      "name": "Median jitter under 40ms",
+      "actual": 26.94,
+      "target": 40,
+      "unit": "ms",
+      "operator": "<=",
+      "pass": true
+    },
+    {
+      "id": "party-voice-packet-loss-under-3pct",
+      "name": "Packet loss under 3%",
+      "actual": 0.0162,
+      "target": 0.03,
+      "unit": "ratio",
+      "operator": "<=",
+      "pass": true
+    }
+  ],
+  "pass": true
+}
