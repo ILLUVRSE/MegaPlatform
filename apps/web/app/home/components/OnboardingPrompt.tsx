@@ -9,7 +9,8 @@ export default function OnboardingPrompt() {
 
   useEffect(() => {
     const completed = window.localStorage.getItem("illuvrse:onboarding-completed") === "1";
-    setVisible(!completed);
+    const dismissed = window.localStorage.getItem("illuvrse:onboarding-dismissed") === "1";
+    setVisible(!completed && !dismissed);
   }, []);
 
   if (!visible) return null;
