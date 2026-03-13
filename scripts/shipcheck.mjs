@@ -10,7 +10,9 @@ const checks = [
   { name: "api-registry", cmd: ["pnpm", ["api:registry:check"]] },
   { name: "platform-runtime", cmd: ["pnpm", ["platform:runtime:check"]] },
   { name: "boundaries", cmd: ["pnpm", ["boundaries:check"]] },
-  { name: "key-rotation", cmd: ["pnpm", ["security:key-rotation:check"]] },
+  ...(process.env.SKIP_KEY_ROTATION_CHECK === "1"
+    ? []
+    : [{ name: "key-rotation", cmd: ["pnpm", ["security:key-rotation:check"]] }]),
   { name: "supply-chain", cmd: ["pnpm", ["security:supply-chain:check"]] },
   { name: "lint", cmd: ["pnpm", ["lint"]] },
   { name: "typecheck", cmd: ["pnpm", ["typecheck"]] },

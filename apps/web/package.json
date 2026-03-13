@@ -13,7 +13,7 @@
     "test:smoke": "vitest run --config tests/vitest.config.ts tests/unit/observability-api.test.ts tests/unit/launch-readiness.test.ts tests/integration/slo-evaluation.test.ts",
     "test:watch": "vitest --config tests/vitest.config.ts",
     "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
-    "shipcheck": "pnpm -C ../.. shipcheck"
+    "shipcheck": "node scripts/shipcheck.mjs"
   },
   "dependencies": {
     "@illuvrse/audit": "workspace:*",

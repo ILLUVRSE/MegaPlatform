@@ -25,7 +25,7 @@
     "api:registry:check": "node scripts/ci/check-api-registry.mjs",
     "boundaries:check": "node scripts/check-boundaries.mjs --config packages/governance/boundaries-config.json",
     "safety:regression:check": "node scripts/safety-regression-gate.mjs",
-    "security:key-rotation:check": "node scripts/key-rotation-check.mjs",
+    "security:key-rotation:check": "node scripts/security/key-rotation-check.mjs",
     "security:supply-chain:check": "node scripts/supply-chain-check.mjs",
     "platform:runtime:check": "node scripts/check-platform-runtime-readiness.mjs",
     "design:tokens:generate": "node scripts/generate-design-tokens.mjs",
