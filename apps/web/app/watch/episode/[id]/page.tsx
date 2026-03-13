@@ -3,22 +3,31 @@
  */
 import { notFound } from "next/navigation";
 import { prisma } from "@illuvrse/db";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { canAccessPremiereEpisodePage, getLivePremiereStatus } from "@/lib/livePremiere";
-import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
-import { canAccessShow } from "@/lib/watchEntitlements";
+import {
+  buildEpisodeEntitlementKeys,
+  canAccessShow,
+  listActiveEntitlementKeysForUser
+} from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
+import { PROFILE_COOKIE } from "@/lib/watchProfiles";
+import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
+import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import EpisodePlayer from "../components/EpisodePlayer";
 
 export default async function WatchEpisodePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
+  const headerStore = await headers();
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
+  const requestRegion = resolveWatchRequestRegion(headerStore);
   const now = new Date();
+
   const episode = await prisma.episode.findUnique({
     where: { id },
     include: {
@@ -34,26 +43,15 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
   if (!episode) {
     notFound();
   }
-
-  const releaseState = evaluateReleaseSchedule(episode, now);
-  const premiereStatus = getLivePremiereStatus(episode, now);
-
-  if (!releaseState.isReleased && !canAccessPremiereEpisodePage(episode, now)) {
+  const [showRightsById, episodeRightsById] = await Promise.all([
+    listWatchShowRights([episode.season.show.id]),
+    listWatchEpisodeRights([episode.id, ...episode.season.episodes.map((item) => item.id)])
+  ]);
+  const showRights = showRightsById.get(episode.season.show.id);
+  const currentEpisodeRights = episodeRightsById.get(episode.id);
+  if (!showRights || !currentEpisodeRights) {
     notFound();
   }
-
-  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
-  const nextEpisodes = episode.season.episodes
-    .filter((item) => item.id !== episode.id && evaluateReleaseSchedule(item, now).isReleased)
-    .slice(0, 6);
-  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
-    {
-      id: episode.id,
-      title: episode.title,
-      seasonNumber: episode.season.number,
-      episodeNumber: episodeNumber > 0 ? episodeNumber : null
-    }
-  ]);
 
   let initialPositionSec: number | null = null;
   let enableDbProgress = false;
@@ -72,17 +70,83 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
     }
   }
 
+  const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
   const access = canAccessShow(
     {
       isPremium: episode.season.show.isPremium,
-      maturityRating: episode.season.show.maturityRating
+      maturityRating: episode.season.show.maturityRating,
+      visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
+      allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,
+      requiresEntitlement: currentEpisodeRights.requiresEntitlement || showRights.requiresEntitlement,
+      entitlementKeys: buildEpisodeEntitlementKeys(episode, episode.season.show)
     },
     {
       userId: session?.user?.id ?? null,
       role: session?.user?.role ?? null,
-      isKidsProfile
-    }
+      isKidsProfile,
+      requestRegion,
+      activeEntitlementKeys
+    },
+    { allowUnlisted: true }
   );
+
+  if (access.reason === "private" || access.reason === "region_restricted") {
+    notFound();
+  }
+
+  const releaseState = evaluateReleaseSchedule(episode, now);
+  const premiereStatus = getLivePremiereStatus(episode, now);
+
+  if (!releaseState.isReleased && !canAccessPremiereEpisodePage(episode, now)) {
+    notFound();
+  }
+
+  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
+  const nextEpisodes = episode.season.episodes
+    .filter((item) => {
+      const nextAccess = canAccessShow(
+        {
+          isPremium: episode.season.show.isPremium,
+          maturityRating: episode.season.show.maturityRating,
+          visibility: mergeWatchVisibility(
+            showRights.visibility,
+            episodeRightsById.get(item.id)?.visibility ?? "PUBLIC"
+          ),
+          allowedRegions:
+            (episodeRightsById.get(item.id)?.allowedRegions?.length ?? 0) > 0
+              ? episodeRightsById.get(item.id)?.allowedRegions
+              : showRights.allowedRegions,
+          requiresEntitlement:
+            Boolean(episodeRightsById.get(item.id)?.requiresEntitlement) || showRights.requiresEntitlement,
+          entitlementKeys: buildEpisodeEntitlementKeys(item, episode.season.show)
+        },
+        {
+          userId: session?.user?.id ?? null,
+          role: session?.user?.role ?? null,
+          isKidsProfile,
+          requestRegion,
+          activeEntitlementKeys
+        }
+      );
+
+      return (
+        nextAccess.reason !== "private" &&
+        nextAccess.reason !== "unlisted" &&
+        nextAccess.reason !== "region_restricted" &&
+        item.id !== episode.id &&
+        evaluateReleaseSchedule(item, now).isReleased
+      );
+    })
+    .slice(0, 6);
+
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
+    {
+      id: episode.id,
+      title: episode.title,
+      seasonNumber: episode.season.number,
+      episodeNumber: episodeNumber > 0 ? episodeNumber : null
+    }
+  ]);
 
   return (
     <div className="-mx-6 space-y-8 bg-[#07070b] px-6 pb-10 text-white">

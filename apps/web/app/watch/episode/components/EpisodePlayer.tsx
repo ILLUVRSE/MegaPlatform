@@ -44,7 +44,17 @@ export default function EpisodePlayer({
   nextEpisodes: Array<{ id: string; title: string; description?: string | null }>;
   initialPositionSec?: number | null;
   enableDbProgress: boolean;
-  access: { allowed: boolean; reason: "ok" | "sign_in_required" | "kids_restricted" };
+  access: {
+    allowed: boolean;
+    reason:
+      | "ok"
+      | "sign_in_required"
+      | "kids_restricted"
+      | "private"
+      | "unlisted"
+      | "region_restricted"
+      | "entitlement_required";
+  };
   premiere: {
     state: "VOD" | "UPCOMING" | "LIVE";
     isPremiereEnabled: boolean;
@@ -220,7 +230,11 @@ export default function EpisodePlayer({
                   ? "Sign in to watch this premium episode."
                   : access.reason === "kids_restricted"
                     ? "This title is restricted on the selected kids profile."
-                    : "Content not available yet."}
+                    : access.reason === "entitlement_required"
+                      ? "This episode requires a matching entitlement before playback."
+                      : access.reason === "region_restricted"
+                        ? "This episode is not available in your current region."
+                        : "Content not available yet."}
               </p>
               {access.reason === "sign_in_required" ? (
                 <Link

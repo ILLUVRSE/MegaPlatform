@@ -12,6 +12,9 @@ type ProjectRecord = {
   format: "SERIES" | "MOVIE";
   status: "DRAFT" | "IN_PRODUCTION" | "READY_TO_PUBLISH" | "PUBLISHED";
   publishedAt: string | null;
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string | null;
   ownerId: string;
@@ -34,6 +37,9 @@ type EpisodeRecord = {
   runtimeSeconds: number | null;
   status: "DRAFT" | "READY" | "PUBLISHED";
   publishedAt: string | null;
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string | null;
   isPremiereEnabled: boolean;
@@ -82,7 +88,13 @@ type ShowProjectPermissions = {
   manageCollaborators: boolean;
 };
 
-type PublishFormState = {
+type RightsFormState = {
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string;
+  requiresEntitlement: boolean;
+};
+
+type PublishFormState = RightsFormState & {
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string;
 };
@@ -225,8 +237,36 @@ function toUtcIsoFromLocalDateTime(value: string) {
   return Number.isNaN(local.getTime()) ? null : local.toISOString();
 }
 
-function createPublishFormState(record: { premiereType: "IMMEDIATE" | "SCHEDULED"; releaseAt: string | null }) {
+function formatAllowedRegions(value: string[] | null | undefined) {
+  return (value ?? []).join(", ");
+}
+
+function parseAllowedRegions(value: string) {
+  const regions = Array.from(
+    new Set(
+      value
+        .split(",")
+        .map((region) => region.trim().toUpperCase())
+        .filter(Boolean)
+    )
+  );
+
+  return regions.length > 0 ? regions : null;
+}
+
+function createPublishFormState(
+  record: {
+    visibility: RightsFormState["visibility"];
+    allowedRegions: string[] | null;
+    requiresEntitlement: boolean;
+    premiereType: "IMMEDIATE" | "SCHEDULED";
+    releaseAt: string | null;
+  }
+) {
   return {
+    visibility: record.visibility,
+    allowedRegions: formatAllowedRegions(record.allowedRegions),
+    requiresEntitlement: record.requiresEntitlement,
     premiereType: record.premiereType,
     releaseAt: toLocalDateTimeInput(record.releaseAt)
   } satisfies PublishFormState;
@@ -235,10 +275,21 @@ function createPublishFormState(record: { premiereType: "IMMEDIATE" | "SCHEDULED
 function createEpisodePublishFormState(
   record: Pick<
     EpisodeRecord,
-    "premiereType" | "releaseAt" | "isPremiereEnabled" | "premiereStartsAt" | "premiereEndsAt" | "chatEnabled"
+    | "visibility"
+    | "allowedRegions"
+    | "requiresEntitlement"
+    | "premiereType"
+    | "releaseAt"
+    | "isPremiereEnabled"
+    | "premiereStartsAt"
+    | "premiereEndsAt"
+    | "chatEnabled"
   >
 ) {
   return {
+    visibility: record.visibility,
+    allowedRegions: formatAllowedRegions(record.allowedRegions),
+    requiresEntitlement: record.requiresEntitlement,
     premiereType: record.premiereType,
     releaseAt: toLocalDateTimeInput(record.releaseAt),
     isPremiereEnabled: record.isPremiereEnabled,
@@ -295,6 +346,16 @@ function buildExtraPayload(form: ExtraFormState) {
     premiereType: form.premiereType,
     releaseAt: form.premiereType === "SCHEDULED" ? toUtcIsoFromLocalDateTime(form.releaseAt) : null
   };
+}
+
+function formatRightsSummary(record: {
+  visibility: RightsFormState["visibility"];
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
+}) {
+  const regions = record.allowedRegions?.length ? record.allowedRegions.join(", ") : "All regions";
+  const entitlement = record.requiresEntitlement ? "Entitlement required" : "No entitlement gate";
+  return `${record.visibility} · ${regions} · ${entitlement}`;
 }
 
 export default function ShowProjectEpisodesManager({
@@ -400,6 +461,9 @@ export default function ShowProjectEpisodesManager({
   function buildPublishPayload(form: PublishFormState) {
     const releaseAt = form.premiereType === "SCHEDULED" ? toUtcIsoFromLocalDateTime(form.releaseAt) : null;
     return {
+      visibility: form.visibility,
+      allowedRegions: parseAllowedRegions(form.allowedRegions),
+      requiresEntitlement: form.requiresEntitlement,
       premiereType: form.premiereType,
       releaseAt
     };
@@ -411,6 +475,9 @@ export default function ShowProjectEpisodesManager({
     const premiereEndsAt = form.isPremiereEnabled ? toUtcIsoFromLocalDateTime(form.premiereEndsAt) : null;
 
     return {
+      visibility: form.visibility,
+      allowedRegions: parseAllowedRegions(form.allowedRegions),
+      requiresEntitlement: form.requiresEntitlement,
       premiereType: form.isPremiereEnabled ? "SCHEDULED" : form.premiereType,
       releaseAt: form.isPremiereEnabled ? premiereStartsAt : releaseAt,
       isPremiereEnabled: form.isPremiereEnabled,
@@ -467,6 +534,9 @@ export default function ShowProjectEpisodesManager({
         buildEpisodePublishPayload(
           episodePublishForms[episodeId] ??
             createEpisodePublishFormState({
+              visibility: "PUBLIC",
+              allowedRegions: null,
+              requiresEntitlement: false,
               premiereType: "IMMEDIATE",
               releaseAt: null,
               isPremiereEnabled: false,
@@ -833,7 +903,60 @@ export default function ShowProjectEpisodesManager({
             <p className="mt-2 text-xs uppercase tracking-[0.2em] text-white/45">
               {formatReleaseState(projectState)}
             </p>
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-cyan-100/70">
+              {formatRightsSummary(projectState)}
+            </p>
           </div>
+        </div>
+
+        <div className="grid gap-3 rounded-[24px] border border-white/10 bg-white/5 p-4 md:grid-cols-2">
+          <label className="space-y-2">
+            <span className="text-xs uppercase tracking-[0.24em] text-white/70">Visibility</span>
+            <select
+              value={projectPublishForm.visibility}
+              onChange={(event) =>
+                setProjectPublishForm((current) => ({
+                  ...current,
+                  visibility: event.target.value as RightsFormState["visibility"]
+                }))
+              }
+              disabled={!canPublish}
+              className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+            >
+              <option value="PUBLIC">Public</option>
+              <option value="UNLISTED">Unlisted</option>
+              <option value="PRIVATE">Private</option>
+            </select>
+          </label>
+          <label className="space-y-2">
+            <span className="text-xs uppercase tracking-[0.24em] text-white/70">Allowed Regions</span>
+            <input
+              value={projectPublishForm.allowedRegions}
+              onChange={(event) =>
+                setProjectPublishForm((current) => ({
+                  ...current,
+                  allowedRegions: event.target.value
+                }))
+              }
+              disabled={!canPublish}
+              className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+              placeholder="US, CA, GB"
+            />
+          </label>
+          <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white md:col-span-2">
+            <input
+              type="checkbox"
+              checked={projectPublishForm.requiresEntitlement}
+              onChange={(event) =>
+                setProjectPublishForm((current) => ({
+                  ...current,
+                  requiresEntitlement: event.target.checked
+                }))
+              }
+              disabled={!canPublish}
+            />
+            Require a matching Watch entitlement key before playback
+          </label>
         </div>
 
         <div className="grid gap-3 rounded-[24px] border border-white/10 bg-white/5 p-4 md:grid-cols-[1fr_1fr_auto]">
@@ -870,7 +993,7 @@ export default function ShowProjectEpisodesManager({
             />
           </label>
           <div className="flex items-end">
-            <p className="text-xs text-white/55">Stored as UTC after local-time conversion in the browser.</p>
+            <p className="text-xs text-white/55">Region list is metadata-only. Leave blank for all regions.</p>
           </div>
         </div>
 
@@ -1129,8 +1252,69 @@ export default function ShowProjectEpisodesManager({
                     ? `Published ${new Date(episode.publishedAt).toLocaleDateString()}`
                     : "Not published"}
                 </p>
+                <p className="mt-2 text-xs uppercase tracking-[0.2em] text-cyan-100/70">
+                  {formatRightsSummary(episode)}
+                </p>
 
                 <div className="mt-4 grid gap-3 rounded-[24px] border border-white/10 bg-black/20 p-3">
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className="space-y-2">
+                      <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Visibility</span>
+                      <select
+                        value={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).visibility}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              visibility: event.target.value as RightsFormState["visibility"]
+                            }
+                          }))
+                        }
+                        disabled={!canPublish}
+                        className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+                      >
+                        <option value="PUBLIC">Public</option>
+                        <option value="UNLISTED">Unlisted</option>
+                        <option value="PRIVATE">Private</option>
+                      </select>
+                    </label>
+                    <label className="space-y-2">
+                      <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Allowed Regions</span>
+                      <input
+                        value={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).allowedRegions}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              allowedRegions: event.target.value
+                            }
+                          }))
+                        }
+                        disabled={!canPublish}
+                        className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+                        placeholder="US, CA, GB"
+                      />
+                    </label>
+                  </div>
+                  <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+                    <input
+                      type="checkbox"
+                      checked={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).requiresEntitlement}
+                      onChange={(event) =>
+                        setEpisodePublishForms((current) => ({
+                          ...current,
+                          [episode.id]: {
+                            ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                            requiresEntitlement: event.target.checked
+                          }
+                        }))
+                      }
+                      disabled={!canPublish}
+                    />
+                    Require a matching Watch entitlement before playback
+                  </label>
                   <div className="grid gap-3 md:grid-cols-2">
                     <label className="space-y-2">
                       <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Premiere</span>

@@ -5,7 +5,7 @@
  */
 import Link from "next/link";
 import { prisma } from "@illuvrse/db";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import HeroCarousel from "./components/HeroCarousel";
@@ -16,17 +16,26 @@ import ContinueWatchingRail from "./components/ContinueWatchingRail";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { WATCH_LOCAL_NAV } from "@/lib/navigation";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
+import { canDiscoverWatchContent } from "@/lib/watchEntitlements";
+import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
+import { listWatchShowRights } from "@/lib/watchRights";
 
 export default async function WatchPage() {
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
+  const headerStore = await headers();
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
+  const requestRegion = resolveWatchRequestRegion(headerStore);
   const now = new Date();
-  const shows = await prisma.show.findMany({
+  const rawShows = await prisma.show.findMany({
     orderBy: [{ watchOrder: "asc" }, { createdAt: "desc" }],
     include: { seasons: { include: { episodes: { orderBy: { createdAt: "asc" } } } } },
-    take: 12
+    take: 24
   });
+  const showRightsById = await listWatchShowRights(rawShows.map((show) => show.id));
+  const shows = rawShows
+    .filter((show) => canDiscoverWatchContent(showRightsById.get(show.id) ?? {}, requestRegion))
+    .slice(0, 12);
 
   const sortedForHero = [...shows].sort((a, b) => {
     const aScore = a.heroPriority ?? Number.MAX_SAFE_INTEGER;

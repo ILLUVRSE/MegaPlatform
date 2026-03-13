@@ -13,8 +13,15 @@ import { getLivePremiereStatus } from "@/lib/livePremiere";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
-import { canAccessShow } from "@/lib/watchEntitlements";
+import {
+  buildEpisodeEntitlementKeys,
+  buildShowEntitlementKeys,
+  canAccessShow,
+  listActiveEntitlementKeysForUser
+} from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
+import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
+import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 
 export async function GET(
   request: Request,
@@ -35,6 +42,11 @@ export async function GET(
   if (!show) {
     return NextResponse.json({ error: "Show not found" }, { status: 404 });
   }
+  const showRightsById = await listWatchShowRights([show.id]);
+  const showRights = showRightsById.get(show.id);
+  if (!showRights) {
+    return NextResponse.json({ error: "Show not found" }, { status: 404 });
+  }
 
   const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
 
@@ -50,26 +62,73 @@ export async function GET(
       isKidsProfile = profile?.isKids ?? false;
     }
   }
+
+  const requestRegion = resolveWatchRequestRegion(request.headers);
+  const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
+  const viewer = {
+    userId: session?.user?.id ?? null,
+    role: session?.user?.role ?? null,
+    isKidsProfile,
+    requestRegion,
+    activeEntitlementKeys
+  };
+
   const access = canAccessShow(
     {
       isPremium: show.isPremium,
-      maturityRating: show.maturityRating
+      maturityRating: show.maturityRating,
+      visibility: showRights.visibility,
+      allowedRegions: showRights.allowedRegions,
+      requiresEntitlement: showRights.requiresEntitlement,
+      entitlementKeys: buildShowEntitlementKeys(show)
     },
-    {
-      userId: session?.user?.id ?? null,
-      role: session?.user?.role ?? null,
-      isKidsProfile
-    }
+    viewer,
+    { allowUnlisted: true }
   );
+
+  if (access.reason === "private") {
+    return NextResponse.json({ error: "Show not found" }, { status: 404 });
+  }
+
+  const episodeRightsById = await listWatchEpisodeRights(show.seasons.flatMap((season) => season.episodes.map((episode) => episode.id)));
+  const episodeAccessById = new Map<string, ReturnType<typeof canAccessShow>>();
+  for (const season of show.seasons) {
+    for (const episode of season.episodes) {
+      const episodeRights = episodeRightsById.get(episode.id);
+      if (!episodeRights) {
+        continue;
+      }
+      episodeAccessById.set(
+        episode.id,
+        canAccessShow(
+          {
+            isPremium: show.isPremium,
+            maturityRating: show.maturityRating,
+            visibility: mergeWatchVisibility(showRights.visibility, episodeRights.visibility),
+            allowedRegions: episodeRights.allowedRegions.length > 0 ? episodeRights.allowedRegions : showRights.allowedRegions,
+            requiresEntitlement: episodeRights.requiresEntitlement || showRights.requiresEntitlement,
+            entitlementKeys: buildEpisodeEntitlementKeys(episode, show)
+          },
+          viewer
+        )
+      );
+    }
+  }
 
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
     show.slug,
     show.seasons.flatMap((season) =>
       season.episodes
         .filter((episode) => {
+          const episodeAccess = episodeAccessById.get(episode.id);
           const releaseState = evaluateReleaseSchedule(episode, now);
           const premiereState = getLivePremiereStatus(episode, now);
-          return releaseState.isReleased || premiereState.isPremiereEnabled;
+          return (
+            episodeAccess?.reason !== "private" &&
+            episodeAccess?.reason !== "unlisted" &&
+            episodeAccess?.reason !== "region_restricted" &&
+            (releaseState.isReleased || premiereState.isPremiereEnabled)
+          );
         })
         .map((episode, index) => ({
           id: episode.id,
@@ -84,9 +143,15 @@ export async function GET(
   show.seasons.forEach((season) => {
     episodesBySeason[season.id] = season.episodes
       .filter((episode) => {
+        const episodeAccess = episodeAccessById.get(episode.id);
         const releaseState = evaluateReleaseSchedule(episode, now);
         const premiereState = getLivePremiereStatus(episode, now);
-        return releaseState.isReleased || premiereState.isPremiereEnabled;
+        return (
+          episodeAccess?.reason !== "private" &&
+          episodeAccess?.reason !== "unlisted" &&
+          episodeAccess?.reason !== "region_restricted" &&
+          (releaseState.isReleased || premiereState.isPremiereEnabled)
+        );
       })
       .map((episode) => {
         const premiereState = getLivePremiereStatus(episode, now);

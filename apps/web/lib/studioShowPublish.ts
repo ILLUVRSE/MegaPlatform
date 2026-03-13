@@ -17,6 +17,9 @@ type PublishableShowProject = {
   format: "SERIES" | "MOVIE";
   status: "DRAFT" | "IN_PRODUCTION" | "READY_TO_PUBLISH" | "PUBLISHED";
   publishedAt: Date | null;
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   posterImageUrl: string | null;
@@ -34,6 +37,9 @@ type PublishableShowEpisode = {
   runtimeSeconds: number | null;
   status: "DRAFT" | "READY" | "PUBLISHED";
   publishedAt: Date | null;
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   isPremiereEnabled: boolean;
@@ -76,6 +82,9 @@ function requirePublishTitle(title: string | null | undefined, kind: "show" | "e
 type PublishScheduleInput = {
   premiereType?: PremiereType | null;
   releaseAt?: Date | null;
+  visibility?: "PUBLIC" | "PRIVATE" | "UNLISTED" | null;
+  allowedRegions?: string[] | null;
+  requiresEntitlement?: boolean | null;
   isPremiereEnabled?: boolean | null;
   premiereStartsAt?: Date | null;
   premiereEndsAt?: Date | null;
@@ -106,6 +115,9 @@ async function findProjectForPublish(
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "posterImageUrl",
@@ -134,6 +146,9 @@ async function findEpisodeForPublish(
       episode."runtimeSeconds",
       episode."status"::text AS "status",
       episode."publishedAt",
+      episode."visibility"::text AS "visibility",
+      episode."allowedRegions",
+      episode."requiresEntitlement",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
       episode."isPremiereEnabled",
@@ -156,6 +171,9 @@ async function markProjectPublished(
     publishedAt: Date;
     premiereType: PremiereType;
     releaseAt: Date | null;
+    visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+    allowedRegions: string[] | null;
+    requiresEntitlement: boolean;
   }
 ) {
   const rows = await tx.$queryRaw<PublishableShowProject[]>`
@@ -163,6 +181,9 @@ async function markProjectPublished(
     SET
       "status" = 'PUBLISHED'::"ShowProjectStatus",
       "publishedAt" = COALESCE("publishedAt", ${input.publishedAt}),
+      "visibility" = ${input.visibility}::"ContentVisibility",
+      "allowedRegions" = ${input.allowedRegions ?? []},
+      "requiresEntitlement" = ${input.requiresEntitlement},
       "premiereType" = ${input.premiereType}::"PremiereType",
       "releaseAt" = ${input.releaseAt},
       "updatedAt" = NOW()
@@ -175,6 +196,9 @@ async function markProjectPublished(
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "posterImageUrl",
@@ -191,6 +215,9 @@ async function markEpisodePublished(
     publishedAt: Date;
     premiereType: PremiereType;
     releaseAt: Date | null;
+    visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+    allowedRegions: string[] | null;
+    requiresEntitlement: boolean;
     isPremiereEnabled: boolean;
     premiereStartsAt: Date | null;
     premiereEndsAt: Date | null;
@@ -202,6 +229,9 @@ async function markEpisodePublished(
     SET
       "status" = 'PUBLISHED'::"ShowEpisodeStatus",
       "publishedAt" = COALESCE("publishedAt", ${input.publishedAt}),
+      "visibility" = ${input.visibility}::"ContentVisibility",
+      "allowedRegions" = ${input.allowedRegions ?? []},
+      "requiresEntitlement" = ${input.requiresEntitlement},
       "premiereType" = ${input.premiereType}::"PremiereType",
       "releaseAt" = ${input.releaseAt},
       "isPremiereEnabled" = ${input.isPremiereEnabled},
@@ -221,6 +251,9 @@ async function markEpisodePublished(
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",
@@ -251,6 +284,9 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
         "title" = ${project.title},
         "slug" = ${project.slug},
         "description" = ${project.description},
+        "visibility" = ${project.visibility}::"ContentVisibility",
+        "allowedRegions" = ${project.allowedRegions ?? []},
+        "requiresEntitlement" = ${project.requiresEntitlement},
         "posterUrl" = ${project.posterImageUrl},
         "heroUrl" = ${project.bannerImageUrl},
         "premiereType" = ${project.premiereType}::"PremiereType",
@@ -270,6 +306,9 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
       "title",
       "slug",
       "description",
+      "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "posterUrl",
       "heroUrl",
       "premiereType",
@@ -283,6 +322,9 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
       ${project.title},
       ${project.slug},
       ${project.description},
+      ${project.visibility}::"ContentVisibility",
+      ${project.allowedRegions ?? []},
+      ${project.requiresEntitlement},
       ${project.posterImageUrl},
       ${project.bannerImageUrl},
       ${project.premiereType}::"PremiereType",
@@ -372,6 +414,9 @@ async function upsertWatchEpisode(
         "sourceShowEpisodeId" = ${episode.id},
         "title" = ${episode.title},
         "description" = ${episode.synopsis},
+        "visibility" = ${episode.visibility}::"ContentVisibility",
+        "allowedRegions" = ${episode.allowedRegions ?? []},
+        "requiresEntitlement" = ${episode.requiresEntitlement},
         "lengthSeconds" = ${lengthSeconds},
         "premiereType" = ${episode.premiereType}::"PremiereType",
         "releaseAt" = ${episode.releaseAt},
@@ -398,6 +443,9 @@ async function upsertWatchEpisode(
       "seasonId",
       "title",
       "description",
+      "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "lengthSeconds",
       "assetUrl",
       "premiereType",
@@ -415,6 +463,9 @@ async function upsertWatchEpisode(
       ${seasonId},
       ${episode.title},
       ${episode.synopsis},
+      ${episode.visibility}::"ContentVisibility",
+      ${episode.allowedRegions ?? []},
+      ${episode.requiresEntitlement},
       ${episode.runtimeSeconds ?? DEFAULT_EPISODE_RUNTIME_SECONDS},
       ${WATCH_PLACEHOLDER_ASSET_URL},
       ${episode.premiereType}::"PremiereType",
@@ -498,6 +549,9 @@ export async function publishShowProjectToWatch(slugOrId: string, publishInput?:
 
     const project = await markProjectPublished(tx, currentProject.id, {
       publishedAt,
+      visibility: publishInput?.visibility ?? currentProject.visibility,
+      allowedRegions: publishInput?.allowedRegions ?? currentProject.allowedRegions,
+      requiresEntitlement: publishInput?.requiresEntitlement ?? currentProject.requiresEntitlement,
       ...releaseSchedule
     });
     if (!project) {
@@ -562,6 +616,9 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
 
     const project = await markProjectPublished(tx, currentProject.id, {
       publishedAt,
+      visibility: currentProject.visibility,
+      allowedRegions: currentProject.allowedRegions,
+      requiresEntitlement: currentProject.requiresEntitlement,
       premiereType: currentProject.premiereType,
       releaseAt: currentProject.releaseAt
     });
@@ -571,6 +628,9 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
 
     const episode = await markEpisodePublished(tx, currentEpisode.id, {
       publishedAt,
+      visibility: publishInput?.visibility ?? currentEpisode.visibility,
+      allowedRegions: publishInput?.allowedRegions ?? currentEpisode.allowedRegions,
+      requiresEntitlement: publishInput?.requiresEntitlement ?? currentEpisode.requiresEntitlement,
       premiereType:
         premiereMetadata.isPremiereEnabled || releaseSchedule.premiereType === "SCHEDULED" ? "SCHEDULED" : "IMMEDIATE",
       releaseAt: premiereMetadata.isPremiereEnabled ? premiereMetadata.premiereStartsAt : releaseSchedule.releaseAt,

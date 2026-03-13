@@ -11,7 +11,13 @@ import { prisma } from "@illuvrse/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
-import { canAccessShow } from "@/lib/watchEntitlements";
+import {
+  buildEpisodeEntitlementKeys,
+  canAccessShow,
+  listActiveEntitlementKeysForUser
+} from "@/lib/watchEntitlements";
+import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
+import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 
 const progressSchema = z.object({
   episodeId: z.string().min(2),
@@ -93,16 +99,31 @@ export async function POST(request: Request) {
   if (!episode) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
+  const [showRightsById, episodeRightsById] = await Promise.all([
+    listWatchShowRights([episode.season.show.id]),
+    listWatchEpisodeRights([episode.id])
+  ]);
+  const showRights = showRightsById.get(episode.season.show.id);
+  const currentEpisodeRights = episodeRightsById.get(episode.id);
+  if (!showRights || !currentEpisodeRights) {
+    return NextResponse.json({ error: "Episode not found" }, { status: 404 });
+  }
 
   const access = canAccessShow(
     {
       isPremium: episode.season.show.isPremium,
-      maturityRating: episode.season.show.maturityRating
+      maturityRating: episode.season.show.maturityRating,
+      visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
+      allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,
+      requiresEntitlement: currentEpisodeRights.requiresEntitlement || showRights.requiresEntitlement,
+      entitlementKeys: buildEpisodeEntitlementKeys(episode, episode.season.show)
     },
     {
       userId: profile.userId,
       role,
-      isKidsProfile: profile.isKids
+      isKidsProfile: profile.isKids,
+      requestRegion: resolveWatchRequestRegion(request.headers),
+      activeEntitlementKeys: await listActiveEntitlementKeysForUser(profile.userId)
     }
   );
   if (!access.allowed) {

@@ -51,6 +51,7 @@ export default async function StudioShowProjectDetailPage({
   const serializedProject = {
     ...project,
     publishedAt: project.publishedAt?.toISOString() ?? null,
+    allowedRegions: project.allowedRegions ?? null,
     releaseAt: project.releaseAt?.toISOString() ?? null,
     createdAt: project.createdAt.toISOString(),
     updatedAt: project.updatedAt.toISOString()
@@ -58,6 +59,7 @@ export default async function StudioShowProjectDetailPage({
   const serializedEpisodes = episodes.map((episode) => ({
     ...episode,
     publishedAt: episode.publishedAt?.toISOString() ?? null,
+    allowedRegions: episode.allowedRegions ?? null,
     releaseAt: episode.releaseAt?.toISOString() ?? null,
     premiereStartsAt: episode.premiereStartsAt?.toISOString() ?? null,
     premiereEndsAt: episode.premiereEndsAt?.toISOString() ?? null,

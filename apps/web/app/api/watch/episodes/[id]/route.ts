@@ -12,8 +12,14 @@ import { authOptions } from "@/lib/auth";
 import { canAccessPremiereEpisodePage, getLivePremiereStatus } from "@/lib/livePremiere";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
-import { canAccessShow } from "@/lib/watchEntitlements";
+import {
+  buildEpisodeEntitlementKeys,
+  canAccessShow,
+  listActiveEntitlementKeysForUser
+} from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
+import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
+import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 
 export async function GET(
   request: Request,
@@ -36,6 +42,15 @@ export async function GET(
   if (!episode) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
+  const [showRightsById, episodeRightsById] = await Promise.all([
+    listWatchShowRights([episode.season.show.id]),
+    listWatchEpisodeRights([episode.id, ...episode.season.episodes.map((item) => item.id)])
+  ]);
+  const showRights = showRightsById.get(episode.season.show.id);
+  const currentEpisodeRights = episodeRightsById.get(episode.id);
+  if (!showRights || !currentEpisodeRights) {
+    return NextResponse.json({ error: "Episode not found" }, { status: 404 });
+  }
 
   const releaseState = evaluateReleaseSchedule(episode, now);
   const premiereStatus = getLivePremiereStatus(episode, now);
@@ -43,17 +58,6 @@ export async function GET(
   if (!releaseState.isReleased && !canAccessPremiereEpisodePage(episode, now)) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
-
-  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
-  const nextEpisodes = episode.season.episodes.filter((item) => evaluateReleaseSchedule(item, now).isReleased);
-  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
-    {
-      id: episode.id,
-      title: episode.title,
-      seasonNumber: episode.season.number,
-      episodeNumber: episodeNumber > 0 ? episodeNumber : null
-    }
-  ]);
 
   const session = await getServerSession(authOptions).catch(() => null);
   let isKidsProfile = false;
@@ -67,17 +71,66 @@ export async function GET(
       isKidsProfile = profile?.isKids ?? false;
     }
   }
+
+  const requestRegion = resolveWatchRequestRegion(request.headers);
+  const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
+  const viewer = {
+    userId: session?.user?.id ?? null,
+    role: session?.user?.role ?? null,
+    isKidsProfile,
+    requestRegion,
+    activeEntitlementKeys
+  };
+
   const access = canAccessShow(
     {
       isPremium: episode.season.show.isPremium,
-      maturityRating: episode.season.show.maturityRating
+      maturityRating: episode.season.show.maturityRating,
+      visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
+      allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,
+      requiresEntitlement: currentEpisodeRights.requiresEntitlement || showRights.requiresEntitlement,
+      entitlementKeys: buildEpisodeEntitlementKeys(episode, episode.season.show)
     },
-    {
-      userId: session?.user?.id ?? null,
-      role: session?.user?.role ?? null,
-      isKidsProfile
-    }
+    viewer,
+    { allowUnlisted: true }
   );
+
+  if (access.reason === "private" || access.reason === "region_restricted") {
+    return NextResponse.json({ error: "Episode not found" }, { status: 404 });
+  }
+
+  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
+  const nextEpisodes = episode.season.episodes.filter((item) => {
+    const nextAccess = canAccessShow(
+      {
+        isPremium: episode.season.show.isPremium,
+        maturityRating: episode.season.show.maturityRating,
+        visibility: mergeWatchVisibility(showRights.visibility, episodeRightsById.get(item.id)?.visibility ?? "PUBLIC"),
+        allowedRegions:
+          (episodeRightsById.get(item.id)?.allowedRegions?.length ?? 0) > 0
+            ? episodeRightsById.get(item.id)?.allowedRegions
+            : showRights.allowedRegions,
+        requiresEntitlement: Boolean(episodeRightsById.get(item.id)?.requiresEntitlement) || showRights.requiresEntitlement,
+        entitlementKeys: buildEpisodeEntitlementKeys(item, episode.season.show)
+      },
+      viewer
+    );
+
+    return (
+      nextAccess.reason !== "private" &&
+      nextAccess.reason !== "unlisted" &&
+      nextAccess.reason !== "region_restricted" &&
+      evaluateReleaseSchedule(item, now).isReleased
+    );
+  });
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
+    {
+      id: episode.id,
+      title: episode.title,
+      seasonNumber: episode.season.number,
+      episodeNumber: episodeNumber > 0 ? episodeNumber : null
+    }
+  ]);
 
   return NextResponse.json({
     episode: {

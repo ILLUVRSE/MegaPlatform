@@ -3,15 +3,23 @@
  */
 import { notFound } from "next/navigation";
 import { prisma } from "@illuvrse/db";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getLivePremiereStatus } from "@/lib/livePremiere";
-import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
-import { canAccessShow } from "@/lib/watchEntitlements";
+import {
+  buildEpisodeEntitlementKeys,
+  buildShowEntitlementKeys,
+  canAccessShow,
+  listActiveEntitlementKeysForUser,
+  type WatchAccessDecision
+} from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import { PROFILE_COOKIE } from "@/lib/watchProfiles";
+import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
+import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import ShowDetailClient from "../components/ShowDetailClient";
 
 type ShowEpisode = {
@@ -39,7 +47,10 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
   const now = new Date();
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
+  const headerStore = await headers();
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
+  const requestRegion = resolveWatchRequestRegion(headerStore);
+
   const show = await prisma.show.findUnique({
     where: { slug },
     include: {
@@ -53,60 +64,11 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
   if (!show) {
     notFound();
   }
-
-  const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
-
-  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
-    show.slug,
-    show.seasons.flatMap((season) =>
-      season.episodes
-        .filter((episode) => {
-          const releaseState = evaluateReleaseSchedule(episode, now);
-          const premiereState = getLivePremiereStatus(episode, now);
-          return releaseState.isReleased || premiereState.isPremiereEnabled;
-        })
-        .map((episode, index) => ({
-          id: episode.id,
-          title: episode.title,
-          seasonNumber: season.number,
-          episodeNumber: index + 1
-        }))
-    )
-  );
-
-  const episodesBySeason = show.seasons.reduce((acc, season) => {
-    acc[season.id] = season.episodes
-      .filter((episode) => {
-        const releaseState = evaluateReleaseSchedule(episode, now);
-        const premiereState = getLivePremiereStatus(episode, now);
-        return releaseState.isReleased || premiereState.isPremiereEnabled;
-      })
-      .map((episode) => {
-        const premiereState = getLivePremiereStatus(episode, now);
-
-        return {
-          id: episode.id,
-          title: episode.title,
-          description: episode.description,
-          lengthSeconds: episode.lengthSeconds,
-          assetUrl: episode.assetUrl,
-          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
-          premiereState: premiereState.state,
-          premiereStartsAt: premiereState.startsAt?.toISOString() ?? null
-        };
-      });
-    return acc;
-  }, {} as Record<string, ShowEpisode[]>);
-  const showRelease = evaluateReleaseSchedule(show, now);
-  const comingSoonAt =
-    getEarliestUpcomingRelease(
-      show.seasons.flatMap((season) => season.episodes),
-      now
-    ) ?? (showRelease.isComingSoon ? showRelease.releaseAt : null);
-  const comingSoonText =
-    Object.values(episodesBySeason).every((episodes) => episodes.length === 0) && comingSoonAt
-      ? `Coming Soon: premieres ${comingSoonAt.toLocaleString()}`
-      : null;
+  const showRightsById = await listWatchShowRights([show.id]);
+  const showRights = showRightsById.get(show.id);
+  if (!showRights) {
+    notFound();
+  }
 
   let isSaved = false;
   let resumeText: string | null = null;
@@ -143,17 +105,124 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
     }
   }
 
+  const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
+  const viewer = {
+    userId: session?.user?.id ?? null,
+    role: session?.user?.role ?? null,
+    isKidsProfile,
+    requestRegion,
+    activeEntitlementKeys
+  };
+
   const access = canAccessShow(
     {
       isPremium: show.isPremium,
-      maturityRating: show.maturityRating
+      maturityRating: show.maturityRating,
+      visibility: showRights.visibility,
+      allowedRegions: showRights.allowedRegions,
+      requiresEntitlement: showRights.requiresEntitlement,
+      entitlementKeys: buildShowEntitlementKeys(show)
     },
-    {
-      userId: session?.user?.id ?? null,
-      role: session?.user?.role ?? null,
-      isKidsProfile
-    }
+    viewer,
+    { allowUnlisted: true }
   );
+
+  if (access.reason === "private") {
+    notFound();
+  }
+
+  const episodeRightsById = await listWatchEpisodeRights(show.seasons.flatMap((season) => season.episodes.map((episode) => episode.id)));
+  const episodeAccessById = new Map<string, WatchAccessDecision>();
+  for (const season of show.seasons) {
+    for (const episode of season.episodes) {
+      const episodeRights = episodeRightsById.get(episode.id);
+      if (!episodeRights) {
+        continue;
+      }
+      episodeAccessById.set(
+        episode.id,
+        canAccessShow(
+          {
+            isPremium: show.isPremium,
+            maturityRating: show.maturityRating,
+            visibility: mergeWatchVisibility(showRights.visibility, episodeRights.visibility),
+            allowedRegions: episodeRights.allowedRegions.length > 0 ? episodeRights.allowedRegions : showRights.allowedRegions,
+            requiresEntitlement: episodeRights.requiresEntitlement || showRights.requiresEntitlement,
+            entitlementKeys: buildEpisodeEntitlementKeys(episode, show)
+          },
+          viewer
+        )
+      );
+    }
+  }
+
+  const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
+
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
+    show.slug,
+    show.seasons.flatMap((season) =>
+      season.episodes
+        .filter((episode) => {
+          const episodeAccess = episodeAccessById.get(episode.id);
+          const releaseState = evaluateReleaseSchedule(episode, now);
+          const premiereState = getLivePremiereStatus(episode, now);
+          return (
+            episodeAccess?.reason !== "private" &&
+            episodeAccess?.reason !== "unlisted" &&
+            episodeAccess?.reason !== "region_restricted" &&
+            (releaseState.isReleased || premiereState.isPremiereEnabled)
+          );
+        })
+        .map((episode, index) => ({
+          id: episode.id,
+          title: episode.title,
+          seasonNumber: season.number,
+          episodeNumber: index + 1
+        }))
+    )
+  );
+
+  const episodesBySeason = show.seasons.reduce((acc, season) => {
+    acc[season.id] = season.episodes
+      .filter((episode) => {
+        const episodeAccess = episodeAccessById.get(episode.id);
+        const releaseState = evaluateReleaseSchedule(episode, now);
+        const premiereState = getLivePremiereStatus(episode, now);
+        return (
+          episodeAccess?.reason !== "private" &&
+          episodeAccess?.reason !== "unlisted" &&
+          episodeAccess?.reason !== "region_restricted" &&
+          (releaseState.isReleased || premiereState.isPremiereEnabled)
+        );
+      })
+      .map((episode) => {
+        const premiereState = getLivePremiereStatus(episode, now);
+
+        return {
+          id: episode.id,
+          title: episode.title,
+          description: episode.description,
+          lengthSeconds: episode.lengthSeconds,
+          assetUrl: episode.assetUrl,
+          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+          premiereState: premiereState.state,
+          premiereStartsAt: premiereState.startsAt?.toISOString() ?? null
+        };
+      });
+
+    return acc;
+  }, {} as Record<string, ShowEpisode[]>);
+
+  const showRelease = evaluateReleaseSchedule(show, now);
+  const comingSoonAt =
+    getEarliestUpcomingRelease(
+      show.seasons.flatMap((season) => season.episodes),
+      now
+    ) ?? (showRelease.isComingSoon ? showRelease.releaseAt : null);
+  const comingSoonText =
+    Object.values(episodesBySeason).every((episodes) => episodes.length === 0) && comingSoonAt
+      ? `Coming Soon: premieres ${comingSoonAt.toLocaleString()}`
+      : null;
 
   return (
     <div className="-mx-6 space-y-8 bg-[#07070b] px-6 pb-10 text-white">

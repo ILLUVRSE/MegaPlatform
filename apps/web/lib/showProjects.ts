@@ -25,6 +25,9 @@ export type ShowProjectRecord = {
   format: ShowProjectFormat;
   status: ShowProjectStatus;
   publishedAt: Date | null;
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   ownerId: string;
@@ -79,6 +82,9 @@ function selectShowProjectFields(alias?: string) {
     ${table}"format"::text AS "format",
     ${table}"status"::text AS "status",
     ${table}"publishedAt",
+    ${table}"visibility"::text AS "visibility",
+    ${table}"allowedRegions",
+    ${table}"requiresEntitlement",
     ${table}"premiereType"::text AS "premiereType",
     ${table}"releaseAt",
     ${table}"ownerId",

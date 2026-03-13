@@ -9,6 +9,9 @@ import { getShowProjectAccessForUser } from "@/lib/showProjects";
 import { publishShowEpisodeToWatch, StudioPublishError } from "@/lib/studioShowPublish";
 
 const publishEpisodeSchema = z.object({
+  visibility: z.enum(["PUBLIC", "PRIVATE", "UNLISTED"]).optional(),
+  allowedRegions: z.array(z.string().trim().min(2)).nullable().optional(),
+  requiresEntitlement: z.boolean().optional(),
   premiereType: z.enum(PREMIERE_TYPES).optional(),
   releaseAt: z.string().datetime().nullable().optional(),
   isPremiereEnabled: z.boolean().optional(),
@@ -48,6 +51,9 @@ export async function POST(
 
   try {
     const result = await publishShowEpisodeToWatch(episode.id, {
+      visibility: parsed.data.visibility,
+      allowedRegions: parsed.data.allowedRegions ?? null,
+      requiresEntitlement: parsed.data.requiresEntitlement,
       premiereType: parsed.data.premiereType,
       releaseAt: parsed.data.releaseAt ? new Date(parsed.data.releaseAt) : null,
       isPremiereEnabled: parsed.data.isPremiereEnabled,

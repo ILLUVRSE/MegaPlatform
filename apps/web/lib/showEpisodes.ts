@@ -25,6 +25,9 @@ export type ShowEpisodeRecord = {
   runtimeSeconds: number | null;
   status: ShowEpisodeStatus;
   publishedAt: Date | null;
+  visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+  allowedRegions: string[] | null;
+  requiresEntitlement: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   isPremiereEnabled: boolean;
@@ -76,6 +79,9 @@ export async function listShowEpisodes(showProjectId: string) {
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",
@@ -107,6 +113,9 @@ export async function findShowEpisodeById(id: string) {
       episode."runtimeSeconds",
       episode."status"::text AS "status",
       episode."publishedAt",
+      episode."visibility"::text AS "visibility",
+      episode."allowedRegions",
+      episode."requiresEntitlement",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
       episode."isPremiereEnabled",
@@ -139,6 +148,9 @@ export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slu
       episode."runtimeSeconds",
       episode."status"::text AS "status",
       episode."publishedAt",
+      episode."visibility"::text AS "visibility",
+      episode."allowedRegions",
+      episode."requiresEntitlement",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
       episode."isPremiereEnabled",
@@ -247,6 +259,9 @@ export async function createShowEpisode(input: {
       "runtimeSeconds",
       "status",
       "publishedAt",
+      "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "premiereType",
       "releaseAt",
       "isPremiereEnabled",
@@ -268,6 +283,9 @@ export async function createShowEpisode(input: {
       NULL,
       'DRAFT'::"ShowEpisodeStatus",
       NULL,
+      'PUBLIC'::"ContentVisibility",
+      ARRAY[]::TEXT[],
+      false,
       'IMMEDIATE'::"PremiereType",
       NULL,
       false,
@@ -289,6 +307,9 @@ export async function createShowEpisode(input: {
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",

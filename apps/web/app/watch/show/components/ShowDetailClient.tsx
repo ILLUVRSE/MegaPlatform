@@ -50,7 +50,17 @@ type ShowDetailClientProps = {
   isSaved: boolean;
   resumeText: string | null;
   canSave: boolean;
-  access: { allowed: boolean; reason: "ok" | "sign_in_required" | "kids_restricted" };
+  access: {
+    allowed: boolean;
+    reason:
+      | "ok"
+      | "sign_in_required"
+      | "kids_restricted"
+      | "private"
+      | "unlisted"
+      | "region_restricted"
+      | "entitlement_required";
+  };
   comingSoonText: string | null;
   extras: ShowExtra[];
 };
@@ -123,7 +133,11 @@ export default function ShowDetailClient({
         <div className="rounded-2xl border border-amber-200/30 bg-amber-200/10 px-4 py-3 text-sm text-amber-100">
           {access.reason === "sign_in_required"
             ? "Sign in to watch premium episodes on this show."
-            : "This title is restricted on the selected kids profile."}
+            : access.reason === "kids_restricted"
+              ? "This title is restricted on the selected kids profile."
+              : access.reason === "entitlement_required"
+                ? "This show requires a matching entitlement before playback."
+                : "This show is not available in your current region."}
         </div>
       ) : null}
       {comingSoonText ? (
