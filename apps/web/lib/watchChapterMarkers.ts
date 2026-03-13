@@ -76,8 +76,7 @@ export async function listWatchChapterMarkersByEpisode(
     SELECT "id"
     FROM "ShowProject"
     WHERE "slug" = ${showSlug}
-      AND "status" IN ('READY_TO_PUBLISH'::"ShowProjectStatus", 'PUBLISHED'::"ShowProjectStatus")
-    ORDER BY CASE WHEN "status" = 'PUBLISHED'::"ShowProjectStatus" THEN 0 ELSE 1 END ASC
+      AND "status" = 'PUBLISHED'::"ShowProjectStatus"
     LIMIT 1
   `;
   const showProjectId = showProjectRows[0]?.id;
@@ -94,7 +93,7 @@ export async function listWatchChapterMarkersByEpisode(
       "title"
     FROM "ShowEpisode"
     WHERE "showProjectId" = ${showProjectId}
-      AND "status" IN ('READY'::"ShowEpisodeStatus", 'PUBLISHED'::"ShowEpisodeStatus")
+      AND "status" = 'PUBLISHED'::"ShowEpisodeStatus"
     ORDER BY
       COALESCE("seasonNumber", 999999) ASC,
       COALESCE("episodeNumber", 999999) ASC,
@@ -185,4 +184,3 @@ export async function listWatchChapterMarkersByEpisode(
 
   return markersByEpisodeId;
 }
-

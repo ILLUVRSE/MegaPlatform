@@ -12,6 +12,7 @@ export type ShowProjectRecord = {
   description: string | null;
   format: ShowProjectFormat;
   status: ShowProjectStatus;
+  publishedAt: Date | null;
   ownerId: string;
   posterImageUrl: string | null;
   bannerImageUrl: string | null;
@@ -45,6 +46,7 @@ export async function findShowProjectBySlug(slug: string) {
       "description",
       "format"::text AS "format",
       "status"::text AS "status",
+      "publishedAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",
@@ -67,6 +69,7 @@ export async function findShowProjectWithOwnerBySlug(slug: string) {
       project."description",
       project."format"::text AS "format",
       project."status"::text AS "status",
+      project."publishedAt",
       project."ownerId",
       project."posterImageUrl",
       project."bannerImageUrl",
@@ -114,6 +117,7 @@ export async function listShowProjects(
       "description",
       "format"::text AS "format",
       "status"::text AS "status",
+      "publishedAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",
@@ -157,6 +161,7 @@ export async function createShowProject(input: {
       "description",
       "format",
       "status",
+      "publishedAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",
@@ -170,6 +175,7 @@ export async function createShowProject(input: {
       ${input.description ?? null},
       ${input.format}::"ShowProjectFormat",
       'DRAFT'::"ShowProjectStatus",
+      NULL,
       ${input.ownerId},
       ${input.posterImageUrl ?? null},
       ${input.bannerImageUrl ?? null},
@@ -183,6 +189,7 @@ export async function createShowProject(input: {
       "description",
       "format"::text AS "format",
       "status"::text AS "status",
+      "publishedAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",

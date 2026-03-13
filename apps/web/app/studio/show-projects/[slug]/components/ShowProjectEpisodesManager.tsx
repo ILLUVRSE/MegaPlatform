@@ -11,6 +11,7 @@ type ProjectRecord = {
   description: string | null;
   format: "SERIES" | "MOVIE";
   status: "DRAFT" | "IN_PRODUCTION" | "READY_TO_PUBLISH" | "PUBLISHED";
+  publishedAt: string | null;
   ownerId: string;
   ownerName: string | null;
   ownerEmail: string | null;
@@ -30,6 +31,7 @@ type EpisodeRecord = {
   synopsis: string | null;
   runtimeSeconds: number | null;
   status: "DRAFT" | "READY" | "PUBLISHED";
+  publishedAt: string | null;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
   createdAt: string;
   updatedAt: string;
@@ -96,21 +98,26 @@ function formatEpisodeCode(episode: EpisodeRecord, format: ProjectRecord["format
 
 export default function ShowProjectEpisodesManager({ project, initialEpisodes }: Props) {
   const router = useRouter();
+  const [projectState, setProjectState] = useState(project);
+  const [episodes, setEpisodes] = useState(initialEpisodes);
   const availableTemplateOptions = templateOptions.filter((option) =>
-    project.format === "MOVIE" ? option.value === "MOVIE_CHAPTER" : option.value !== "MOVIE_CHAPTER"
+    projectState.format === "MOVIE" ? option.value === "MOVIE_CHAPTER" : option.value !== "MOVIE_CHAPTER"
   );
   const [isComposerOpen, setIsComposerOpen] = useState(false);
   const [templateType, setTemplateType] = useState<EpisodeRecord["templateType"]>(
-    project.format === "MOVIE" ? "MOVIE_CHAPTER" : "STANDARD_EPISODE"
+    projectState.format === "MOVIE" ? "MOVIE_CHAPTER" : "STANDARD_EPISODE"
   );
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [publishTarget, setPublishTarget] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   async function handleCreateEpisode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    setNotice(null);
 
-    const response = await fetch(`/api/studio/show-projects/${project.slug}/episodes`, {
+    const response = await fetch(`/api/studio/show-projects/${projectState.slug}/episodes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ templateType })
@@ -128,54 +135,139 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes }:
     });
   }
 
+  async function handlePublishProject() {
+    setPublishTarget("project");
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/show-projects/${projectState.slug}/publish`, {
+      method: "POST"
+    });
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      project?: ProjectRecord;
+      watchShow?: { slug: string };
+    };
+
+    setPublishTarget(null);
+
+    if (!response.ok || !payload.project) {
+      setError(payload.error ?? "Unable to publish show.");
+      return;
+    }
+
+    setProjectState(payload.project);
+    setNotice(`Published to Watch: /watch/show/${payload.watchShow?.slug ?? payload.project.slug}`);
+    startTransition(() => {
+      router.refresh();
+    });
+  }
+
+  async function handlePublishEpisode(episodeId: string) {
+    setPublishTarget(episodeId);
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/episodes/${episodeId}/publish`, {
+      method: "POST"
+    });
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      project?: ProjectRecord;
+      episode?: EpisodeRecord;
+      watchShow?: { slug: string };
+      watchEpisode?: { id: string };
+    };
+
+    setPublishTarget(null);
+
+    if (!response.ok || !payload.project || !payload.episode) {
+      setError(payload.error ?? "Unable to publish episode.");
+      return;
+    }
+
+    setProjectState(payload.project);
+    setEpisodes((current) =>
+      current.map((episode) => (episode.id === payload.episode?.id ? payload.episode : episode))
+    );
+    setNotice(
+      `Published to Watch: /watch/show/${payload.watchShow?.slug ?? payload.project.slug} · episode ${payload.watchEpisode?.id ?? payload.episode.id}`
+    );
+    startTransition(() => {
+      router.refresh();
+    });
+  }
+
   return (
     <div className="space-y-4">
       <section className="party-card space-y-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">
-              {project.format} Project
+              {projectState.format} Project
             </p>
-            <h1 className="mt-2 text-3xl font-semibold text-white">{project.title}</h1>
+            <h1 className="mt-2 text-3xl font-semibold text-white">{projectState.title}</h1>
             <p className="mt-2 max-w-3xl text-sm text-white/75">
-              {project.description || "No description yet."}
+              {projectState.description || "No description yet."}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => setIsComposerOpen((current) => !current)}
-            className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950"
-          >
-            Create Episode
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={handlePublishProject}
+              disabled={publishTarget !== null}
+              className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-50"
+            >
+              {publishTarget === "project" ? "Publishing" : "Publish to Watch"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsComposerOpen((current) => !current)}
+              className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950"
+            >
+              Create Episode
+            </button>
+          </div>
         </div>
 
         <div className="grid gap-3 md:grid-cols-4">
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Status</p>
-            <p className="mt-2 text-lg font-semibold text-white">{project.status}</p>
+            <p className="mt-2 text-lg font-semibold text-white">{projectState.status}</p>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Episodes</p>
-            <p className="mt-2 text-lg font-semibold text-white">{initialEpisodes.length}</p>
+            <p className="mt-2 text-lg font-semibold text-white">{episodes.length}</p>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Slug</p>
-            <p className="mt-2 text-lg font-semibold text-white">{project.slug}</p>
+            <p className="mt-2 text-lg font-semibold text-white">{projectState.slug}</p>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Owner</p>
             <p className="mt-2 text-lg font-semibold text-white">
-              {project.ownerName || project.ownerEmail || project.ownerId}
+              {projectState.ownerName || projectState.ownerEmail || projectState.ownerId}
             </p>
           </div>
         </div>
-        <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
-          <p className="text-xs uppercase tracking-[0.24em] text-white/70">Updated</p>
-          <p className="mt-2 text-lg font-semibold text-white">
-            {new Date(project.updatedAt).toLocaleDateString()}
-          </p>
+
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+            <p className="text-xs uppercase tracking-[0.24em] text-white/70">Updated</p>
+            <p className="mt-2 text-lg font-semibold text-white">
+              {new Date(projectState.updatedAt).toLocaleDateString()}
+            </p>
+          </div>
+          <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+            <p className="text-xs uppercase tracking-[0.24em] text-white/70">Published</p>
+            <p className="mt-2 text-lg font-semibold text-white">
+              {projectState.publishedAt ? new Date(projectState.publishedAt).toLocaleDateString() : "Not published"}
+            </p>
+          </div>
         </div>
+
+        {error ? <p className="text-sm text-rose-300">{error}</p> : null}
+        {notice ? <p className="text-sm text-emerald-300">{notice}</p> : null}
 
         {isComposerOpen ? (
           <form onSubmit={handleCreateEpisode} className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-4">
@@ -191,26 +283,26 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes }:
 
             <div className="grid gap-3 md:grid-cols-3">
               {availableTemplateOptions.map((option) => (
-                  <label
-                    key={option.value}
-                    className={`cursor-pointer rounded-[24px] border p-4 transition ${
-                      templateType === option.value
-                        ? "border-cyan-300/60 bg-cyan-400/10"
-                        : "border-white/10 bg-slate-950/40"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="templateType"
-                      value={option.value}
-                      checked={templateType === option.value}
-                      onChange={() => setTemplateType(option.value)}
-                      className="sr-only"
-                    />
-                    <p className="text-sm font-semibold text-white">{option.label}</p>
-                    <p className="mt-2 text-sm text-white/70">{option.description}</p>
-                  </label>
-                ))}
+                <label
+                  key={option.value}
+                  className={`cursor-pointer rounded-[24px] border p-4 transition ${
+                    templateType === option.value
+                      ? "border-cyan-300/60 bg-cyan-400/10"
+                      : "border-white/10 bg-slate-950/40"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="templateType"
+                    value={option.value}
+                    checked={templateType === option.value}
+                    onChange={() => setTemplateType(option.value)}
+                    className="sr-only"
+                  />
+                  <p className="text-sm font-semibold text-white">{option.label}</p>
+                  <p className="mt-2 text-sm text-white/70">{option.description}</p>
+                </label>
+              ))}
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -228,7 +320,6 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes }:
               >
                 Cancel
               </button>
-              {error ? <p className="text-sm text-rose-300">{error}</p> : null}
             </div>
           </form>
         ) : null}
@@ -241,25 +332,22 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes }:
             <h2 className="text-xl font-semibold">Project episodes</h2>
           </div>
           <p className="text-sm text-illuvrse-muted">
-            {project.format === "MOVIE" ? "Chapters and sequence drafts" : "Episodes ready for story development"}
+            {projectState.format === "MOVIE" ? "Chapters and sequence drafts" : "Episodes ready for story development"}
           </p>
         </div>
 
-        {initialEpisodes.length === 0 ? (
+        {episodes.length === 0 ? (
           <div className="rounded-[28px] border border-dashed border-white/10 bg-white/[0.03] p-6 text-sm text-illuvrse-muted">
             No episodes yet. Create the first one to seed structure notes and start the release pipeline draft.
           </div>
         ) : (
           <div className="grid gap-4 lg:grid-cols-2">
-            {initialEpisodes.map((episode) => (
-              <article
-                key={episode.id}
-                className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4"
-              >
+            {episodes.map((episode) => (
+              <article key={episode.id} className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/80">
-                      {formatEpisodeCode(episode, project.format)}
+                      {formatEpisodeCode(episode, projectState.format)}
                     </p>
                     <h3 className="mt-2 text-lg font-semibold text-white">{episode.title}</h3>
                   </div>
@@ -278,9 +366,23 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes }:
                   {episode.synopsis || "No structure notes yet."}
                 </p>
 
-                <div className="mt-4">
+                <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/45">
+                  {episode.publishedAt
+                    ? `Published ${new Date(episode.publishedAt).toLocaleDateString()}`
+                    : "Not published"}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handlePublishEpisode(episode.id)}
+                    disabled={publishTarget !== null}
+                    className="interactive-focus inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100 disabled:opacity-50"
+                  >
+                    {publishTarget === episode.id ? "Publishing" : "Publish to Watch"}
+                  </button>
                   <Link
-                    href={`/studio/show-projects/${project.slug}/episodes/${episode.slug}`}
+                    href={`/studio/show-projects/${projectState.slug}/episodes/${episode.slug}`}
                     className="interactive-focus inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white"
                   >
                     Open Script Editor

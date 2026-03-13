@@ -41,6 +41,7 @@ model Role {
 
 model Show {
   id                String     @id @default(cuid())
+  sourceShowProjectId String?  @unique
   title             String
   slug              String     @unique
   description       String?
@@ -78,6 +79,7 @@ model Season {
 
 model Episode {
   id            String          @id @default(cuid())
+  sourceShowEpisodeId String?   @unique
   seasonId      String
   title         String
   description   String?
@@ -363,6 +365,7 @@ model ShowProject {
   description    String?
   format         ShowProjectFormat
   status         ShowProjectStatus @default(DRAFT)
+  publishedAt    DateTime?
   ownerId        String
   posterImageUrl String?
   bannerImageUrl String?
@@ -373,6 +376,7 @@ model ShowProject {
 
   @@index([ownerId, createdAt])
   @@index([status, updatedAt])
+  @@index([status, publishedAt])
 }
 
 model ShowEpisode {
@@ -385,6 +389,7 @@ model ShowEpisode {
   synopsis       String?
   runtimeSeconds Int?
   status         ShowEpisodeStatus       @default(DRAFT)
+  publishedAt    DateTime?
   templateType   ShowEpisodeTemplateType
   createdAt      DateTime                @default(now())
   updatedAt      DateTime                @updatedAt
@@ -395,6 +400,7 @@ model ShowEpisode {
   @@unique([showProjectId, slug])
   @@index([showProjectId, createdAt])
   @@index([showProjectId, status, updatedAt])
+  @@index([showProjectId, status, publishedAt])
 }
 
 model ShowScene {

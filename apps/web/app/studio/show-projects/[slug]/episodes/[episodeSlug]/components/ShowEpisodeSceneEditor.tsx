@@ -12,6 +12,7 @@ type EpisodeRecord = {
   synopsis: string | null;
   runtimeSeconds: number | null;
   status: "DRAFT" | "READY" | "PUBLISHED";
+  publishedAt: string | null;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
   createdAt: string;
   updatedAt: string;
@@ -85,10 +86,12 @@ function formatClipTimestamp(value: number) {
 }
 
 export default function ShowEpisodeSceneEditor({ episode, initialScenes, initialShortDrafts }: Props) {
+  const [episodeState, setEpisodeState] = useState(episode);
   const [scenes, setScenes] = useState(initialScenes);
   const [shortDrafts, setShortDrafts] = useState(initialShortDrafts);
   const [isCreating, setIsCreating] = useState(false);
   const [isGeneratingDrafts, setIsGeneratingDrafts] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
   const [activeSceneId, setActiveSceneId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -98,7 +101,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
     setError(null);
     setNotice(null);
 
-    const response = await fetch(`/api/studio/episodes/${episode.id}/scenes`, {
+    const response = await fetch(`/api/studio/episodes/${episodeState.id}/scenes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({})
@@ -160,7 +163,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
     setError(null);
     setNotice(null);
 
-    const response = await fetch(`/api/studio/episodes/${episode.id}/generate-shorts`, {
+    const response = await fetch(`/api/studio/episodes/${episodeState.id}/generate-shorts`, {
       method: "POST"
     });
 
@@ -187,6 +190,34 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
     );
   }
 
+  async function handlePublishEpisode() {
+    setIsPublishing(true);
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/episodes/${episodeState.id}/publish`, {
+      method: "POST"
+    });
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      episode?: EpisodeRecord;
+      watchShow?: { slug: string };
+      watchEpisode?: { id: string };
+    };
+
+    setIsPublishing(false);
+
+    if (!response.ok || !payload.episode) {
+      setError(payload.error ?? "Unable to publish episode.");
+      return;
+    }
+
+    setEpisodeState(payload.episode);
+    setNotice(
+      `Published to Watch: /watch/show/${payload.watchShow?.slug ?? "show"} · episode ${payload.watchEpisode?.id ?? payload.episode.id}`
+    );
+  }
+
   async function handleReorder(sceneId: string, direction: -1 | 1) {
     const currentIndex = scenes.findIndex((scene) => scene.id === sceneId);
     const nextIndex = currentIndex + direction;
@@ -202,7 +233,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
     setError(null);
     setNotice(null);
 
-    const response = await fetch(`/api/studio/episodes/${episode.id}/scenes/reorder`, {
+    const response = await fetch(`/api/studio/episodes/${episodeState.id}/scenes/reorder`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sceneIds: nextScenes.map((scene) => scene.id) })
@@ -229,26 +260,36 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
       <section className="party-card space-y-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">{formatEpisodeCode(episode)}</p>
-            <h1 className="mt-2 text-3xl font-semibold text-white">{episode.title}</h1>
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">{formatEpisodeCode(episodeState)}</p>
+            <h1 className="mt-2 text-3xl font-semibold text-white">{episodeState.title}</h1>
             <p className="mt-2 max-w-3xl text-sm text-white/75">
-              {episode.synopsis || "No episode synopsis yet."}
+              {episodeState.synopsis || "No episode synopsis yet."}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={handleCreateScene}
-            disabled={isCreating}
-            className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-60"
-          >
-            {isCreating ? "Creating" : "Create Scene"}
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={handlePublishEpisode}
+              disabled={isPublishing}
+              className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-50"
+            >
+              {isPublishing ? "Publishing" : "Publish to Watch"}
+            </button>
+            <button
+              type="button"
+              onClick={handleCreateScene}
+              disabled={isCreating}
+              className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-60"
+            >
+              {isCreating ? "Creating" : "Create Scene"}
+            </button>
+          </div>
         </div>
 
         <div className="grid gap-3 md:grid-cols-5">
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Status</p>
-            <p className="mt-2 text-lg font-semibold text-white">{episode.status}</p>
+            <p className="mt-2 text-lg font-semibold text-white">{episodeState.status}</p>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Scenes</p>
@@ -260,12 +301,19 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Template</p>
-            <p className="mt-2 text-lg font-semibold text-white">{episode.templateType}</p>
+            <p className="mt-2 text-lg font-semibold text-white">{episodeState.templateType}</p>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Slug</p>
-            <p className="mt-2 text-lg font-semibold text-white">{episode.slug}</p>
+            <p className="mt-2 text-lg font-semibold text-white">{episodeState.slug}</p>
           </div>
+        </div>
+
+        <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+          <p className="text-xs uppercase tracking-[0.24em] text-white/70">Published</p>
+          <p className="mt-2 text-lg font-semibold text-white">
+            {episodeState.publishedAt ? new Date(episodeState.publishedAt).toLocaleDateString() : "Not published"}
+          </p>
         </div>
 
         {error ? <p className="text-sm text-rose-300">{error}</p> : null}
@@ -284,7 +332,11 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
           <button
             type="button"
             onClick={handleGenerateShortDrafts}
-            disabled={isGeneratingDrafts || scenes.length === 0 || (episode.status !== "READY" && episode.status !== "PUBLISHED")}
+            disabled={
+              isGeneratingDrafts ||
+              scenes.length === 0 ||
+              (episodeState.status !== "READY" && episodeState.status !== "PUBLISHED")
+            }
             className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-40"
           >
             {isGeneratingDrafts ? "Generating" : "Generate Shorts Drafts"}
@@ -292,7 +344,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
         </div>
 
         <p className="text-xs uppercase tracking-[0.2em] text-white/45">
-          {episode.status === "READY" || episode.status === "PUBLISHED"
+          {episodeState.status === "READY" || episodeState.status === "PUBLISHED"
             ? "Generation is enabled for ready episodes."
             : "Set episode status to READY before generating shorts drafts."}
         </p>
@@ -379,15 +431,23 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                     >
                       Down
                     </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSaveScene(scene)}
+                      disabled={activeSceneId === scene.id}
+                      className="interactive-focus rounded-full bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-950 disabled:opacity-40"
+                    >
+                      {activeSceneId === scene.id ? "Saving" : "Save Scene"}
+                    </button>
                   </div>
                 </div>
 
                 <div className="mt-4 grid gap-3 md:grid-cols-3">
-                  <label className="space-y-2 text-sm text-white/70">
-                    <span className="block text-xs uppercase tracking-[0.2em] text-white/50">Start intent</span>
+                  <label className="space-y-2">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/55">Start intent</span>
                     <input
                       type="number"
-                      min="0"
+                      min={0}
                       value={scene.startIntentSeconds ?? ""}
                       onChange={(event) =>
                         setScenes((current) =>
@@ -396,20 +456,20 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                               ? {
                                   ...entry,
                                   startIntentSeconds:
-                                    event.target.value === "" ? null : Number(event.target.value)
+                                    event.target.value === "" ? null : Number.parseInt(event.target.value, 10)
                                 }
                               : entry
                           )
                         )
                       }
-                      className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-white outline-none transition focus:border-cyan-300/60"
+                      className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60"
                     />
                   </label>
-                  <label className="space-y-2 text-sm text-white/70">
-                    <span className="block text-xs uppercase tracking-[0.2em] text-white/50">End intent</span>
+                  <label className="space-y-2">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/55">End intent</span>
                     <input
                       type="number"
-                      min="0"
+                      min={0}
                       value={scene.endIntentSeconds ?? ""}
                       onChange={(event) =>
                         setScenes((current) =>
@@ -418,37 +478,35 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                               ? {
                                   ...entry,
                                   endIntentSeconds:
-                                    event.target.value === "" ? null : Number(event.target.value)
+                                    event.target.value === "" ? null : Number.parseInt(event.target.value, 10)
                                 }
                               : entry
                           )
                         )
                       }
-                      className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-white outline-none transition focus:border-cyan-300/60"
+                      className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60"
                     />
                   </label>
-                  <label className="space-y-2 text-sm text-white/70">
-                    <span className="block text-xs uppercase tracking-[0.2em] text-white/50">Tags</span>
+                  <label className="space-y-2">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/55">Tags</span>
                     <input
                       type="text"
                       value={scene.tags?.join(", ") ?? ""}
                       onChange={(event) =>
                         setScenes((current) =>
                           current.map((entry) =>
-                            entry.id === scene.id
-                              ? { ...entry, tags: parseTags(event.target.value) }
-                              : entry
+                            entry.id === scene.id ? { ...entry, tags: parseTags(event.target.value) } : entry
                           )
                         )
                       }
+                      className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60"
                       placeholder="intro, dialogue, transition"
-                      className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-white outline-none transition focus:border-cyan-300/60"
                     />
                   </label>
                 </div>
 
-                <label className="mt-4 block space-y-2 text-sm text-white/70">
-                  <span className="block text-xs uppercase tracking-[0.2em] text-white/50">Script</span>
+                <label className="mt-4 block space-y-2">
+                  <span className="text-xs uppercase tracking-[0.2em] text-white/55">Script</span>
                   <textarea
                     value={scene.scriptText}
                     onChange={(event) =>
@@ -458,25 +516,10 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                         )
                       )
                     }
-                    rows={10}
-                    className="min-h-[220px] w-full rounded-[24px] border border-white/10 bg-slate-950/50 px-4 py-4 text-sm leading-6 text-white outline-none transition focus:border-cyan-300/60"
+                    className="min-h-48 w-full rounded-3xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-white outline-none transition focus:border-cyan-300/60"
                     placeholder="Write the scene action, dialogue, and production notes here."
                   />
                 </label>
-
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => handleSaveScene(scene)}
-                    disabled={activeSceneId === scene.id}
-                    className="interactive-focus rounded-full bg-cyan-300 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-60"
-                  >
-                    {activeSceneId === scene.id ? "Saving" : "Save Scene"}
-                  </button>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/45">
-                    Updated {new Date(scene.updatedAt).toLocaleString()}
-                  </p>
-                </div>
               </article>
             ))}
           </div>

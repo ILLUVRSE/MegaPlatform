@@ -48,6 +48,7 @@ export default async function StudioShowEpisodeDetailPage({
   const shortDrafts = await listDerivedShortDrafts(episode.id);
   const serializedEpisode = {
     ...episode,
+    publishedAt: episode.publishedAt?.toISOString() ?? null,
     createdAt: episode.createdAt.toISOString(),
     updatedAt: episode.updatedAt.toISOString()
   };

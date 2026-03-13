@@ -24,6 +24,7 @@ export type ShowEpisodeRecord = {
   synopsis: string | null;
   runtimeSeconds: number | null;
   status: ShowEpisodeStatus;
+  publishedAt: Date | null;
   templateType: ShowEpisodeTemplateType;
   createdAt: Date;
   updatedAt: Date;
@@ -72,6 +73,7 @@ export async function listShowEpisodes(showProjectId: string) {
       "synopsis",
       "runtimeSeconds",
       "status"::text AS "status",
+      "publishedAt",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -96,6 +98,7 @@ export async function findShowEpisodeById(id: string) {
       episode."synopsis",
       episode."runtimeSeconds",
       episode."status"::text AS "status",
+      episode."publishedAt",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -121,6 +124,7 @@ export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slu
       episode."synopsis",
       episode."runtimeSeconds",
       episode."status"::text AS "status",
+      episode."publishedAt",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -222,6 +226,7 @@ export async function createShowEpisode(input: {
       "synopsis",
       "runtimeSeconds",
       "status",
+      "publishedAt",
       "templateType",
       "createdAt",
       "updatedAt"
@@ -236,6 +241,7 @@ export async function createShowEpisode(input: {
       ${defaults.synopsis},
       NULL,
       'DRAFT'::"ShowEpisodeStatus",
+      NULL,
       ${input.templateType}::"ShowEpisodeTemplateType",
       NOW(),
       NOW()
@@ -250,6 +256,7 @@ export async function createShowEpisode(input: {
       "synopsis",
       "runtimeSeconds",
       "status"::text AS "status",
+      "publishedAt",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -306,6 +313,7 @@ export async function updateShowEpisode(
       "synopsis",
       "runtimeSeconds",
       "status"::text AS "status",
+      "publishedAt",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
