@@ -10,7 +10,9 @@ import {
   listShowProjectCollaborators
 } from "@/lib/showProjects";
 import { getShowEpisodePublishQc, getShowProjectPublishQc } from "@/lib/studioPublishQc";
+import { getStudioShowWatchAnalytics } from "@/lib/studioWatchAnalytics";
 import InteractiveExtrasEditor from "../components/InteractiveExtrasEditor";
+import StudioWatchAnalyticsPanel from "../components/StudioWatchAnalyticsPanel";
 import ShowProjectEpisodesManager from "./components/ShowProjectEpisodesManager";
 
 export default async function StudioShowProjectDetailPage({
@@ -46,12 +48,13 @@ export default async function StudioShowProjectDetailPage({
     notFound();
   }
 
-  const [episodes, extras, interactiveExtras, collaborators, projectQc] = await Promise.all([
+  const [episodes, extras, interactiveExtras, collaborators, projectQc, analytics] = await Promise.all([
     listShowEpisodes(project.id),
     listShowExtras(project.id),
     listInteractiveExtrasForShow(project.id),
     listShowProjectCollaborators(project.id),
-    getShowProjectPublishQc(project.id)
+    getShowProjectPublishQc(project.id),
+    getStudioShowWatchAnalytics(project.id)
   ]);
   const episodeQcEntries = await Promise.all(episodes.map(async (episode) => [episode.id, await getShowEpisodePublishQc(episode.id)] as const));
   const serializedProject = {
@@ -110,6 +113,7 @@ export default async function StudioShowProjectDetailPage({
         currentUserRole={access.role}
         permissions={access.permissions}
       />
+      <StudioWatchAnalyticsPanel analytics={analytics} />
       <InteractiveExtrasEditor
         scope={{ kind: "show", slug: project.slug }}
         title="Show-level prompts and callouts"

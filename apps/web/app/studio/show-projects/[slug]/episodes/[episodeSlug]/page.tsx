@@ -8,7 +8,9 @@ import { listDerivedShortDrafts } from "@/lib/showShortDrafts";
 import { listShowScenes } from "@/lib/showScenes";
 import { findShowProjectWithOwnerBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 import { getShowEpisodePublishQc } from "@/lib/studioPublishQc";
+import { getStudioEpisodeWatchAnalytics } from "@/lib/studioWatchAnalytics";
 import InteractiveExtrasEditor from "../../../components/InteractiveExtrasEditor";
+import StudioWatchAnalyticsPanel from "../../../components/StudioWatchAnalyticsPanel";
 import ShowEpisodeSceneEditor from "./components/ShowEpisodeSceneEditor";
 
 export default async function StudioShowEpisodeDetailPage({
@@ -49,12 +51,13 @@ export default async function StudioShowEpisodeDetailPage({
     notFound();
   }
 
-  const [scenes, shortDrafts, shotlistSuggestions, interactiveExtras, episodeQc] = await Promise.all([
+  const [scenes, shortDrafts, shotlistSuggestions, interactiveExtras, episodeQc, analytics] = await Promise.all([
     listShowScenes(episode.id),
     listDerivedShortDrafts(episode.id),
     listShotlistSuggestions(episode.id),
     listInteractiveExtrasForEpisode(episode.id),
-    getShowEpisodePublishQc(episode.id)
+    getShowEpisodePublishQc(episode.id),
+    getStudioEpisodeWatchAnalytics(episode.id)
   ]);
   const serializedEpisode = {
     ...episode,
@@ -101,6 +104,7 @@ export default async function StudioShowEpisodeDetailPage({
         initialShotlistSuggestions={serializedShotlistSuggestions}
         permissions={access.permissions}
       />
+      <StudioWatchAnalyticsPanel analytics={analytics} />
       <InteractiveExtrasEditor
         scope={{ kind: "episode", episodeId: episode.id }}
         title="Episode-level prompts and callouts"
