@@ -1,0 +1,511 @@
+{
+  "generatedAt": "2026-03-13T09:50:01.154Z",
+  "repoRoot": "/home/ryan/ILLUVRSE",
+  "options": {
+    "pattern": "gamegrid/**/.*integration.test.ts",
+    "iterations": 1,
+    "outputDir": "/home/ryan/ILLUVRSE/artifacts/flaky-triage/demo-20260313T095001Z",
+    "baseSeed": 1561396334
+  },
+  "environment": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  },
+  "totals": {
+    "matchedTests": 18,
+    "totalRuns": 18,
+    "totalFailures": 0,
+    "overallFlakeRate": 0
+  },
+  "tests": [
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/games/goalie-gauntlet/career.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/games/goalie-gauntlet/career.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 2067.386046,
+      "minDurationMs": 2067.386046,
+      "maxDurationMs": 2067.386046,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2321700617,
+          "status": "passed",
+          "durationMs": 2067.386046,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/games/starlight-chronicles/scene.crew.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/games/starlight-chronicles/scene.crew.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 2226.493375,
+      "minDurationMs": 2226.493375,
+      "maxDurationMs": 2226.493375,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3641421709,
+          "status": "passed",
+          "durationMs": 2226.493375,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/alley-bowling-blitz.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1542.197233,
+      "minDurationMs": 1542.197233,
+      "maxDurationMs": 1542.197233,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 571250500,
+          "status": "passed",
+          "durationMs": 1542.197233,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/card-table.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/card-table.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1502.954949,
+      "minDurationMs": 1502.954949,
+      "maxDurationMs": 1502.954949,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3596197713,
+          "status": "passed",
+          "durationMs": 1502.954949,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/foosball.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/foosball.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1639.950257,
+      "minDurationMs": 1639.950257,
+      "maxDurationMs": 1639.950257,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1131398094,
+          "status": "passed",
+          "durationMs": 1639.950257,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/freethrow-frenzy.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/freethrow-frenzy.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1626.611924,
+      "minDurationMs": 1626.611924,
+      "maxDurationMs": 1626.611924,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 266520505,
+          "status": "passed",
+          "durationMs": 1626.611924,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/goalie-gauntlet.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/goalie-gauntlet.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1585.696562,
+      "minDurationMs": 1585.696562,
+      "maxDurationMs": 1585.696562,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2115613920,
+          "status": "passed",
+          "durationMs": 1585.696562,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1661.416655,
+      "minDurationMs": 1661.416655,
+      "maxDurationMs": 1661.416655,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3344094169,
+          "status": "passed",
+          "durationMs": 1661.416655,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/minigolf.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/minigolf.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1778.50831,
+      "minDurationMs": 1778.50831,
+      "maxDurationMs": 1778.50831,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2595549301,
+          "status": "passed",
+          "durationMs": 1778.50831,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1806.549926,
+      "minDurationMs": 1806.549926,
+      "maxDurationMs": 1806.549926,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 2946522554,
+          "status": "passed",
+          "durationMs": 1806.549926,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1662.60687,
+      "minDurationMs": 1662.60687,
+      "maxDurationMs": 1662.60687,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 4075003514,
+          "status": "passed",
+          "durationMs": 1662.60687,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/pixelpuck.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/pixelpuck.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1551.01361,
+      "minDurationMs": 1551.01361,
+      "maxDurationMs": 1551.01361,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1074554883,
+          "status": "passed",
+          "durationMs": 1551.01361,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/pool.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/pool.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1531.412802,
+      "minDurationMs": 1531.412802,
+      "maxDurationMs": 1531.412802,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1658624516,
+          "status": "passed",
+          "durationMs": 1531.412802,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/starlight-chronicles.coop-boss.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/starlight-chronicles.coop-boss.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1859.388513,
+      "minDurationMs": 1859.388513,
+      "maxDurationMs": 1859.388513,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3028900716,
+          "status": "passed",
+          "durationMs": 1859.388513,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/starlight-chronicles.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/starlight-chronicles.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1934.948559,
+      "minDurationMs": 1934.948559,
+      "maxDurationMs": 1934.948559,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 1987975055,
+          "status": "passed",
+          "durationMs": 1934.948559,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/tabletennis.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/tabletennis.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1694.316659,
+      "minDurationMs": 1694.316659,
+      "maxDurationMs": 1694.316659,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3553703905,
+          "status": "passed",
+          "durationMs": 1694.316659,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/throw-darts.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/mp/throw-darts.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1613.844389,
+      "minDurationMs": 1613.844389,
+      "maxDurationMs": 1613.844389,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 3729957525,
+          "status": "passed",
+          "durationMs": 1613.844389,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "appName": "@illuvrse/gamegrid",
+      "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+      "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/scenes/starlight.integration.test.ts",
+      "repoRelative": "apps/gamegrid/src/scenes/starlight.integration.test.ts",
+      "iterations": 1,
+      "passCount": 1,
+      "failCount": 0,
+      "flakeRate": 0,
+      "averageDurationMs": 1642.968892,
+      "minDurationMs": 1642.968892,
+      "maxDurationMs": 1642.968892,
+      "candidateRootCauseHints": [
+        "No root-cause hint detected from current traces."
+      ],
+      "runs": [
+        {
+          "runIndex": 1,
+          "seed": 126699654,
+          "status": "passed",
+          "durationMs": 1642.968892,
+          "exitCode": 0,
+          "failureCount": 0,
+          "failures": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/scenes/starlight.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/scenes/starlight.integration.test.ts",
+  "iterations": 1,
+  "passCount": 1,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1642.968892,
+  "minDurationMs": 1642.968892,
+  "maxDurationMs": 1642.968892,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 126699654,
+      "status": "passed",
+      "durationMs": 1642.968892,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

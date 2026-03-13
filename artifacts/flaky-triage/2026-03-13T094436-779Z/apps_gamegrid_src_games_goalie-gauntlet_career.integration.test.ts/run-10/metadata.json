@@ -1,0 +1,25 @@
+{
+  "seed": 4233956821,
+  "runIndex": 10,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/games/goalie-gauntlet/career.integration.test.ts",
+  "startedAt": "2026-03-13T09:44:51.366Z",
+  "finishedAt": "2026-03-13T09:44:52.989Z",
+  "durationMs": 1623.193091,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "4233956821",
+    "TEST_RANDOM_SEED": "4233956821",
+    "FLAKY_TRIAGE_RUN_INDEX": "10",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

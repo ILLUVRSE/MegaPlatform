@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/starlight-chronicles.coop-boss.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/starlight-chronicles.coop-boss.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1784.5706023999999,
+  "minDurationMs": 1684.806219,
+  "maxDurationMs": 1916.350992,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 2487837474,
+      "status": "passed",
+      "durationMs": 1792.658127,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 2504614223,
+      "status": "passed",
+      "durationMs": 1781.237727,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 2588502012,
+      "status": "passed",
+      "durationMs": 1731.169627,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 2605278825,
+      "status": "passed",
+      "durationMs": 1802.312914,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 2554946710,
+      "status": "passed",
+      "durationMs": 1805.949428,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 2571725571,
+      "status": "passed",
+      "durationMs": 1751.639076,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 2655611312,
+      "status": "passed",
+      "durationMs": 1684.806219,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 2403946765,
+      "status": "passed",
+      "durationMs": 1916.350992,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 2353616826,
+      "status": "passed",
+      "durationMs": 1702.547897,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 2433542038,
+      "status": "passed",
+      "durationMs": 1877.034017,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "seed": 1538254872,
+  "runIndex": 9,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/foosball.integration.test.ts",
+  "startedAt": "2026-03-13T09:46:00.873Z",
+  "finishedAt": "2026-03-13T09:46:02.510Z",
+  "durationMs": 1637.446947,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "1538254872",
+    "TEST_RANDOM_SEED": "1538254872",
+    "FLAKY_TRIAGE_RUN_INDEX": "9",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "seed": 841122622,
+  "runIndex": 6,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/freethrow-frenzy.integration.test.ts",
+  "startedAt": "2026-03-13T09:46:12.081Z",
+  "finishedAt": "2026-03-13T09:46:13.697Z",
+  "durationMs": 1616.149172,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "841122622",
+    "TEST_RANDOM_SEED": "841122622",
+    "FLAKY_TRIAGE_RUN_INDEX": "6",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

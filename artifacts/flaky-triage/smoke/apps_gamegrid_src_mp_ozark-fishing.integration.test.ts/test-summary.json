@@ -1,0 +1,36 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/ozark-fishing.integration.test.ts",
+  "iterations": 2,
+  "passCount": 2,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1765.5938314999999,
+  "minDurationMs": 1749.600383,
+  "maxDurationMs": 1781.58728,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 1030488329,
+      "status": "passed",
+      "durationMs": 1749.600383,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 980158032,
+      "status": "passed",
+      "durationMs": 1781.58728,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

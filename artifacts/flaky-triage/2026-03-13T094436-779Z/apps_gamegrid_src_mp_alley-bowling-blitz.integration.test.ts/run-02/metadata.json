@@ -1,0 +1,25 @@
+{
+  "seed": 63745463,
+  "runIndex": 2,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/alley-bowling-blitz.integration.test.ts",
+  "startedAt": "2026-03-13T09:45:17.262Z",
+  "finishedAt": "2026-03-13T09:45:18.853Z",
+  "durationMs": 1591.226547,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "63745463",
+    "TEST_RANDOM_SEED": "63745463",
+    "FLAKY_TRIAGE_RUN_INDEX": "2",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

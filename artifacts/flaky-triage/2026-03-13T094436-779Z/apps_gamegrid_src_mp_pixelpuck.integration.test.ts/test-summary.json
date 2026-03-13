@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/pixelpuck.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/pixelpuck.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1598.265673,
+  "minDurationMs": 1525.64161,
+  "maxDurationMs": 1686.118529,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 1624002637,
+      "status": "passed",
+      "durationMs": 1569.060642,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 1741446036,
+      "status": "passed",
+      "durationMs": 1587.249533,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 1724667239,
+      "status": "passed",
+      "durationMs": 1576.536483,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 1707890862,
+      "status": "passed",
+      "durationMs": 1552.176258,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 1691113985,
+      "status": "passed",
+      "durationMs": 1525.64161,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 1808555336,
+      "status": "passed",
+      "durationMs": 1686.118529,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 1791778523,
+      "status": "passed",
+      "durationMs": 1657.898412,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 1775002210,
+      "status": "passed",
+      "durationMs": 1609.933145,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 1758225397,
+      "status": "passed",
+      "durationMs": 1630.415521,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 1333832263,
+      "status": "passed",
+      "durationMs": 1587.626597,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

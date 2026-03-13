@@ -1,0 +1,25 @@
+{
+  "seed": 4224422697,
+  "runIndex": 3,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/games/starlight-chronicles/scene.crew.integration.test.ts",
+  "startedAt": "2026-03-13T09:44:57.354Z",
+  "finishedAt": "2026-03-13T09:44:59.692Z",
+  "durationMs": 2338.548975,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "4224422697",
+    "TEST_RANDOM_SEED": "4224422697",
+    "FLAKY_TRIAGE_RUN_INDEX": "3",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "seed": 1524206330,
+  "runIndex": 5,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/goalie-gauntlet.integration.test.ts",
+  "startedAt": "2026-03-13T09:46:26.719Z",
+  "finishedAt": "2026-03-13T09:46:28.362Z",
+  "durationMs": 1642.7511,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "1524206330",
+    "TEST_RANDOM_SEED": "1524206330",
+    "FLAKY_TRIAGE_RUN_INDEX": "5",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

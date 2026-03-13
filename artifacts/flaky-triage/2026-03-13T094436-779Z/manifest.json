@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-03-13T09:44:36.841Z",
+  "repoRoot": "/home/ryan/ILLUVRSE",
+  "options": {
+    "pattern": "gamegrid/**/.*integration.test.ts",
+    "iterations": 10,
+    "outputDir": "/home/ryan/ILLUVRSE/artifacts/flaky-triage/2026-03-13T094436-779Z",
+    "baseSeed": 2110864416
+  },
+  "environment": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

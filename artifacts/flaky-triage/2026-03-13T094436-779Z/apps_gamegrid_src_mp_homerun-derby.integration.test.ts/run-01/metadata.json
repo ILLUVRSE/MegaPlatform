@@ -1,0 +1,25 @@
+{
+  "seed": 3885165463,
+  "runIndex": 1,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/homerun-derby.integration.test.ts",
+  "startedAt": "2026-03-13T09:46:36.836Z",
+  "finishedAt": "2026-03-13T09:46:38.396Z",
+  "durationMs": 1560.117576,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "3885165463",
+    "TEST_RANDOM_SEED": "3885165463",
+    "FLAKY_TRIAGE_RUN_INDEX": "1",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

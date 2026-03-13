@@ -1,0 +1,25 @@
+{
+  "seed": 2539680028,
+  "runIndex": 9,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/ozark-fishing.integration.test.ts",
+  "startedAt": "2026-03-13T09:47:24.157Z",
+  "finishedAt": "2026-03-13T09:47:25.846Z",
+  "durationMs": 1689.499327,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "2539680028",
+    "TEST_RANDOM_SEED": "2539680028",
+    "FLAKY_TRIAGE_RUN_INDEX": "9",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/homerun-derby.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1582.4402894999998,
+  "minDurationMs": 1534.957022,
+  "maxDurationMs": 1631.021205,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 3885165463,
+      "status": "passed",
+      "durationMs": 1560.117576,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 3868386666,
+      "status": "passed",
+      "durationMs": 1534.957022,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 3784500989,
+      "status": "passed",
+      "durationMs": 1578.583386,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 3901944824,
+      "status": "passed",
+      "durationMs": 1621.135153,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 3952274763,
+      "status": "passed",
+      "durationMs": 1542.761692,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 3935497950,
+      "status": "passed",
+      "durationMs": 1569.649882,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 3851610289,
+      "status": "passed",
+      "durationMs": 1623.815703,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 3969054124,
+      "status": "passed",
+      "durationMs": 1631.021205,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 4019386175,
+      "status": "passed",
+      "durationMs": 1576.719523,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 572356005,
+      "status": "passed",
+      "durationMs": 1585.641753,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

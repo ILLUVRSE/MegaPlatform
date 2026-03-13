@@ -1,0 +1,25 @@
+{
+  "seed": 3836889916,
+  "runIndex": 1,
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testRelativeToApp": "src/mp/starlight-chronicles.integration.test.ts",
+  "startedAt": "2026-03-13T09:44:00.978Z",
+  "finishedAt": "2026-03-13T09:44:02.922Z",
+  "durationMs": 1943.555603,
+  "exitCode": 0,
+  "env": {
+    "CI": "1",
+    "TZ": "UTC",
+    "FLAKY_TRIAGE_SEED": "3836889916",
+    "TEST_RANDOM_SEED": "3836889916",
+    "FLAKY_TRIAGE_RUN_INDEX": "1",
+    "NODE_ENV": null
+  },
+  "system": {
+    "node": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuCount": 16,
+    "hostname": "DESKTOP-UJ3U29L"
+  }
+}

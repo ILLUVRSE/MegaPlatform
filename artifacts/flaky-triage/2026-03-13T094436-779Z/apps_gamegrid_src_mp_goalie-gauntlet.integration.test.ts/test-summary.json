@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/goalie-gauntlet.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/goalie-gauntlet.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1685.6716706,
+  "minDurationMs": 1607.443961,
+  "maxDurationMs": 1751.316169,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 1591315630,
+      "status": "passed",
+      "durationMs": 1607.443961,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 1608094427,
+      "status": "passed",
+      "durationMs": 1751.316169,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 1557762376,
+      "status": "passed",
+      "durationMs": 1692.837357,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 1440318541,
+      "status": "passed",
+      "durationMs": 1695.585791,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 1524206330,
+      "status": "passed",
+      "durationMs": 1642.7511,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 1540983143,
+      "status": "passed",
+      "durationMs": 1698.463018,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 1490653076,
+      "status": "passed",
+      "durationMs": 1632.172565,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 1641650601,
+      "status": "passed",
+      "durationMs": 1710.411601,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 1725538262,
+      "status": "passed",
+      "durationMs": 1683.503767,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 2575238970,
+      "status": "passed",
+      "durationMs": 1742.231377,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}

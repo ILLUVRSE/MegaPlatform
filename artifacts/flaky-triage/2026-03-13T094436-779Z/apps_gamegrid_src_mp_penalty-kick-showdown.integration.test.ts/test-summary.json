@@ -1,0 +1,108 @@
+{
+  "appName": "@illuvrse/gamegrid",
+  "appRoot": "/home/ryan/ILLUVRSE/apps/gamegrid",
+  "testFile": "/home/ryan/ILLUVRSE/apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+  "repoRelative": "apps/gamegrid/src/mp/penalty-kick-showdown.integration.test.ts",
+  "iterations": 10,
+  "passCount": 10,
+  "failCount": 0,
+  "flakeRate": 0,
+  "averageDurationMs": 1607.5595942999998,
+  "minDurationMs": 1502.105488,
+  "maxDurationMs": 1664.278382,
+  "candidateRootCauseHints": [
+    "No root-cause hint detected from current traces."
+  ],
+  "runs": [
+    {
+      "runIndex": 1,
+      "seed": 3525551668,
+      "status": "passed",
+      "durationMs": 1608.820819,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 2,
+      "seed": 3475219181,
+      "status": "passed",
+      "durationMs": 1605.46788,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 3,
+      "seed": 3424887066,
+      "status": "passed",
+      "durationMs": 1605.957,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 4,
+      "seed": 3508775291,
+      "status": "passed",
+      "durationMs": 1610.900214,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 5,
+      "seed": 3592663016,
+      "status": "passed",
+      "durationMs": 1571.728055,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 6,
+      "seed": 3542328481,
+      "status": "passed",
+      "durationMs": 1502.105488,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 7,
+      "seed": 3491998414,
+      "status": "passed",
+      "durationMs": 1664.278382,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 8,
+      "seed": 3575886639,
+      "status": "passed",
+      "durationMs": 1647.367981,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 9,
+      "seed": 3659772252,
+      "status": "passed",
+      "durationMs": 1638.222161,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    },
+    {
+      "runIndex": 10,
+      "seed": 1664719500,
+      "status": "passed",
+      "durationMs": 1620.747963,
+      "exitCode": 0,
+      "failureCount": 0,
+      "failures": []
+    }
+  ]
+}
