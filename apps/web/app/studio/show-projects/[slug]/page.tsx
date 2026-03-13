@@ -8,6 +8,7 @@ import {
   getShowProjectAccessForUser,
   listShowProjectCollaborators
 } from "@/lib/showProjects";
+import { getShowEpisodePublishQc, getShowProjectPublishQc } from "@/lib/studioPublishQc";
 import ShowProjectEpisodesManager from "./components/ShowProjectEpisodesManager";
 
 export default async function StudioShowProjectDetailPage({
@@ -43,11 +44,13 @@ export default async function StudioShowProjectDetailPage({
     notFound();
   }
 
-  const [episodes, extras, collaborators] = await Promise.all([
+  const [episodes, extras, collaborators, projectQc] = await Promise.all([
     listShowEpisodes(project.id),
     listShowExtras(project.id),
-    listShowProjectCollaborators(project.id)
+    listShowProjectCollaborators(project.id),
+    getShowProjectPublishQc(project.id)
   ]);
+  const episodeQcEntries = await Promise.all(episodes.map(async (episode) => [episode.id, await getShowEpisodePublishQc(episode.id)] as const));
   const serializedProject = {
     ...project,
     publishedAt: project.publishedAt?.toISOString() ?? null,
@@ -91,6 +94,8 @@ export default async function StudioShowProjectDetailPage({
       </div>
       <ShowProjectEpisodesManager
         project={serializedProject}
+        initialProjectQc={projectQc}
+        initialEpisodeQcById={Object.fromEntries(episodeQcEntries)}
         initialEpisodes={serializedEpisodes}
         initialExtras={serializedExtras}
         collaborators={serializedCollaborators}

@@ -6,6 +6,7 @@ import { AuthzError, requireSession } from "@/lib/authz";
 import { PREMIERE_TYPES } from "@/lib/releaseScheduling";
 import { findShowEpisodeById } from "@/lib/showEpisodes";
 import { getShowProjectAccessForUser } from "@/lib/showProjects";
+import { getShowEpisodePublishQc } from "@/lib/studioPublishQc";
 import { publishShowEpisodeToWatch, StudioPublishError } from "@/lib/studioShowPublish";
 
 const publishEpisodeSchema = z.object({
@@ -64,7 +65,10 @@ export async function POST(
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof StudioPublishError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
+      const qc =
+        (error.details as { qc?: unknown } | null)?.qc ??
+        (error.status === 409 ? await getShowEpisodePublishQc(episode.id) : null);
+      return NextResponse.json({ error: error.message, qc }, { status: error.status });
     }
     throw error;
   }

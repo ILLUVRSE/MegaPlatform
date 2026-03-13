@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { PREMIERE_TYPES } from "@/lib/releaseScheduling";
+import { getShowProjectPublishQc } from "@/lib/studioPublishQc";
 import { findShowProjectBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 import { publishShowProjectToWatch, StudioPublishError } from "@/lib/studioShowPublish";
 
@@ -55,7 +56,10 @@ export async function POST(
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof StudioPublishError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
+      const qc =
+        (error.details as { qc?: unknown } | null)?.qc ??
+        (error.status === 409 ? await getShowProjectPublishQc(project.id) : null);
+      return NextResponse.json({ error: error.message, qc }, { status: error.status });
     }
     throw error;
   }

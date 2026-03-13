@@ -6,6 +6,7 @@ import { listShotlistSuggestions } from "@/lib/showShotlistSuggestions";
 import { listDerivedShortDrafts } from "@/lib/showShortDrafts";
 import { listShowScenes } from "@/lib/showScenes";
 import { findShowProjectWithOwnerBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
+import { getShowEpisodePublishQc } from "@/lib/studioPublishQc";
 import ShowEpisodeSceneEditor from "./components/ShowEpisodeSceneEditor";
 
 export default async function StudioShowEpisodeDetailPage({
@@ -46,9 +47,12 @@ export default async function StudioShowEpisodeDetailPage({
     notFound();
   }
 
-  const scenes = await listShowScenes(episode.id);
-  const shortDrafts = await listDerivedShortDrafts(episode.id);
-  const shotlistSuggestions = await listShotlistSuggestions(episode.id);
+  const [scenes, shortDrafts, shotlistSuggestions, episodeQc] = await Promise.all([
+    listShowScenes(episode.id),
+    listDerivedShortDrafts(episode.id),
+    listShotlistSuggestions(episode.id),
+    getShowEpisodePublishQc(episode.id)
+  ]);
   const serializedEpisode = {
     ...episode,
     publishedAt: episode.publishedAt?.toISOString() ?? null,
@@ -83,6 +87,7 @@ export default async function StudioShowEpisodeDetailPage({
       </div>
       <ShowEpisodeSceneEditor
         episode={serializedEpisode}
+        initialPublishQc={episodeQc}
         initialScenes={serializedScenes}
         initialShortDrafts={serializedShortDrafts}
         initialShotlistSuggestions={serializedShotlistSuggestions}

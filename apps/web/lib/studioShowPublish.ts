@@ -5,8 +5,12 @@ import {
   type PremiereType,
   normalizeReleaseSchedule
 } from "@/lib/releaseScheduling";
-
-const WATCH_PLACEHOLDER_ASSET_URL = "https://cdn.illuvrse.dev/assets/placeholder-episode.mp4";
+import {
+  buildShowEpisodePublishQc,
+  buildShowProjectPublishQc,
+  type StudioPublishQcResult
+} from "@/lib/studioPublishQc";
+import { WATCH_PLACEHOLDER_ASSET_URL } from "@/lib/studioWatchPublishConfig";
 const DEFAULT_EPISODE_RUNTIME_SECONDS = 60;
 
 type PublishableShowProject = {
@@ -65,17 +69,13 @@ type WatchEpisodeRow = {
 
 export class StudioPublishError extends Error {
   status: number;
+  details: unknown;
 
-  constructor(message: string, status = 400) {
+  constructor(message: string, status = 400, details: unknown = null) {
     super(message);
     this.name = "StudioPublishError";
     this.status = status;
-  }
-}
-
-function requirePublishTitle(title: string | null | undefined, kind: "show" | "episode") {
-  if (!title?.trim()) {
-    throw new StudioPublishError(`Cannot publish ${kind} without a title.`, 400);
+    this.details = details;
   }
 }
 
@@ -100,6 +100,12 @@ type PremiereMetadata = {
 
 function buildSeasonTitle(project: PublishableShowProject, seasonNumber: number) {
   return project.format === "MOVIE" ? "Movie" : `Season ${seasonNumber}`;
+}
+
+function assertQcPassed(result: StudioPublishQcResult, message: string) {
+  if (!result.canPublish) {
+    throw new StudioPublishError(message, 409, { qc: result });
+  }
 }
 
 async function findProjectForPublish(
@@ -528,8 +534,7 @@ export async function publishShowProjectToWatch(slugOrId: string, publishInput?:
     if (!currentProject) {
       throw new StudioPublishError("Show project not found.", 404);
     }
-
-    requirePublishTitle(currentProject.title, "show");
+    assertQcPassed(buildShowProjectPublishQc(currentProject), "Pre-publish QC failed for this show.");
 
     const publishedAt = currentProject.publishedAt ?? new Date();
     let releaseSchedule;
@@ -580,14 +585,24 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
       throw new StudioPublishError("Cannot publish episode without parent show.", 400);
     }
 
-    requirePublishTitle(currentEpisode.title, "episode");
-
     const currentProject = await findProjectForPublish(tx, currentEpisode.showProjectId);
     if (!currentProject) {
       throw new StudioPublishError("Cannot publish episode without parent show.", 400);
     }
-
-    requirePublishTitle(currentProject.title, "show");
+    const currentWatchEpisodeRows = await tx.$queryRaw<Array<{ assetUrl: string | null }>>`
+      SELECT "assetUrl"
+      FROM "Episode"
+      WHERE "sourceShowEpisodeId" = ${currentEpisode.id}
+      LIMIT 1
+    `;
+    assertQcPassed(
+      buildShowEpisodePublishQc({
+        episode: currentEpisode,
+        parentShow: currentProject,
+        watchEpisode: currentWatchEpisodeRows[0] ?? null
+      }),
+      "Pre-publish QC failed for this episode."
+    );
 
     const publishedAt = currentEpisode.publishedAt ?? new Date();
     let releaseSchedule;

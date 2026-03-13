@@ -3,6 +3,7 @@
 import { type FormEvent, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import type { StudioPublishQcResult } from "@/lib/studioPublishQc";
 
 type ProjectRecord = {
   id: string;
@@ -119,6 +120,8 @@ type ExtraFormState = {
 
 type Props = {
   project: ProjectRecord;
+  initialProjectQc: StudioPublishQcResult | null;
+  initialEpisodeQcById: Record<string, StudioPublishQcResult | null>;
   initialEpisodes: EpisodeRecord[];
   initialExtras: ShowExtraRecord[];
   collaborators: CollaboratorRecord[];
@@ -358,8 +361,63 @@ function formatRightsSummary(record: {
   return `${record.visibility} · ${regions} · ${entitlement}`;
 }
 
+function qcSummaryTone(qc: StudioPublishQcResult | null) {
+  if (!qc) return "text-white/55";
+  if (qc.summary.blockingFailures > 0) return "text-rose-200";
+  if (qc.summary.warnings > 0) return "text-amber-100";
+  return "text-emerald-200";
+}
+
+function renderQcPanel(qc: StudioPublishQcResult | null, label: string) {
+  if (!qc) {
+    return (
+      <div className="rounded-[24px] border border-white/10 bg-black/20 p-3 text-sm text-white/60">
+        QC unavailable for this {label}.
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3 rounded-[24px] border border-white/10 bg-black/20 p-3">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[11px] uppercase tracking-[0.22em] text-white/55">Pre-publish QC</p>
+        <p className={`text-[11px] uppercase tracking-[0.2em] ${qcSummaryTone(qc)}`}>
+          {qc.canPublish
+            ? qc.summary.warnings > 0
+              ? `${qc.summary.warnings} warning${qc.summary.warnings === 1 ? "" : "s"}`
+              : "Ready to publish"
+            : `${qc.summary.blockingFailures} blocking failure${qc.summary.blockingFailures === 1 ? "" : "s"}`}
+        </p>
+      </div>
+      <div className="grid gap-2">
+        {qc.checks.map((check) => (
+          <div key={check.code} className="rounded-2xl border border-white/10 bg-slate-950/40 px-3 py-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm font-medium text-white">{check.label}</p>
+              <span
+                className={`rounded-full px-2 py-1 text-[10px] uppercase tracking-[0.2em] ${
+                  check.status === "fail"
+                    ? "border border-rose-300/30 bg-rose-400/10 text-rose-100"
+                    : check.status === "warn"
+                      ? "border border-amber-300/30 bg-amber-300/10 text-amber-100"
+                      : "border border-emerald-300/30 bg-emerald-400/10 text-emerald-100"
+                }`}
+              >
+                {check.status}
+              </span>
+            </div>
+            <p className="mt-2 text-xs text-white/65">{check.message}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ShowProjectEpisodesManager({
   project,
+  initialProjectQc,
+  initialEpisodeQcById,
   initialEpisodes,
   initialExtras,
   collaborators: initialCollaborators,
@@ -368,7 +426,9 @@ export default function ShowProjectEpisodesManager({
 }: Props) {
   const router = useRouter();
   const [projectState, setProjectState] = useState(project);
+  const [projectQc, setProjectQc] = useState(initialProjectQc);
   const [episodes, setEpisodes] = useState(initialEpisodes);
+  const [episodeQcById, setEpisodeQcById] = useState(initialEpisodeQcById);
   const [extras, setExtras] = useState(initialExtras);
   const [collaborators, setCollaborators] = useState(initialCollaborators);
   const [projectPublishForm, setProjectPublishForm] = useState<PublishFormState>(() => createPublishFormState(project));
@@ -501,11 +561,15 @@ export default function ShowProjectEpisodesManager({
       error?: string;
       project?: ProjectRecord;
       watchShow?: { slug: string };
+      qc?: StudioPublishQcResult | null;
     };
 
     setPublishTarget(null);
 
     if (!response.ok || !payload.project) {
+      if (payload.qc) {
+        setProjectQc(payload.qc);
+      }
       setError(payload.error ?? "Unable to publish show.");
       return;
     }
@@ -553,11 +617,15 @@ export default function ShowProjectEpisodesManager({
       episode?: EpisodeRecord;
       watchShow?: { slug: string };
       watchEpisode?: { id: string };
+      qc?: StudioPublishQcResult | null;
     };
 
     setPublishTarget(null);
 
     if (!response.ok || !payload.project || !payload.episode) {
+      if (payload.qc) {
+        setEpisodeQcById((current) => ({ ...current, [episodeId]: payload.qc ?? null }));
+      }
       setError(payload.error ?? "Unable to publish episode.");
       return;
     }
@@ -724,7 +792,7 @@ export default function ShowProjectEpisodesManager({
             <button
               type="button"
               onClick={handlePublishProject}
-              disabled={!canPublish || publishTarget !== null}
+              disabled={!canPublish || publishTarget !== null || !(projectQc?.canPublish ?? false)}
               className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-50"
             >
               {publishTarget === "project" ? "Publishing" : "Publish to Watch"}
@@ -996,6 +1064,8 @@ export default function ShowProjectEpisodesManager({
             <p className="text-xs text-white/55">Region list is metadata-only. Leave blank for all regions.</p>
           </div>
         </div>
+
+        {renderQcPanel(projectQc, "show")}
 
         {error ? <p className="text-sm text-rose-300">{error}</p> : null}
         {notice ? <p className="text-sm text-emerald-300">{notice}</p> : null}
@@ -1456,11 +1526,13 @@ export default function ShowProjectEpisodesManager({
                   </p>
                 </div>
 
+                <div className="mt-4">{renderQcPanel(episodeQcById[episode.id] ?? null, "episode")}</div>
+
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button
                     type="button"
                     onClick={() => handlePublishEpisode(episode.id)}
-                    disabled={!canPublish || publishTarget !== null}
+                    disabled={!canPublish || publishTarget !== null || !(episodeQcById[episode.id] ?? null)?.canPublish}
                     className="interactive-focus inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100 disabled:opacity-50"
                   >
                     {publishTarget === episode.id ? "Publishing" : "Publish to Watch"}
