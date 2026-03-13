@@ -5,6 +5,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import EpisodeRow from "./EpisodeRow";
 
 type Episode = {
@@ -13,6 +14,7 @@ type Episode = {
   description?: string | null;
   lengthSeconds: number;
   assetUrl: string;
+  chapterMarkers: WatchChapterMarker[];
 };
 
 type Season = {

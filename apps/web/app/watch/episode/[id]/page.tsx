@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { canAccessShow } from "@/lib/watchEntitlements";
+import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 import EpisodePlayer from "../components/EpisodePlayer";
 
 export default async function WatchEpisodePage({ params }: { params: Promise<{ id: string }> }) {
@@ -17,18 +18,30 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
   const episode = await prisma.episode.findUnique({
     where: { id },
-    include: { season: { include: { show: true } } }
+    include: {
+      season: {
+        include: {
+          show: true,
+          episodes: { orderBy: { createdAt: "asc" } }
+        }
+      }
+    }
   });
 
   if (!episode) {
     notFound();
   }
 
-  const nextEpisodes = await prisma.episode.findMany({
-    where: { seasonId: episode.seasonId, NOT: { id: episode.id } },
-    orderBy: { createdAt: "asc" },
-    take: 6
-  });
+  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
+  const nextEpisodes = episode.season.episodes.filter((item) => item.id !== episode.id).slice(0, 6);
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
+    {
+      id: episode.id,
+      title: episode.title,
+      seasonNumber: episode.season.number,
+      episodeNumber: episodeNumber > 0 ? episodeNumber : null
+    }
+  ]);
 
   let initialPositionSec: number | null = null;
   let enableDbProgress = false;
@@ -78,6 +91,7 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
           number: episode.season.number,
           title: episode.season.title
         }}
+        chapterMarkers={chapterMarkersByEpisode[episode.id] ?? []}
         nextEpisodes={nextEpisodes.map((item) => ({
           id: item.id,
           title: item.title,

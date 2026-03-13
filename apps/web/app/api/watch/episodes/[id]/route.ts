@@ -11,6 +11,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { canAccessShow } from "@/lib/watchEntitlements";
+import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 
 export async function GET(
   request: Request,
@@ -19,17 +20,30 @@ export async function GET(
   const { id } = await params;
   const episode = await prisma.episode.findUnique({
     where: { id },
-    include: { season: { include: { show: true } } }
+    include: {
+      season: {
+        include: {
+          show: true,
+          episodes: { orderBy: { createdAt: "asc" } }
+        }
+      }
+    }
   });
 
   if (!episode) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
-  const nextEpisodes = await prisma.episode.findMany({
-    where: { seasonId: episode.seasonId },
-    orderBy: { createdAt: "asc" }
-  });
+  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
+  const nextEpisodes = episode.season.episodes;
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
+    {
+      id: episode.id,
+      title: episode.title,
+      seasonNumber: episode.season.number,
+      episodeNumber: episodeNumber > 0 ? episodeNumber : null
+    }
+  ]);
 
   const session = await getServerSession(authOptions).catch(() => null);
   let isKidsProfile = false;
@@ -61,7 +75,8 @@ export async function GET(
       title: episode.title,
       description: episode.description,
       lengthSeconds: episode.lengthSeconds,
-      assetUrl: access.allowed ? episode.assetUrl : null
+      assetUrl: access.allowed ? episode.assetUrl : null,
+      chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
     },
     season: {
       id: episode.season.id,

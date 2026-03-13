@@ -6,6 +6,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import VideoPlayer from "@/components/VideoPlayer";
+import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import ChapterMarkers from "../../components/ChapterMarkers";
 import PosterCard from "../../components/PosterCard";
 
 const STORAGE_KEY = "illuvrse_watch_progress";
@@ -14,6 +16,7 @@ export default function EpisodePlayer({
   episode,
   show,
   season,
+  chapterMarkers,
   nextEpisodes,
   initialPositionSec,
   enableDbProgress,
@@ -35,6 +38,7 @@ export default function EpisodePlayer({
     number: number;
     title: string;
   };
+  chapterMarkers: WatchChapterMarker[];
   nextEpisodes: Array<{ id: string; title: string; description?: string | null }>;
   initialPositionSec?: number | null;
   enableDbProgress: boolean;
@@ -143,6 +147,8 @@ export default function EpisodePlayer({
         <h1 className="text-2xl font-semibold text-white">{episode.title}</h1>
         <p className="text-sm text-white/70">{episode.description}</p>
       </div>
+
+      <ChapterMarkers markers={chapterMarkers} />
 
       {nextEpisodes.length > 0 ? (
         <div className="space-y-3">

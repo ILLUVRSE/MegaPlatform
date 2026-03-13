@@ -11,6 +11,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { canAccessShow } from "@/lib/watchEntitlements";
+import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 
 export async function GET(
   request: Request,
@@ -55,6 +56,18 @@ export async function GET(
     }
   );
 
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
+    show.slug,
+    show.seasons.flatMap((season) =>
+      season.episodes.map((episode, index) => ({
+        id: episode.id,
+        title: episode.title,
+        seasonNumber: season.number,
+        episodeNumber: index + 1
+      }))
+    )
+  );
+
   const episodesBySeason: Record<string, unknown> = {};
   show.seasons.forEach((season) => {
     episodesBySeason[season.id] = season.episodes.map((episode) => ({
@@ -62,7 +75,8 @@ export async function GET(
       title: episode.title,
       description: episode.description,
       lengthSeconds: episode.lengthSeconds,
-      assetUrl: access.allowed ? episode.assetUrl : null
+      assetUrl: access.allowed ? episode.assetUrl : null,
+      chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
     }));
   });
 

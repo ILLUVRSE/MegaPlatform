@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { canAccessShow } from "@/lib/watchEntitlements";
+import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import ShowDetailClient from "../components/ShowDetailClient";
 
 type ShowEpisode = {
@@ -16,6 +17,7 @@ type ShowEpisode = {
   description?: string | null;
   lengthSeconds: number;
   assetUrl: string;
+  chapterMarkers: WatchChapterMarker[];
 };
 
 export default async function WatchShowPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,13 +39,26 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
     notFound();
   }
 
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
+    show.slug,
+    show.seasons.flatMap((season) =>
+      season.episodes.map((episode, index) => ({
+        id: episode.id,
+        title: episode.title,
+        seasonNumber: season.number,
+        episodeNumber: index + 1
+      }))
+    )
+  );
+
   const episodesBySeason = show.seasons.reduce((acc, season) => {
     acc[season.id] = season.episodes.map((episode) => ({
       id: episode.id,
       title: episode.title,
       description: episode.description,
       lengthSeconds: episode.lengthSeconds,
-      assetUrl: episode.assetUrl
+      assetUrl: episode.assetUrl,
+      chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
     }));
     return acc;
   }, {} as Record<string, ShowEpisode[]>);
