@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Prisma, prisma } from "@illuvrse/db";
 import { AuthzError, requireSession } from "@/lib/authz";
+import { invalidateCdnKeysWithRetry } from "@/lib/cdnInvalidation";
 import { ensureCreatorProfile } from "@/lib/creatorIdentity";
 import { evaluateContentQa } from "@/lib/contentQa";
 
@@ -112,16 +113,78 @@ export async function POST(
   const createdById = creatorUser?.id ?? null;
   const creatorProfile = creatorUser ? await ensureCreatorProfile(creatorUser).catch(() => null) : null;
 
-  const post = await prisma.shortPost.create({
-    data: {
-      projectId: project.id,
-      title: parsed.data.title ?? project.title,
-      caption: resolvedCaption,
-      mediaUrl: asset.url,
-      mediaType: project.type === "MEME" ? "IMAGE" : "VIDEO",
-      createdById,
-      publishedAt: new Date()
-    }
+  const now = new Date();
+  const post = await prisma.$transaction(async (tx) => {
+    const createdPost = await tx.shortPost.create({
+      data: {
+        projectId: project.id,
+        title: parsed.data.title ?? project.title,
+        caption: resolvedCaption,
+        mediaUrl: asset.url,
+        mediaType: project.type === "MEME" ? "IMAGE" : "VIDEO",
+        createdById,
+        publishedAt: now
+      }
+    });
+
+    await Promise.all(
+      project.assets.map((projectAsset) => {
+        const meta =
+          (projectAsset.metaJson as Record<string, unknown> | null) ??
+          {};
+        return Promise.all([
+          tx.studioAsset.update({
+            where: { id: projectAsset.id },
+            data: {
+              status: "published",
+              temporary: false,
+              metaJson: {
+                ...meta,
+                lifecycleState: "published",
+                projectId: project.id,
+                publishedAt: now.toISOString(),
+                publishedById: principal.userId,
+                publishedPostId: createdPost.id,
+                temporary: false
+              } as Prisma.InputJsonValue
+            }
+          }),
+          tx.assetLineage.upsert({
+            where: { studioAssetId: projectAsset.id },
+            update: {
+              originType: "GENERATED",
+              rightsStatus: "UNVERIFIED",
+              provenanceJson: {
+                projectType: project.type,
+                projectId: project.id,
+                publishedPostId: createdPost.id,
+                generatedAt: now.toISOString()
+              } as Prisma.InputJsonValue
+            },
+            create: {
+              projectId: project.id,
+              studioAssetId: projectAsset.id,
+              rootAssetId: projectAsset.id,
+              originType: "GENERATED",
+              rightsStatus: "UNVERIFIED",
+              provenanceJson: {
+                projectType: project.type,
+                projectId: project.id,
+                publishedPostId: createdPost.id,
+                generatedAt: now.toISOString()
+              } as Prisma.InputJsonValue
+            }
+          })
+        ]);
+      })
+    );
+
+    await tx.studioProject.update({
+      where: { id: project.id },
+      data: { status: "PUBLISHED" }
+    });
+
+    return createdPost;
   });
 
   const feedType = project.type === "MEME" ? "MEME" : "SHORT";
@@ -156,61 +219,13 @@ export async function POST(
     });
   }
 
-  await prisma.studioProject.update({
-    where: { id: project.id },
-    data: { status: "PUBLISHED" }
+  const keysToInvalidate = project.assets
+    .map((projectAsset) => projectAsset.storageKey)
+    .filter((storageKey): storageKey is string => Boolean(storageKey));
+  await invalidateCdnKeysWithRetry({
+    keys: keysToInvalidate,
+    requestId: `shorts-publish:${project.id}:${post.id}`
   });
-
-  await Promise.all(
-    project.assets.map((asset) => {
-      const meta =
-        (asset.metaJson as Record<string, unknown> | null) ??
-        {};
-      return Promise.all([
-        prisma.studioAsset.update({
-          where: { id: asset.id },
-          data: {
-            temporary: false,
-            metaJson: {
-              ...meta,
-              lifecycleState: "published",
-              projectId: project.id,
-              publishedAt: new Date().toISOString(),
-              publishedById: principal.userId,
-              publishedPostId: post.id,
-              temporary: false
-            } as Prisma.InputJsonValue
-          }
-        }),
-        prisma.assetLineage.upsert({
-          where: { studioAssetId: asset.id },
-          update: {
-            originType: "GENERATED",
-            rightsStatus: "UNVERIFIED",
-            provenanceJson: {
-              projectType: project.type,
-              projectId: project.id,
-              publishedPostId: post.id,
-              generatedAt: new Date().toISOString()
-            } as Prisma.InputJsonValue
-          },
-          create: {
-            projectId: project.id,
-            studioAssetId: asset.id,
-            rootAssetId: asset.id,
-            originType: "GENERATED",
-            rightsStatus: "UNVERIFIED",
-            provenanceJson: {
-              projectType: project.type,
-              projectId: project.id,
-              publishedPostId: post.id,
-              generatedAt: new Date().toISOString()
-            } as Prisma.InputJsonValue
-          }
-        })
-      ]);
-    })
-  );
 
   return NextResponse.json({ post });
 }

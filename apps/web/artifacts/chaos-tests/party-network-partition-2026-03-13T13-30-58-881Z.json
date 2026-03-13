@@ -1,0 +1,196 @@
+{
+  "name": "Party Rooms Network Partition",
+  "scenario": "party-network-partition",
+  "service": "party-rooms",
+  "durationMs": 30000,
+  "sampleIntervalMs": 5000,
+  "startedAt": "2026-03-13T13:30:58.881Z",
+  "completedAt": "2026-03-13T13:31:28.882Z",
+  "faults": [
+    {
+      "type": "latency",
+      "target": "live-presence-stream",
+      "startMs": 1500,
+      "endMs": 30000,
+      "config": {
+        "delayMs": 900
+      }
+    },
+    {
+      "type": "drop_packets",
+      "target": "party-room-sse",
+      "startMs": 4500,
+      "endMs": 30000,
+      "config": {
+        "dropRate": 0.45
+      }
+    },
+    {
+      "type": "kill_worker",
+      "target": "presence-sync-worker",
+      "startMs": 12000,
+      "endMs": 16500,
+      "config": {
+        "worker": "party-presence-2"
+      }
+    },
+    {
+      "type": "patch_response",
+      "target": "/api/party/:code/events",
+      "startMs": 3000,
+      "endMs": 21000,
+      "config": {
+        "status": 202,
+        "body": {
+          "partitioned": true,
+          "retryAfterMs": 3000,
+          "source": "chaos-runner"
+        }
+      }
+    }
+  ],
+  "samples": [
+    {
+      "timestamp": "2026-03-13T13:30:58.881Z",
+      "latencyP95Ms": 120,
+      "availability": 0.998,
+      "errorRate": 0.004,
+      "successfulRequests": 996,
+      "failedRequests": 4,
+      "metadata": {
+        "activeFaults": [],
+        "elapsedMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-13T13:31:03.882Z",
+      "latencyP95Ms": 1140,
+      "availability": 0.974,
+      "errorRate": 0.056,
+      "successfulRequests": 944,
+      "failedRequests": 56,
+      "metadata": {
+        "activeFaults": [
+          "latency",
+          "drop_packets",
+          "patch_response"
+        ],
+        "elapsedMs": 5000
+      }
+    },
+    {
+      "timestamp": "2026-03-13T13:31:08.882Z",
+      "latencyP95Ms": 1140,
+      "availability": 0.974,
+      "errorRate": 0.056,
+      "successfulRequests": 944,
+      "failedRequests": 56,
+      "metadata": {
+        "activeFaults": [
+          "latency",
+          "drop_packets",
+          "patch_response"
+        ],
+        "elapsedMs": 10000
+      }
+    },
+    {
+      "timestamp": "2026-03-13T13:31:13.882Z",
+      "latencyP95Ms": 1260,
+      "availability": 0.954,
+      "errorRate": 0.082,
+      "successfulRequests": 918,
+      "failedRequests": 82,
+      "metadata": {
+        "activeFaults": [
+          "latency",
+          "drop_packets",
+          "kill_worker",
+          "patch_response"
+        ],
+        "elapsedMs": 15000
+      }
+    },
+    {
+      "timestamp": "2026-03-13T13:31:18.882Z",
+      "latencyP95Ms": 1140,
+      "availability": 0.974,
+      "errorRate": 0.056,
+      "successfulRequests": 944,
+      "failedRequests": 56,
+      "metadata": {
+        "activeFaults": [
+          "latency",
+          "drop_packets",
+          "patch_response"
+        ],
+        "elapsedMs": 20000
+      }
+    },
+    {
+      "timestamp": "2026-03-13T13:31:23.882Z",
+      "latencyP95Ms": 1100,
+      "availability": 0.974,
+      "errorRate": 0.044,
+      "successfulRequests": 955,
+      "failedRequests": 45,
+      "metadata": {
+        "activeFaults": [
+          "latency",
+          "drop_packets"
+        ],
+        "elapsedMs": 25000
+      }
+    },
+    {
+      "timestamp": "2026-03-13T13:31:28.882Z",
+      "latencyP95Ms": 800,
+      "availability": 0.994,
+      "errorRate": 0.014,
+      "successfulRequests": 986,
+      "failedRequests": 14,
+      "metadata": {
+        "activeFaults": [
+          "latency",
+          "drop_packets"
+        ],
+        "elapsedMs": 30000
+      }
+    }
+  ],
+  "sloImpact": {
+    "latencyP95Ms": {
+      "baseline": 120,
+      "worst": 1260,
+      "final": 800,
+      "delta": 680,
+      "target": 400,
+      "breached": true
+    },
+    "availability": {
+      "baseline": 0.998,
+      "worst": 0.954,
+      "final": 0.994,
+      "delta": -0.004,
+      "target": 0.985,
+      "breached": true
+    },
+    "errorRate": {
+      "baseline": 0.004,
+      "worst": 0.082,
+      "final": 0.014,
+      "delta": 0.01,
+      "target": 0.03,
+      "breached": true
+    }
+  },
+  "autoRollbackTriggered": true,
+  "rollbackReasons": [
+    "availability dropped below the rollback floor",
+    "error rate exceeded the rollback floor"
+  ],
+  "safety": {
+    "productionReady": false,
+    "warning": "Do not run this chaos scenario against production workloads."
+  }
+}

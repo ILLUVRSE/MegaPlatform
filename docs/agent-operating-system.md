@@ -14,9 +14,10 @@ It does not imply a broad production-grade autonomous runtime; the current repo 
 
 ## Runtime Hooks
 - Guardrails + capability checks in specialist/director flows
-- Memory log append on run completion/failure
+- Persistent memory store with TTL/eviction and per-agent namespaces
 - Handoff artifact persisted per created task
-- Replay tool for memory traces
+- Replay tool for memory traces and last-N interaction windows
+- Token budget controls with soft-fail alerts
 
 ## Safety
 - High-risk actions are denied by default (`blocked: true`) in safe-actions manifest.

@@ -159,7 +159,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^3.0.8
-        version: 3.2.4(@types/node@22.19.11)(jsdom@25.0.1)
+        version: 3.2.4(@types/node@22.19.11)(jiti@2.6.1)(jsdom@25.0.1)(tsx@4.21.0)
 
   apps/pixelbrawl:
     dependencies:
@@ -172,7 +172,7 @@ importers:
         version: 7.3.1(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0)
       vitest:
         specifier: ^3.2.0
-        version: 3.2.4(@types/node@24.11.0)(jsdom@25.0.1)
+        version: 3.2.4(@types/node@24.11.0)(jiti@2.6.1)(jsdom@25.0.1)(tsx@4.21.0)
 
   apps/web:
     dependencies:
@@ -206,6 +206,9 @@ importers:
       '@illuvrse/media-corp-workflows':
         specifier: workspace:*
         version: link:../../packages/media-corp-workflows
+      '@illuvrse/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
       '@illuvrse/storage':
         specifier: workspace:*
         version: link:../../packages/storage
@@ -397,6 +400,43 @@ importers:
         specifier: ^5.6.3
         version: 5.9.3
 
+  packages/design-system:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+    devDependencies:
+      '@testing-library/jest-dom':
+        specifier: ^6.6.3
+        version: 6.9.1
+      '@types/node':
+        specifier: ^22.8.0
+        version: 22.19.11
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.14)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.3
+        version: 4.7.0(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0))
+      axe-core:
+        specifier: ^4.11.1
+        version: 4.11.1
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.11)(jsdom@25.0.1)
+
   packages/media-corp-agents:
     dependencies:
       '@illuvrse/media-corp-core':
@@ -455,6 +495,37 @@ importers:
       '@illuvrse/media-corp-core':
         specifier: workspace:*
         version: link:../media-corp-core
+
+  packages/observability: {}
+
+  packages/payments: {}
+
+  packages/sdk-js:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.0
+        version: 22.19.11
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/node@22.19.11)(jiti@2.6.1)(jsdom@25.0.1)(tsx@4.21.0)
 
   packages/storage:
     dependencies:
@@ -7150,21 +7221,21 @@ snapshots:
     optionalDependencies:
       vite: 5.4.21(@types/node@24.11.0)
 
-  '@vitest/mocker@3.2.4(vite@5.4.21(@types/node@22.19.11))':
+  '@vitest/mocker@3.2.4(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0))':
     dependencies:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 5.4.21(@types/node@22.19.11)
+      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)
 
-  '@vitest/mocker@3.2.4(vite@5.4.21(@types/node@24.11.0))':
+  '@vitest/mocker@3.2.4(vite@7.3.1(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0))':
     dependencies:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 5.4.21(@types/node@24.11.0)
+      vite: 7.3.1(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -9947,15 +10018,16 @@ snapshots:
       - supports-color
       - terser
 
-  vite-node@3.2.4(@types/node@22.19.11):
+  vite-node@3.2.4(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 5.4.21(@types/node@22.19.11)
+      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)
     transitivePeerDependencies:
       - '@types/node'
+      - jiti
       - less
       - lightningcss
       - sass
@@ -9964,16 +10036,19 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - tsx
+      - yaml
 
-  vite-node@3.2.4(@types/node@24.11.0):
+  vite-node@3.2.4(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 5.4.21(@types/node@24.11.0)
+      vite: 7.3.1(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0)
     transitivePeerDependencies:
       - '@types/node'
+      - jiti
       - less
       - lightningcss
       - sass
@@ -9982,6 +10057,8 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - tsx
+      - yaml
 
   vite@5.4.21(@types/node@22.19.11):
     dependencies:
@@ -10115,11 +10192,11 @@ snapshots:
       - supports-color
       - terser
 
-  vitest@3.2.4(@types/node@22.19.11)(jsdom@25.0.1):
+  vitest@3.2.4(@types/node@22.19.11)(jiti@2.6.1)(jsdom@25.0.1)(tsx@4.21.0):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@5.4.21(@types/node@22.19.11))
+      '@vitest/mocker': 3.2.4(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0))
       '@vitest/pretty-format': 3.2.4
       '@vitest/runner': 3.2.4
       '@vitest/snapshot': 3.2.4
@@ -10137,13 +10214,14 @@ snapshots:
       tinyglobby: 0.2.15
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 5.4.21(@types/node@22.19.11)
-      vite-node: 3.2.4(@types/node@22.19.11)
+      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)
+      vite-node: 3.2.4(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.19.11
       jsdom: 25.0.1
     transitivePeerDependencies:
+      - jiti
       - less
       - lightningcss
       - msw
@@ -10153,12 +10231,14 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - tsx
+      - yaml
 
-  vitest@3.2.4(@types/node@24.11.0)(jsdom@25.0.1):
+  vitest@3.2.4(@types/node@24.11.0)(jiti@2.6.1)(jsdom@25.0.1)(tsx@4.21.0):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@5.4.21(@types/node@24.11.0))
+      '@vitest/mocker': 3.2.4(vite@7.3.1(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0))
       '@vitest/pretty-format': 3.2.4
       '@vitest/runner': 3.2.4
       '@vitest/snapshot': 3.2.4
@@ -10176,13 +10256,14 @@ snapshots:
       tinyglobby: 0.2.15
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 5.4.21(@types/node@24.11.0)
-      vite-node: 3.2.4(@types/node@24.11.0)
+      vite: 7.3.1(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0)
+      vite-node: 3.2.4(@types/node@24.11.0)(jiti@2.6.1)(tsx@4.21.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.11.0
       jsdom: 25.0.1
     transitivePeerDependencies:
+      - jiti
       - less
       - lightningcss
       - msw
@@ -10192,6 +10273,8 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - tsx
+      - yaml
 
   w3c-xmlserializer@5.0.0:
     dependencies:

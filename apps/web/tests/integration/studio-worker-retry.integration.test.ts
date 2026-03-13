@@ -59,7 +59,8 @@ function createIntegrationDeps() {
         }
         assets.set(key, updated);
         return updated;
-      })
+      }),
+      updateMany: vi.fn(async () => ({ count: 0 }))
     },
     shortPost: {
       updateMany: vi.fn(async () => ({ count: 0 }))
@@ -88,6 +89,7 @@ function createIntegrationDeps() {
         return "/tmp/render.mp4";
       }),
       transcodeToHls: vi.fn(async () => ({ manifest: "/tmp/master.m3u8", dir: "/tmp/hls" })),
+      generateMobileFastPasses: vi.fn(async () => []),
       generateThumbnail: vi.fn(async () => "/tmp/thumb.jpg"),
       generateMemePng: vi.fn(async () => Buffer.from("png")),
       extractClip: vi.fn(async () => "/tmp/clip.mp4"),

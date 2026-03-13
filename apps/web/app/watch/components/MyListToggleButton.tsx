@@ -35,7 +35,9 @@ export default function MyListToggleButton({ showId, initialSaved }: { showId: s
     <button
       type="button"
       onClick={toggle}
-      className="rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
+      aria-pressed={saved}
+      aria-label={saved ? "Remove show from My List" : "Save show to My List"}
+      className="interactive-focus rounded-full bg-black/78 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
     >
       {saved ? "✓ Saved" : "+ List"}
     </button>

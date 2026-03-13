@@ -7,11 +7,86 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/news
     steps:
       - uses: actions/checkout@v4
+      - name: Detect package manager
+        id: package-manager
+        shell: bash
+        run: |
+          if [[ -f pnpm-lock.yaml ]]; then
+            echo "manager=pnpm" >> "$GITHUB_OUTPUT"
+            echo "cache=pnpm" >> "$GITHUB_OUTPUT"
+            echo "lockfile=pnpm-lock.yaml" >> "$GITHUB_OUTPUT"
+          else
+            echo "manager=npm" >> "$GITHUB_OUTPUT"
+            echo "cache=npm" >> "$GITHUB_OUTPUT"
+            echo "lockfile=package-lock.json" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Setup pnpm
+        if: steps.package-manager.outputs.manager == 'pnpm'
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm install
-      - run: npm run test
+          cache: ${{ steps.package-manager.outputs.cache }}
+          cache-dependency-path: apps/news/${{ steps.package-manager.outputs.lockfile }}
+      - name: Compute workspace node_modules cache
+        id: workspace-cache
+        run: node tooling/ci/cache-helpers.mjs gha --package . --cache node-modules
+      - name: Restore workspace node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            apps/news/node_modules
+            apps/news/api/node_modules
+            apps/news/workers/node_modules
+            apps/news/web/node_modules
+          key: ${{ steps.workspace-cache.outputs.key }}
+          restore-keys: ${{ steps.workspace-cache.outputs.restore_keys }}
+      - name: Compute pnpm store cache
+        if: steps.package-manager.outputs.manager == 'pnpm'
+        id: pnpm-cache
+        run: node tooling/ci/cache-helpers.mjs gha --package . --cache pnpm-store
+      - name: Restore pnpm store
+        if: steps.package-manager.outputs.manager == 'pnpm'
+        uses: actions/cache/restore@v4
+        with:
+          path: apps/news/.pnpm-store
+          key: ${{ steps.pnpm-cache.outputs.key }}
+          restore-keys: ${{ steps.pnpm-cache.outputs.restore_keys }}
+      - name: Install dependencies
+        run: |
+          if [[ "${{ steps.package-manager.outputs.manager }}" == "pnpm" ]]; then
+            pnpm config set store-dir .pnpm-store
+            pnpm install --frozen-lockfile
+          else
+            npm ci
+          fi
+      - name: Save workspace node_modules cache
+        if: github.ref == 'refs/heads/main'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            apps/news/node_modules
+            apps/news/api/node_modules
+            apps/news/workers/node_modules
+            apps/news/web/node_modules
+          key: ${{ steps.workspace-cache.outputs.key }}
+      - name: Save pnpm store
+        if: github.ref == 'refs/heads/main' && steps.package-manager.outputs.manager == 'pnpm'
+        uses: actions/cache/save@v4
+        with:
+          path: apps/news/.pnpm-store
+          key: ${{ steps.pnpm-cache.outputs.key }}
+      - name: Run tests
+        run: |
+          if [[ "${{ steps.package-manager.outputs.manager }}" == "pnpm" ]]; then
+            pnpm test
+          else
+            npm run test
+          fi

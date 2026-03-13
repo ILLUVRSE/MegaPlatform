@@ -1,0 +1,47 @@
+{
+  "title": "Minigolf Critical Flows",
+  "schemaVersion": 1,
+  "description": "Dashboard for end-to-end minigolf tracing across watch, party, games, and studio flows.",
+  "panels": [
+    {
+      "id": "latency-party-create",
+      "title": "Party Create P95",
+      "type": "timeseries",
+      "query": {
+        "signal": "traces",
+        "spanName": "http.request.party.minigolf.create",
+        "aggregate": "p95(duration_ms)"
+      }
+    },
+    {
+      "id": "latency-games-telemetry",
+      "title": "Games Telemetry P95",
+      "type": "timeseries",
+      "query": {
+        "signal": "traces",
+        "spanName": "http.request.games.telemetry",
+        "aggregate": "p95(duration_ms)"
+      }
+    },
+    {
+      "id": "errors-minigolf-flows",
+      "title": "Critical Flow Errors",
+      "type": "stat",
+      "query": {
+        "signal": "traces",
+        "filter": "span.status = error and illuvrse.flow in [party.minigolf.create, games.telemetry, studio.realtime.event]",
+        "aggregate": "count()"
+      }
+    },
+    {
+      "id": "sampling-promotions",
+      "title": "Error Sampling Promotions",
+      "type": "table",
+      "query": {
+        "signal": "traces",
+        "filter": "sampling.promoted_by_error = true",
+        "columns": ["traceId", "name", "illuvrse.domain", "http.route", "errorMessage"]
+      }
+    }
+  ]
+}

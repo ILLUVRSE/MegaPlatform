@@ -159,6 +159,7 @@ async function runOpsSre(task: TaskRecord, repoRoot: string, queueRoot: string) 
 
 export async function runSpecialist(agent: OpsAgent, options: RunSpecialistOptions = {}) {
   const runId = newRunId();
+  const estimatedTokens = agent === "Quality/Analytics" ? 900 : 300;
   assertAgent(agent);
   const repoRoot = options.repoRoot ?? (await findRepoRoot());
   const queueRoot = options.queueRoot ?? path.join(repoRoot, "docs", "queue");
@@ -182,7 +183,22 @@ export async function runSpecialist(agent: OpsAgent, options: RunSpecialistOptio
   const allTasks = await listTasks(queueRoot);
   const todayPrefix = new Date().toISOString().slice(0, 10);
   const actionsToday = allTasks.filter((entry) => entry.updated_at.startsWith(todayPrefix) && entry.claimed_by === agent).length;
-  await assertAgentBudget(repoRoot, agent, { actionsToday });
+  const budget = await assertAgentBudget(repoRoot, agent, { actionsToday, estimatedTokens });
+  if (budget.softFail) {
+    await appendAgentMemory(repoRoot, agent, {
+      runId,
+      actor: agent,
+      ok: false,
+      action: "budget_guardrail",
+      summary: "Soft-failed due to daily token budget threshold.",
+      tokenUsage: 0,
+      metadata: { budget, queueRoot }
+    });
+    return {
+      ok: false,
+      message: `Budget soft-fail for ${agent}.`
+    };
+  }
 
   const claimed = await claimTask(task.id, agent, queueRoot);
   const handoffArtifact = await writeHandoff(
@@ -203,7 +219,8 @@ export async function runSpecialist(agent: OpsAgent, options: RunSpecialistOptio
       ok: result.ok,
       action: "run_shipcheck_quick",
       summary: `Task ${task.id} ${result.status}.`,
-      metadata: { taskId: task.id, handoffArtifact }
+      tokenUsage: estimatedTokens,
+      metadata: { taskId: task.id, handoffArtifact, budget }
     });
     return {
       ok: result.ok,
@@ -221,7 +238,8 @@ export async function runSpecialist(agent: OpsAgent, options: RunSpecialistOptio
       ok: result.ok,
       action: "update_runbook",
       summary: `Task ${task.id} ${result.status}.`,
-      metadata: { taskId: task.id, handoffArtifact }
+      tokenUsage: estimatedTokens,
+      metadata: { taskId: task.id, handoffArtifact, budget }
     });
     return {
       ok: result.ok,
@@ -240,7 +258,8 @@ export async function runSpecialist(agent: OpsAgent, options: RunSpecialistOptio
     ok: false,
     action: "specialist_handler",
     summary: `Task ${task.id} blocked due to missing specialist behavior.`,
-    metadata: { taskId: task.id, handoffArtifact }
+    tokenUsage: estimatedTokens,
+    metadata: { taskId: task.id, handoffArtifact, budget }
   });
 
   return {

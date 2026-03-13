@@ -58,6 +58,8 @@ export default function PartyMode() {
   const [customStatus, setCustomStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const searchParams = useSearchParams();
   const gamegridId = searchParams.get("gamegridId");
+  const draftPlayerNameId = "party-draft-player-name";
+  const partySeedId = "party-seed";
 
   const currentPlayer = players[playerIndex];
   const roundSeed = useMemo(
@@ -229,16 +231,21 @@ export default function PartyMode() {
             <div className="space-y-3">
               {players.map((player, index) => (
                 <div key={player.id} className="flex flex-wrap items-center gap-3">
-                  <span className="w-16 text-xs uppercase tracking-[0.3em] text-illuvrse-muted">
+                  <label
+                    htmlFor={`party-player-${player.id}`}
+                    className="w-16 text-xs uppercase tracking-[0.3em] text-illuvrse-muted"
+                  >
                     P{index + 1}
-                  </span>
+                  </label>
                   <input
-                    className="flex-1 rounded-full border border-illuvrse-border bg-white px-4 py-2 text-sm"
+                    id={`party-player-${player.id}`}
+                    className="interactive-focus flex-1 rounded-full border border-illuvrse-border bg-white px-4 py-2 text-sm"
                     value={player.name}
                     onChange={(event) => handleUpdatePlayer(player.id, event.target.value)}
+                    aria-label={`Player ${index + 1} name`}
                   />
                   {players.length > 2 ? (
-                    <button className="text-xs uppercase tracking-[0.3em] text-illuvrse-primary" onClick={() => handleRemovePlayer(player.id)}>
+                    <button className="interactive-focus text-xs uppercase tracking-[0.3em] text-illuvrse-primary" onClick={() => handleRemovePlayer(player.id)}>
                       Remove
                     </button>
                   ) : null}
@@ -246,25 +253,30 @@ export default function PartyMode() {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-3">
+              <label htmlFor={draftPlayerNameId} className="sr-only">
+                New player name
+              </label>
               <input
-                className="flex-1 rounded-full border border-illuvrse-border bg-white px-4 py-2 text-sm"
+                id={draftPlayerNameId}
+                className="interactive-focus flex-1 rounded-full border border-illuvrse-border bg-white px-4 py-2 text-sm"
                 placeholder="New player name"
                 value={draftName}
                 onChange={(event) => setDraftName(event.target.value)}
               />
-              <button className="party-button" onClick={handleAddPlayer} disabled={players.length >= MAX_PLAYERS}>
+              <button className="party-button interactive-focus" onClick={handleAddPlayer} disabled={players.length >= MAX_PLAYERS}>
                 Add Player
               </button>
             </div>
-            <div className="flex flex-wrap items-center gap-3 text-sm text-illuvrse-muted">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-illuvrse-muted" role="group" aria-label="Select number of rounds">
               <span>Rounds</span>
               {ROUND_OPTIONS.map((rounds) => (
                 <button
                   key={rounds}
-                  className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] ${
+                  className={`interactive-focus rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] ${
                     roundsTotal === rounds ? "border-illuvrse-primary text-illuvrse-primary" : "border-illuvrse-border"
                   }`}
                   onClick={() => setRoundsTotal(rounds)}
+                  aria-pressed={roundsTotal === rounds}
                 >
                   {rounds}
                 </button>
@@ -272,18 +284,21 @@ export default function PartyMode() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex flex-1 items-center gap-2 rounded-full border border-illuvrse-border bg-white px-4 py-2 text-sm">
-                <span className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Seed</span>
+                <label htmlFor={partySeedId} className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">
+                  Seed
+                </label>
                 <input
-                  className="flex-1 bg-transparent text-sm"
+                  id={partySeedId}
+                  className="interactive-focus flex-1 bg-transparent text-sm"
                   value={partySeed}
                   onChange={(event) => setPartySeed(event.target.value)}
                 />
               </div>
-              <button className="party-button" onClick={handleShuffleSeed}>
+              <button className="party-button interactive-focus" onClick={handleShuffleSeed}>
                 Shuffle Seed
               </button>
             </div>
-            <button className="party-button text-lg" onClick={handleStartParty} disabled={!canStartParty}>
+            <button className="party-button interactive-focus text-lg" onClick={handleStartParty} disabled={!canStartParty}>
               Start Party
             </button>
           </div>
@@ -324,7 +339,7 @@ export default function PartyMode() {
                     <p className="text-sm text-illuvrse-muted">
                       Hand the controls to <span className="font-semibold text-illuvrse-primary">{currentPlayer?.name}</span>.
                     </p>
-                    <button className="party-button" onClick={() => setTurnStarted(true)}>
+                    <button className="party-button interactive-focus" onClick={() => setTurnStarted(true)}>
                       Start Turn
                     </button>
                   </div>
@@ -358,7 +373,7 @@ export default function PartyMode() {
                     );
                   })}
                 </div>
-                <button className="party-button" onClick={handleNextRound}>
+                <button className="party-button interactive-focus" onClick={handleNextRound}>
                   Start Round {roundIndex + 2}
                 </button>
               </div>
@@ -384,10 +399,10 @@ export default function PartyMode() {
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <button className="party-button" onClick={handleNewParty}>
+                  <button className="party-button interactive-focus" onClick={handleNewParty}>
                     New Party
                   </button>
-                  <button className="party-button" onClick={() => setPhase("lobby")}>
+                  <button className="party-button interactive-focus" onClick={() => setPhase("lobby")}>
                     Back to Lobby
                   </button>
                 </div>

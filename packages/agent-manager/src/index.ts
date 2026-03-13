@@ -34,6 +34,15 @@ export {
 export { runDirectorCycle } from "./ops/director";
 export { runSpecialist } from "./ops/specialist";
 export {
+  newRunId,
+  appendAgentMemory,
+  listAgentMemory,
+  getAgentDailyUsage,
+  type AgentMemoryRecord
+} from "./ops/memory";
+export { replayAgentRun, replayAgentInteractions } from "./ops/replay";
+export { assertAgentBudget, type AgentBudgetResult } from "./ops/controlPlane";
+export {
   buildStudioDedupeKey,
   calculateStudioRetryDelayMs,
   STUDIO_JOB_ATTEMPTS,
@@ -42,6 +51,7 @@ export {
   STUDIO_QUEUE_NAME,
   STUDIO_RETRY_BASE_DELAY_MS
 } from "./studioQueue";
+export { generateThumbnail } from "./render";
 
 let queueInstance: Queue | null = null;
 

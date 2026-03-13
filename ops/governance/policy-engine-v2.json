@@ -62,6 +62,186 @@
           "value": false
         }
       ]
+    },
+    {
+      "id": "deny-admin-user-ban",
+      "scope": "admin",
+      "action": "user.ban",
+      "targetKind": "api",
+      "resources": ["user"],
+      "operations": ["ban"],
+      "effect": "deny",
+      "priority": 500,
+      "conditions": [
+        {
+          "key": "targetRole",
+          "operator": "in",
+          "value": ["admin", "super_admin"]
+        }
+      ]
+    },
+    {
+      "id": "allow-standard-user-ban",
+      "scope": "admin",
+      "action": "user.ban",
+      "targetKind": "api",
+      "resources": ["user"],
+      "operations": ["ban"],
+      "effect": "allow",
+      "priority": 250,
+      "conditions": [
+        {
+          "key": "requestedDisabled",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "key": "targetRole",
+          "operator": "not_in",
+          "value": ["admin", "super_admin"]
+        }
+      ]
+    },
+    {
+      "id": "deny-pinned-content-takedown",
+      "scope": "moderation",
+      "action": "content.takedown",
+      "targetKind": "api",
+      "resources": ["feed-post"],
+      "operations": ["hide", "shadowban"],
+      "effect": "deny",
+      "priority": 450,
+      "conditions": [
+        {
+          "key": "isPinned",
+          "operator": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "deny-featured-content-takedown",
+      "scope": "moderation",
+      "action": "content.takedown",
+      "targetKind": "api",
+      "resources": ["feed-post"],
+      "operations": ["hide", "shadowban"],
+      "effect": "deny",
+      "priority": 440,
+      "conditions": [
+        {
+          "key": "isFeatured",
+          "operator": "eq",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "allow-standard-content-takedown",
+      "scope": "moderation",
+      "action": "content.takedown",
+      "targetKind": "api",
+      "resources": ["feed-post"],
+      "operations": ["hide", "shadowban"],
+      "effect": "allow",
+      "priority": 250,
+      "conditions": [
+        {
+          "key": "requestedState",
+          "operator": "in",
+          "value": ["hidden", "shadowbanned"]
+        }
+      ]
+    },
+    {
+      "id": "deny-bulk-delete-young-assets",
+      "scope": "infrastructure",
+      "action": "db.destructive",
+      "targetKind": "infra",
+      "resources": ["studioAsset"],
+      "operations": ["bulkDelete"],
+      "effect": "deny",
+      "priority": 450,
+      "conditions": [
+        {
+          "key": "days",
+          "operator": "lte",
+          "value": 29
+        }
+      ]
+    },
+    {
+      "id": "deny-bulk-delete-over-batch-cap",
+      "scope": "infrastructure",
+      "action": "db.destructive",
+      "targetKind": "infra",
+      "resources": ["studioAsset"],
+      "operations": ["bulkDelete"],
+      "effect": "deny",
+      "priority": 440,
+      "conditions": [
+        {
+          "key": "candidateCount",
+          "operator": "gte",
+          "value": 251
+        }
+      ]
+    },
+    {
+      "id": "allow-bulk-delete-aged-assets",
+      "scope": "infrastructure",
+      "action": "db.destructive",
+      "targetKind": "infra",
+      "resources": ["studioAsset"],
+      "operations": ["bulkDelete"],
+      "effect": "allow",
+      "priority": 250,
+      "conditions": [
+        {
+          "key": "days",
+          "operator": "gte",
+          "value": 30
+        },
+        {
+          "key": "candidateCount",
+          "operator": "lte",
+          "value": 250
+        }
+      ]
+    },
+    {
+      "id": "deny-delete-live-scheduled-episode",
+      "scope": "infrastructure",
+      "action": "db.destructive",
+      "targetKind": "infra",
+      "resources": ["episode"],
+      "operations": ["delete"],
+      "effect": "deny",
+      "priority": 430,
+      "conditions": [
+        {
+          "key": "scheduledProgramCount",
+          "operator": "gte",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "allow-delete-unscheduled-episode",
+      "scope": "infrastructure",
+      "action": "db.destructive",
+      "targetKind": "infra",
+      "resources": ["episode"],
+      "operations": ["delete"],
+      "effect": "allow",
+      "priority": 250,
+      "conditions": [
+        {
+          "key": "scheduledProgramCount",
+          "operator": "lte",
+          "value": 0
+        }
+      ]
     }
   ]
 }

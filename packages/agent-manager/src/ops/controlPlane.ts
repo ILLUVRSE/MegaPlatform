@@ -1,12 +1,39 @@
 import { promises as fs } from "fs";
 import path from "path";
 import type { OpsAgent } from "./taskQueue";
+import { getAgentDailyUsage } from "./memory";
 
 type Capability = { agent: string; action: string; requiresApproval: boolean };
 type SafeAction = { action: string; risk: "low" | "medium" | "high"; blocked: boolean };
 type ApprovalCheckpoint = { action: string; approvalRequired: boolean; owner: string };
 
 type Budget = { agent: string; window: string; maxActions: number; maxTokenBudget: number };
+type BudgetAlert = {
+  at: string;
+  agent: string;
+  status: "warning" | "soft_fail";
+  message: string;
+  usage: {
+    actionsToday: number;
+    tokensToday: number;
+    projectedTokens: number;
+    maxActions: number;
+    maxTokenBudget: number;
+  };
+};
+
+export type AgentBudgetResult = {
+  ok: boolean;
+  softFail: boolean;
+  usage: {
+    actionsToday: number;
+    tokensToday: number;
+    projectedTokens: number;
+    maxActions: number;
+    maxTokenBudget: number;
+  };
+  alerts: string[];
+};
 
 async function readJson<T>(repoRoot: string, relativePath: string): Promise<T> {
   const full = path.join(repoRoot, relativePath);
@@ -52,11 +79,74 @@ export async function assertApprovalIfRequired(repoRoot: string, action: string)
   }
 }
 
-export async function assertAgentBudget(repoRoot: string, agent: OpsAgent | "Director", usage: { actionsToday: number }) {
+export async function assertAgentBudget(
+  repoRoot: string,
+  agent: OpsAgent | "Director",
+  usage: { actionsToday: number; estimatedTokens?: number }
+) {
   const budgets = await readJson<Budget[]>(repoRoot, "ops/governance/agent-budgets.json");
   const budget = budgets.find((entry) => entry.agent === agent);
-  if (!budget) return;
+  if (!budget) {
+    return {
+      ok: true,
+      softFail: false,
+      usage: {
+        actionsToday: usage.actionsToday,
+        tokensToday: 0,
+        projectedTokens: 0,
+        maxActions: Number.POSITIVE_INFINITY,
+        maxTokenBudget: Number.POSITIVE_INFINITY
+      },
+      alerts: []
+    } satisfies AgentBudgetResult;
+  }
   if (usage.actionsToday >= budget.maxActions) {
     throw new Error(`Budget exceeded for ${agent}: actionsToday=${usage.actionsToday}, max=${budget.maxActions}`);
   }
+
+  const day = new Date().toISOString().slice(0, 10);
+  const dailyUsage = await getAgentDailyUsage(repoRoot, agent, day);
+  const estimatedTokens = Math.max(0, Number(usage.estimatedTokens ?? 0));
+  const projectedTokens = dailyUsage.tokens + estimatedTokens;
+  const alerts: string[] = [];
+
+  if (projectedTokens >= budget.maxTokenBudget * 0.8) {
+    alerts.push(
+      projectedTokens >= budget.maxTokenBudget
+        ? `Token budget reached for ${agent}: projected=${projectedTokens}, max=${budget.maxTokenBudget}`
+        : `Token budget warning for ${agent}: projected=${projectedTokens}, max=${budget.maxTokenBudget}`
+    );
+  }
+
+  if (alerts.length > 0) {
+    const alertsDir = path.join(repoRoot, "docs", "ops_brain", "alerts");
+    await fs.mkdir(alertsDir, { recursive: true });
+    const alert: BudgetAlert = {
+      at: new Date().toISOString(),
+      agent,
+      status: projectedTokens >= budget.maxTokenBudget ? "soft_fail" : "warning",
+      message: alerts[0],
+      usage: {
+        actionsToday: usage.actionsToday,
+        tokensToday: dailyUsage.tokens,
+        projectedTokens,
+        maxActions: budget.maxActions,
+        maxTokenBudget: budget.maxTokenBudget
+      }
+    };
+    await fs.appendFile(path.join(alertsDir, "agent-cost-controls.jsonl"), `${JSON.stringify(alert)}\n`, "utf-8");
+  }
+
+  return {
+    ok: projectedTokens < budget.maxTokenBudget,
+    softFail: projectedTokens >= budget.maxTokenBudget,
+    usage: {
+      actionsToday: usage.actionsToday,
+      tokensToday: dailyUsage.tokens,
+      projectedTokens,
+      maxActions: budget.maxActions,
+      maxTokenBudget: budget.maxTokenBudget
+    },
+    alerts
+  } satisfies AgentBudgetResult;
 }

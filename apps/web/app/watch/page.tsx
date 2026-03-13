@@ -187,11 +187,12 @@ export default async function WatchPage() {
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.26em] ${
+              className={`interactive-focus rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.26em] ${
                 active
                   ? "border-cyan-300/30 bg-cyan-400/10 text-cyan-100"
-                  : "border-white/10 bg-white/5 text-white/62 hover:text-white"
+                  : "border-white/10 bg-white/5 text-white/82 hover:text-white"
               }`}
+              aria-current={active ? "page" : undefined}
             >
               {item.label}
             </Link>
@@ -253,16 +254,20 @@ export default async function WatchPage() {
           <section className="platform-panel-dark">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Up next</p>
+                <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">Up next</p>
                 <h2 className="mt-1 text-xl font-semibold text-white">Recommendations</h2>
               </div>
-              <Link href="/watch/live" className="text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200">
+              <Link href="/watch/live" className="interactive-focus text-xs font-semibold uppercase tracking-[0.26em] text-cyan-100">
                 Live
               </Link>
             </div>
             <div className="mt-4 space-y-3">
               {recommendationItems.map((item) => (
-                <Link key={item.id} href={`/watch/show/${item.slug}`} className="flex gap-3 rounded-[22px] border border-white/10 bg-white/5 p-3">
+                <Link
+                  key={item.id}
+                  href={`/watch/show/${item.slug}`}
+                  className="interactive-focus flex gap-3 rounded-[22px] border border-white/10 bg-white/5 p-3"
+                >
                   <img
                     src={item.posterUrl ?? "https://placehold.co/280x160?text=ILLUVRSE"}
                     alt={item.title}
@@ -270,7 +275,7 @@ export default async function WatchPage() {
                   />
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold text-white">{item.title}</p>
-                    <p className="mt-1 text-xs text-white/52">Queue this next in Watch or Party.</p>
+                    <p className="mt-1 text-xs text-white/78">Queue this next in Watch or Party.</p>
                   </div>
                 </Link>
               ))}
@@ -278,7 +283,7 @@ export default async function WatchPage() {
           </section>
 
           <section className="platform-panel-dark">
-            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Friends watching</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">Friends watching</p>
             <div className="mt-4 space-y-3">
               {["Ryan", "Alex", "Jamie"].map((name, index) => (
                 <div key={name} className="flex items-center justify-between rounded-[22px] border border-white/10 bg-white/5 px-3 py-3">
@@ -286,10 +291,10 @@ export default async function WatchPage() {
                     <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-cyan-400/90 to-fuchsia-500/80" />
                     <div>
                       <p className="text-sm font-semibold text-white">{name}</p>
-                      <p className="text-xs text-white/48">{index === 0 ? "Nebula Nights" : index === 1 ? "Trending shorts" : "Live recap"}</p>
+                      <p className="text-xs text-white/76">{index === 0 ? "Nebula Nights" : index === 1 ? "Trending shorts" : "Live recap"}</p>
                     </div>
                   </div>
-                  <Link href="/party" className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">
+                  <Link href="/party" className="interactive-focus text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100">
                     Join
                   </Link>
                 </div>
@@ -298,7 +303,7 @@ export default async function WatchPage() {
           </section>
 
           <section className="platform-panel-dark">
-            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/60">Live now</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-100">Live now</p>
             <div className="mt-4 space-y-3">
               {channels.slice(0, 4).map((channel) => (
                 <ChannelTile

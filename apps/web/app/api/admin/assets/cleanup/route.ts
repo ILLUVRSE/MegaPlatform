@@ -4,6 +4,7 @@ import { prisma } from "@illuvrse/db";
 import { deleteObject } from "@illuvrse/storage";
 import { requireAdmin } from "@/lib/rbac";
 import { writeAudit } from "@/lib/audit";
+import { enforceAdminPolicy, policyViolationResponse } from "@/lib/policyEnforcement";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,31 @@ export async function POST(request: Request) {
 
   if (candidates.length === 0) {
     return NextResponse.json({ dryRun: false, deleted: 0, storageDeleted: 0, storageFailed: 0, assets: [] });
+  }
+
+  const decision = await enforceAdminPolicy({
+    adminId: auth.session.user.id,
+    scope: "infrastructure",
+    action: "db.destructive",
+    target: {
+      kind: "infra",
+      resource: "studioAsset",
+      operation: "bulkDelete"
+    },
+    attributes: {
+      dryRun: parsed.data.dryRun,
+      days: parsed.data.days,
+      maxBatch: parsed.data.maxBatch,
+      candidateCount: candidates.length,
+      deleteFromStorage: parsed.data.deleteFromStorage
+    }
+  });
+
+  if (!decision.ok) {
+    return NextResponse.json({ error: decision.reason }, { status: 400 });
+  }
+  if (!decision.allow) {
+    return policyViolationResponse(decision);
   }
 
   const storageFailures: Array<{ id: string; storageKey: string; error: string }> = [];

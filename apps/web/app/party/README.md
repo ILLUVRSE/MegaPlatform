@@ -29,7 +29,7 @@ Party Core delivers seat-based lobbies, real-time presence, and leader-synced pl
   - Response: `{ seatIndex, state }`
 - `POST /api/party/[code]/playback`
   - Body: `{ action, leaderTime, playbackPositionMs, currentIndex, playbackState }`
-  - Response: playback snapshot
+  - Response: authoritative playback snapshot with timeline metadata
 - `GET /api/party/[code]/events`
   - SSE stream of `snapshot`, `seat_update`, `playback_update`, `presence_update`, and `keepalive` events.
 - `GET /api/party/[code]/playlist`
@@ -73,10 +73,11 @@ Playlist changes publish `playlist_update` SSE events and clients refetch `/api/
 Presence heartbeats update party-level heartbeat counters in Redis-backed world-state and emit `keepalive` plus host `snapshot` events for reconnect reconciliation.
 
 ## Playback Sync Algorithm (Leader Model)
-1. Host sends a heartbeat every 2 seconds with `{ leaderTime, playbackPositionMs }`.
-2. Followers estimate position as `playbackPositionMs + (Date.now() - leaderTime)`.
-3. Client applies smoothing (`applyDriftCorrection`) unless the drift exceeds the snap threshold.
-4. Host advances `currentIndex` and publishes `playback_update` events.
+1. Host sends a heartbeat every 2 seconds while playback is active.
+2. The server rewrites playback timestamps using its own clock and publishes authoritative `playback_update` events.
+3. Followers estimate position as `playbackPositionMs + (Date.now() - leaderTime)` only while the room is playing.
+4. Client smooths small drift, snaps large drift, and applies a short soft-lock when the host seeks or rewrites the timeline.
+5. After SSE reconnect, the host performs a `resume` handshake to reclaim the authoritative playhead before resuming heartbeats.
 
 ## Playlist Seeding (Prisma)
 Episodes are seeded in `packages/db/seed.ts`. Seeded shows + episodes can be browsed in the media picker.

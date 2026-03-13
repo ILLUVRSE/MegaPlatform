@@ -28,23 +28,65 @@ type PurchaseRow = {
   shortPost: { id: string; title: string; isPremium: boolean; price?: number | null };
 };
 
+type SubscriptionRow = {
+  id: string;
+  userId: string;
+  planId: string;
+  cohort: string;
+  status: "trialing" | "active" | "past_due" | "cancelled";
+  autoConvertOptIn: boolean;
+  trialEndsAt: string;
+  convertedAt: string | null;
+  billingRetryCount: number;
+  dunningStage: string | null;
+};
+
+type CohortMetric = {
+  cohort: string;
+  trialStarts: number;
+  reminderSent: number;
+  paidConversions: number;
+  activePaid: number;
+  cancelled: number;
+  pastDue: number;
+  recovered: number;
+  conversionRate: number;
+};
+
+type SubscriptionEventRow = {
+  id: string;
+  subscriptionId: string;
+  type: string;
+  createdAt: string;
+  metadata?: Record<string, unknown>;
+};
+
 export default function MonetizationPage() {
   const [query, setQuery] = useState("");
   const [shorts, setShorts] = useState<ShortRow[]>([]);
   const [shows, setShows] = useState<ShowRow[]>([]);
   const [purchases, setPurchases] = useState<PurchaseRow[]>([]);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionRow[]>([]);
+  const [cohorts, setCohorts] = useState<CohortMetric[]>([]);
+  const [subscriptionEvents, setSubscriptionEvents] = useState<SubscriptionEventRow[]>([]);
+  const [overview, setOverview] = useState({ totalTrials: 0, activePaid: 0, pastDue: 0, cancelled: 0, converted: 0 });
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
     setLoading(true);
-    const [shortPayload, showPayload, purchasePayload] = await Promise.all([
+    const [shortPayload, showPayload, purchasePayload, subscriptionPayload] = await Promise.all([
       fetch(`/api/admin/monetization/shorts?q=${encodeURIComponent(query)}`).then((res) => res.json()),
       fetch(`/api/admin/monetization/shows?q=${encodeURIComponent(query)}`).then((res) => res.json()),
-      fetch("/api/admin/monetization/purchases").then((res) => res.json())
+      fetch("/api/admin/monetization/purchases").then((res) => res.json()),
+      fetch("/api/admin/monetization/subscriptions").then((res) => res.json())
     ]);
     setShorts(shortPayload.data ?? []);
     setShows(showPayload.data ?? []);
     setPurchases(purchasePayload.data ?? []);
+    setSubscriptions(subscriptionPayload.data?.subscriptions ?? []);
+    setCohorts(subscriptionPayload.data?.cohorts ?? []);
+    setSubscriptionEvents(subscriptionPayload.data?.events ?? []);
+    setOverview(subscriptionPayload.data?.overview ?? { totalTrials: 0, activePaid: 0, pastDue: 0, cancelled: 0, converted: 0 });
     setLoading(false);
   };
 
@@ -120,6 +162,44 @@ export default function MonetizationPage() {
     [purchases]
   );
 
+  const subscriptionColumns = useMemo<DataColumn<SubscriptionRow>[]>(
+    () => [
+      { key: "userId", header: "User", render: (row) => row.userId },
+      { key: "planId", header: "Plan", render: (row) => row.planId },
+      { key: "cohort", header: "Cohort", render: (row) => row.cohort },
+      { key: "status", header: "Status", render: (row) => row.status },
+      { key: "autoConvert", header: "Auto-Convert", render: (row) => (row.autoConvertOptIn ? "Opted In" : "Opted Out") },
+      { key: "trialEndsAt", header: "Trial Ends", render: (row) => new Date(row.trialEndsAt).toLocaleDateString() },
+      { key: "billingRetryCount", header: "Retries", render: (row) => `${row.billingRetryCount}` },
+      { key: "dunningStage", header: "Dunning", render: (row) => row.dunningStage ?? "-" }
+    ],
+    [subscriptions]
+  );
+
+  const cohortColumns = useMemo<DataColumn<CohortMetric>[]>(
+    () => [
+      { key: "cohort", header: "Cohort", render: (row) => row.cohort },
+      { key: "trialStarts", header: "Trials", render: (row) => `${row.trialStarts}` },
+      { key: "reminderSent", header: "Reminders", render: (row) => `${row.reminderSent}` },
+      { key: "paidConversions", header: "Paid", render: (row) => `${row.paidConversions}` },
+      { key: "activePaid", header: "Active", render: (row) => `${row.activePaid}` },
+      { key: "pastDue", header: "Past Due", render: (row) => `${row.pastDue}` },
+      { key: "cancelled", header: "Cancelled", render: (row) => `${row.cancelled}` },
+      { key: "conversionRate", header: "Conversion", render: (row) => `${Math.round(row.conversionRate * 100)}%` }
+    ],
+    [cohorts]
+  );
+
+  const eventColumns = useMemo<DataColumn<SubscriptionEventRow>[]>(
+    () => [
+      { key: "type", header: "Event", render: (row) => row.type },
+      { key: "subscriptionId", header: "Subscription", render: (row) => row.subscriptionId },
+      { key: "createdAt", header: "When", render: (row) => new Date(row.createdAt).toLocaleString() },
+      { key: "metadata", header: "Details", render: (row) => (row.metadata ? JSON.stringify(row.metadata) : "-") }
+    ],
+    [subscriptionEvents]
+  );
+
   return (
     <div className="space-y-6">
       <div className="rounded-2xl border border-illuvrse-border bg-white p-6 shadow-card">
@@ -137,6 +217,40 @@ export default function MonetizationPage() {
         <div className="rounded-2xl border border-illuvrse-border bg-white p-6">Loading...</div>
       ) : (
         <>
+          <div className="grid gap-4 md:grid-cols-5">
+            <div className="rounded-2xl border border-illuvrse-border bg-white p-4">
+              <div className="text-xs uppercase tracking-wide text-illuvrse-muted">Trials</div>
+              <div className="mt-2 text-2xl font-semibold">{overview.totalTrials}</div>
+            </div>
+            <div className="rounded-2xl border border-illuvrse-border bg-white p-4">
+              <div className="text-xs uppercase tracking-wide text-illuvrse-muted">Converted</div>
+              <div className="mt-2 text-2xl font-semibold">{overview.converted}</div>
+            </div>
+            <div className="rounded-2xl border border-illuvrse-border bg-white p-4">
+              <div className="text-xs uppercase tracking-wide text-illuvrse-muted">Active Paid</div>
+              <div className="mt-2 text-2xl font-semibold">{overview.activePaid}</div>
+            </div>
+            <div className="rounded-2xl border border-illuvrse-border bg-white p-4">
+              <div className="text-xs uppercase tracking-wide text-illuvrse-muted">Past Due</div>
+              <div className="mt-2 text-2xl font-semibold">{overview.pastDue}</div>
+            </div>
+            <div className="rounded-2xl border border-illuvrse-border bg-white p-4">
+              <div className="text-xs uppercase tracking-wide text-illuvrse-muted">Cancelled</div>
+              <div className="mt-2 text-2xl font-semibold">{overview.cancelled}</div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold">Trial Retention Cohorts</h3>
+            <DataTable columns={cohortColumns} rows={cohorts} emptyMessage="No trial cohorts yet." />
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold">Subscription Lifecycle</h3>
+            <DataTable columns={subscriptionColumns} rows={subscriptions} emptyMessage="No subscription activity yet." />
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold">Billing and Dunning Events</h3>
+            <DataTable columns={eventColumns} rows={subscriptionEvents} emptyMessage="No subscription events yet." />
+          </div>
           <div className="space-y-2">
             <h3 className="font-semibold">Shorts Pricing</h3>
             <DataTable columns={shortColumns} rows={shorts} emptyMessage="No shorts found." />

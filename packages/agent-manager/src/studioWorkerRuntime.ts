@@ -11,6 +11,7 @@ import {
 } from "./index";
 import {
   extractClip,
+  generateMobileFastPasses,
   generateMemePng,
   generateShortSlideshowMp4,
   generateThumbnail,
@@ -45,6 +46,7 @@ type StudioWorkerDeps = {
   loadBrollImages: typeof loadBrollImages;
   generateShortSlideshowMp4: typeof generateShortSlideshowMp4;
   transcodeToHls: typeof transcodeToHls;
+  generateMobileFastPasses: typeof generateMobileFastPasses;
   generateThumbnail: typeof generateThumbnail;
   generateMemePng: typeof generateMemePng;
   extractClip: typeof extractClip;
@@ -65,6 +67,7 @@ export const defaultStudioWorkerDeps: StudioWorkerDeps = {
   loadBrollImages,
   generateShortSlideshowMp4,
   transcodeToHls,
+  generateMobileFastPasses,
   generateThumbnail,
   generateMemePng,
   extractClip,
@@ -220,6 +223,21 @@ async function upsertAssetRecord(
       },
       status: "ready",
       finalizedAt: new Date()
+    }
+  });
+}
+
+async function updateProjectAssetStatuses(
+  deps: StudioWorkerDeps,
+  projectId: string,
+  currentStatus: string,
+  nextStatus: string
+) {
+  await deps.prisma.studioAsset.updateMany({
+    where: { projectId, status: currentStatus },
+    data: {
+      status: nextStatus,
+      ...(nextStatus === "ready" ? { finalizedAt: new Date() } : {})
     }
   });
 }
@@ -385,6 +403,31 @@ export async function processStudioJob(
       const tmpFile = deps.join(deps.tmpdir(), `illuvrse-transcode-${deps.now()}.mp4`);
       await deps.writeFile(tmpFile, mp4Buffer);
 
+      const fastPassVariants = await deps.generateMobileFastPasses(tmpFile, {
+        contentType: typeof payload.input.contentType === "string" ? payload.input.contentType : undefined,
+        prioritizeMobile: payload.input.prioritizeMobile !== false
+      });
+      for (const variant of fastPassVariants) {
+        const variantBuffer = await deps.readFile(variant.outputPath);
+        const variantKey = `shorts/${payload.projectId}/${variant.name}.mp4`;
+        const variantUrl = await deps.uploadBuffer(variantKey, variantBuffer, variant.contentType);
+        await upsertAssetRecord(deps, {
+          projectId: payload.projectId,
+          jobId: payload.jobId,
+          jobType: payload.type,
+          kind: "SHORT_MP4",
+          url: variantUrl,
+          storageKey: variantKey,
+          metaJson: {
+            outputKind: "SHORT_MP4",
+            variant: variant.name,
+            width: variant.width,
+            height: variant.height,
+            fastPass: true
+          }
+        });
+      }
+
       const { manifest, dir } = await deps.transcodeToHls(tmpFile);
       const files = await deps.readdir(dir);
       const segmentFiles = files.filter((file) => file.endsWith(".ts"));
@@ -426,6 +469,8 @@ export async function processStudioJob(
         where: { projectId: payload.projectId },
         data: { mediaUrl: manifestUrl }
       });
+
+      await updateProjectAssetStatuses(deps, payload.projectId, "pending", "ready");
 
       outputJson = { manifestUrl, thumbUrl };
     }

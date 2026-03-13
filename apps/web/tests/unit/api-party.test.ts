@@ -138,4 +138,136 @@ describe("party APIs", () => {
     const response = await playbackPost(request, { params: Promise.resolve({ code: "ABC123" }) });
     expect(response.status).toBe(401);
   });
+
+  it("returns authoritative resume state instead of trusting stale host position", async () => {
+    requireSessionMock.mockResolvedValueOnce({ userId: "host-1", role: "user", permissions: [] });
+    prismaMock.party.findUnique.mockResolvedValueOnce(partyFixture);
+    prismaMock.party.update.mockResolvedValueOnce(null);
+    prismaMock.playlistItem.count.mockResolvedValueOnce(3);
+    getStateMock
+      .mockResolvedValueOnce({
+        partyId: "party-1",
+        seatCount: 12,
+        seats: {},
+        playback: {
+          currentIndex: 1,
+          playbackState: "playing",
+          leaderTime: 1_000,
+          playbackPositionMs: 20_000,
+          leaderId: "host-1",
+          timelineRevision: 3,
+          syncSequence: 5,
+          lastAction: "heartbeat",
+          lastHeartbeatAt: 1_000
+        },
+        participants: {},
+        updatedAt: new Date().toISOString()
+      })
+      .mockResolvedValueOnce({
+        partyId: "party-1",
+        seatCount: 12,
+        seats: {},
+        playback: {
+          currentIndex: 1,
+          playbackState: "playing"
+        },
+        participants: {},
+        updatedAt: new Date().toISOString()
+      });
+
+    vi.spyOn(Date, "now").mockReturnValue(4_000);
+
+    const request = new Request("http://localhost", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "resume",
+        leaderTime: 4_000,
+        playbackPositionMs: 8_000,
+        currentIndex: 0,
+        playbackState: "playing"
+      })
+    });
+
+    const response = await playbackPost(request, { params: Promise.resolve({ code: "ABC123" }) });
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({
+      currentIndex: 1,
+      playbackPositionMs: 23_000,
+      timelineRevision: 3,
+      lastAction: "resume"
+    });
+  });
+
+  it("soft-locks the timeline after a host seek rewrite", async () => {
+    requireSessionMock.mockResolvedValueOnce({ userId: "host-1", role: "user", permissions: [] });
+    prismaMock.party.findUnique.mockResolvedValueOnce(partyFixture);
+    prismaMock.party.update.mockResolvedValueOnce(null);
+    prismaMock.playlistItem.count.mockResolvedValueOnce(3);
+    getStateMock
+      .mockResolvedValueOnce({
+        partyId: "party-1",
+        seatCount: 12,
+        seats: {},
+        playback: {
+          currentIndex: 0,
+          playbackState: "paused",
+          leaderTime: 1_000,
+          playbackPositionMs: 2_000,
+          leaderId: "host-1",
+          timelineRevision: 1,
+          syncSequence: 1,
+          lastAction: "pause",
+          lastHeartbeatAt: 1_000
+        },
+        participants: {},
+        updatedAt: new Date().toISOString()
+      })
+      .mockResolvedValueOnce({
+        partyId: "party-1",
+        seatCount: 12,
+        seats: {},
+        playback: {
+          currentIndex: 0,
+          playbackState: "paused"
+        },
+        participants: {},
+        updatedAt: new Date().toISOString()
+      });
+
+    vi.spyOn(Date, "now").mockReturnValue(5_000);
+
+    const request = new Request("http://localhost", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "seek",
+        leaderTime: 5_000,
+        playbackPositionMs: 15_000,
+        currentIndex: 0,
+        playbackState: "paused"
+      })
+    });
+
+    const response = await playbackPost(request, { params: Promise.resolve({ code: "ABC123" }) });
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({
+      playbackPositionMs: 15_000,
+      timelineRevision: 2,
+      softLockUntil: 6_500,
+      lastAction: "seek"
+    });
+    expect(publishMock).toHaveBeenCalledWith(
+      "party-1",
+      expect.objectContaining({
+        type: "playback_update",
+        timelineRevision: 2,
+        softLockUntil: 6_500
+      })
+    );
+  });
 });

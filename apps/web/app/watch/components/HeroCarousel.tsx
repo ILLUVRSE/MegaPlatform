@@ -32,7 +32,7 @@ export default function HeroCarousel({ items }: { items: HeroItem[] }) {
     return (
       <div className="rounded-3xl border border-white/10 bg-white/5 p-10 text-white">
         <h2 className="text-2xl font-semibold">No featured shows yet</h2>
-        <p className="text-sm text-white/60">Add shows in Admin to populate the Watch experience.</p>
+        <p className="text-sm text-white/78">Add shows in Admin to populate the Watch experience.</p>
       </div>
     );
   }
@@ -54,34 +54,34 @@ export default function HeroCarousel({ items }: { items: HeroItem[] }) {
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end gap-4 p-8">
         <div className="max-w-xl space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/60">Featured</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-white/80">Featured</p>
           <h1 className="text-3xl font-semibold md:text-4xl">{current.title}</h1>
-          <p className="text-sm text-white/70 line-clamp-3">{current.description}</p>
+          <p className="text-sm text-white/82 line-clamp-3">{current.description}</p>
         </div>
         <div className="flex flex-wrap gap-3">
           {current.featuredEpisodeId ? (
             <Link
               href={`/watch/episode/${current.featuredEpisodeId}`}
-              className="rounded-full bg-white px-5 py-2 text-xs font-semibold uppercase tracking-widest text-black"
+              className="interactive-focus rounded-full bg-white px-5 py-2 text-xs font-semibold uppercase tracking-widest text-black"
             >
               Watch Now
             </Link>
           ) : null}
           <Link
             href={`/watch/show/${current.slug}`}
-            className="rounded-full border border-white/40 px-5 py-2 text-xs font-semibold uppercase tracking-widest"
+            className="interactive-focus rounded-full border border-white/50 px-5 py-2 text-xs font-semibold uppercase tracking-widest"
           >
             Details
           </Link>
           <Link
             href={buildWatchToPartyHref({ showSlug: current.slug, episodeId: current.featuredEpisodeId ?? undefined })}
-            className="rounded-full border border-cyan-300/50 bg-cyan-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-cyan-100"
+            className="interactive-focus rounded-full border border-cyan-300/50 bg-cyan-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-cyan-50"
           >
             Watch Together
           </Link>
           <Link
             href={buildWatchToStudioHref({ showSlug: current.slug, episodeId: current.featuredEpisodeId ?? undefined })}
-            className="rounded-full border border-amber-300/50 bg-amber-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-amber-100"
+            className="interactive-focus rounded-full border border-amber-300/50 bg-amber-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-amber-50"
           >
             Remix in Studio
           </Link>
@@ -91,9 +91,9 @@ export default function HeroCarousel({ items }: { items: HeroItem[] }) {
             <button
               key={item.id}
               type="button"
-              className={`h-2 w-6 rounded-full ${idx === index ? "bg-white" : "bg-white/30"}`}
+              className={`interactive-focus h-2 w-6 rounded-full ${idx === index ? "bg-white" : "bg-white/30"}`}
               onClick={() => setIndex(idx)}
-              aria-label={`Show ${item.title}`}
+              aria-label={`Show slide ${idx + 1}: ${item.title}`}
               aria-current={idx === index ? "true" : "false"}
             />
           ))}

@@ -206,6 +206,17 @@ export default function StudioCreatorFlow() {
   const [assets, setAssets] = useState<StudioAsset[]>([]);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
+  const fieldIds = {
+    idea: "studio-idea",
+    script: "studio-script",
+    tone: "studio-tone",
+    voice: "studio-voice",
+    music: "studio-music",
+    captionStyle: "studio-caption-style",
+    title: "studio-title",
+    tags: "studio-tags",
+    visibility: "studio-visibility"
+  } as const;
 
   const stepLabel = useMemo(() => steps[activeStep]?.title ?? "", [activeStep]);
   const hasRenderedAsset = useMemo(
@@ -511,10 +522,10 @@ export default function StudioCreatorFlow() {
             )}
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <a href="#creator" className="party-button text-lg">Create a Short</a>
+            <a href="#creator" className="party-button interactive-focus text-lg">Create a Short</a>
             <Link
               href="/shorts"
-              className="text-xs font-semibold uppercase tracking-widest text-illuvrse-primary"
+              className="interactive-focus text-xs font-semibold uppercase tracking-widest text-illuvrse-primary"
             >
               Remix a Short
             </Link>
@@ -529,7 +540,9 @@ export default function StudioCreatorFlow() {
             <h2 className="text-2xl font-semibold">Step {activeStep + 1} · {stepLabel}</h2>
             <p className="text-sm text-illuvrse-muted">Navigate the creator flow with quick iterations.</p>
             {activityStatus ? (
-              <p className="text-xs text-illuvrse-muted">{activityStatus}</p>
+              <p className="text-xs text-illuvrse-muted" role="status" aria-live="polite">
+                {activityStatus}
+              </p>
             ) : null}
           </div>
           <div className="flex flex-wrap gap-2 text-xs">
@@ -537,7 +550,7 @@ export default function StudioCreatorFlow() {
               <button
                 key={step.id}
                 onClick={() => setActiveStep(index)}
-                className={`rounded-full border px-3 py-1 ${
+                className={`interactive-focus rounded-full border px-3 py-1 ${
                   index === activeStep
                     ? "border-illuvrse-primary text-illuvrse-primary"
                     : "border-white/10 text-illuvrse-muted"
@@ -552,8 +565,9 @@ export default function StudioCreatorFlow() {
         {activeStep === 0 && (
           <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
             <div className="space-y-3">
-              <label className="text-sm font-semibold">Your short idea</label>
+              <label htmlFor={fieldIds.idea} className="text-sm font-semibold">Your short idea</label>
               <textarea
+                id={fieldIds.idea}
                 className="h-32 w-full rounded-md border border-white/10 bg-transparent p-3 text-sm"
                 placeholder="Describe the hook, vibe, and payoff..."
                 value={idea}
@@ -562,7 +576,7 @@ export default function StudioCreatorFlow() {
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href="#templates"
-                  className="text-xs font-semibold uppercase tracking-widest text-illuvrse-primary"
+                  className="interactive-focus text-xs font-semibold uppercase tracking-widest text-illuvrse-primary"
                 >
                   Pick a template
                 </a>
@@ -574,14 +588,14 @@ export default function StudioCreatorFlow() {
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <button
-                  className="party-button"
+                  className="party-button interactive-focus"
                   onClick={() => void ensureProject()}
                   disabled={isBusy}
                 >
                   Save draft
                 </button>
                 <button
-                  className="party-button"
+                  className="party-button interactive-focus"
                   onClick={handleGenerateScript}
                   disabled={isBusy}
                 >
@@ -602,11 +616,11 @@ export default function StudioCreatorFlow() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-sm font-semibold">AI-generated script</p>
               <div className="flex flex-wrap items-center gap-2">
-                <button className="party-button" onClick={handleGenerateScript} disabled={isBusy}>
+                <button className="party-button interactive-focus" onClick={handleGenerateScript} disabled={isBusy}>
                   Generate script
                 </button>
                 <button
-                  className="party-button"
+                  className="party-button interactive-focus"
                   onClick={() => setScript((prev) => prev.trim() || "Add your script here...")}
                 >
                   Use placeholder
@@ -614,14 +628,17 @@ export default function StudioCreatorFlow() {
               </div>
             </div>
             <textarea
+              id={fieldIds.script}
               className="h-40 w-full rounded-md border border-white/10 bg-transparent p-3 text-sm"
               value={script}
               onChange={(event) => setScript(event.target.value)}
               placeholder="Your script will appear here..."
+              aria-label="AI-generated script"
             />
             <div className="flex flex-wrap items-center gap-4">
-              <label className="text-sm font-semibold">Tone & style</label>
+              <label htmlFor={fieldIds.tone} className="text-sm font-semibold">Tone & style</label>
               <select
+                id={fieldIds.tone}
                 className="rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                 value={tone}
                 onChange={(event) => setTone(event.target.value)}
@@ -640,10 +657,10 @@ export default function StudioCreatorFlow() {
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold">Scene list</p>
               <div className="flex flex-wrap items-center gap-2">
-                <button className="party-button" onClick={handleAutoScenes} disabled={isBusy}>
+                <button className="party-button interactive-focus" onClick={handleAutoScenes} disabled={isBusy}>
                   Auto-generate scenes
                 </button>
-                <button className="party-button" onClick={handleAddScene}>Add scene</button>
+                <button className="party-button interactive-focus" onClick={handleAddScene}>Add scene</button>
               </div>
             </div>
             <div className="space-y-3">
@@ -655,17 +672,17 @@ export default function StudioCreatorFlow() {
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-sm font-semibold">{scene.title}</p>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <button className="party-button" onClick={() => handleMoveScene(index, -1)} disabled={index === 0}>
+                      <button className="party-button interactive-focus" onClick={() => handleMoveScene(index, -1)} disabled={index === 0}>
                         Move up
                       </button>
                       <button
-                        className="party-button"
+                        className="party-button interactive-focus"
                         onClick={() => handleMoveScene(index, 1)}
                         disabled={index === scenes.length - 1}
                       >
                         Move down
                       </button>
-                      <button className="party-button" onClick={() => handleRemoveScene(scene.id)}>
+                      <button className="party-button interactive-focus" onClick={() => handleRemoveScene(scene.id)}>
                         Remove
                       </button>
                     </div>
@@ -673,6 +690,7 @@ export default function StudioCreatorFlow() {
                   <textarea
                     className="h-20 w-full rounded-md border border-white/10 bg-transparent p-2 text-sm"
                     value={scene.description}
+                    aria-label={`${scene.title} description`}
                     onChange={(event) =>
                       setScenes((prev) =>
                         prev.map((item) =>
@@ -691,8 +709,9 @@ export default function StudioCreatorFlow() {
           <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-semibold">Voice picker</label>
+                <label htmlFor={fieldIds.voice} className="text-sm font-semibold">Voice picker</label>
                 <select
+                  id={fieldIds.voice}
                   className="w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                   value={voice}
                   onChange={(event) => setVoice(event.target.value)}
@@ -703,8 +722,9 @@ export default function StudioCreatorFlow() {
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold">Background music</label>
+                <label htmlFor={fieldIds.music} className="text-sm font-semibold">Background music</label>
                 <select
+                  id={fieldIds.music}
                   className="w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                   value={music}
                   onChange={(event) => setMusic(event.target.value)}
@@ -715,8 +735,9 @@ export default function StudioCreatorFlow() {
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold">Caption style</label>
+                <label htmlFor={fieldIds.captionStyle} className="text-sm font-semibold">Caption style</label>
                 <select
+                  id={fieldIds.captionStyle}
                   className="w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                   value={captionStyle}
                   onChange={(event) => setCaptionStyle(event.target.value as "clean" | "impact" | "tiktok")}
@@ -752,12 +773,12 @@ export default function StudioCreatorFlow() {
               <p className="text-xs text-illuvrse-muted">SFX: {sfxEnabled ? "On" : "Off"}</p>
               <p className="text-xs text-illuvrse-muted">Caption style: {captionStyle}</p>
               <button
-                className="party-button"
+                className="party-button interactive-focus"
                 onClick={() => setVoicePreview(`Previewed ${voice} just now`)}
               >
                 Preview voice
               </button>
-              <p className="text-xs text-illuvrse-muted">{voicePreview}</p>
+              <p className="text-xs text-illuvrse-muted" role="status" aria-live="polite">{voicePreview}</p>
             </div>
           </div>
         )}
@@ -769,7 +790,7 @@ export default function StudioCreatorFlow() {
                 <p className="text-sm font-semibold">Render preview</p>
                 <p className="text-xs text-illuvrse-muted">{previewStatus}</p>
               </div>
-              <button className="party-button" onClick={handleRenderPreview} disabled={isBusy}>
+              <button className="party-button interactive-focus" onClick={handleRenderPreview} disabled={isBusy}>
                 Render preview
               </button>
             </div>
@@ -782,10 +803,10 @@ export default function StudioCreatorFlow() {
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-sm font-semibold">{scene.title} · Take {scene.take}</p>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <button className="party-button" onClick={() => handleRegenerateScene(scene.id)}>
+                      <button className="party-button interactive-focus" onClick={() => handleRegenerateScene(scene.id)}>
                         Regenerate
                       </button>
-                      <button className="party-button" onClick={() => setCaptionEditId(scene.id)}>
+                      <button className="party-button interactive-focus" onClick={() => setCaptionEditId(scene.id)}>
                         Edit captions
                       </button>
                     </div>
@@ -795,6 +816,7 @@ export default function StudioCreatorFlow() {
                     <textarea
                       className="h-16 w-full rounded-md border border-white/10 bg-transparent p-2 text-sm"
                       value={scene.caption}
+                      aria-label={`${scene.title} caption`}
                       onChange={(event) =>
                         setScenes((prev) =>
                           prev.map((item) =>
@@ -807,7 +829,7 @@ export default function StudioCreatorFlow() {
                     <p className="text-xs">Caption: {scene.caption}</p>
                   )}
                   {captionEditId === scene.id && (
-                    <button className="party-button" onClick={() => setCaptionEditId(null)}>
+                    <button className="party-button interactive-focus" onClick={() => setCaptionEditId(null)}>
                       Done editing
                     </button>
                   )}
@@ -820,21 +842,24 @@ export default function StudioCreatorFlow() {
         {activeStep === 5 && (
           <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
             <div className="space-y-3">
-              <label className="text-sm font-semibold">Title</label>
+              <label htmlFor={fieldIds.title} className="text-sm font-semibold">Title</label>
               <input
+                id={fieldIds.title}
                 className="w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
                 placeholder="Give your short a title"
               />
-              <label className="text-sm font-semibold">Tags</label>
+              <label htmlFor={fieldIds.tags} className="text-sm font-semibold">Tags</label>
               <input
+                id={fieldIds.tags}
                 className="w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                 value={tags}
                 onChange={(event) => setTags(event.target.value)}
               />
-              <label className="text-sm font-semibold">Visibility</label>
+              <label htmlFor={fieldIds.visibility} className="text-sm font-semibold">Visibility</label>
               <select
+                id={fieldIds.visibility}
                 className="w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm"
                 value={visibility}
                 onChange={(event) => setVisibility(event.target.value)}
@@ -843,13 +868,13 @@ export default function StudioCreatorFlow() {
                 <option value="Unlisted">Unlisted</option>
                 <option value="Private">Private</option>
               </select>
-              <button className="party-button" onClick={handlePublish} disabled={isBusy || !hasRenderedAsset}>
+              <button className="party-button interactive-focus" onClick={handlePublish} disabled={isBusy || !hasRenderedAsset}>
                 Publish
               </button>
             </div>
             <div className="rounded-md border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold">Publish status</p>
-              <p className="text-xs text-illuvrse-muted">{publishStatus || "Ready when you are."}</p>
+              <p className="text-xs text-illuvrse-muted" role="status" aria-live="polite">{publishStatus || "Ready when you are."}</p>
               <div className="text-xs text-illuvrse-muted">
                 <p>Template: {selectedTemplate?.name ?? "Original"}</p>
                 <p>Scenes: {scenes.length}</p>
@@ -863,14 +888,14 @@ export default function StudioCreatorFlow() {
           <div className="text-xs text-illuvrse-muted">Step {activeStep + 1} of {steps.length}</div>
           <div className="flex flex-wrap items-center gap-2">
             <button
-              className="party-button"
+              className="party-button interactive-focus"
               onClick={() => setActiveStep((prev) => Math.max(0, prev - 1))}
               disabled={activeStep === 0}
             >
               Back
             </button>
             <button
-              className="party-button"
+              className="party-button interactive-focus"
               onClick={() => setActiveStep((prev) => Math.min(steps.length - 1, prev + 1))}
               disabled={activeStep === steps.length - 1}
             >
@@ -894,7 +919,7 @@ export default function StudioCreatorFlow() {
           {templates.map((template) => (
             <button
               key={template.id}
-              className={`rounded-md border p-4 text-left space-y-2 ${
+              className={`interactive-focus rounded-md border p-4 text-left space-y-2 ${
                 selectedTemplate?.id === template.id
                   ? "border-illuvrse-primary"
                   : "border-white/10"
@@ -923,7 +948,7 @@ export default function StudioCreatorFlow() {
             <p className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Asset Library</p>
             <h2 className="text-2xl font-semibold">Your uploads, generations, and drafts</h2>
           </div>
-          <button className="party-button" disabled>
+          <button className="party-button interactive-focus" disabled>
             Upload (Coming soon)
           </button>
         </div>
@@ -932,7 +957,7 @@ export default function StudioCreatorFlow() {
             <button
               key={tab}
               onClick={() => setAssetTab(tab as keyof typeof seedAssetLibrary)}
-              className={`rounded-full border px-3 py-1 ${
+              className={`interactive-focus rounded-full border px-3 py-1 ${
                 tab === assetTab
                   ? "border-illuvrse-primary text-illuvrse-primary"
                   : "border-white/10 text-illuvrse-muted"

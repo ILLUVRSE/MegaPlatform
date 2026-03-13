@@ -7,6 +7,7 @@ import Redis from "ioredis";
 
 export type SeatState = "available" | "reserved" | "locked" | "occupied";
 export type PlaybackState = "idle" | "playing" | "paused";
+export type PlaybackAction = "heartbeat" | "play" | "pause" | "resume" | "advance" | "seek";
 
 export type SeatUpdatePayload = {
   type: "seat_update";
@@ -22,6 +23,11 @@ export type PlaybackUpdatePayload = {
   currentIndex: number;
   playbackState: PlaybackState;
   leaderId: string;
+  timelineRevision?: number;
+  syncSequence?: number;
+  softLockUntil?: number;
+  lastAction?: PlaybackAction;
+  lastHeartbeatAt?: number;
 };
 
 export type PlaylistUpdatePayload = {
@@ -72,6 +78,11 @@ export type PartyPlaybackSnapshot = {
   leaderTime?: number;
   playbackPositionMs?: number;
   leaderId?: string | null;
+  timelineRevision?: number;
+  syncSequence?: number;
+  softLockUntil?: number;
+  lastAction?: PlaybackAction;
+  lastHeartbeatAt?: number;
 };
 
 export type PartyPresenceSnapshot = {

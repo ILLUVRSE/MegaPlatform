@@ -10,6 +10,7 @@ import { z } from "zod";
 import { prisma } from "@illuvrse/db";
 import { requireAdmin } from "@/lib/rbac";
 import { writeAudit } from "@/lib/audit";
+import { enforceAdminPolicy, policyViolationResponse } from "@/lib/policyEnforcement";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +85,45 @@ export async function DELETE(
   }
 
   const { id } = await params;
+  const existingEpisode = await prisma.episode.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      _count: {
+        select: {
+          livePrograms: true
+        }
+      }
+    }
+  });
+  if (!existingEpisode) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  const decision = await enforceAdminPolicy({
+    adminId: auth.session.user.id,
+    scope: "infrastructure",
+    action: "db.destructive",
+    target: {
+      kind: "infra",
+      resource: "episode",
+      operation: "delete",
+      id
+    },
+    attributes: {
+      scheduledProgramCount: existingEpisode._count.livePrograms
+    }
+  });
+
+  if (!decision.ok) {
+    return NextResponse.json({ error: decision.reason }, { status: 400 });
+  }
+
+  if (!decision.allow) {
+    return policyViolationResponse(decision);
+  }
+
   const episode = await prisma.episode.delete({
     where: { id }
   });

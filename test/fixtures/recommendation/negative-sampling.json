@@ -1,0 +1,83 @@
+{
+  "now": "2026-03-13T12:00:00.000Z",
+  "events": [
+    { "itemId": "space-opera-premiere", "engaged": true },
+    { "itemId": "comedy-room-set", "engaged": true },
+    { "itemId": "sports-buzzer-beater", "engaged": false },
+    { "itemId": "music-tour-announcement", "engaged": false }
+  ],
+  "inventory": [
+    {
+      "id": "space-opera-premiere",
+      "createdAt": "2026-03-13T09:00:00.000Z",
+      "likeCount": 11,
+      "commentCount": 4,
+      "shareCount": 2,
+      "categories": ["Sci-Fi", "Series"],
+      "topics": ["Found-Family", "Premiere"]
+    },
+    {
+      "id": "space-opera-theory",
+      "createdAt": "2026-03-13T08:30:00.000Z",
+      "likeCount": 8,
+      "commentCount": 3,
+      "shareCount": 1,
+      "categories": ["Sci-Fi"],
+      "topics": ["Found-Family", "Theory"]
+    },
+    {
+      "id": "galactic-casting-rumor",
+      "createdAt": "2026-03-13T07:00:00.000Z",
+      "likeCount": 7,
+      "commentCount": 2,
+      "shareCount": 1,
+      "categories": ["Sci-Fi"],
+      "topics": ["Casting", "Premiere"]
+    },
+    {
+      "id": "comedy-room-set",
+      "createdAt": "2026-03-13T08:15:00.000Z",
+      "likeCount": 10,
+      "commentCount": 4,
+      "shareCount": 1,
+      "categories": ["Comedy"],
+      "topics": ["Standup", "Club"]
+    },
+    {
+      "id": "club-crowd-work",
+      "createdAt": "2026-03-13T07:30:00.000Z",
+      "likeCount": 9,
+      "commentCount": 3,
+      "shareCount": 1,
+      "categories": ["Comedy"],
+      "topics": ["Standup", "Crowd-Work"]
+    },
+    {
+      "id": "late-night-monologue",
+      "createdAt": "2026-03-13T06:45:00.000Z",
+      "likeCount": 8,
+      "commentCount": 2,
+      "shareCount": 1,
+      "categories": ["Comedy"],
+      "topics": ["Monologue", "Club"]
+    },
+    {
+      "id": "sports-buzzer-beater",
+      "createdAt": "2026-03-13T08:10:00.000Z",
+      "likeCount": 6,
+      "commentCount": 3,
+      "shareCount": 2,
+      "categories": ["Sports"],
+      "topics": ["Highlights", "Playoffs"]
+    },
+    {
+      "id": "music-tour-announcement",
+      "createdAt": "2026-03-13T08:00:00.000Z",
+      "likeCount": 7,
+      "commentCount": 2,
+      "shareCount": 1,
+      "categories": ["Music"],
+      "topics": ["Tour", "Announcement"]
+    }
+  ]
+}

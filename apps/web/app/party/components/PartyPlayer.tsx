@@ -6,7 +6,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { applyDriftCorrection, estimatePlaybackPosition } from "../lib/playback";
+import {
+  estimatePlaybackPosition,
+  repairPlaybackDrift
+} from "../lib/playback";
 
 export type PlaybackSnapshot = {
   currentIndex: number;
@@ -14,6 +17,11 @@ export type PlaybackSnapshot = {
   leaderTime?: number;
   playbackPositionMs?: number;
   leaderId?: string | null;
+  timelineRevision?: number;
+  syncSequence?: number;
+  softLockUntil?: number;
+  lastAction?: "heartbeat" | "play" | "pause" | "resume" | "advance" | "seek";
+  lastHeartbeatAt?: number;
 };
 
 type PlaylistItem = {
@@ -33,6 +41,7 @@ type PartyPlayerProps = {
   playback: PlaybackSnapshot;
   onPlaybackChange: (next: PlaybackSnapshot) => void;
   refreshKey: number;
+  syncGeneration?: number;
 };
 
 export default function PartyPlayer({
@@ -40,12 +49,16 @@ export default function PartyPlayer({
   isHost,
   playback,
   onPlaybackChange,
-  refreshKey
+  refreshKey,
+  syncGeneration = 0
 }: PartyPlayerProps) {
   const [positionMs, setPositionMs] = useState(playback.playbackPositionMs ?? 0);
   const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
   const [memeStatus, setMemeStatus] = useState<"idle" | "pending" | "done">("idle");
   const positionRef = useRef(positionMs);
+  const lastTimelineRevisionRef = useRef(playback.timelineRevision ?? 0);
+  const lastSyncGenerationRef = useRef(syncGeneration);
+  const lastCurrentIndexRef = useRef(playback.currentIndex);
 
   const activeItem = useMemo(
     () => playlist.find((item) => item.order === playback.currentIndex),
@@ -77,11 +90,34 @@ export default function PartyPlayer({
       const target = estimatePlaybackPosition(
         playback.leaderTime,
         playback.playbackPositionMs,
-        Date.now()
+        Date.now(),
+        playback.playbackState
       );
-      setPositionMs((current) => applyDriftCorrection(current, target));
+      const timelineRevision = playback.timelineRevision ?? 0;
+      const timelineWasRewritten =
+        timelineRevision !== lastTimelineRevisionRef.current ||
+        playback.lastAction === "seek" ||
+        playback.lastAction === "advance" ||
+        playback.currentIndex !== lastCurrentIndexRef.current;
+
+      if (timelineWasRewritten || (playback.softLockUntil ?? 0) > Date.now()) {
+        setPositionMs(target);
+      } else {
+        setPositionMs((current) => repairPlaybackDrift(current, target).nextPositionMs);
+      }
+      lastTimelineRevisionRef.current = timelineRevision;
+      lastCurrentIndexRef.current = playback.currentIndex;
     }
-  }, [isHost, playback.leaderTime, playback.playbackPositionMs]);
+  }, [
+    isHost,
+    playback.currentIndex,
+    playback.lastAction,
+    playback.leaderTime,
+    playback.playbackPositionMs,
+    playback.playbackState,
+    playback.softLockUntil,
+    playback.timelineRevision
+  ]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -104,8 +140,20 @@ export default function PartyPlayer({
     return () => clearInterval(interval);
   }, [isHost, playback.playbackState, playback.currentIndex]);
 
+  useEffect(() => {
+    if (!isHost) return;
+    if (syncGeneration <= lastSyncGenerationRef.current) return;
+    lastSyncGenerationRef.current = syncGeneration;
+    if (playback.playbackState === "idle") return;
+    void sendPlayback("resume", {
+      playbackPositionMs: positionRef.current,
+      currentIndex: playback.currentIndex,
+      playbackState: playback.playbackState
+    });
+  }, [isHost, playback.currentIndex, playback.playbackState, syncGeneration]);
+
   const sendPlayback = async (
-    action: "heartbeat" | "play" | "pause" | "resume" | "advance",
+    action: "heartbeat" | "play" | "pause" | "resume" | "advance" | "seek",
     override?: Partial<PlaybackSnapshot>
   ) => {
     if (action === "advance" && playlist.length === 0) return;
@@ -130,6 +178,17 @@ export default function PartyPlayer({
     if (next.playbackPositionMs !== undefined) {
       setPositionMs(next.playbackPositionMs);
     }
+  };
+
+  const commitSeek = (nextPositionMs: number) => {
+    const clampedPositionMs = Math.max(0, Math.floor(nextPositionMs));
+    positionRef.current = clampedPositionMs;
+    setPositionMs(clampedPositionMs);
+    void sendPlayback("seek", {
+      playbackPositionMs: clampedPositionMs,
+      currentIndex: playback.currentIndex,
+      playbackState: playback.playbackState === "idle" ? "paused" : playback.playbackState
+    });
   };
 
   const handleMemeThis = async () => {
@@ -206,6 +265,29 @@ export default function PartyPlayer({
             style={{ width: `${Math.min(100, (positionMs % 60000) / 600)}%` }}
           />
         </div>
+        {isHost ? (
+          <input
+            type="range"
+            min={0}
+            max={60_000}
+            step={1_000}
+            value={Math.max(0, Math.min(60_000, positionMs))}
+            aria-label="Scrub playback"
+            className="w-full accent-illuvrse-primary"
+            onChange={(event) => {
+              const nextPositionMs = Number(event.target.value);
+              positionRef.current = nextPositionMs;
+              setPositionMs(nextPositionMs);
+            }}
+            onMouseUp={() => commitSeek(positionRef.current)}
+            onTouchEnd={() => commitSeek(positionRef.current)}
+            onKeyUp={(event) => {
+              if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") {
+                commitSeek(positionRef.current);
+              }
+            }}
+          />
+        ) : null}
       </div>
       {isHost ? (
         <div className="flex flex-wrap gap-3">
