@@ -6,6 +6,7 @@ import { prisma } from "@illuvrse/db";
 import { cookies, headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { listPublishedInteractiveExtrasForEpisode } from "@/lib/interactiveExtras";
 import { canAccessPremiereEpisodePage, getLivePremiereStatus } from "@/lib/livePremiere";
 import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
 import {
@@ -62,6 +63,7 @@ export default async function WatchEpisodePage({
   if (!episode) {
     notFound();
   }
+  const watchEpisode = episode as typeof episode & { sourceShowEpisodeId: string | null };
   const [showRightsById, episodeRightsById] = await Promise.all([
     listWatchShowRights([episode.season.show.id]),
     listWatchEpisodeRights([episode.id, ...episode.season.episodes.map((item) => item.id)])
@@ -167,6 +169,7 @@ export default async function WatchEpisodePage({
       episodeNumber: episodeNumber > 0 ? episodeNumber : null
     }
   ]);
+  const interactiveExtras = await listPublishedInteractiveExtrasForEpisode(watchEpisode.sourceShowEpisodeId);
 
   return (
     <div className="-mx-6 space-y-8 bg-[#07070b] px-6 pb-10 text-white">
@@ -203,6 +206,12 @@ export default async function WatchEpisodePage({
           effectiveEndsAt: premiereStatus.effectiveEndsAt?.toISOString() ?? null,
           chatEnabled: premiereStatus.chatEnabled
         }}
+        interactiveExtras={interactiveExtras.map((extra) => ({
+          id: extra.id,
+          type: extra.type,
+          title: extra.title,
+          payload: extra.payload
+        }))}
       />
     </div>
   );

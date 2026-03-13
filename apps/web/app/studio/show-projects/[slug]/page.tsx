@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPrincipal } from "@/lib/authz";
+import { listInteractiveExtrasForShow } from "@/lib/interactiveExtras";
 import { listShowEpisodes } from "@/lib/showEpisodes";
 import { listShowExtras } from "@/lib/showExtras";
 import {
@@ -9,6 +10,7 @@ import {
   listShowProjectCollaborators
 } from "@/lib/showProjects";
 import { getShowEpisodePublishQc, getShowProjectPublishQc } from "@/lib/studioPublishQc";
+import InteractiveExtrasEditor from "../components/InteractiveExtrasEditor";
 import ShowProjectEpisodesManager from "./components/ShowProjectEpisodesManager";
 
 export default async function StudioShowProjectDetailPage({
@@ -44,9 +46,10 @@ export default async function StudioShowProjectDetailPage({
     notFound();
   }
 
-  const [episodes, extras, collaborators, projectQc] = await Promise.all([
+  const [episodes, extras, interactiveExtras, collaborators, projectQc] = await Promise.all([
     listShowEpisodes(project.id),
     listShowExtras(project.id),
+    listInteractiveExtrasForShow(project.id),
     listShowProjectCollaborators(project.id),
     getShowProjectPublishQc(project.id)
   ]);
@@ -81,6 +84,11 @@ export default async function StudioShowProjectDetailPage({
     createdAt: collaborator.createdAt.toISOString(),
     updatedAt: collaborator.updatedAt.toISOString()
   }));
+  const serializedInteractiveExtras = interactiveExtras.map((extra) => ({
+    ...extra,
+    createdAt: extra.createdAt.toISOString(),
+    updatedAt: extra.updatedAt.toISOString()
+  }));
 
   return (
     <div className="space-y-4">
@@ -100,6 +108,13 @@ export default async function StudioShowProjectDetailPage({
         initialExtras={serializedExtras}
         collaborators={serializedCollaborators}
         currentUserRole={access.role}
+        permissions={access.permissions}
+      />
+      <InteractiveExtrasEditor
+        scope={{ kind: "show", slug: project.slug }}
+        title="Show-level prompts and callouts"
+        description="Attach lightweight interactive blocks to the Watch show page without building a heavier branching system."
+        initialExtras={serializedInteractiveExtras}
         permissions={access.permissions}
       />
     </div>

@@ -2,11 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPrincipal } from "@/lib/authz";
 import { findShowEpisodeByProjectAndSlug } from "@/lib/showEpisodes";
+import { listInteractiveExtrasForEpisode } from "@/lib/interactiveExtras";
 import { listShotlistSuggestions } from "@/lib/showShotlistSuggestions";
 import { listDerivedShortDrafts } from "@/lib/showShortDrafts";
 import { listShowScenes } from "@/lib/showScenes";
 import { findShowProjectWithOwnerBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 import { getShowEpisodePublishQc } from "@/lib/studioPublishQc";
+import InteractiveExtrasEditor from "../../../components/InteractiveExtrasEditor";
 import ShowEpisodeSceneEditor from "./components/ShowEpisodeSceneEditor";
 
 export default async function StudioShowEpisodeDetailPage({
@@ -47,10 +49,11 @@ export default async function StudioShowEpisodeDetailPage({
     notFound();
   }
 
-  const [scenes, shortDrafts, shotlistSuggestions, episodeQc] = await Promise.all([
+  const [scenes, shortDrafts, shotlistSuggestions, interactiveExtras, episodeQc] = await Promise.all([
     listShowScenes(episode.id),
     listDerivedShortDrafts(episode.id),
     listShotlistSuggestions(episode.id),
+    listInteractiveExtrasForEpisode(episode.id),
     getShowEpisodePublishQc(episode.id)
   ]);
   const serializedEpisode = {
@@ -74,6 +77,11 @@ export default async function StudioShowEpisodeDetailPage({
     createdAt: suggestion.createdAt.toISOString(),
     updatedAt: suggestion.updatedAt.toISOString()
   }));
+  const serializedInteractiveExtras = interactiveExtras.map((extra) => ({
+    ...extra,
+    createdAt: extra.createdAt.toISOString(),
+    updatedAt: extra.updatedAt.toISOString()
+  }));
 
   return (
     <div className="space-y-4">
@@ -91,6 +99,13 @@ export default async function StudioShowEpisodeDetailPage({
         initialScenes={serializedScenes}
         initialShortDrafts={serializedShortDrafts}
         initialShotlistSuggestions={serializedShotlistSuggestions}
+        permissions={access.permissions}
+      />
+      <InteractiveExtrasEditor
+        scope={{ kind: "episode", episodeId: episode.id }}
+        title="Episode-level prompts and callouts"
+        description="Author lightweight interactions that appear directly below playback on the Watch episode page."
+        initialExtras={serializedInteractiveExtras}
         permissions={access.permissions}
       />
     </div>

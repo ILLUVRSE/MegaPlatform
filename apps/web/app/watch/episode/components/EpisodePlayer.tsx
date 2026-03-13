@@ -8,6 +8,7 @@ import Link from "next/link";
 import VideoPlayer from "@/components/VideoPlayer";
 import { buildWatchToPartyHref } from "@/lib/journeyBridge";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
 import ChapterMarkers from "../../components/ChapterMarkers";
 import PosterCard from "../../components/PosterCard";
 
@@ -22,7 +23,8 @@ export default function EpisodePlayer({
   initialPositionSec,
   enableDbProgress,
   access,
-  premiere
+  premiere,
+  interactiveExtras
 }: {
   episode: {
     id: string;
@@ -62,6 +64,12 @@ export default function EpisodePlayer({
     effectiveEndsAt: string | null;
     chatEnabled: boolean;
   };
+  interactiveExtras: Array<{
+    id: string;
+    type: "POLL" | "CALLOUT";
+    title: string;
+    payload: Record<string, unknown>;
+  }>;
 }) {
   const [progress, setProgress] = useState<{ currentTime: number; duration: number } | null>(null);
   const [localResumeSec, setLocalResumeSec] = useState<number | null>(null);
@@ -282,6 +290,14 @@ export default function EpisodePlayer({
       </div>
 
       {shouldShowVodPlayer ? <ChapterMarkers markers={chapterMarkers} /> : null}
+
+      {interactiveExtras.length > 0 ? (
+        <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/70">
+          Interactive extras available below playback.
+        </p>
+      ) : null}
+
+      <InteractiveExtrasPanel extras={interactiveExtras} title="Episode Interactives" />
 
       {shouldShowVodPlayer && nextEpisodes.length > 0 ? (
         <div className="space-y-3">

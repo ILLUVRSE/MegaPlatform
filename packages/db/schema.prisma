@@ -216,6 +216,16 @@ enum ShowExtraStatus {
   PUBLISHED
 }
 
+enum InteractiveExtraType {
+  POLL
+  CALLOUT
+}
+
+enum InteractiveExtraPublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
 enum PremiereType {
   IMMEDIATE
   SCHEDULED
@@ -430,6 +440,7 @@ model ShowProject {
   owner          User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   episodes       ShowEpisode[]
   extras         ShowExtra[]
+  interactiveExtras InteractiveExtra[]
   collaborators  ShowProjectCollaborator[]
 
   @@index([ownerId, createdAt])
@@ -474,6 +485,23 @@ model ShowExtra {
   @@index([showProjectId, status, premiereType, releaseAt])
 }
 
+model InteractiveExtra {
+  id            String                        @id @default(cuid())
+  showId        String?
+  episodeId     String?
+  type          InteractiveExtraType
+  title         String
+  payload       Json
+  publishStatus InteractiveExtraPublishStatus @default(DRAFT)
+  createdAt     DateTime                      @default(now())
+  updatedAt     DateTime                      @updatedAt
+  show          ShowProject?                  @relation(fields: [showId], references: [id], onDelete: Cascade)
+  episode       ShowEpisode?                  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@index([showId, publishStatus, updatedAt])
+  @@index([episodeId, publishStatus, updatedAt])
+}
+
 model ShowEpisode {
   id             String                  @id @default(cuid())
   showProjectId  String
@@ -501,6 +529,7 @@ model ShowEpisode {
   scenes         ShowScene[]
   shortDrafts    DerivedShortDraft[]
   shotlistSuggestions ShotlistSuggestion[]
+  interactiveExtras InteractiveExtra[]
 
   @@unique([showProjectId, slug])
   @@index([showProjectId, createdAt])

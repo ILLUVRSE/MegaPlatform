@@ -6,6 +6,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@illuvrse/db";
+import InteractiveExtrasPanel from "@/app/watch/components/InteractiveExtrasPanel";
+import { listPublishedInteractiveExtrasForShowByProjectSlug } from "@/lib/interactiveExtras";
 import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
 
 export default async function ShowPage({ params }: { params: { slug: string } }) {
@@ -25,6 +27,7 @@ export default async function ShowPage({ params }: { params: { slug: string } })
   if (!show) return notFound();
 
   const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
+  const interactiveExtras = await listPublishedInteractiveExtrasForShowByProjectSlug(show.slug);
 
   return (
     <div className="space-y-6">
@@ -80,6 +83,19 @@ export default async function ShowPage({ params }: { params: { slug: string } })
           </div>
         )}
       </section>
+      {interactiveExtras.length > 0 ? (
+        <section className="party-card space-y-4">
+          <InteractiveExtrasPanel
+            extras={interactiveExtras.map((extra) => ({
+              id: extra.id,
+              type: extra.type,
+              title: extra.title,
+              payload: extra.payload
+            }))}
+            title="Interactive Extras"
+          />
+        </section>
+      ) : null}
       <section className="party-card space-y-4">
         <h2 className="text-xl font-semibold">Extras</h2>
         {extras.length === 0 ? (

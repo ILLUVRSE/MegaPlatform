@@ -6,6 +6,7 @@ import { prisma } from "@illuvrse/db";
 import { cookies, headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { listPublishedInteractiveExtrasForShowByProjectSlug } from "@/lib/interactiveExtras";
 import { getLivePremiereStatus } from "@/lib/livePremiere";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
@@ -20,6 +21,7 @@ import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
+import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
 import ShowDetailClient from "../components/ShowDetailClient";
 
 type ShowEpisode = {
@@ -157,6 +159,7 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
   }
 
   const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
+  const interactiveExtras = await listPublishedInteractiveExtrasForShowByProjectSlug(show.slug);
 
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
     show.slug,
@@ -270,6 +273,15 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
           assetUrl: access.allowed ? extra.assetUrl : null,
           runtimeSeconds: extra.runtimeSeconds
         } satisfies ShowExtra))}
+      />
+      <InteractiveExtrasPanel
+        extras={interactiveExtras.map((extra) => ({
+          id: extra.id,
+          type: extra.type,
+          title: extra.title,
+          payload: extra.payload
+        }))}
+        title="Interactive Extras"
       />
     </div>
   );
