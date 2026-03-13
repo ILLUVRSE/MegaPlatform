@@ -24,7 +24,7 @@ function runMinigolfQuickSmoke() {
   // Keep the quick gate focused on deterministic multiplayer regressions that are
   // too easy to miss in local UI work. To skip them locally, run `npm test` or
   // the individual Vitest command directly instead of `npm run shipcheck:quick`.
-  const smokePatterns = ['minigolf.replay.test.ts', 'minigolf.integration.test.ts'];
+  const smokePatterns = ['minigolf.replay.test.ts', 'minigolf.integration.test.ts', 'pixelbrawl.smoke.test.ts'];
 
   for (const pattern of smokePatterns) {
     run(`pnpm test -- --run "${pattern}"`);
