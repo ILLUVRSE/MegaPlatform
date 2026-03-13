@@ -36,6 +36,10 @@ type EpisodeRecord = {
   publishedAt: string | null;
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string | null;
+  isPremiereEnabled: boolean;
+  premiereStartsAt: string | null;
+  premiereEndsAt: string | null;
+  chatEnabled: boolean;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
   createdAt: string;
   updatedAt: string;
@@ -60,6 +64,13 @@ type ShowExtraRecord = {
 type PublishFormState = {
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string;
+};
+
+type EpisodePublishFormState = PublishFormState & {
+  isPremiereEnabled: boolean;
+  premiereStartsAt: string;
+  premiereEndsAt: string;
+  chatEnabled: boolean;
 };
 
 type ExtraFormState = {
@@ -189,6 +200,22 @@ function createPublishFormState(record: { premiereType: "IMMEDIATE" | "SCHEDULED
   } satisfies PublishFormState;
 }
 
+function createEpisodePublishFormState(
+  record: Pick<
+    EpisodeRecord,
+    "premiereType" | "releaseAt" | "isPremiereEnabled" | "premiereStartsAt" | "premiereEndsAt" | "chatEnabled"
+  >
+) {
+  return {
+    premiereType: record.premiereType,
+    releaseAt: toLocalDateTimeInput(record.releaseAt),
+    isPremiereEnabled: record.isPremiereEnabled,
+    premiereStartsAt: toLocalDateTimeInput(record.premiereStartsAt),
+    premiereEndsAt: toLocalDateTimeInput(record.premiereEndsAt),
+    chatEnabled: record.chatEnabled
+  } satisfies EpisodePublishFormState;
+}
+
 function createExtraFormState(extra?: ShowExtraRecord) {
   return {
     type: extra?.type ?? "BEHIND_THE_SCENES",
@@ -207,6 +234,22 @@ function formatReleaseState(record: { premiereType: "IMMEDIATE" | "SCHEDULED"; r
     return `Scheduled for ${new Date(record.releaseAt).toLocaleString()}`;
   }
   return "Immediate release";
+}
+
+function formatEpisodePremiereState(record: {
+  isPremiereEnabled: boolean;
+  premiereStartsAt: string | null;
+  premiereEndsAt: string | null;
+  chatEnabled: boolean;
+}) {
+  if (!record.isPremiereEnabled || !record.premiereStartsAt) {
+    return "Premiere shell disabled";
+  }
+
+  const startText = new Date(record.premiereStartsAt).toLocaleString();
+  const endText = record.premiereEndsAt ? ` until ${new Date(record.premiereEndsAt).toLocaleString()}` : "";
+  const chatText = record.chatEnabled ? " · Party chat link enabled" : " · Chat stub hidden";
+  return `Premiere starts ${startText}${endText}${chatText}`;
 }
 
 function buildExtraPayload(form: ExtraFormState) {
@@ -228,8 +271,8 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [extras, setExtras] = useState(initialExtras);
   const [projectPublishForm, setProjectPublishForm] = useState<PublishFormState>(() => createPublishFormState(project));
-  const [episodePublishForms, setEpisodePublishForms] = useState<Record<string, PublishFormState>>(() =>
-    Object.fromEntries(initialEpisodes.map((episode) => [episode.id, createPublishFormState(episode)]))
+  const [episodePublishForms, setEpisodePublishForms] = useState<Record<string, EpisodePublishFormState>>(() =>
+    Object.fromEntries(initialEpisodes.map((episode) => [episode.id, createEpisodePublishFormState(episode)]))
   );
   const [extraForms, setExtraForms] = useState<Record<string, ExtraFormState>>(() =>
     Object.fromEntries(initialExtras.map((extra) => [extra.id, createExtraFormState(extra)]))
@@ -315,6 +358,21 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
     };
   }
 
+  function buildEpisodePublishPayload(form: EpisodePublishFormState) {
+    const releaseAt = form.premiereType === "SCHEDULED" ? toUtcIsoFromLocalDateTime(form.releaseAt) : null;
+    const premiereStartsAt = form.isPremiereEnabled ? toUtcIsoFromLocalDateTime(form.premiereStartsAt) : null;
+    const premiereEndsAt = form.isPremiereEnabled ? toUtcIsoFromLocalDateTime(form.premiereEndsAt) : null;
+
+    return {
+      premiereType: form.isPremiereEnabled ? "SCHEDULED" : form.premiereType,
+      releaseAt: form.isPremiereEnabled ? premiereStartsAt : releaseAt,
+      isPremiereEnabled: form.isPremiereEnabled,
+      premiereStartsAt,
+      premiereEndsAt,
+      chatEnabled: form.isPremiereEnabled ? form.chatEnabled : false
+    };
+  }
+
   async function handlePublishProject() {
     setPublishTarget("project");
     setError(null);
@@ -359,11 +417,15 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
-        buildPublishPayload(
+        buildEpisodePublishPayload(
           episodePublishForms[episodeId] ??
-            createPublishFormState({
+            createEpisodePublishFormState({
               premiereType: "IMMEDIATE",
-              releaseAt: null
+              releaseAt: null,
+              isPremiereEnabled: false,
+              premiereStartsAt: null,
+              premiereEndsAt: null,
+              chatEnabled: false
             })
         )
       )
@@ -391,7 +453,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
     );
     setEpisodePublishForms((current) => ({
       ...current,
-      [publishedEpisode.id]: createPublishFormState(publishedEpisode)
+      [publishedEpisode.id]: createEpisodePublishFormState(publishedEpisode)
     }));
     setNotice(
       publishedEpisode.premiereType === "SCHEDULED"
@@ -805,12 +867,12 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                     <label className="space-y-2">
                       <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Premiere</span>
                       <select
-                        value={(episodePublishForms[episode.id] ?? createPublishFormState(episode)).premiereType}
+                        value={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).premiereType}
                         onChange={(event) =>
                           setEpisodePublishForms((current) => ({
                             ...current,
                             [episode.id]: {
-                              ...(current[episode.id] ?? createPublishFormState(episode)),
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
                               premiereType: event.target.value as PublishFormState["premiereType"]
                             }
                           }))
@@ -825,25 +887,109 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                       <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Release Time</span>
                       <input
                         type="datetime-local"
-                        value={(episodePublishForms[episode.id] ?? createPublishFormState(episode)).releaseAt}
+                        value={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).releaseAt}
                         onChange={(event) =>
                           setEpisodePublishForms((current) => ({
                             ...current,
                             [episode.id]: {
-                              ...(current[episode.id] ?? createPublishFormState(episode)),
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
                               releaseAt: event.target.value
                             }
                           }))
                         }
                         disabled={
-                          (episodePublishForms[episode.id] ?? createPublishFormState(episode)).premiereType !==
+                          (episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).premiereType !==
                           "SCHEDULED"
                         }
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
                       />
                     </label>
                   </div>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">{formatReleaseState(episode)}</p>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+                      <input
+                        type="checkbox"
+                        checked={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              isPremiereEnabled: event.target.checked,
+                              premiereType: event.target.checked
+                                ? "SCHEDULED"
+                                : (current[episode.id] ?? createEpisodePublishFormState(episode)).premiereType
+                            }
+                          }))
+                        }
+                      />
+                      Enable live premiere shell on Watch
+                    </label>
+                    <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+                      <input
+                        type="checkbox"
+                        checked={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).chatEnabled}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              chatEnabled: event.target.checked
+                            }
+                          }))
+                        }
+                        disabled={!(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                      />
+                      Show party chat link
+                    </label>
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className="space-y-2">
+                      <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Premiere Starts</span>
+                      <input
+                        type="datetime-local"
+                        value={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).premiereStartsAt}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              premiereStartsAt: event.target.value,
+                              releaseAt: event.target.value
+                            }
+                          }))
+                        }
+                        disabled={!(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                        className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </label>
+                    <label className="space-y-2">
+                      <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">
+                        Premiere Ends (Optional)
+                      </span>
+                      <input
+                        type="datetime-local"
+                        value={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).premiereEndsAt}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              premiereEndsAt: event.target.value
+                            }
+                          }))
+                        }
+                        disabled={!(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                        className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </label>
+                  </div>
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
+                    {formatReleaseState(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode))}
+                  </p>
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-100/70">
+                    {formatEpisodePremiereState(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode))}
+                  </p>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-3">

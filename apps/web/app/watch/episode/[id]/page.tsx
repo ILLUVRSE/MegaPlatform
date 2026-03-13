@@ -6,6 +6,7 @@ import { prisma } from "@illuvrse/db";
 import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { canAccessPremiereEpisodePage, getLivePremiereStatus } from "@/lib/livePremiere";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
 import { canAccessShow } from "@/lib/watchEntitlements";
@@ -34,7 +35,10 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
     notFound();
   }
 
-  if (!evaluateReleaseSchedule(episode, now).isReleased) {
+  const releaseState = evaluateReleaseSchedule(episode, now);
+  const premiereStatus = getLivePremiereStatus(episode, now);
+
+  if (!releaseState.isReleased && !canAccessPremiereEpisodePage(episode, now)) {
     notFound();
   }
 
@@ -108,6 +112,13 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
         initialPositionSec={initialPositionSec}
         enableDbProgress={enableDbProgress}
         access={access}
+        premiere={{
+          state: premiereStatus.state,
+          isPremiereEnabled: premiereStatus.isPremiereEnabled,
+          startsAt: premiereStatus.startsAt?.toISOString() ?? null,
+          effectiveEndsAt: premiereStatus.effectiveEndsAt?.toISOString() ?? null,
+          chatEnabled: premiereStatus.chatEnabled
+        }}
       />
     </div>
   );

@@ -10,7 +10,11 @@ import { publishShowEpisodeToWatch, StudioPublishError } from "@/lib/studioShowP
 
 const publishEpisodeSchema = z.object({
   premiereType: z.enum(PREMIERE_TYPES).optional(),
-  releaseAt: z.string().datetime().nullable().optional()
+  releaseAt: z.string().datetime().nullable().optional(),
+  isPremiereEnabled: z.boolean().optional(),
+  premiereStartsAt: z.string().datetime().nullable().optional(),
+  premiereEndsAt: z.string().datetime().nullable().optional(),
+  chatEnabled: z.boolean().optional()
 });
 
 export async function POST(
@@ -44,7 +48,11 @@ export async function POST(
   try {
     const result = await publishShowEpisodeToWatch(episode.id, {
       premiereType: parsed.data.premiereType,
-      releaseAt: parsed.data.releaseAt ? new Date(parsed.data.releaseAt) : null
+      releaseAt: parsed.data.releaseAt ? new Date(parsed.data.releaseAt) : null,
+      isPremiereEnabled: parsed.data.isPremiereEnabled,
+      premiereStartsAt: parsed.data.premiereStartsAt ? new Date(parsed.data.premiereStartsAt) : null,
+      premiereEndsAt: parsed.data.premiereEndsAt ? new Date(parsed.data.premiereEndsAt) : null,
+      chatEnabled: parsed.data.chatEnabled
     });
     return NextResponse.json(result);
   } catch (error) {

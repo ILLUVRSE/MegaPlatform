@@ -28,6 +28,10 @@ export type ShowEpisodeRecord = {
   publishedAt: Date | null;
   premiereType: PremiereType;
   releaseAt: Date | null;
+  isPremiereEnabled: boolean;
+  premiereStartsAt: Date | null;
+  premiereEndsAt: Date | null;
+  chatEnabled: boolean;
   templateType: ShowEpisodeTemplateType;
   createdAt: Date;
   updatedAt: Date;
@@ -79,6 +83,10 @@ export async function listShowEpisodes(showProjectId: string) {
       "publishedAt",
       "premiereType"::text AS "premiereType",
       "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -106,6 +114,10 @@ export async function findShowEpisodeById(id: string) {
       episode."publishedAt",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
+      episode."isPremiereEnabled",
+      episode."premiereStartsAt",
+      episode."premiereEndsAt",
+      episode."chatEnabled",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -134,6 +146,10 @@ export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slu
       episode."publishedAt",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
+      episode."isPremiereEnabled",
+      episode."premiereStartsAt",
+      episode."premiereEndsAt",
+      episode."chatEnabled",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -238,6 +254,10 @@ export async function createShowEpisode(input: {
       "publishedAt",
       "premiereType",
       "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
       "templateType",
       "createdAt",
       "updatedAt"
@@ -255,6 +275,10 @@ export async function createShowEpisode(input: {
       NULL,
       'IMMEDIATE'::"PremiereType",
       NULL,
+      false,
+      NULL,
+      NULL,
+      false,
       ${input.templateType}::"ShowEpisodeTemplateType",
       NOW(),
       NOW()
@@ -272,6 +296,10 @@ export async function createShowEpisode(input: {
       "publishedAt",
       "premiereType"::text AS "premiereType",
       "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -331,6 +359,10 @@ export async function updateShowEpisode(
       "publishedAt",
       "premiereType"::text AS "premiereType",
       "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"

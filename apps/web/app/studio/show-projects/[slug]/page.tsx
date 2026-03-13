@@ -51,6 +51,8 @@ export default async function StudioShowProjectDetailPage({
     ...episode,
     publishedAt: episode.publishedAt?.toISOString() ?? null,
     releaseAt: episode.releaseAt?.toISOString() ?? null,
+    premiereStartsAt: episode.premiereStartsAt?.toISOString() ?? null,
+    premiereEndsAt: episode.premiereEndsAt?.toISOString() ?? null,
     createdAt: episode.createdAt.toISOString(),
     updatedAt: episode.updatedAt.toISOString()
   }));

@@ -15,6 +15,8 @@ type Episode = {
   lengthSeconds: number;
   assetUrl: string;
   chapterMarkers: WatchChapterMarker[];
+  premiereState?: "VOD" | "UPCOMING" | "LIVE";
+  premiereStartsAt?: string | null;
 };
 
 type Season = {

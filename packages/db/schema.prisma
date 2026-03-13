@@ -91,6 +91,10 @@ model Episode {
   assetUrl      String
   premiereType  PremiereType    @default(IMMEDIATE)
   releaseAt     DateTime?
+  isPremiereEnabled Boolean     @default(false)
+  premiereStartsAt DateTime?
+  premiereEndsAt   DateTime?
+  chatEnabled      Boolean      @default(false)
   season        Season          @relation(fields: [seasonId], references: [id])
   playlistItems PlaylistItem[]
   livePrograms  LiveProgram[]
@@ -100,6 +104,7 @@ model Episode {
   updatedAt     DateTime        @updatedAt
 
   @@index([premiereType, releaseAt])
+  @@index([isPremiereEnabled, premiereStartsAt])
 }
 
 model Party {
@@ -442,6 +447,10 @@ model ShowEpisode {
   publishedAt    DateTime?
   premiereType   PremiereType            @default(IMMEDIATE)
   releaseAt      DateTime?
+  isPremiereEnabled Boolean              @default(false)
+  premiereStartsAt DateTime?
+  premiereEndsAt   DateTime?
+  chatEnabled      Boolean               @default(false)
   templateType   ShowEpisodeTemplateType
   createdAt      DateTime                @default(now())
   updatedAt      DateTime                @updatedAt
@@ -454,6 +463,7 @@ model ShowEpisode {
   @@index([showProjectId, status, updatedAt])
   @@index([showProjectId, status, publishedAt])
   @@index([showProjectId, status, premiereType, releaseAt])
+  @@index([showProjectId, status, isPremiereEnabled, premiereStartsAt])
 }
 
 model ShowScene {

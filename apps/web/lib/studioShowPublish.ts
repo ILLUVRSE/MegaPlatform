@@ -36,6 +36,10 @@ type PublishableShowEpisode = {
   publishedAt: Date | null;
   premiereType: PremiereType;
   releaseAt: Date | null;
+  isPremiereEnabled: boolean;
+  premiereStartsAt: Date | null;
+  premiereEndsAt: Date | null;
+  chatEnabled: boolean;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
 };
 
@@ -72,6 +76,17 @@ function requirePublishTitle(title: string | null | undefined, kind: "show" | "e
 type PublishScheduleInput = {
   premiereType?: PremiereType | null;
   releaseAt?: Date | null;
+  isPremiereEnabled?: boolean | null;
+  premiereStartsAt?: Date | null;
+  premiereEndsAt?: Date | null;
+  chatEnabled?: boolean | null;
+};
+
+type PremiereMetadata = {
+  isPremiereEnabled: boolean;
+  premiereStartsAt: Date | null;
+  premiereEndsAt: Date | null;
+  chatEnabled: boolean;
 };
 
 function buildSeasonTitle(project: PublishableShowProject, seasonNumber: number) {
@@ -121,6 +136,10 @@ async function findEpisodeForPublish(
       episode."publishedAt",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
+      episode."isPremiereEnabled",
+      episode."premiereStartsAt",
+      episode."premiereEndsAt",
+      episode."chatEnabled",
       episode."templateType"::text AS "templateType"
     FROM "ShowEpisode" episode
     WHERE episode."id" = ${id}
@@ -172,6 +191,10 @@ async function markEpisodePublished(
     publishedAt: Date;
     premiereType: PremiereType;
     releaseAt: Date | null;
+    isPremiereEnabled: boolean;
+    premiereStartsAt: Date | null;
+    premiereEndsAt: Date | null;
+    chatEnabled: boolean;
   }
 ) {
   const rows = await tx.$queryRaw<PublishableShowEpisode[]>`
@@ -181,6 +204,10 @@ async function markEpisodePublished(
       "publishedAt" = COALESCE("publishedAt", ${input.publishedAt}),
       "premiereType" = ${input.premiereType}::"PremiereType",
       "releaseAt" = ${input.releaseAt},
+      "isPremiereEnabled" = ${input.isPremiereEnabled},
+      "premiereStartsAt" = ${input.premiereStartsAt},
+      "premiereEndsAt" = ${input.premiereEndsAt},
+      "chatEnabled" = ${input.chatEnabled},
       "updatedAt" = NOW()
     WHERE "id" = ${episodeId}
     RETURNING
@@ -196,6 +223,10 @@ async function markEpisodePublished(
       "publishedAt",
       "premiereType"::text AS "premiereType",
       "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
       "templateType"::text AS "templateType"
   `;
 
@@ -344,6 +375,10 @@ async function upsertWatchEpisode(
         "lengthSeconds" = ${lengthSeconds},
         "premiereType" = ${episode.premiereType}::"PremiereType",
         "releaseAt" = ${episode.releaseAt},
+        "isPremiereEnabled" = ${episode.isPremiereEnabled},
+        "premiereStartsAt" = ${episode.premiereStartsAt},
+        "premiereEndsAt" = ${episode.premiereEndsAt},
+        "chatEnabled" = ${episode.chatEnabled},
         "assetUrl" = CASE
           WHEN "assetUrl" = '' THEN ${WATCH_PLACEHOLDER_ASSET_URL}
           ELSE "assetUrl"
@@ -367,6 +402,10 @@ async function upsertWatchEpisode(
       "assetUrl",
       "premiereType",
       "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
       "createdAt",
       "updatedAt"
     )
@@ -380,6 +419,10 @@ async function upsertWatchEpisode(
       ${WATCH_PLACEHOLDER_ASSET_URL},
       ${episode.premiereType}::"PremiereType",
       ${episode.releaseAt},
+      ${episode.isPremiereEnabled},
+      ${episode.premiereStartsAt},
+      ${episode.premiereEndsAt},
+      ${episode.chatEnabled},
       NOW(),
       NOW()
     )
@@ -387,6 +430,45 @@ async function upsertWatchEpisode(
   `;
 
   return insertedRows[0] ?? null;
+}
+
+function normalizePremiereMetadata(input: PublishScheduleInput, now = new Date()): PremiereMetadata {
+  const isPremiereEnabled = Boolean(input.isPremiereEnabled);
+  const premiereStartsAt = input.premiereStartsAt ?? null;
+  const premiereEndsAt = input.premiereEndsAt ?? null;
+  const chatEnabled = isPremiereEnabled && Boolean(input.chatEnabled);
+
+  if (!isPremiereEnabled) {
+    return {
+      isPremiereEnabled: false,
+      premiereStartsAt: null,
+      premiereEndsAt: null,
+      chatEnabled: false
+    };
+  }
+
+  if (!premiereStartsAt || Number.isNaN(premiereStartsAt.getTime())) {
+    throw new StudioPublishError("Premiere start time is required when live premiere is enabled.", 400);
+  }
+
+  if (premiereStartsAt.getTime() <= now.getTime()) {
+    throw new StudioPublishError("Premiere start time must be in the future.", 400);
+  }
+
+  if (premiereEndsAt && Number.isNaN(premiereEndsAt.getTime())) {
+    throw new StudioPublishError("Premiere end time is invalid.", 400);
+  }
+
+  if (premiereEndsAt && premiereEndsAt.getTime() <= premiereStartsAt.getTime()) {
+    throw new StudioPublishError("Premiere end time must be after the premiere start time.", 400);
+  }
+
+  return {
+    isPremiereEnabled,
+    premiereStartsAt,
+    premiereEndsAt,
+    chatEnabled
+  };
 }
 
 export async function publishShowProjectToWatch(slugOrId: string, publishInput?: PublishScheduleInput) {
@@ -455,11 +537,20 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
 
     const publishedAt = currentEpisode.publishedAt ?? new Date();
     let releaseSchedule;
+    let premiereMetadata;
     try {
       releaseSchedule = normalizeReleaseSchedule(
         publishInput ?? {
           premiereType: currentEpisode.premiereType,
           releaseAt: currentEpisode.releaseAt
+        }
+      );
+      premiereMetadata = normalizePremiereMetadata(
+        publishInput ?? {
+          isPremiereEnabled: currentEpisode.isPremiereEnabled,
+          premiereStartsAt: currentEpisode.premiereStartsAt,
+          premiereEndsAt: currentEpisode.premiereEndsAt,
+          chatEnabled: currentEpisode.chatEnabled
         }
       );
     } catch (error) {
@@ -480,7 +571,10 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
 
     const episode = await markEpisodePublished(tx, currentEpisode.id, {
       publishedAt,
-      ...releaseSchedule
+      premiereType:
+        premiereMetadata.isPremiereEnabled || releaseSchedule.premiereType === "SCHEDULED" ? "SCHEDULED" : "IMMEDIATE",
+      releaseAt: premiereMetadata.isPremiereEnabled ? premiereMetadata.premiereStartsAt : releaseSchedule.releaseAt,
+      ...premiereMetadata
     });
     if (!episode) {
       throw new StudioPublishError("Unable to publish episode.", 500);

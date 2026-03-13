@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@illuvrse/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { canAccessPremiereEpisodePage, getLivePremiereStatus } from "@/lib/livePremiere";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
 import { canAccessShow } from "@/lib/watchEntitlements";
@@ -36,7 +37,10 @@ export async function GET(
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
-  if (!evaluateReleaseSchedule(episode, now).isReleased) {
+  const releaseState = evaluateReleaseSchedule(episode, now);
+  const premiereStatus = getLivePremiereStatus(episode, now);
+
+  if (!releaseState.isReleased && !canAccessPremiereEpisodePage(episode, now)) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
@@ -81,8 +85,15 @@ export async function GET(
       title: episode.title,
       description: episode.description,
       lengthSeconds: episode.lengthSeconds,
-      assetUrl: access.allowed ? episode.assetUrl : null,
-      chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
+      assetUrl: access.allowed && premiereStatus.state === "VOD" ? episode.assetUrl : null,
+      chapterMarkers: premiereStatus.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+      premiere: {
+        state: premiereStatus.state,
+        isPremiereEnabled: premiereStatus.isPremiereEnabled,
+        startsAt: premiereStatus.startsAt?.toISOString() ?? null,
+        effectiveEndsAt: premiereStatus.effectiveEndsAt?.toISOString() ?? null,
+        chatEnabled: premiereStatus.chatEnabled
+      }
     },
     season: {
       id: episode.season.id,

@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@illuvrse/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { getLivePremiereStatus } from "@/lib/livePremiere";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
@@ -65,7 +66,11 @@ export async function GET(
     show.slug,
     show.seasons.flatMap((season) =>
       season.episodes
-        .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
+        .filter((episode) => {
+          const releaseState = evaluateReleaseSchedule(episode, now);
+          const premiereState = getLivePremiereStatus(episode, now);
+          return releaseState.isReleased || premiereState.isPremiereEnabled;
+        })
         .map((episode, index) => ({
           id: episode.id,
           title: episode.title,
@@ -78,15 +83,30 @@ export async function GET(
   const episodesBySeason: Record<string, unknown> = {};
   show.seasons.forEach((season) => {
     episodesBySeason[season.id] = season.episodes
-      .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
-      .map((episode) => ({
-        id: episode.id,
-        title: episode.title,
-        description: episode.description,
-        lengthSeconds: episode.lengthSeconds,
-        assetUrl: access.allowed ? episode.assetUrl : null,
-        chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
-      }));
+      .filter((episode) => {
+        const releaseState = evaluateReleaseSchedule(episode, now);
+        const premiereState = getLivePremiereStatus(episode, now);
+        return releaseState.isReleased || premiereState.isPremiereEnabled;
+      })
+      .map((episode) => {
+        const premiereState = getLivePremiereStatus(episode, now);
+
+        return {
+          id: episode.id,
+          title: episode.title,
+          description: episode.description,
+          lengthSeconds: episode.lengthSeconds,
+          assetUrl: access.allowed && premiereState.state === "VOD" ? episode.assetUrl : null,
+          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+          premiere: {
+            state: premiereState.state,
+            isPremiereEnabled: premiereState.isPremiereEnabled,
+            startsAt: premiereState.startsAt?.toISOString() ?? null,
+            effectiveEndsAt: premiereState.effectiveEndsAt?.toISOString() ?? null,
+            chatEnabled: premiereState.chatEnabled
+          }
+        };
+      });
   });
 
   const showRelease = evaluateReleaseSchedule(show, now);

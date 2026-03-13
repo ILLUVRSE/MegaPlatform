@@ -6,6 +6,7 @@ import { prisma } from "@illuvrse/db";
 import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { getLivePremiereStatus } from "@/lib/livePremiere";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
@@ -20,6 +21,8 @@ type ShowEpisode = {
   lengthSeconds: number;
   assetUrl: string;
   chapterMarkers: WatchChapterMarker[];
+  premiereState: "VOD" | "UPCOMING" | "LIVE";
+  premiereStartsAt: string | null;
 };
 
 type ShowExtra = {
@@ -57,7 +60,11 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
     show.slug,
     show.seasons.flatMap((season) =>
       season.episodes
-        .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
+        .filter((episode) => {
+          const releaseState = evaluateReleaseSchedule(episode, now);
+          const premiereState = getLivePremiereStatus(episode, now);
+          return releaseState.isReleased || premiereState.isPremiereEnabled;
+        })
         .map((episode, index) => ({
           id: episode.id,
           title: episode.title,
@@ -69,15 +76,25 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
 
   const episodesBySeason = show.seasons.reduce((acc, season) => {
     acc[season.id] = season.episodes
-      .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
-      .map((episode) => ({
-        id: episode.id,
-        title: episode.title,
-        description: episode.description,
-        lengthSeconds: episode.lengthSeconds,
-        assetUrl: episode.assetUrl,
-        chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
-      }));
+      .filter((episode) => {
+        const releaseState = evaluateReleaseSchedule(episode, now);
+        const premiereState = getLivePremiereStatus(episode, now);
+        return releaseState.isReleased || premiereState.isPremiereEnabled;
+      })
+      .map((episode) => {
+        const premiereState = getLivePremiereStatus(episode, now);
+
+        return {
+          id: episode.id,
+          title: episode.title,
+          description: episode.description,
+          lengthSeconds: episode.lengthSeconds,
+          assetUrl: episode.assetUrl,
+          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+          premiereState: premiereState.state,
+          premiereStartsAt: premiereState.startsAt?.toISOString() ?? null
+        };
+      });
     return acc;
   }, {} as Record<string, ShowEpisode[]>);
   const showRelease = evaluateReleaseSchedule(show, now);
