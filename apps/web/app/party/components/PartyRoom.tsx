@@ -6,6 +6,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import SeatGrid, { type SeatSnapshot } from "./SeatGrid";
 import PartyPlayer, { type PlaybackSnapshot } from "./PartyPlayer";
 import VoicePanel from "./VoicePanel";
@@ -24,6 +25,7 @@ type PartyMeta = {
   name: string;
   seatCount: number;
   hostId: string;
+  playlist?: Array<{ episodeId: string | null }>;
   playback: PlaybackSnapshot;
 };
 
@@ -33,6 +35,7 @@ type PartyRoomProps = {
 };
 
 export default function PartyRoom({ code, isHost }: PartyRoomProps) {
+  const pathname = usePathname();
   const [meta, setMeta] = useState<PartyMeta | null>(null);
   const [seatStates, setSeatStates] = useState<Record<string, SeatSnapshot>>({});
   const [playback, setPlayback] = useState<PlaybackSnapshot>({
@@ -87,6 +90,24 @@ export default function PartyRoom({ code, isHost }: PartyRoomProps) {
       mounted = false;
     };
   }, [code]);
+
+  useEffect(() => {
+    if (!meta) return;
+    const activePlaylistItem = meta.playlist?.[playback.currentIndex] ?? null;
+    void fetch("/api/platform/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        currentModule: "party",
+        partyCode: code,
+        href: pathname,
+        action: isHost ? "host-room" : "join-room",
+        state: {
+          partyEpisodeId: activePlaylistItem?.episodeId ?? null
+        }
+      })
+    }).catch(() => {});
+  }, [code, isHost, meta, pathname, playback.currentIndex]);
 
   useEffect(() => {
     if (!code) return;

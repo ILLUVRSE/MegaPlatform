@@ -3,12 +3,15 @@
  */
 import Link from "next/link";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import { buildWatchToPartyHref } from "@/lib/journeyBridge";
+import type { PartyLaunchMode } from "@/lib/watchParty";
 import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
 import ChapterMarkers from "../../components/ChapterMarkers";
 
 export default function EpisodeRow({
   episode,
-  index
+  index,
+  showSlug
 }: {
   episode: {
     id: string;
@@ -33,8 +36,11 @@ export default function EpisodeRow({
     chapterMarkers: WatchChapterMarker[];
     premiereState?: "VOD" | "UPCOMING" | "LIVE";
     premiereStartsAt?: string | null;
+    partyEnabled: boolean;
+    defaultPartyMode: PartyLaunchMode;
   };
   index: number;
+  showSlug: string;
 }) {
   const minutes = Math.round(episode.lengthSeconds / 60);
 
@@ -71,6 +77,11 @@ export default function EpisodeRow({
             </div>
           </div>
           <p className="text-xs text-white/60 line-clamp-2">{episode.description}</p>
+          {episode.partyEnabled ? (
+            <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-100/70">
+              Party ready · {episode.defaultPartyMode.toLowerCase()} default
+            </p>
+          ) : null}
           {!episode.access.allowed ? (
             <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/70">
               {episode.access.reason === "entitlement_required"
@@ -87,6 +98,18 @@ export default function EpisodeRow({
           ) : null}
         </div>
       </Link>
+      {episode.partyEnabled ? (
+        <Link
+          href={buildWatchToPartyHref({
+            showSlug,
+            episodeId: episode.id,
+            partyMode: episode.defaultPartyMode
+          })}
+          className="inline-flex rounded-full border border-cyan-300/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-100"
+        >
+          Start Party
+        </Link>
+      ) : null}
       {episode.premiereState === "VOD" ? (
         <ChapterMarkers markers={episode.chapterMarkers} title="Chapter markers" compact />
       ) : null}

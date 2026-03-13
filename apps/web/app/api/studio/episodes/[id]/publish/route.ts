@@ -8,6 +8,7 @@ import { findShowEpisodeById } from "@/lib/showEpisodes";
 import { getShowProjectAccessForUser } from "@/lib/showProjects";
 import { getShowEpisodePublishQc } from "@/lib/studioPublishQc";
 import { publishShowEpisodeToWatch, StudioPublishError } from "@/lib/studioShowPublish";
+import { PARTY_LAUNCH_MODES } from "@/lib/watchParty";
 import { WATCH_MONETIZATION_MODES } from "@/lib/watchMonetization";
 
 const publishEpisodeSchema = z.object({
@@ -23,7 +24,9 @@ const publishEpisodeSchema = z.object({
   isPremiereEnabled: z.boolean().optional(),
   premiereStartsAt: z.string().datetime().nullable().optional(),
   premiereEndsAt: z.string().datetime().nullable().optional(),
-  chatEnabled: z.boolean().optional()
+  chatEnabled: z.boolean().optional(),
+  partyEnabled: z.boolean().optional(),
+  defaultPartyMode: z.enum(PARTY_LAUNCH_MODES).optional()
 });
 
 export async function POST(
@@ -69,7 +72,9 @@ export async function POST(
       isPremiereEnabled: parsed.data.isPremiereEnabled,
       premiereStartsAt: parsed.data.premiereStartsAt ? new Date(parsed.data.premiereStartsAt) : null,
       premiereEndsAt: parsed.data.premiereEndsAt ? new Date(parsed.data.premiereEndsAt) : null,
-      chatEnabled: parsed.data.chatEnabled
+      chatEnabled: parsed.data.chatEnabled,
+      partyEnabled: parsed.data.partyEnabled,
+      defaultPartyMode: parsed.data.defaultPartyMode
     });
     return NextResponse.json(result);
   } catch (error) {

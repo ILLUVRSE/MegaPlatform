@@ -11,6 +11,7 @@ import {
   type StudioPublishQcResult
 } from "@/lib/studioPublishQc";
 import { WATCH_PLACEHOLDER_ASSET_URL } from "@/lib/studioWatchPublishConfig";
+import type { PartyLaunchMode } from "@/lib/watchParty";
 import { WATCH_MONETIZATION_MODES, type WatchMonetizationMode } from "@/lib/watchMonetization";
 const DEFAULT_EPISODE_RUNTIME_SECONDS = 60;
 
@@ -59,6 +60,8 @@ type PublishableShowEpisode = {
   premiereStartsAt: Date | null;
   premiereEndsAt: Date | null;
   chatEnabled: boolean;
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
 };
 
@@ -102,6 +105,8 @@ type PublishScheduleInput = {
   premiereStartsAt?: Date | null;
   premiereEndsAt?: Date | null;
   chatEnabled?: boolean | null;
+  partyEnabled?: boolean | null;
+  defaultPartyMode?: PartyLaunchMode | null;
 };
 
 type PremiereMetadata = {
@@ -189,6 +194,8 @@ async function findEpisodeForPublish(
       episode."premiereStartsAt",
       episode."premiereEndsAt",
       episode."chatEnabled",
+      episode."partyEnabled",
+      episode."defaultPartyMode"::text AS "defaultPartyMode",
       episode."templateType"::text AS "templateType"
     FROM "ShowEpisode" episode
     WHERE episode."id" = ${id}
@@ -272,6 +279,8 @@ async function markEpisodePublished(
     premiereStartsAt: Date | null;
     premiereEndsAt: Date | null;
     chatEnabled: boolean;
+    partyEnabled: boolean;
+    defaultPartyMode: PartyLaunchMode;
   }
 ) {
   const rows = await tx.$queryRaw<PublishableShowEpisode[]>`
@@ -292,6 +301,8 @@ async function markEpisodePublished(
       "premiereStartsAt" = ${input.premiereStartsAt},
       "premiereEndsAt" = ${input.premiereEndsAt},
       "chatEnabled" = ${input.chatEnabled},
+      "partyEnabled" = ${input.partyEnabled},
+      "defaultPartyMode" = ${input.defaultPartyMode}::"PartyLaunchMode",
       "updatedAt" = NOW()
     WHERE "id" = ${episodeId}
     RETURNING
@@ -318,6 +329,8 @@ async function markEpisodePublished(
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode"::text AS "defaultPartyMode",
       "templateType"::text AS "templateType"
   `;
 
@@ -504,6 +517,8 @@ async function upsertWatchEpisode(
         "premiereStartsAt" = ${episode.premiereStartsAt},
         "premiereEndsAt" = ${episode.premiereEndsAt},
         "chatEnabled" = ${episode.chatEnabled},
+        "partyEnabled" = ${episode.partyEnabled},
+        "defaultPartyMode" = ${episode.defaultPartyMode}::"PartyLaunchMode",
         "assetUrl" = CASE
           WHEN "assetUrl" = '' THEN ${WATCH_PLACEHOLDER_ASSET_URL}
           ELSE "assetUrl"
@@ -538,6 +553,8 @@ async function upsertWatchEpisode(
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode",
       "createdAt",
       "updatedAt"
     )
@@ -562,6 +579,8 @@ async function upsertWatchEpisode(
       ${episode.premiereStartsAt},
       ${episode.premiereEndsAt},
       ${episode.chatEnabled},
+      ${episode.partyEnabled},
+      ${episode.defaultPartyMode}::"PartyLaunchMode",
       NOW(),
       NOW()
     )
@@ -782,6 +801,8 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
       premiereType:
         premiereMetadata.isPremiereEnabled || releaseSchedule.premiereType === "SCHEDULED" ? "SCHEDULED" : "IMMEDIATE",
       releaseAt: premiereMetadata.isPremiereEnabled ? premiereMetadata.premiereStartsAt : releaseSchedule.releaseAt,
+      partyEnabled: publishInput?.partyEnabled ?? currentEpisode.partyEnabled,
+      defaultPartyMode: publishInput?.defaultPartyMode ?? currentEpisode.defaultPartyMode,
       ...premiereMetadata
     });
     if (!episode) {

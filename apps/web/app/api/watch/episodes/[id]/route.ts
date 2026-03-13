@@ -19,6 +19,7 @@ import {
 } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMonetization";
+import type { PartyLaunchMode } from "@/lib/watchParty";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 
@@ -43,20 +44,24 @@ export async function GET(
   if (!episode) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
+  const watchEpisode = episode as typeof episode & {
+    partyEnabled: boolean;
+    defaultPartyMode: PartyLaunchMode;
+  };
   const [showRightsById, episodeRightsById] = await Promise.all([
-    listWatchShowRights([episode.season.show.id]),
-    listWatchEpisodeRights([episode.id, ...episode.season.episodes.map((item) => item.id)])
+    listWatchShowRights([watchEpisode.season.show.id]),
+    listWatchEpisodeRights([watchEpisode.id, ...watchEpisode.season.episodes.map((item) => item.id)])
   ]);
-  const showRights = showRightsById.get(episode.season.show.id);
-  const currentEpisodeRights = episodeRightsById.get(episode.id);
+  const showRights = showRightsById.get(watchEpisode.season.show.id);
+  const currentEpisodeRights = episodeRightsById.get(watchEpisode.id);
   if (!showRights || !currentEpisodeRights) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
-  const releaseState = evaluateReleaseSchedule(episode, now);
-  const premiereStatus = getLivePremiereStatus(episode, now);
+  const releaseState = evaluateReleaseSchedule(watchEpisode, now);
+  const premiereStatus = getLivePremiereStatus(watchEpisode, now);
 
-  if (!releaseState.isReleased && !canAccessPremiereEpisodePage(episode, now)) {
+  if (!releaseState.isReleased && !canAccessPremiereEpisodePage(watchEpisode, now)) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
@@ -76,8 +81,8 @@ export async function GET(
   const requestRegion = resolveWatchRequestRegion(request.headers);
   const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
   const episodeMonetization = resolveWatchMonetization(
-    readWatchMonetization(episode.season.show),
-    readWatchMonetization(episode)
+    readWatchMonetization(watchEpisode.season.show),
+    readWatchMonetization(watchEpisode)
   );
   const viewer = {
     userId: session?.user?.id ?? null,
@@ -90,11 +95,11 @@ export async function GET(
   const access = canAccessShow(
     {
       monetizationMode: episodeMonetization.monetizationMode,
-      maturityRating: episode.season.show.maturityRating,
+      maturityRating: watchEpisode.season.show.maturityRating,
       visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
       allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,
       requiresEntitlement: currentEpisodeRights.requiresEntitlement || showRights.requiresEntitlement,
-      entitlementKeys: buildEpisodeEntitlementKeys(episode, episode.season.show)
+      entitlementKeys: buildEpisodeEntitlementKeys(watchEpisode, watchEpisode.season.show)
     },
     viewer,
     { allowUnlisted: true }
@@ -104,22 +109,22 @@ export async function GET(
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
-  const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
-  const nextEpisodes = episode.season.episodes.filter((item) => {
+  const episodeNumber = watchEpisode.season.episodes.findIndex((item) => item.id === watchEpisode.id) + 1;
+  const nextEpisodes = watchEpisode.season.episodes.filter((item) => {
     const nextAccess = canAccessShow(
       {
         monetizationMode: resolveWatchMonetization(
-          readWatchMonetization(episode.season.show),
-          readWatchMonetization(item)
-        ).monetizationMode,
-        maturityRating: episode.season.show.maturityRating,
+            readWatchMonetization(watchEpisode.season.show),
+            readWatchMonetization(item)
+          ).monetizationMode,
+        maturityRating: watchEpisode.season.show.maturityRating,
         visibility: mergeWatchVisibility(showRights.visibility, episodeRightsById.get(item.id)?.visibility ?? "PUBLIC"),
         allowedRegions:
           (episodeRightsById.get(item.id)?.allowedRegions?.length ?? 0) > 0
             ? episodeRightsById.get(item.id)?.allowedRegions
             : showRights.allowedRegions,
         requiresEntitlement: Boolean(episodeRightsById.get(item.id)?.requiresEntitlement) || showRights.requiresEntitlement,
-        entitlementKeys: buildEpisodeEntitlementKeys(item, episode.season.show)
+        entitlementKeys: buildEpisodeEntitlementKeys(item, watchEpisode.season.show)
       },
       viewer
     );
@@ -131,27 +136,29 @@ export async function GET(
       evaluateReleaseSchedule(item, now).isReleased
     );
   });
-  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
+  const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(watchEpisode.season.show.slug, [
     {
-      id: episode.id,
-      title: episode.title,
-      seasonNumber: episode.season.number,
+      id: watchEpisode.id,
+      title: watchEpisode.title,
+      seasonNumber: watchEpisode.season.number,
       episodeNumber: episodeNumber > 0 ? episodeNumber : null
     }
   ]);
 
   return NextResponse.json({
     episode: {
-      id: episode.id,
-      title: episode.title,
-      description: episode.description,
-      lengthSeconds: episode.lengthSeconds,
-      assetUrl: access.allowed && premiereStatus.state === "VOD" ? episode.assetUrl : null,
+      id: watchEpisode.id,
+      title: watchEpisode.title,
+      description: watchEpisode.description,
+      lengthSeconds: watchEpisode.lengthSeconds,
+      assetUrl: access.allowed && premiereStatus.state === "VOD" ? watchEpisode.assetUrl : null,
       monetizationMode: episodeMonetization.monetizationMode,
       priceCents: episodeMonetization.priceCents,
       currency: episodeMonetization.currency,
       adsEnabled: episodeMonetization.adsEnabled,
-      chapterMarkers: premiereStatus.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+      partyEnabled: watchEpisode.partyEnabled,
+      defaultPartyMode: watchEpisode.defaultPartyMode,
+      chapterMarkers: premiereStatus.state === "VOD" ? chapterMarkersByEpisode[watchEpisode.id] ?? [] : [],
       premiere: {
         state: premiereStatus.state,
         isPremiereEnabled: premiereStatus.isPremiereEnabled,
@@ -161,22 +168,22 @@ export async function GET(
       }
     },
     season: {
-      id: episode.season.id,
-      number: episode.season.number,
-      title: episode.season.title
+      id: watchEpisode.season.id,
+      number: watchEpisode.season.number,
+      title: watchEpisode.season.title
     },
     show: {
-      id: episode.season.show.id,
-      title: episode.season.show.title,
-      slug: episode.season.show.slug,
-      description: episode.season.show.description,
-      posterUrl: episode.season.show.posterUrl,
-      heroUrl: episode.season.show.heroUrl,
-      monetizationMode: resolveWatchMonetization(readWatchMonetization(episode.season.show)).monetizationMode,
-      priceCents: resolveWatchMonetization(readWatchMonetization(episode.season.show)).priceCents,
-      currency: resolveWatchMonetization(readWatchMonetization(episode.season.show)).currency,
-      adsEnabled: resolveWatchMonetization(readWatchMonetization(episode.season.show)).adsEnabled,
-      maturityRating: episode.season.show.maturityRating
+      id: watchEpisode.season.show.id,
+      title: watchEpisode.season.show.title,
+      slug: watchEpisode.season.show.slug,
+      description: watchEpisode.season.show.description,
+      posterUrl: watchEpisode.season.show.posterUrl,
+      heroUrl: watchEpisode.season.show.heroUrl,
+      monetizationMode: resolveWatchMonetization(readWatchMonetization(watchEpisode.season.show)).monetizationMode,
+      priceCents: resolveWatchMonetization(readWatchMonetization(watchEpisode.season.show)).priceCents,
+      currency: resolveWatchMonetization(readWatchMonetization(watchEpisode.season.show)).currency,
+      adsEnabled: resolveWatchMonetization(readWatchMonetization(watchEpisode.season.show)).adsEnabled,
+      maturityRating: watchEpisode.season.show.maturityRating
     },
     access,
     nextEpisodes: nextEpisodes.map((item) => ({
@@ -185,15 +192,15 @@ export async function GET(
       description: item.description,
       lengthSeconds: item.lengthSeconds,
       monetizationMode: resolveWatchMonetization(
-        readWatchMonetization(episode.season.show),
+        readWatchMonetization(watchEpisode.season.show),
         readWatchMonetization(item)
       ).monetizationMode,
       priceCents: resolveWatchMonetization(
-        readWatchMonetization(episode.season.show),
+        readWatchMonetization(watchEpisode.season.show),
         readWatchMonetization(item)
       ).priceCents,
       currency: resolveWatchMonetization(
-        readWatchMonetization(episode.season.show),
+        readWatchMonetization(watchEpisode.season.show),
         readWatchMonetization(item)
       ).currency
     }))

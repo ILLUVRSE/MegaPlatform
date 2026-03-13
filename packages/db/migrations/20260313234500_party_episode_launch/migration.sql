@@ -1,0 +1,9 @@
+CREATE TYPE "PartyLaunchMode" AS ENUM ('STANDARD', 'COMMENTARY');
+
+ALTER TABLE "Episode"
+ADD COLUMN "partyEnabled" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "defaultPartyMode" "PartyLaunchMode" NOT NULL DEFAULT 'STANDARD';
+
+ALTER TABLE "ShowEpisode"
+ADD COLUMN "partyEnabled" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "defaultPartyMode" "PartyLaunchMode" NOT NULL DEFAULT 'STANDARD';

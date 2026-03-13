@@ -20,6 +20,7 @@ import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMone
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import EpisodePlayer from "../components/EpisodePlayer";
+import type { PartyLaunchMode } from "@/lib/watchParty";
 
 function parseStartTime(value: string | string[] | undefined) {
   const raw = Array.isArray(value) ? value[0] : value;
@@ -33,15 +34,19 @@ function parseStartTime(value: string | string[] | undefined) {
   return parsed;
 }
 
+function parseStringParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] ?? null : value ?? null;
+}
+
 export default async function WatchEpisodePage({
   params,
   searchParams
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ t?: string | string[] }>;
+  searchParams: Promise<{ t?: string | string[]; partyCode?: string | string[] }>;
 }) {
   const { id } = await params;
-  const { t } = await searchParams;
+  const { t, partyCode } = await searchParams;
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const headerStore = await headers();
@@ -64,7 +69,11 @@ export default async function WatchEpisodePage({
   if (!episode) {
     notFound();
   }
-  const watchEpisode = episode as typeof episode & { sourceShowEpisodeId: string | null };
+  const watchEpisode = episode as typeof episode & {
+    sourceShowEpisodeId: string | null;
+    partyEnabled: boolean;
+    defaultPartyMode: PartyLaunchMode;
+  };
   const [showRightsById, episodeRightsById] = await Promise.all([
     listWatchShowRights([episode.season.show.id]),
     listWatchEpisodeRights([episode.id, ...episode.season.episodes.map((item) => item.id)])
@@ -191,7 +200,9 @@ export default async function WatchEpisodePage({
           monetizationMode: episodeMonetization.monetizationMode,
           priceCents: episodeMonetization.priceCents,
           currency: episodeMonetization.currency,
-          adsEnabled: episodeMonetization.adsEnabled
+          adsEnabled: episodeMonetization.adsEnabled,
+          partyEnabled: watchEpisode.partyEnabled,
+          defaultPartyMode: watchEpisode.defaultPartyMode
         }}
         show={{
           title: episode.season.show.title,
@@ -240,6 +251,7 @@ export default async function WatchEpisodePage({
           title: extra.title,
           payload: extra.payload
         }))}
+        routePartyCode={parseStringParam(partyCode)}
       />
     </div>
   );

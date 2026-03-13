@@ -5,10 +5,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import VideoPlayer from "@/components/VideoPlayer";
 import { buildWatchToPartyHref } from "@/lib/journeyBridge";
+import {
+  buildEpisodePartyRoomName,
+  getPartyLaunchModeLabel,
+  type PartyLaunchMode
+} from "@/lib/watchParty";
 import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import { setHostForCode } from "@/app/party/lib/storage";
 import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
 import ChapterMarkers from "../../components/ChapterMarkers";
 import PosterCard from "../../components/PosterCard";
@@ -25,7 +32,8 @@ export default function EpisodePlayer({
   enableDbProgress,
   access,
   premiere,
-  interactiveExtras
+  interactiveExtras,
+  routePartyCode
 }: {
   episode: {
     id: string;
@@ -37,6 +45,8 @@ export default function EpisodePlayer({
     priceCents: number | null;
     currency: string | null;
     adsEnabled: boolean;
+    partyEnabled: boolean;
+    defaultPartyMode: PartyLaunchMode;
   };
   show: {
     title: string;
@@ -86,10 +96,15 @@ export default function EpisodePlayer({
     title: string;
     payload: Record<string, unknown>;
   }>;
+  routePartyCode?: string | null;
 }) {
+  const router = useRouter();
   const [progress, setProgress] = useState<{ currentTime: number; duration: number } | null>(null);
   const [localResumeSec, setLocalResumeSec] = useState<number | null>(null);
   const [timeRemainingLabel, setTimeRemainingLabel] = useState<string | null>(null);
+  const [sessionPartyCode, setSessionPartyCode] = useState<string | null>(null);
+  const [creatingParty, setCreatingParty] = useState(false);
+  const [partyError, setPartyError] = useState<string | null>(null);
   const lastSavedAt = useRef(0);
   const resumeSec = initialPositionSec ?? localResumeSec;
   const shouldShowVodPlayer = premiere.state === "VOD";
@@ -109,6 +124,26 @@ export default function EpisodePlayer({
       // ignore
     }
   }, [episode.id, enableDbProgress]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadSession = async () => {
+      const response = await fetch("/api/platform/session");
+      if (!response.ok) return;
+      const payload = (await response.json().catch(() => null)) as
+        | { session?: { partyCode?: string | null; state?: Record<string, unknown> | null } }
+        | null;
+      if (cancelled) return;
+      const activeEpisodeId =
+        typeof payload?.session?.state?.partyEpisodeId === "string" ? payload.session.state.partyEpisodeId : null;
+      setSessionPartyCode(activeEpisodeId === episode.id ? payload?.session?.partyCode ?? null : null);
+    };
+
+    void loadSession();
+    return () => {
+      cancelled = true;
+    };
+  }, [episode.id]);
 
   useEffect(() => {
     if (!progress) return;
@@ -185,11 +220,73 @@ export default function EpisodePlayer({
     return () => window.clearInterval(interval);
   }, [premiere.startsAt, premiere.state]);
 
-  const premierePartyHref = buildWatchToPartyHref({ showSlug: show.slug, episodeId: episode.id });
+  const premierePartyHref = buildWatchToPartyHref({
+    showSlug: show.slug,
+    episodeId: episode.id,
+    partyMode: episode.defaultPartyMode
+  });
   const premiereEndsAtText = premiere.effectiveEndsAt ? new Date(premiere.effectiveEndsAt).toLocaleString() : null;
+  const joinPartyCode = routePartyCode ?? sessionPartyCode;
+
+  const handleStartParty = async () => {
+    setCreatingParty(true);
+    setPartyError(null);
+
+    const response = await fetch("/api/party/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: buildEpisodePartyRoomName(episode.title, episode.defaultPartyMode),
+        seatCount: 12,
+        isPublic: true,
+        episodeId: episode.id
+      })
+    });
+
+    const payload = (await response.json().catch(() => ({}))) as {
+      code?: string;
+      partyId?: string;
+      hostId?: string;
+      error?: string;
+    };
+
+    setCreatingParty(false);
+
+    if (!response.ok || !payload.code || !payload.hostId) {
+      setPartyError(payload.error ?? "Unable to start party.");
+      return;
+    }
+
+    setHostForCode(payload.code, payload.hostId);
+    router.push(`/party/${payload.code}/host`);
+  };
 
   return (
     <div className="space-y-6">
+      {episode.partyEnabled ? (
+        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-3">
+          <button
+            type="button"
+            onClick={handleStartParty}
+            disabled={creatingParty}
+            className="rounded-full bg-cyan-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 disabled:opacity-60"
+          >
+            {creatingParty ? "Starting..." : "Start Party"}
+          </button>
+          {joinPartyCode ? (
+            <Link
+              href={`/party/${joinPartyCode}`}
+              className="rounded-full border border-cyan-200/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100"
+            >
+              Join Party
+            </Link>
+          ) : null}
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-100/75">
+            {getPartyLaunchModeLabel(episode.defaultPartyMode)} launch default
+          </p>
+          {partyError ? <p className="text-sm text-rose-200">{partyError}</p> : null}
+        </div>
+      ) : null}
       {shouldShowVodPlayer && access.allowed && episode.assetUrl ? (
         <VideoPlayer
           src={episode.assetUrl}

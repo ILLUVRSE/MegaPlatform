@@ -6,6 +6,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import type { PartyLaunchMode } from "@/lib/watchParty";
 import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
 import EpisodeRow from "./EpisodeRow";
 
@@ -33,6 +34,8 @@ type Episode = {
   chapterMarkers: WatchChapterMarker[];
   premiereState?: "VOD" | "UPCOMING" | "LIVE";
   premiereStartsAt?: string | null;
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
 };
 
 type Season = {
@@ -231,7 +234,7 @@ export default function ShowDetailClient({
           <p className="text-sm text-white/60">No episodes available yet.</p>
         ) : (
           episodes.map((episode, index) => (
-            <EpisodeRow key={episode.id} episode={episode} index={index + 1} />
+            <EpisodeRow key={episode.id} episode={episode} index={index + 1} showSlug={show.slug} />
           ))
         )}
       </div>

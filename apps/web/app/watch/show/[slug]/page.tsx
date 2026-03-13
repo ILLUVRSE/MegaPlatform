@@ -20,6 +20,7 @@ import {
 import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMonetization";
+import type { PartyLaunchMode } from "@/lib/watchParty";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
@@ -39,6 +40,8 @@ type ShowEpisode = {
   chapterMarkers: WatchChapterMarker[];
   premiereState: "VOD" | "UPCOMING" | "LIVE";
   premiereStartsAt: string | null;
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
 };
 
 type ShowExtra = {
@@ -206,24 +209,30 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
         );
       })
       .map((episode) => {
+        const watchEpisode = episode as typeof episode & {
+          partyEnabled: boolean;
+          defaultPartyMode: PartyLaunchMode;
+        };
         const premiereState = getLivePremiereStatus(episode, now);
         const monetization = resolveWatchMonetization(readWatchMonetization(show), readWatchMonetization(episode));
         const episodeAccess = episodeAccessById.get(episode.id) ?? { allowed: true, reason: "ok" as const };
 
         return {
-          id: episode.id,
-          title: episode.title,
-          description: episode.description,
-          lengthSeconds: episode.lengthSeconds,
-          assetUrl: episodeAccess.allowed ? episode.assetUrl : "",
+          id: watchEpisode.id,
+          title: watchEpisode.title,
+          description: watchEpisode.description,
+          lengthSeconds: watchEpisode.lengthSeconds,
+          assetUrl: episodeAccess.allowed ? watchEpisode.assetUrl : "",
           monetizationMode: monetization.monetizationMode,
           priceCents: monetization.priceCents,
           currency: monetization.currency,
           adsEnabled: monetization.adsEnabled,
           access: episodeAccess,
-          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[watchEpisode.id] ?? [] : [],
           premiereState: premiereState.state,
-          premiereStartsAt: premiereState.startsAt?.toISOString() ?? null
+          premiereStartsAt: premiereState.startsAt?.toISOString() ?? null,
+          partyEnabled: watchEpisode.partyEnabled,
+          defaultPartyMode: watchEpisode.defaultPartyMode
         };
       });
 

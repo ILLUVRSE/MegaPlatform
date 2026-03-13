@@ -156,22 +156,28 @@ export async function GET(
         );
       })
       .map((episode) => {
+        const watchEpisode = episode as typeof episode & {
+          partyEnabled: boolean;
+          defaultPartyMode: "STANDARD" | "COMMENTARY";
+        };
         const premiereState = getLivePremiereStatus(episode, now);
         const monetization = resolveWatchMonetization(readWatchMonetization(show), readWatchMonetization(episode));
         const episodeAccess = episodeAccessById.get(episode.id) ?? { allowed: true, reason: "ok" as const };
 
         return {
-          id: episode.id,
-          title: episode.title,
-          description: episode.description,
-          lengthSeconds: episode.lengthSeconds,
-          assetUrl: episodeAccess.allowed && premiereState.state === "VOD" ? episode.assetUrl : null,
+          id: watchEpisode.id,
+          title: watchEpisode.title,
+          description: watchEpisode.description,
+          lengthSeconds: watchEpisode.lengthSeconds,
+          assetUrl: episodeAccess.allowed && premiereState.state === "VOD" ? watchEpisode.assetUrl : null,
           monetizationMode: monetization.monetizationMode,
           priceCents: monetization.priceCents,
           currency: monetization.currency,
           adsEnabled: monetization.adsEnabled,
+          partyEnabled: watchEpisode.partyEnabled,
+          defaultPartyMode: watchEpisode.defaultPartyMode,
           access: episodeAccess,
-          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
+          chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[watchEpisode.id] ?? [] : [],
           premiere: {
             state: premiereState.state,
             isPremiereEnabled: premiereState.isPremiereEnabled,

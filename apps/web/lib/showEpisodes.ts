@@ -3,6 +3,7 @@ import { Prisma, prisma } from "@illuvrse/db";
 import { z } from "zod";
 import type { PremiereType } from "@/lib/releaseScheduling";
 import type { ShowProjectFormat, ShowProjectRecord } from "@/lib/showProjects";
+import { PARTY_LAUNCH_MODES, type PartyLaunchMode } from "@/lib/watchParty";
 import type { WatchMonetizationMode } from "@/lib/watchMonetization";
 
 export const SHOW_EPISODE_STATUSES = ["DRAFT", "READY", "PUBLISHED"] as const;
@@ -39,6 +40,8 @@ export type ShowEpisodeRecord = {
   premiereStartsAt: Date | null;
   premiereEndsAt: Date | null;
   chatEnabled: boolean;
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
   templateType: ShowEpisodeTemplateType;
   createdAt: Date;
   updatedAt: Date;
@@ -57,7 +60,9 @@ export const updateShowEpisodeSchema = z
     title: z.string().trim().min(1).max(160).optional(),
     synopsis: z.string().trim().max(4000).nullable().optional(),
     runtimeSeconds: z.number().int().min(1).max(60 * 60 * 8).nullable().optional(),
-    status: z.enum(SHOW_EPISODE_STATUSES).optional()
+    status: z.enum(SHOW_EPISODE_STATUSES).optional(),
+    partyEnabled: z.boolean().optional(),
+    defaultPartyMode: z.enum(PARTY_LAUNCH_MODES).optional()
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: "At least one field is required"
@@ -97,6 +102,8 @@ export async function listShowEpisodes(showProjectId: string) {
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode"::text AS "defaultPartyMode",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -135,6 +142,8 @@ export async function findShowEpisodeById(id: string) {
       episode."premiereStartsAt",
       episode."premiereEndsAt",
       episode."chatEnabled",
+      episode."partyEnabled",
+      episode."defaultPartyMode"::text AS "defaultPartyMode",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -174,6 +183,8 @@ export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slu
       episode."premiereStartsAt",
       episode."premiereEndsAt",
       episode."chatEnabled",
+      episode."partyEnabled",
+      episode."defaultPartyMode"::text AS "defaultPartyMode",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -285,6 +296,8 @@ export async function createShowEpisode(input: {
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode",
       "templateType",
       "createdAt",
       "updatedAt"
@@ -309,6 +322,8 @@ export async function createShowEpisode(input: {
       NULL,
       NULL,
       false,
+      false,
+      'STANDARD'::"PartyLaunchMode",
       ${input.templateType}::"ShowEpisodeTemplateType",
       NOW(),
       NOW()
@@ -337,6 +352,8 @@ export async function createShowEpisode(input: {
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode"::text AS "defaultPartyMode",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -377,6 +394,8 @@ export async function createShowEpisodeFromTemplate(input: {
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode",
       "templateType",
       "createdAt",
       "updatedAt"
@@ -401,6 +420,8 @@ export async function createShowEpisodeFromTemplate(input: {
       NULL,
       NULL,
       false,
+      false,
+      'STANDARD'::"PartyLaunchMode",
       ${input.templateType}::"ShowEpisodeTemplateType",
       NOW(),
       NOW()
@@ -429,6 +450,8 @@ export async function createShowEpisodeFromTemplate(input: {
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode"::text AS "defaultPartyMode",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -468,6 +491,12 @@ export async function updateShowEpisode(
   if (input.status !== undefined) {
     assignments.push(Prisma.sql`"status" = ${input.status}::"ShowEpisodeStatus"`);
   }
+  if (input.partyEnabled !== undefined) {
+    assignments.push(Prisma.sql`"partyEnabled" = ${input.partyEnabled}`);
+  }
+  if (input.defaultPartyMode !== undefined) {
+    assignments.push(Prisma.sql`"defaultPartyMode" = ${input.defaultPartyMode}::"PartyLaunchMode"`);
+  }
 
   assignments.push(Prisma.sql`"updatedAt" = NOW()`);
 
@@ -499,6 +528,8 @@ export async function updateShowEpisode(
       "premiereStartsAt",
       "premiereEndsAt",
       "chatEnabled",
+      "partyEnabled",
+      "defaultPartyMode"::text AS "defaultPartyMode",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"

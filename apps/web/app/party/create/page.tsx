@@ -5,19 +5,57 @@
  */
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import PlaylistEditor, { type PlaylistDraftItem } from "../components/PlaylistEditor";
 import { setHostForCode } from "../lib/storage";
+import { buildEpisodePartyRoomName, type PartyLaunchMode } from "@/lib/watchParty";
 
 export default function PartyCreatePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [name, setName] = useState("Weekend Watch");
   const [seatCount, setSeatCount] = useState(12);
   const [isPublic, setIsPublic] = useState(true);
   const [playlistItems, setPlaylistItems] = useState<PlaylistDraftItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const episodeId = searchParams.get("episodeId");
+    const partyMode = (searchParams.get("partyMode") as PartyLaunchMode | null) ?? "STANDARD";
+    if (!episodeId) {
+      return;
+    }
+
+    let cancelled = false;
+    const loadEpisode = async () => {
+      const response = await fetch(`/api/watch/episodes/${episodeId}`);
+      if (!response.ok) return;
+      const payload = (await response.json().catch(() => null)) as
+        | {
+            episode?: { id: string; title: string; assetUrl: string | null };
+          }
+        | null;
+      if (cancelled || !payload?.episode?.id || !payload.episode.assetUrl) {
+        return;
+      }
+
+      setName(buildEpisodePartyRoomName(payload.episode.title, partyMode));
+      setPlaylistItems([
+        {
+          episodeId: payload.episode.id,
+          title: payload.episode.title,
+          assetUrl: payload.episode.assetUrl
+        }
+      ]);
+    };
+
+    void loadEpisode();
+    return () => {
+      cancelled = true;
+    };
+  }, [searchParams]);
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,7 +68,8 @@ export default function PartyCreatePage() {
       body: JSON.stringify({
         name,
         seatCount,
-        isPublic
+        isPublic,
+        episodeId: playlistItems[0]?.episodeId
       })
     });
 

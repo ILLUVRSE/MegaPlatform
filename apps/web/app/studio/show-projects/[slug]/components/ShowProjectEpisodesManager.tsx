@@ -10,6 +10,11 @@ import {
   WATCH_MONETIZATION_MODES,
   type WatchMonetizationMode
 } from "@/lib/watchMonetization";
+import {
+  PARTY_LAUNCH_MODES,
+  getPartyLaunchModeLabel,
+  type PartyLaunchMode
+} from "@/lib/watchParty";
 
 type ProjectRecord = {
   id: string;
@@ -61,6 +66,8 @@ type EpisodeRecord = {
   premiereStartsAt: string | null;
   premiereEndsAt: string | null;
   chatEnabled: boolean;
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
   createdAt: string;
   updatedAt: string;
@@ -126,6 +133,8 @@ type EpisodePublishFormState = PublishFormState & {
   premiereStartsAt: string;
   premiereEndsAt: string;
   chatEnabled: boolean;
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
 };
 
 type ExtraFormState = {
@@ -320,6 +329,8 @@ function createEpisodePublishFormState(
     | "premiereStartsAt"
     | "premiereEndsAt"
     | "chatEnabled"
+    | "partyEnabled"
+    | "defaultPartyMode"
   >
 ) {
   return {
@@ -335,7 +346,9 @@ function createEpisodePublishFormState(
     isPremiereEnabled: record.isPremiereEnabled,
     premiereStartsAt: toLocalDateTimeInput(record.premiereStartsAt),
     premiereEndsAt: toLocalDateTimeInput(record.premiereEndsAt),
-    chatEnabled: record.chatEnabled
+    chatEnabled: record.chatEnabled,
+    partyEnabled: record.partyEnabled,
+    defaultPartyMode: record.defaultPartyMode
   } satisfies EpisodePublishFormState;
 }
 
@@ -373,6 +386,16 @@ function formatEpisodePremiereState(record: {
   const endText = record.premiereEndsAt ? ` until ${new Date(record.premiereEndsAt).toLocaleString()}` : "";
   const chatText = record.chatEnabled ? " · Party chat link enabled" : " · Chat stub hidden";
   return `Premiere starts ${startText}${endText}${chatText}`;
+}
+
+function formatEpisodePartyState(record: {
+  partyEnabled: boolean;
+  defaultPartyMode: PartyLaunchMode;
+}) {
+  if (!record.partyEnabled) {
+    return "Party launch disabled";
+  }
+  return `Party launch enabled · ${getPartyLaunchModeLabel(record.defaultPartyMode)} default`;
 }
 
 function buildExtraPayload(form: ExtraFormState) {
@@ -596,7 +619,9 @@ export default function ShowProjectEpisodesManager({
       isPremiereEnabled: form.isPremiereEnabled,
       premiereStartsAt,
       premiereEndsAt,
-      chatEnabled: form.isPremiereEnabled ? form.chatEnabled : false
+      chatEnabled: form.isPremiereEnabled ? form.chatEnabled : false,
+      partyEnabled: form.partyEnabled,
+      defaultPartyMode: form.defaultPartyMode
     };
   }
 
@@ -728,7 +753,9 @@ export default function ShowProjectEpisodesManager({
               isPremiereEnabled: false,
               premiereStartsAt: null,
               premiereEndsAt: null,
-              chatEnabled: false
+              chatEnabled: false,
+              partyEnabled: false,
+              defaultPartyMode: "STANDARD"
             })
         )
       )
@@ -1607,6 +1634,58 @@ export default function ShowProjectEpisodesManager({
                       />
                       Show party chat link
                     </label>
+                    <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+                      <input
+                        type="checkbox"
+                        checked={(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).partyEnabled}
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              partyEnabled: event.target.checked
+                            }
+                          }))
+                        }
+                        disabled={!canPublish}
+                      />
+                      Allow Watch to launch Party rooms from this episode
+                    </label>
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className="space-y-2">
+                      <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Default Party Mode</span>
+                      <select
+                        value={
+                          (episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).defaultPartyMode
+                        }
+                        onChange={(event) =>
+                          setEpisodePublishForms((current) => ({
+                            ...current,
+                            [episode.id]: {
+                              ...(current[episode.id] ?? createEpisodePublishFormState(episode)),
+                              defaultPartyMode: event.target.value as PartyLaunchMode
+                            }
+                          }))
+                        }
+                        disabled={
+                          !canPublish ||
+                          !(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).partyEnabled
+                        }
+                        className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {PARTY_LAUNCH_MODES.map((mode) => (
+                          <option key={mode} value={mode}>
+                            {getPartyLaunchModeLabel(mode)}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <div className="flex items-end">
+                      <p className="text-xs text-white/55">
+                        Commentary mode only changes the launch default. Party playback infrastructure stays unchanged.
+                      </p>
+                    </div>
                   </div>
                   <div className="grid gap-3 md:grid-cols-2">
                     <label className="space-y-2">
@@ -1660,6 +1739,9 @@ export default function ShowProjectEpisodesManager({
                   </p>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-100/70">
                     {formatEpisodePremiereState(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode))}
+                  </p>
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-100/70">
+                    {formatEpisodePartyState(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode))}
                   </p>
                 </div>
 
