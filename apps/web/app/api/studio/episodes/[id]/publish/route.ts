@@ -8,11 +8,16 @@ import { findShowEpisodeById } from "@/lib/showEpisodes";
 import { getShowProjectAccessForUser } from "@/lib/showProjects";
 import { getShowEpisodePublishQc } from "@/lib/studioPublishQc";
 import { publishShowEpisodeToWatch, StudioPublishError } from "@/lib/studioShowPublish";
+import { WATCH_MONETIZATION_MODES } from "@/lib/watchMonetization";
 
 const publishEpisodeSchema = z.object({
   visibility: z.enum(["PUBLIC", "PRIVATE", "UNLISTED"]).optional(),
   allowedRegions: z.array(z.string().trim().min(2)).nullable().optional(),
   requiresEntitlement: z.boolean().optional(),
+  monetizationMode: z.enum(WATCH_MONETIZATION_MODES).optional(),
+  priceCents: z.number().int().min(0).nullable().optional(),
+  currency: z.string().trim().min(3).max(3).nullable().optional(),
+  adsEnabled: z.boolean().optional(),
   premiereType: z.enum(PREMIERE_TYPES).optional(),
   releaseAt: z.string().datetime().nullable().optional(),
   isPremiereEnabled: z.boolean().optional(),
@@ -55,6 +60,10 @@ export async function POST(
       visibility: parsed.data.visibility,
       allowedRegions: parsed.data.allowedRegions ?? null,
       requiresEntitlement: parsed.data.requiresEntitlement,
+      monetizationMode: parsed.data.monetizationMode,
+      priceCents: parsed.data.priceCents,
+      currency: parsed.data.currency ?? null,
+      adsEnabled: parsed.data.adsEnabled,
       premiereType: parsed.data.premiereType,
       releaseAt: parsed.data.releaseAt ? new Date(parsed.data.releaseAt) : null,
       isPremiereEnabled: parsed.data.isPremiereEnabled,

@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { Prisma, prisma } from "@illuvrse/db";
 import type { Principal } from "@/lib/authz";
 import type { PremiereType } from "@/lib/releaseScheduling";
+import type { WatchMonetizationMode } from "@/lib/watchMonetization";
 
 export const SHOW_PROJECT_COLLABORATOR_ROLES = ["OWNER", "EDITOR", "WRITER", "PRODUCER", "VIEWER"] as const;
 
@@ -28,6 +29,10 @@ export type ShowProjectRecord = {
   visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   ownerId: string;
@@ -85,6 +90,10 @@ function selectShowProjectFields(alias?: string) {
     ${table}"visibility"::text AS "visibility",
     ${table}"allowedRegions",
     ${table}"requiresEntitlement",
+    ${table}"monetizationMode"::text AS "monetizationMode",
+    ${table}"priceCents",
+    ${table}"currency",
+    ${table}"adsEnabled",
     ${table}"premiereType"::text AS "premiereType",
     ${table}"releaseAt",
     ${table}"ownerId",

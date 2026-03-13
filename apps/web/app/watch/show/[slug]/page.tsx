@@ -19,6 +19,7 @@ import {
 } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
+import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMonetization";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
@@ -30,6 +31,11 @@ type ShowEpisode = {
   description?: string | null;
   lengthSeconds: number;
   assetUrl: string;
+  monetizationMode: "FREE" | "PREMIUM" | "TICKETED";
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
+  access: WatchAccessDecision;
   chapterMarkers: WatchChapterMarker[];
   premiereState: "VOD" | "UPCOMING" | "LIVE";
   premiereStartsAt: string | null;
@@ -108,6 +114,7 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
   }
 
   const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
+  const showMonetization = resolveWatchMonetization(readWatchMonetization(show));
   const viewer = {
     userId: session?.user?.id ?? null,
     role: session?.user?.role ?? null,
@@ -118,7 +125,7 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
 
   const access = canAccessShow(
     {
-      isPremium: show.isPremium,
+      monetizationMode: showMonetization.monetizationMode,
       maturityRating: show.maturityRating,
       visibility: showRights.visibility,
       allowedRegions: showRights.allowedRegions,
@@ -145,7 +152,7 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
         episode.id,
         canAccessShow(
           {
-            isPremium: show.isPremium,
+            monetizationMode: resolveWatchMonetization(readWatchMonetization(show), readWatchMonetization(episode)).monetizationMode,
             maturityRating: show.maturityRating,
             visibility: mergeWatchVisibility(showRights.visibility, episodeRights.visibility),
             allowedRegions: episodeRights.allowedRegions.length > 0 ? episodeRights.allowedRegions : showRights.allowedRegions,
@@ -200,13 +207,20 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
       })
       .map((episode) => {
         const premiereState = getLivePremiereStatus(episode, now);
+        const monetization = resolveWatchMonetization(readWatchMonetization(show), readWatchMonetization(episode));
+        const episodeAccess = episodeAccessById.get(episode.id) ?? { allowed: true, reason: "ok" as const };
 
         return {
           id: episode.id,
           title: episode.title,
           description: episode.description,
           lengthSeconds: episode.lengthSeconds,
-          assetUrl: episode.assetUrl,
+          assetUrl: episodeAccess.allowed ? episode.assetUrl : "",
+          monetizationMode: monetization.monetizationMode,
+          priceCents: monetization.priceCents,
+          currency: monetization.currency,
+          adsEnabled: monetization.adsEnabled,
+          access: episodeAccess,
           chapterMarkers: premiereState.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
           premiereState: premiereState.state,
           premiereStartsAt: premiereState.startsAt?.toISOString() ?? null
@@ -247,13 +261,15 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
         show={{
           id: show.id,
           title: show.title,
-          slug: show.slug,
-          description: show.description,
-          posterUrl: show.posterUrl,
-          heroUrl: show.heroUrl,
-          isPremium: show.isPremium,
-          price: show.price
-        }}
+        slug: show.slug,
+        description: show.description,
+        posterUrl: show.posterUrl,
+        heroUrl: show.heroUrl,
+        monetizationMode: showMonetization.monetizationMode,
+        priceCents: showMonetization.priceCents,
+        currency: showMonetization.currency,
+        adsEnabled: showMonetization.adsEnabled
+      }}
         seasons={show.seasons.map((season) => ({
           id: season.id,
           number: season.number,

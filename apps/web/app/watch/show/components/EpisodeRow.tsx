@@ -3,6 +3,7 @@
  */
 import Link from "next/link";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
 import ChapterMarkers from "../../components/ChapterMarkers";
 
 export default function EpisodeRow({
@@ -14,6 +15,21 @@ export default function EpisodeRow({
     title: string;
     description?: string | null;
     lengthSeconds: number;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
+    access: {
+      allowed: boolean;
+      reason:
+        | "ok"
+        | "sign_in_required"
+        | "kids_restricted"
+        | "private"
+        | "unlisted"
+        | "region_restricted"
+        | "entitlement_required";
+    };
     chapterMarkers: WatchChapterMarker[];
     premiereState?: "VOD" | "UPCOMING" | "LIVE";
     premiereStartsAt?: string | null;
@@ -43,10 +59,27 @@ export default function EpisodeRow({
                   {episode.premiereState === "LIVE" ? "Live" : "Premiere"}
                 </span>
               ) : null}
+              {episode.monetizationMode !== "FREE" || episode.adsEnabled ? (
+                <span className="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100">
+                  {getWatchMonetizationLabel(episode)}
+                  {formatWatchPrice(episode.priceCents, episode.currency)
+                    ? ` ${formatWatchPrice(episode.priceCents, episode.currency)}`
+                    : ""}
+                </span>
+              ) : null}
               <span className="text-xs text-white/60">{minutes}m</span>
             </div>
           </div>
           <p className="text-xs text-white/60 line-clamp-2">{episode.description}</p>
+          {!episode.access.allowed ? (
+            <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/70">
+              {episode.access.reason === "entitlement_required"
+                ? "Ticket or entitlement required"
+                : episode.access.reason === "sign_in_required"
+                  ? "Sign in to unlock"
+                  : "Playback locked"}
+            </p>
+          ) : null}
           {episode.premiereState === "UPCOMING" && episode.premiereStartsAt ? (
             <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/70">
               Starts {new Date(episode.premiereStartsAt).toLocaleString()}

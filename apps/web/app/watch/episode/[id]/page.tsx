@@ -16,6 +16,7 @@ import {
 } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
+import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMonetization";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import EpisodePlayer from "../components/EpisodePlayer";
@@ -93,9 +94,13 @@ export default async function WatchEpisodePage({
   }
 
   const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
+  const episodeMonetization = resolveWatchMonetization(
+    readWatchMonetization(episode.season.show),
+    readWatchMonetization(episode)
+  );
   const access = canAccessShow(
     {
-      isPremium: episode.season.show.isPremium,
+      monetizationMode: episodeMonetization.monetizationMode,
       maturityRating: episode.season.show.maturityRating,
       visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
       allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,
@@ -128,7 +133,10 @@ export default async function WatchEpisodePage({
     .filter((item) => {
       const nextAccess = canAccessShow(
         {
-          isPremium: episode.season.show.isPremium,
+          monetizationMode: resolveWatchMonetization(
+            readWatchMonetization(episode.season.show),
+            readWatchMonetization(item)
+          ).monetizationMode,
           maturityRating: episode.season.show.maturityRating,
           visibility: mergeWatchVisibility(
             showRights.visibility,
@@ -179,12 +187,20 @@ export default async function WatchEpisodePage({
           title: episode.title,
           description: episode.description,
           lengthSeconds: episode.lengthSeconds,
-          assetUrl: access.allowed ? episode.assetUrl : ""
+          assetUrl: access.allowed ? episode.assetUrl : "",
+          monetizationMode: episodeMonetization.monetizationMode,
+          priceCents: episodeMonetization.priceCents,
+          currency: episodeMonetization.currency,
+          adsEnabled: episodeMonetization.adsEnabled
         }}
         show={{
           title: episode.season.show.title,
           slug: episode.season.show.slug,
-          posterUrl: episode.season.show.posterUrl
+          posterUrl: episode.season.show.posterUrl,
+          monetizationMode: resolveWatchMonetization(readWatchMonetization(episode.season.show)).monetizationMode,
+          priceCents: resolveWatchMonetization(readWatchMonetization(episode.season.show)).priceCents,
+          currency: resolveWatchMonetization(readWatchMonetization(episode.season.show)).currency,
+          adsEnabled: resolveWatchMonetization(readWatchMonetization(episode.season.show)).adsEnabled
         }}
         season={{
           number: episode.season.number,
@@ -194,7 +210,19 @@ export default async function WatchEpisodePage({
         nextEpisodes={nextEpisodes.map((item) => ({
           id: item.id,
           title: item.title,
-          description: item.description
+          description: item.description,
+          monetizationMode: resolveWatchMonetization(
+            readWatchMonetization(episode.season.show),
+            readWatchMonetization(item)
+          ).monetizationMode,
+          priceCents: resolveWatchMonetization(
+            readWatchMonetization(episode.season.show),
+            readWatchMonetization(item)
+          ).priceCents,
+          currency: resolveWatchMonetization(
+            readWatchMonetization(episode.season.show),
+            readWatchMonetization(item)
+          ).currency
         }))}
         initialPositionSec={initialPositionSec}
         enableDbProgress={enableDbProgress}

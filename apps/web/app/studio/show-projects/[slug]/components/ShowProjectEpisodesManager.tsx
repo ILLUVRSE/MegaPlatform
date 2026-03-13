@@ -4,6 +4,12 @@ import { type FormEvent, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { StudioPublishQcResult } from "@/lib/studioPublishQc";
+import {
+  formatWatchPrice,
+  getWatchMonetizationLabel,
+  WATCH_MONETIZATION_MODES,
+  type WatchMonetizationMode
+} from "@/lib/watchMonetization";
 
 type ProjectRecord = {
   id: string;
@@ -16,6 +22,10 @@ type ProjectRecord = {
   visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string | null;
   ownerId: string;
@@ -41,6 +51,10 @@ type EpisodeRecord = {
   visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string | null;
   isPremiereEnabled: boolean;
@@ -95,7 +109,14 @@ type RightsFormState = {
   requiresEntitlement: boolean;
 };
 
-type PublishFormState = RightsFormState & {
+type MonetizationFormState = {
+  monetizationMode: WatchMonetizationMode;
+  priceCents: string;
+  currency: string;
+  adsEnabled: boolean;
+};
+
+type PublishFormState = RightsFormState & MonetizationFormState & {
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string;
 };
@@ -262,6 +283,10 @@ function createPublishFormState(
     visibility: RightsFormState["visibility"];
     allowedRegions: string[] | null;
     requiresEntitlement: boolean;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
     premiereType: "IMMEDIATE" | "SCHEDULED";
     releaseAt: string | null;
   }
@@ -270,6 +295,10 @@ function createPublishFormState(
     visibility: record.visibility,
     allowedRegions: formatAllowedRegions(record.allowedRegions),
     requiresEntitlement: record.requiresEntitlement,
+    monetizationMode: record.monetizationMode,
+    priceCents: record.priceCents == null ? "" : String(record.priceCents),
+    currency: record.currency ?? "",
+    adsEnabled: record.adsEnabled,
     premiereType: record.premiereType,
     releaseAt: toLocalDateTimeInput(record.releaseAt)
   } satisfies PublishFormState;
@@ -281,6 +310,10 @@ function createEpisodePublishFormState(
     | "visibility"
     | "allowedRegions"
     | "requiresEntitlement"
+    | "monetizationMode"
+    | "priceCents"
+    | "currency"
+    | "adsEnabled"
     | "premiereType"
     | "releaseAt"
     | "isPremiereEnabled"
@@ -293,6 +326,10 @@ function createEpisodePublishFormState(
     visibility: record.visibility,
     allowedRegions: formatAllowedRegions(record.allowedRegions),
     requiresEntitlement: record.requiresEntitlement,
+    monetizationMode: record.monetizationMode,
+    priceCents: record.priceCents == null ? "" : String(record.priceCents),
+    currency: record.currency ?? "",
+    adsEnabled: record.adsEnabled,
     premiereType: record.premiereType,
     releaseAt: toLocalDateTimeInput(record.releaseAt),
     isPremiereEnabled: record.isPremiereEnabled,
@@ -355,10 +392,16 @@ function formatRightsSummary(record: {
   visibility: RightsFormState["visibility"];
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
 }) {
   const regions = record.allowedRegions?.length ? record.allowedRegions.join(", ") : "All regions";
   const entitlement = record.requiresEntitlement ? "Entitlement required" : "No entitlement gate";
-  return `${record.visibility} · ${regions} · ${entitlement}`;
+  const monetization = `${getWatchMonetizationLabel(record)}${formatWatchPrice(record.priceCents, record.currency) ? ` ${formatWatchPrice(record.priceCents, record.currency)}` : ""}`;
+  const ads = record.adsEnabled ? "Ads on" : "Ads off";
+  return `${record.visibility} · ${regions} · ${entitlement} · ${monetization} · ${ads}`;
 }
 
 function qcSummaryTone(qc: StudioPublishQcResult | null) {
@@ -520,10 +563,15 @@ export default function ShowProjectEpisodesManager({
 
   function buildPublishPayload(form: PublishFormState) {
     const releaseAt = form.premiereType === "SCHEDULED" ? toUtcIsoFromLocalDateTime(form.releaseAt) : null;
+    const priceCents = form.monetizationMode === "FREE" || !form.priceCents.trim() ? null : Number(form.priceCents);
     return {
       visibility: form.visibility,
       allowedRegions: parseAllowedRegions(form.allowedRegions),
       requiresEntitlement: form.requiresEntitlement,
+      monetizationMode: form.monetizationMode,
+      priceCents,
+      currency: form.monetizationMode === "FREE" ? null : form.currency.trim().toUpperCase() || null,
+      adsEnabled: form.adsEnabled,
       premiereType: form.premiereType,
       releaseAt
     };
@@ -533,11 +581,16 @@ export default function ShowProjectEpisodesManager({
     const releaseAt = form.premiereType === "SCHEDULED" ? toUtcIsoFromLocalDateTime(form.releaseAt) : null;
     const premiereStartsAt = form.isPremiereEnabled ? toUtcIsoFromLocalDateTime(form.premiereStartsAt) : null;
     const premiereEndsAt = form.isPremiereEnabled ? toUtcIsoFromLocalDateTime(form.premiereEndsAt) : null;
+    const priceCents = form.monetizationMode === "FREE" || !form.priceCents.trim() ? null : Number(form.priceCents);
 
     return {
       visibility: form.visibility,
       allowedRegions: parseAllowedRegions(form.allowedRegions),
       requiresEntitlement: form.requiresEntitlement,
+      monetizationMode: form.monetizationMode,
+      priceCents,
+      currency: form.monetizationMode === "FREE" ? null : form.currency.trim().toUpperCase() || null,
+      adsEnabled: form.adsEnabled,
       premiereType: form.isPremiereEnabled ? "SCHEDULED" : form.premiereType,
       releaseAt: form.isPremiereEnabled ? premiereStartsAt : releaseAt,
       isPremiereEnabled: form.isPremiereEnabled,
@@ -545,6 +598,71 @@ export default function ShowProjectEpisodesManager({
       premiereEndsAt,
       chatEnabled: form.isPremiereEnabled ? form.chatEnabled : false
     };
+  }
+
+  function renderMonetizationControls<T extends MonetizationFormState>(
+    form: T,
+    onChange: (updater: (current: T) => T) => void,
+    disabled: boolean
+  ) {
+    return (
+      <div className="grid gap-3 rounded-[24px] border border-white/10 bg-black/20 p-4 md:grid-cols-2">
+        <label className="space-y-2">
+          <span className="text-xs uppercase tracking-[0.24em] text-white/70">Monetization</span>
+          <select
+            value={form.monetizationMode}
+            onChange={(event) =>
+              onChange((current) => ({
+                ...current,
+                monetizationMode: event.target.value as WatchMonetizationMode,
+                priceCents: event.target.value === "FREE" ? "" : current.priceCents,
+                currency: event.target.value === "FREE" ? "" : current.currency
+              }))
+            }
+            disabled={disabled}
+            className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+          >
+            {WATCH_MONETIZATION_MODES.map((mode) => (
+              <option key={mode} value={mode}>
+                {mode}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+          <input
+            type="checkbox"
+            checked={form.adsEnabled}
+            onChange={(event) => onChange((current) => ({ ...current, adsEnabled: event.target.checked }))}
+            disabled={disabled}
+          />
+          Enable ads metadata on Watch
+        </label>
+        <label className="space-y-2">
+          <span className="text-xs uppercase tracking-[0.24em] text-white/70">Price Cents</span>
+          <input
+            type="number"
+            min={0}
+            value={form.priceCents}
+            onChange={(event) => onChange((current) => ({ ...current, priceCents: event.target.value }))}
+            disabled={disabled || form.monetizationMode === "FREE"}
+            className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+            placeholder="499"
+          />
+        </label>
+        <label className="space-y-2">
+          <span className="text-xs uppercase tracking-[0.24em] text-white/70">Currency</span>
+          <input
+            value={form.currency}
+            onChange={(event) => onChange((current) => ({ ...current, currency: event.target.value.toUpperCase() }))}
+            disabled={disabled || form.monetizationMode === "FREE"}
+            className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+            placeholder="USD"
+            maxLength={3}
+          />
+        </label>
+      </div>
+    );
   }
 
   async function handlePublishProject() {
@@ -601,6 +719,10 @@ export default function ShowProjectEpisodesManager({
               visibility: "PUBLIC",
               allowedRegions: null,
               requiresEntitlement: false,
+              monetizationMode: "FREE",
+              priceCents: null,
+              currency: null,
+              adsEnabled: false,
               premiereType: "IMMEDIATE",
               releaseAt: null,
               isPremiereEnabled: false,
@@ -1027,6 +1149,12 @@ export default function ShowProjectEpisodesManager({
           </label>
         </div>
 
+        {renderMonetizationControls(
+          projectPublishForm,
+          (updater) => setProjectPublishForm((current) => updater(current)),
+          !canPublish
+        )}
+
         <div className="grid gap-3 rounded-[24px] border border-white/10 bg-white/5 p-4 md:grid-cols-[1fr_1fr_auto]">
           <label className="space-y-2">
             <span className="text-xs uppercase tracking-[0.24em] text-white/70">Show Premiere</span>
@@ -1385,6 +1513,15 @@ export default function ShowProjectEpisodesManager({
                     />
                     Require a matching Watch entitlement before playback
                   </label>
+                  {renderMonetizationControls(
+                    episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode),
+                    (updater) =>
+                      setEpisodePublishForms((current) => ({
+                        ...current,
+                        [episode.id]: updater(current[episode.id] ?? createEpisodePublishFormState(episode))
+                      })),
+                    !canPublish
+                  )}
                   <div className="grid gap-3 md:grid-cols-2">
                     <label className="space-y-2">
                       <span className="text-[11px] uppercase tracking-[0.22em] text-white/55">Premiere</span>

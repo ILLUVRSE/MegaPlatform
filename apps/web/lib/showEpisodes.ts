@@ -3,6 +3,7 @@ import { Prisma, prisma } from "@illuvrse/db";
 import { z } from "zod";
 import type { PremiereType } from "@/lib/releaseScheduling";
 import type { ShowProjectFormat, ShowProjectRecord } from "@/lib/showProjects";
+import type { WatchMonetizationMode } from "@/lib/watchMonetization";
 
 export const SHOW_EPISODE_STATUSES = ["DRAFT", "READY", "PUBLISHED"] as const;
 export const SHOW_EPISODE_TEMPLATE_TYPES = [
@@ -28,6 +29,10 @@ export type ShowEpisodeRecord = {
   visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   isPremiereEnabled: boolean;
@@ -82,6 +87,10 @@ export async function listShowEpisodes(showProjectId: string) {
       "visibility"::text AS "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",
@@ -116,6 +125,10 @@ export async function findShowEpisodeById(id: string) {
       episode."visibility"::text AS "visibility",
       episode."allowedRegions",
       episode."requiresEntitlement",
+      episode."monetizationMode"::text AS "monetizationMode",
+      episode."priceCents",
+      episode."currency",
+      episode."adsEnabled",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
       episode."isPremiereEnabled",
@@ -151,6 +164,10 @@ export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slu
       episode."visibility"::text AS "visibility",
       episode."allowedRegions",
       episode."requiresEntitlement",
+      episode."monetizationMode"::text AS "monetizationMode",
+      episode."priceCents",
+      episode."currency",
+      episode."adsEnabled",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
       episode."isPremiereEnabled",
@@ -310,6 +327,10 @@ export async function createShowEpisode(input: {
       "visibility"::text AS "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",
@@ -373,6 +394,13 @@ export async function updateShowEpisode(
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",

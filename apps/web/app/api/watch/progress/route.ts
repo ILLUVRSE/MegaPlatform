@@ -18,6 +18,7 @@ import {
 } from "@/lib/watchEntitlements";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
+import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMonetization";
 
 const progressSchema = z.object({
   episodeId: z.string().min(2),
@@ -111,7 +112,10 @@ export async function POST(request: Request) {
 
   const access = canAccessShow(
     {
-      isPremium: episode.season.show.isPremium,
+      monetizationMode: resolveWatchMonetization(
+        readWatchMonetization(episode.season.show),
+        readWatchMonetization(episode)
+      ).monetizationMode,
       maturityRating: episode.season.show.maturityRating,
       visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
       allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,

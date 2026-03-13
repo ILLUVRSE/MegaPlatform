@@ -1,5 +1,6 @@
 import { prisma } from "@illuvrse/db";
 import { canAccessPremiumContent } from "@/lib/monetizationRules";
+import { isLockedWatchMonetization, type WatchMonetizationMode } from "@/lib/watchMonetization";
 
 export type WatchVisibility = "PUBLIC" | "PRIVATE" | "UNLISTED";
 
@@ -12,7 +13,7 @@ export type WatchViewer = {
 };
 
 export type WatchShowAccessInput = {
-  isPremium: boolean;
+  monetizationMode?: WatchMonetizationMode | null;
   maturityRating: string | null;
   visibility?: WatchVisibility | null;
   allowedRegions?: string[] | null;
@@ -106,7 +107,7 @@ export function canAccessShow(
     return { allowed: false, reason: "region_restricted" };
   }
 
-  if (!isAdmin && input.requiresEntitlement) {
+  if (!isAdmin && (input.requiresEntitlement || input.monetizationMode === "TICKETED")) {
     if (!viewer.userId) {
       return { allowed: false, reason: "sign_in_required" };
     }
@@ -119,7 +120,7 @@ export function canAccessShow(
   }
 
   const premiumDecision = canAccessPremiumContent({
-    isPremium: input.isPremium,
+    isPremium: isLockedWatchMonetization(input.monetizationMode),
     isSignedIn: Boolean(viewer.userId),
     isAdmin
   });

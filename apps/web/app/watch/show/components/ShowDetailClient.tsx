@@ -6,6 +6,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
 import EpisodeRow from "./EpisodeRow";
 
 type Episode = {
@@ -14,6 +15,21 @@ type Episode = {
   description?: string | null;
   lengthSeconds: number;
   assetUrl: string;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
+  access: {
+    allowed: boolean;
+    reason:
+      | "ok"
+      | "sign_in_required"
+      | "kids_restricted"
+      | "private"
+      | "unlisted"
+      | "region_restricted"
+      | "entitlement_required";
+  };
   chapterMarkers: WatchChapterMarker[];
   premiereState?: "VOD" | "UPCOMING" | "LIVE";
   premiereStartsAt?: string | null;
@@ -42,8 +58,10 @@ type ShowDetailClientProps = {
     description?: string | null;
     posterUrl?: string | null;
     heroUrl?: string | null;
-    isPremium?: boolean;
-    price?: number | null;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
   };
   seasons: Season[];
   episodesBySeason: Record<string, Episode[]>;
@@ -129,14 +147,28 @@ export default function ShowDetailClient({
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-wrap gap-2">
+        <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-white/75">
+          {getWatchMonetizationLabel(show)}
+        </span>
+        {formatWatchPrice(show.priceCents, show.currency) ? (
+          <span className="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-cyan-100">
+            {formatWatchPrice(show.priceCents, show.currency)}
+          </span>
+        ) : null}
+      </div>
       {!access.allowed ? (
         <div className="rounded-2xl border border-amber-200/30 bg-amber-200/10 px-4 py-3 text-sm text-amber-100">
           {access.reason === "sign_in_required"
-            ? "Sign in to watch premium episodes on this show."
+            ? show.monetizationMode === "TICKETED"
+              ? "Sign in to unlock this ticketed show."
+              : "Sign in to watch premium episodes on this show."
             : access.reason === "kids_restricted"
               ? "This title is restricted on the selected kids profile."
               : access.reason === "entitlement_required"
-                ? "This show requires a matching entitlement before playback."
+                ? show.monetizationMode === "TICKETED"
+                  ? "This ticketed show requires a matching entitlement before playback."
+                  : "This show requires a matching entitlement before playback."
                 : "This show is not available in your current region."}
         </div>
       ) : null}

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import VideoPlayer from "@/components/VideoPlayer";
 import { buildWatchToPartyHref } from "@/lib/journeyBridge";
+import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
 import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
 import ChapterMarkers from "../../components/ChapterMarkers";
@@ -32,18 +33,33 @@ export default function EpisodePlayer({
     description?: string | null;
     lengthSeconds: number;
     assetUrl: string;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
   };
   show: {
     title: string;
     slug: string;
     posterUrl?: string | null;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
   };
   season: {
     number: number;
     title: string;
   };
   chapterMarkers: WatchChapterMarker[];
-  nextEpisodes: Array<{ id: string; title: string; description?: string | null }>;
+  nextEpisodes: Array<{
+    id: string;
+    title: string;
+    description?: string | null;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+  }>;
   initialPositionSec?: number | null;
   enableDbProgress: boolean;
   access: {
@@ -235,11 +251,15 @@ export default function EpisodePlayer({
             <>
               <p>
                 {access.reason === "sign_in_required"
-                  ? "Sign in to watch this premium episode."
+                  ? episode.monetizationMode === "TICKETED"
+                    ? "Sign in to unlock this ticketed episode."
+                    : "Sign in to watch this premium episode."
                   : access.reason === "kids_restricted"
                     ? "This title is restricted on the selected kids profile."
                     : access.reason === "entitlement_required"
-                      ? "This episode requires a matching entitlement before playback."
+                      ? episode.monetizationMode === "TICKETED"
+                        ? "This ticketed episode requires a matching entitlement before playback."
+                        : "This episode requires a matching entitlement before playback."
                       : access.reason === "region_restricted"
                         ? "This episode is not available in your current region."
                         : "Content not available yet."}
@@ -257,6 +277,16 @@ export default function EpisodePlayer({
         </div>
       )}
       <div className="space-y-2">
+        <div className="flex flex-wrap gap-2">
+          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-white/75">
+            {getWatchMonetizationLabel(episode)}
+          </span>
+          {formatWatchPrice(episode.priceCents, episode.currency) ? (
+            <span className="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-cyan-100">
+              {formatWatchPrice(episode.priceCents, episode.currency)}
+            </span>
+          ) : null}
+        </div>
         {resumeSec && resumeSec > 0 ? (
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">
             Resuming at {Math.floor(resumeSec / 60)}:{`${Math.floor(resumeSec % 60)}`.padStart(2, "0")}
@@ -307,7 +337,7 @@ export default function EpisodePlayer({
               <PosterCard
                 key={item.id}
                 title={show.title}
-                subtitle={item.title}
+                subtitle={`${item.title}${formatWatchPrice(item.priceCents, item.currency) ? ` · ${formatWatchPrice(item.priceCents, item.currency)}` : item.monetizationMode !== "FREE" ? ` · ${item.monetizationMode}` : ""}`}
                 imageUrl={show.posterUrl}
                 href={`/watch/episode/${item.id}`}
               />

@@ -11,6 +11,7 @@ import {
   type StudioPublishQcResult
 } from "@/lib/studioPublishQc";
 import { WATCH_PLACEHOLDER_ASSET_URL } from "@/lib/studioWatchPublishConfig";
+import { WATCH_MONETIZATION_MODES, type WatchMonetizationMode } from "@/lib/watchMonetization";
 const DEFAULT_EPISODE_RUNTIME_SECONDS = 60;
 
 type PublishableShowProject = {
@@ -24,6 +25,10 @@ type PublishableShowProject = {
   visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   posterImageUrl: string | null;
@@ -44,6 +49,10 @@ type PublishableShowEpisode = {
   visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
   allowedRegions: string[] | null;
   requiresEntitlement: boolean;
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
   premiereType: PremiereType;
   releaseAt: Date | null;
   isPremiereEnabled: boolean;
@@ -85,6 +94,10 @@ type PublishScheduleInput = {
   visibility?: "PUBLIC" | "PRIVATE" | "UNLISTED" | null;
   allowedRegions?: string[] | null;
   requiresEntitlement?: boolean | null;
+  monetizationMode?: WatchMonetizationMode | null;
+  priceCents?: number | null;
+  currency?: string | null;
+  adsEnabled?: boolean | null;
   isPremiereEnabled?: boolean | null;
   premiereStartsAt?: Date | null;
   premiereEndsAt?: Date | null;
@@ -96,6 +109,13 @@ type PremiereMetadata = {
   premiereStartsAt: Date | null;
   premiereEndsAt: Date | null;
   chatEnabled: boolean;
+};
+
+type MonetizationMetadata = {
+  monetizationMode: WatchMonetizationMode;
+  priceCents: number | null;
+  currency: string | null;
+  adsEnabled: boolean;
 };
 
 function buildSeasonTitle(project: PublishableShowProject, seasonNumber: number) {
@@ -124,6 +144,10 @@ async function findProjectForPublish(
       "visibility"::text AS "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "posterImageUrl",
@@ -155,6 +179,10 @@ async function findEpisodeForPublish(
       episode."visibility"::text AS "visibility",
       episode."allowedRegions",
       episode."requiresEntitlement",
+      episode."monetizationMode"::text AS "monetizationMode",
+      episode."priceCents",
+      episode."currency",
+      episode."adsEnabled",
       episode."premiereType"::text AS "premiereType",
       episode."releaseAt",
       episode."isPremiereEnabled",
@@ -180,6 +208,10 @@ async function markProjectPublished(
     visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
     allowedRegions: string[] | null;
     requiresEntitlement: boolean;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
   }
 ) {
   const rows = await tx.$queryRaw<PublishableShowProject[]>`
@@ -190,6 +222,10 @@ async function markProjectPublished(
       "visibility" = ${input.visibility}::"ContentVisibility",
       "allowedRegions" = ${input.allowedRegions ?? []},
       "requiresEntitlement" = ${input.requiresEntitlement},
+      "monetizationMode" = ${input.monetizationMode}::"WatchMonetizationMode",
+      "priceCents" = ${input.priceCents},
+      "currency" = ${input.currency},
+      "adsEnabled" = ${input.adsEnabled},
       "premiereType" = ${input.premiereType}::"PremiereType",
       "releaseAt" = ${input.releaseAt},
       "updatedAt" = NOW()
@@ -205,6 +241,10 @@ async function markProjectPublished(
       "visibility"::text AS "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "posterImageUrl",
@@ -224,6 +264,10 @@ async function markEpisodePublished(
     visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
     allowedRegions: string[] | null;
     requiresEntitlement: boolean;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
     isPremiereEnabled: boolean;
     premiereStartsAt: Date | null;
     premiereEndsAt: Date | null;
@@ -238,6 +282,10 @@ async function markEpisodePublished(
       "visibility" = ${input.visibility}::"ContentVisibility",
       "allowedRegions" = ${input.allowedRegions ?? []},
       "requiresEntitlement" = ${input.requiresEntitlement},
+      "monetizationMode" = ${input.monetizationMode}::"WatchMonetizationMode",
+      "priceCents" = ${input.priceCents},
+      "currency" = ${input.currency},
+      "adsEnabled" = ${input.adsEnabled},
       "premiereType" = ${input.premiereType}::"PremiereType",
       "releaseAt" = ${input.releaseAt},
       "isPremiereEnabled" = ${input.isPremiereEnabled},
@@ -260,6 +308,10 @@ async function markEpisodePublished(
       "visibility"::text AS "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "premiereType"::text AS "premiereType",
       "releaseAt",
       "isPremiereEnabled",
@@ -293,6 +345,12 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
         "visibility" = ${project.visibility}::"ContentVisibility",
         "allowedRegions" = ${project.allowedRegions ?? []},
         "requiresEntitlement" = ${project.requiresEntitlement},
+        "isPremium" = ${project.monetizationMode !== "FREE"},
+        "price" = ${project.priceCents},
+        "monetizationMode" = ${project.monetizationMode}::"WatchMonetizationMode",
+        "priceCents" = ${project.priceCents},
+        "currency" = ${project.currency},
+        "adsEnabled" = ${project.adsEnabled},
         "posterUrl" = ${project.posterImageUrl},
         "heroUrl" = ${project.bannerImageUrl},
         "premiereType" = ${project.premiereType}::"PremiereType",
@@ -315,6 +373,12 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
       "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "isPremium",
+      "price",
+      "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "posterUrl",
       "heroUrl",
       "premiereType",
@@ -331,6 +395,12 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
       ${project.visibility}::"ContentVisibility",
       ${project.allowedRegions ?? []},
       ${project.requiresEntitlement},
+      ${project.monetizationMode !== "FREE"},
+      ${project.priceCents},
+      ${project.monetizationMode}::"WatchMonetizationMode",
+      ${project.priceCents},
+      ${project.currency},
+      ${project.adsEnabled},
       ${project.posterImageUrl},
       ${project.bannerImageUrl},
       ${project.premiereType}::"PremiereType",
@@ -423,6 +493,10 @@ async function upsertWatchEpisode(
         "visibility" = ${episode.visibility}::"ContentVisibility",
         "allowedRegions" = ${episode.allowedRegions ?? []},
         "requiresEntitlement" = ${episode.requiresEntitlement},
+        "monetizationMode" = ${episode.monetizationMode}::"WatchMonetizationMode",
+        "priceCents" = ${episode.priceCents},
+        "currency" = ${episode.currency},
+        "adsEnabled" = ${episode.adsEnabled},
         "lengthSeconds" = ${lengthSeconds},
         "premiereType" = ${episode.premiereType}::"PremiereType",
         "releaseAt" = ${episode.releaseAt},
@@ -452,6 +526,10 @@ async function upsertWatchEpisode(
       "visibility",
       "allowedRegions",
       "requiresEntitlement",
+      "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
       "lengthSeconds",
       "assetUrl",
       "premiereType",
@@ -472,6 +550,10 @@ async function upsertWatchEpisode(
       ${episode.visibility}::"ContentVisibility",
       ${episode.allowedRegions ?? []},
       ${episode.requiresEntitlement},
+      ${episode.monetizationMode}::"WatchMonetizationMode",
+      ${episode.priceCents},
+      ${episode.currency},
+      ${episode.adsEnabled},
       ${episode.runtimeSeconds ?? DEFAULT_EPISODE_RUNTIME_SECONDS},
       ${WATCH_PLACEHOLDER_ASSET_URL},
       ${episode.premiereType}::"PremiereType",
@@ -528,6 +610,42 @@ function normalizePremiereMetadata(input: PublishScheduleInput, now = new Date()
   };
 }
 
+function normalizeMonetizationMetadata(
+  input: Pick<PublishScheduleInput, "monetizationMode" | "priceCents" | "currency" | "adsEnabled">,
+  current: { monetizationMode: WatchMonetizationMode; priceCents: number | null; currency: string | null; adsEnabled: boolean }
+): MonetizationMetadata {
+  const monetizationMode = input.monetizationMode ?? current.monetizationMode;
+  if (!WATCH_MONETIZATION_MODES.includes(monetizationMode)) {
+    throw new StudioPublishError("Invalid monetization mode.", 400);
+  }
+
+  const adsEnabled = input.adsEnabled ?? current.adsEnabled;
+  if (monetizationMode === "FREE") {
+    return {
+      monetizationMode,
+      priceCents: null,
+      currency: null,
+      adsEnabled
+    };
+  }
+
+  const priceCents = input.priceCents ?? current.priceCents;
+  const currency = (input.currency ?? current.currency ?? null)?.trim().toUpperCase() ?? null;
+  if (priceCents != null && priceCents < 0) {
+    throw new StudioPublishError("Price must be zero or greater.", 400);
+  }
+  if (priceCents != null && !currency) {
+    throw new StudioPublishError("Currency is required when a price is set.", 400);
+  }
+
+  return {
+    monetizationMode,
+    priceCents,
+    currency,
+    adsEnabled
+  };
+}
+
 export async function publishShowProjectToWatch(slugOrId: string, publishInput?: PublishScheduleInput) {
   return prisma.$transaction(async (tx) => {
     const currentProject = await findProjectForPublish(tx, slugOrId);
@@ -537,6 +655,7 @@ export async function publishShowProjectToWatch(slugOrId: string, publishInput?:
     assertQcPassed(buildShowProjectPublishQc(currentProject), "Pre-publish QC failed for this show.");
 
     const publishedAt = currentProject.publishedAt ?? new Date();
+    const monetization = normalizeMonetizationMetadata(publishInput ?? {}, currentProject);
     let releaseSchedule;
     try {
       releaseSchedule = normalizeReleaseSchedule(
@@ -557,6 +676,10 @@ export async function publishShowProjectToWatch(slugOrId: string, publishInput?:
       visibility: publishInput?.visibility ?? currentProject.visibility,
       allowedRegions: publishInput?.allowedRegions ?? currentProject.allowedRegions,
       requiresEntitlement: publishInput?.requiresEntitlement ?? currentProject.requiresEntitlement,
+      monetizationMode: monetization.monetizationMode,
+      priceCents: monetization.priceCents,
+      currency: monetization.currency,
+      adsEnabled: monetization.adsEnabled,
       ...releaseSchedule
     });
     if (!project) {
@@ -605,6 +728,8 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
     );
 
     const publishedAt = currentEpisode.publishedAt ?? new Date();
+    const projectMonetization = normalizeMonetizationMetadata({}, currentProject);
+    const episodeMonetization = normalizeMonetizationMetadata(publishInput ?? {}, currentEpisode);
     let releaseSchedule;
     let premiereMetadata;
     try {
@@ -634,6 +759,10 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
       visibility: currentProject.visibility,
       allowedRegions: currentProject.allowedRegions,
       requiresEntitlement: currentProject.requiresEntitlement,
+      monetizationMode: projectMonetization.monetizationMode,
+      priceCents: projectMonetization.priceCents,
+      currency: projectMonetization.currency,
+      adsEnabled: projectMonetization.adsEnabled,
       premiereType: currentProject.premiereType,
       releaseAt: currentProject.releaseAt
     });
@@ -646,6 +775,10 @@ export async function publishShowEpisodeToWatch(id: string, publishInput?: Publi
       visibility: publishInput?.visibility ?? currentEpisode.visibility,
       allowedRegions: publishInput?.allowedRegions ?? currentEpisode.allowedRegions,
       requiresEntitlement: publishInput?.requiresEntitlement ?? currentEpisode.requiresEntitlement,
+      monetizationMode: episodeMonetization.monetizationMode,
+      priceCents: episodeMonetization.priceCents,
+      currency: episodeMonetization.currency,
+      adsEnabled: episodeMonetization.adsEnabled,
       premiereType:
         premiereMetadata.isPremiereEnabled || releaseSchedule.premiereType === "SCHEDULED" ? "SCHEDULED" : "IMMEDIATE",
       releaseAt: premiereMetadata.isPremiereEnabled ? premiereMetadata.premiereStartsAt : releaseSchedule.releaseAt,

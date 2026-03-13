@@ -18,6 +18,7 @@ import {
   listActiveEntitlementKeysForUser
 } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
+import { readWatchMonetization, resolveWatchMonetization } from "@/lib/watchMonetization";
 import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 
@@ -74,6 +75,10 @@ export async function GET(
 
   const requestRegion = resolveWatchRequestRegion(request.headers);
   const activeEntitlementKeys = await listActiveEntitlementKeysForUser(session?.user?.id ?? null);
+  const episodeMonetization = resolveWatchMonetization(
+    readWatchMonetization(episode.season.show),
+    readWatchMonetization(episode)
+  );
   const viewer = {
     userId: session?.user?.id ?? null,
     role: session?.user?.role ?? null,
@@ -84,7 +89,7 @@ export async function GET(
 
   const access = canAccessShow(
     {
-      isPremium: episode.season.show.isPremium,
+      monetizationMode: episodeMonetization.monetizationMode,
       maturityRating: episode.season.show.maturityRating,
       visibility: mergeWatchVisibility(showRights.visibility, currentEpisodeRights.visibility),
       allowedRegions: currentEpisodeRights.allowedRegions.length > 0 ? currentEpisodeRights.allowedRegions : showRights.allowedRegions,
@@ -103,7 +108,10 @@ export async function GET(
   const nextEpisodes = episode.season.episodes.filter((item) => {
     const nextAccess = canAccessShow(
       {
-        isPremium: episode.season.show.isPremium,
+        monetizationMode: resolveWatchMonetization(
+          readWatchMonetization(episode.season.show),
+          readWatchMonetization(item)
+        ).monetizationMode,
         maturityRating: episode.season.show.maturityRating,
         visibility: mergeWatchVisibility(showRights.visibility, episodeRightsById.get(item.id)?.visibility ?? "PUBLIC"),
         allowedRegions:
@@ -139,6 +147,10 @@ export async function GET(
       description: episode.description,
       lengthSeconds: episode.lengthSeconds,
       assetUrl: access.allowed && premiereStatus.state === "VOD" ? episode.assetUrl : null,
+      monetizationMode: episodeMonetization.monetizationMode,
+      priceCents: episodeMonetization.priceCents,
+      currency: episodeMonetization.currency,
+      adsEnabled: episodeMonetization.adsEnabled,
       chapterMarkers: premiereStatus.state === "VOD" ? chapterMarkersByEpisode[episode.id] ?? [] : [],
       premiere: {
         state: premiereStatus.state,
@@ -160,7 +172,10 @@ export async function GET(
       description: episode.season.show.description,
       posterUrl: episode.season.show.posterUrl,
       heroUrl: episode.season.show.heroUrl,
-      isPremium: episode.season.show.isPremium,
+      monetizationMode: resolveWatchMonetization(readWatchMonetization(episode.season.show)).monetizationMode,
+      priceCents: resolveWatchMonetization(readWatchMonetization(episode.season.show)).priceCents,
+      currency: resolveWatchMonetization(readWatchMonetization(episode.season.show)).currency,
+      adsEnabled: resolveWatchMonetization(readWatchMonetization(episode.season.show)).adsEnabled,
       maturityRating: episode.season.show.maturityRating
     },
     access,
@@ -168,7 +183,19 @@ export async function GET(
       id: item.id,
       title: item.title,
       description: item.description,
-      lengthSeconds: item.lengthSeconds
+      lengthSeconds: item.lengthSeconds,
+      monetizationMode: resolveWatchMonetization(
+        readWatchMonetization(episode.season.show),
+        readWatchMonetization(item)
+      ).monetizationMode,
+      priceCents: resolveWatchMonetization(
+        readWatchMonetization(episode.season.show),
+        readWatchMonetization(item)
+      ).priceCents,
+      currency: resolveWatchMonetization(
+        readWatchMonetization(episode.season.show),
+        readWatchMonetization(item)
+      ).currency
     }))
   });
 }
