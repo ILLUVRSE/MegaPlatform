@@ -11,6 +11,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
+import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
 import { canAccessShow } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 
@@ -33,6 +34,8 @@ export async function GET(
   if (!show) {
     return NextResponse.json({ error: "Show not found" }, { status: 404 });
   }
+
+  const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
 
   const session = await getServerSession(authOptions).catch(() => null);
   let isKidsProfile = false;
@@ -112,6 +115,14 @@ export async function GET(
       number: season.number,
       title: season.title
     })),
-    episodesBySeason
+    episodesBySeason,
+    extras: extras.map((extra) => ({
+      id: extra.id,
+      type: extra.type,
+      title: extra.title,
+      description: extra.description,
+      assetUrl: access.allowed ? extra.assetUrl : null,
+      runtimeSeconds: extra.runtimeSeconds
+    }))
   });
 }

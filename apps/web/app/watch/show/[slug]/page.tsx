@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
+import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
 import { canAccessShow } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import ShowDetailClient from "../components/ShowDetailClient";
@@ -19,6 +20,15 @@ type ShowEpisode = {
   lengthSeconds: number;
   assetUrl: string;
   chapterMarkers: WatchChapterMarker[];
+};
+
+type ShowExtra = {
+  id: string;
+  type: "BEHIND_THE_SCENES" | "COMMENTARY" | "BONUS_CLIP" | "TRAILER";
+  title: string;
+  description?: string | null;
+  assetUrl: string | null;
+  runtimeSeconds: number | null;
 };
 
 export default async function WatchShowPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -40,6 +50,8 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
   if (!show) {
     notFound();
   }
+
+  const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
 
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
     show.slug,
@@ -164,6 +176,14 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
         canSave={Boolean(session?.user?.id && profileId)}
         access={access}
         comingSoonText={comingSoonText}
+        extras={extras.map((extra) => ({
+          id: extra.id,
+          type: extra.type,
+          title: extra.title,
+          description: extra.description,
+          assetUrl: access.allowed ? extra.assetUrl : null,
+          runtimeSeconds: extra.runtimeSeconds
+        } satisfies ShowExtra))}
       />
     </div>
   );

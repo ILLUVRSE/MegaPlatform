@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPrincipal } from "@/lib/authz";
 import { listShowEpisodes } from "@/lib/showEpisodes";
+import { listShowExtras } from "@/lib/showExtras";
 import { canManageAllShowProjects, findShowProjectWithOwnerBySlug } from "@/lib/showProjects";
 import ShowProjectEpisodesManager from "./components/ShowProjectEpisodesManager";
 
@@ -38,6 +39,7 @@ export default async function StudioShowProjectDetailPage({
   }
 
   const episodes = await listShowEpisodes(project.id);
+  const extras = await listShowExtras(project.id);
   const serializedProject = {
     ...project,
     publishedAt: project.publishedAt?.toISOString() ?? null,
@@ -52,6 +54,13 @@ export default async function StudioShowProjectDetailPage({
     createdAt: episode.createdAt.toISOString(),
     updatedAt: episode.updatedAt.toISOString()
   }));
+  const serializedExtras = extras.map((extra) => ({
+    ...extra,
+    publishedAt: extra.publishedAt?.toISOString() ?? null,
+    releaseAt: extra.releaseAt?.toISOString() ?? null,
+    createdAt: extra.createdAt.toISOString(),
+    updatedAt: extra.updatedAt.toISOString()
+  }));
 
   return (
     <div className="space-y-4">
@@ -63,7 +72,11 @@ export default async function StudioShowProjectDetailPage({
           Back to projects
         </Link>
       </div>
-      <ShowProjectEpisodesManager project={serializedProject} initialEpisodes={serializedEpisodes} />
+      <ShowProjectEpisodesManager
+        project={serializedProject}
+        initialEpisodes={serializedEpisodes}
+        initialExtras={serializedExtras}
+      />
     </div>
   );
 }

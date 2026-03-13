@@ -23,6 +23,15 @@ type Season = {
   title: string;
 };
 
+type ShowExtra = {
+  id: string;
+  type: "BEHIND_THE_SCENES" | "COMMENTARY" | "BONUS_CLIP" | "TRAILER";
+  title: string;
+  description?: string | null;
+  assetUrl: string | null;
+  runtimeSeconds: number | null;
+};
+
 type ShowDetailClientProps = {
   show: {
     id: string;
@@ -41,7 +50,32 @@ type ShowDetailClientProps = {
   canSave: boolean;
   access: { allowed: boolean; reason: "ok" | "sign_in_required" | "kids_restricted" };
   comingSoonText: string | null;
+  extras: ShowExtra[];
 };
+
+function formatExtraType(type: ShowExtra["type"]) {
+  switch (type) {
+    case "BEHIND_THE_SCENES":
+      return "Behind the Scenes";
+    case "COMMENTARY":
+      return "Commentary";
+    case "BONUS_CLIP":
+      return "Bonus Clip";
+    case "TRAILER":
+      return "Trailer";
+    default:
+      return type;
+  }
+}
+
+function formatRuntime(runtimeSeconds: number | null) {
+  if (!runtimeSeconds) {
+    return "Runtime TBD";
+  }
+  const minutes = Math.floor(runtimeSeconds / 60);
+  const seconds = runtimeSeconds % 60;
+  return `${minutes}m ${seconds.toString().padStart(2, "0")}s`;
+}
 
 export default function ShowDetailClient({
   show,
@@ -51,7 +85,8 @@ export default function ShowDetailClient({
   resumeText,
   canSave,
   access,
-  comingSoonText
+  comingSoonText,
+  extras
 }: ShowDetailClientProps) {
   const [selectedSeasonId, setSelectedSeasonId] = useState(seasons[0]?.id ?? "");
   const [saved, setSaved] = useState(isSaved);
@@ -152,6 +187,52 @@ export default function ShowDetailClient({
           ))
         )}
       </div>
+
+      <section className="space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-semibold text-white">Extras</h2>
+          <span className="text-xs uppercase tracking-[0.24em] text-white/45">Studio bonus drops</span>
+        </div>
+        {extras.length === 0 ? (
+          <p className="text-sm text-white/60">No extras available yet.</p>
+        ) : (
+          <div className="grid gap-3 md:grid-cols-2">
+            {extras.map((extra) => (
+              <div
+                key={extra.id}
+                className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-cyan-100/80">
+                      {formatExtraType(extra.type)}
+                    </p>
+                    <h3 className="mt-2 text-sm font-semibold text-white">{extra.title}</h3>
+                  </div>
+                  <span className="text-[11px] uppercase tracking-[0.22em] text-white/45">
+                    {formatRuntime(extra.runtimeSeconds)}
+                  </span>
+                </div>
+                <p className="text-sm text-white/65">{extra.description || "Open the extra clip."}</p>
+                {extra.assetUrl ? (
+                  <a
+                    href={extra.assetUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex rounded-full border border-cyan-200/30 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100 transition hover:border-cyan-200/60"
+                  >
+                    Watch Extra
+                  </a>
+                ) : (
+                  <p className="text-xs uppercase tracking-[0.22em] text-white/45">
+                    Sign in with an eligible profile to open this extra.
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }

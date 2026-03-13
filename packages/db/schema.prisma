@@ -184,6 +184,18 @@ enum ShowEpisodeTemplateType {
   MOVIE_CHAPTER
 }
 
+enum ShowExtraType {
+  BEHIND_THE_SCENES
+  COMMENTARY
+  BONUS_CLIP
+  TRAILER
+}
+
+enum ShowExtraStatus {
+  DRAFT
+  PUBLISHED
+}
+
 enum PremiereType {
   IMMEDIATE
   SCHEDULED
@@ -388,11 +400,33 @@ model ShowProject {
   updatedAt      DateTime          @updatedAt
   owner          User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   episodes       ShowEpisode[]
+  extras         ShowExtra[]
 
   @@index([ownerId, createdAt])
   @@index([status, updatedAt])
   @@index([status, publishedAt])
   @@index([status, premiereType, releaseAt])
+}
+
+model ShowExtra {
+  id             String          @id @default(cuid())
+  showProjectId  String
+  type           ShowExtraType
+  title          String
+  description    String?
+  assetUrl       String
+  runtimeSeconds Int?
+  status         ShowExtraStatus @default(DRAFT)
+  publishedAt    DateTime?
+  premiereType   PremiereType    @default(IMMEDIATE)
+  releaseAt      DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  showProject    ShowProject     @relation(fields: [showProjectId], references: [id], onDelete: Cascade)
+
+  @@index([showProjectId, createdAt])
+  @@index([showProjectId, status, updatedAt])
+  @@index([showProjectId, status, premiereType, releaseAt])
 }
 
 model ShowEpisode {
