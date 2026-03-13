@@ -390,6 +390,7 @@ model ShowEpisode {
   updatedAt      DateTime                @updatedAt
   showProject    ShowProject             @relation(fields: [showProjectId], references: [id], onDelete: Cascade)
   scenes         ShowScene[]
+  shortDrafts    DerivedShortDraft[]
 
   @@unique([showProjectId, slug])
   @@index([showProjectId, createdAt])
@@ -408,10 +409,29 @@ model ShowScene {
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
   showEpisode        ShowEpisode @relation(fields: [showEpisodeId], references: [id], onDelete: Cascade)
+  shortDrafts        DerivedShortDraft[]
 
   @@unique([showEpisodeId, sceneNumber])
   @@index([showEpisodeId, createdAt])
   @@index([showEpisodeId, updatedAt])
+}
+
+model DerivedShortDraft {
+  id               String      @id @default(cuid())
+  showEpisodeId    String
+  showSceneId      String
+  title            String
+  clipStartSeconds Int
+  clipEndSeconds   Int
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  showEpisode      ShowEpisode @relation(fields: [showEpisodeId], references: [id], onDelete: Cascade)
+  showScene        ShowScene   @relation(fields: [showSceneId], references: [id], onDelete: Cascade)
+
+  @@unique([showEpisodeId, showSceneId])
+  @@index([showEpisodeId, createdAt])
+  @@index([showSceneId])
 }
 
 model CreatorProfile {

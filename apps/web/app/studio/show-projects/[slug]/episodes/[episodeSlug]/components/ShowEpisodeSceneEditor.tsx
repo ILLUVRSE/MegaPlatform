@@ -30,9 +30,26 @@ type SceneRecord = {
   updatedAt: string;
 };
 
+type ShortDraftRecord = {
+  id: string;
+  showEpisodeId: string;
+  showSceneId: string;
+  title: string;
+  clipStartSeconds: number;
+  clipEndSeconds: number;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  sourceShowTitle: string;
+  sourceEpisodeTitle: string;
+  sourceSceneNumber: number;
+  sourceSceneTitle: string;
+};
+
 type Props = {
   episode: EpisodeRecord;
   initialScenes: SceneRecord[];
+  initialShortDrafts: ShortDraftRecord[];
 };
 
 function formatEpisodeCode(episode: EpisodeRecord) {
@@ -61,9 +78,17 @@ function parseTags(value: string) {
   return tags.length > 0 ? tags : null;
 }
 
-export default function ShowEpisodeSceneEditor({ episode, initialScenes }: Props) {
+function formatClipTimestamp(value: number) {
+  const minutes = Math.floor(value / 60);
+  const seconds = value % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+export default function ShowEpisodeSceneEditor({ episode, initialScenes, initialShortDrafts }: Props) {
   const [scenes, setScenes] = useState(initialScenes);
+  const [shortDrafts, setShortDrafts] = useState(initialShortDrafts);
   const [isCreating, setIsCreating] = useState(false);
+  const [isGeneratingDrafts, setIsGeneratingDrafts] = useState(false);
   const [activeSceneId, setActiveSceneId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -130,6 +155,38 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes }: Props
     setNotice(`Saved ${nextScene.title}.`);
   }
 
+  async function handleGenerateShortDrafts() {
+    setIsGeneratingDrafts(true);
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/episodes/${episode.id}/generate-shorts`, {
+      method: "POST"
+    });
+
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      drafts?: ShortDraftRecord[];
+      counts?: {
+        created: number;
+        updated: number;
+        total: number;
+      };
+    };
+
+    setIsGeneratingDrafts(false);
+
+    if (!response.ok || !payload.drafts || !payload.counts) {
+      setError(payload.error ?? "Unable to generate shorts drafts.");
+      return;
+    }
+
+    setShortDrafts(payload.drafts);
+    setNotice(
+      `Generated shorts drafts: ${payload.counts.created} new, ${payload.counts.updated} refreshed, ${payload.counts.total} total.`
+    );
+  }
+
   async function handleReorder(sceneId: string, direction: -1 | 1) {
     const currentIndex = scenes.findIndex((scene) => scene.id === sceneId);
     const nextIndex = currentIndex + direction;
@@ -188,7 +245,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes }: Props
           </button>
         </div>
 
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid gap-3 md:grid-cols-5">
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Status</p>
             <p className="mt-2 text-lg font-semibold text-white">{episode.status}</p>
@@ -196,6 +253,10 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes }: Props
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Scenes</p>
             <p className="mt-2 text-lg font-semibold text-white">{scenes.length}</p>
+          </div>
+          <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+            <p className="text-xs uppercase tracking-[0.24em] text-white/70">Short drafts</p>
+            <p className="mt-2 text-lg font-semibold text-white">{shortDrafts.length}</p>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-white/70">Template</p>
@@ -209,6 +270,59 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes }: Props
 
         {error ? <p className="text-sm text-rose-300">{error}</p> : null}
         {notice ? <p className="text-sm text-emerald-300">{notice}</p> : null}
+      </section>
+
+      <section className="party-card space-y-4">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Shorts Pipeline</p>
+            <h2 className="text-xl font-semibold">Generated drafts</h2>
+            <p className="mt-2 max-w-3xl text-sm text-white/70">
+              Generate one draft short per scene. This is metadata only and keeps placeholder clip timestamps until editing/render is built.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleGenerateShortDrafts}
+            disabled={isGeneratingDrafts || scenes.length === 0 || (episode.status !== "READY" && episode.status !== "PUBLISHED")}
+            className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-40"
+          >
+            {isGeneratingDrafts ? "Generating" : "Generate Shorts Drafts"}
+          </button>
+        </div>
+
+        <p className="text-xs uppercase tracking-[0.2em] text-white/45">
+          {episode.status === "READY" || episode.status === "PUBLISHED"
+            ? "Generation is enabled for ready episodes."
+            : "Set episode status to READY before generating shorts drafts."}
+        </p>
+
+        {shortDrafts.length === 0 ? (
+          <div className="rounded-[28px] border border-dashed border-white/10 bg-white/[0.03] p-6 text-sm text-illuvrse-muted">
+            No shorts drafts generated yet.
+          </div>
+        ) : (
+          <div className="grid gap-3">
+            {shortDrafts.map((draft) => (
+              <article key={draft.id} className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/80">
+                      Scene {draft.sourceSceneNumber}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold text-white">{draft.title}</h3>
+                    <p className="mt-2 text-sm text-white/70">
+                      {draft.sourceShowTitle} · {draft.sourceEpisodeTitle} · {draft.sourceSceneTitle}
+                    </p>
+                  </div>
+                  <div className="rounded-full border border-white/10 bg-slate-950/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/60">
+                    {formatClipTimestamp(draft.clipStartSeconds)} - {formatClipTimestamp(draft.clipEndSeconds)}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="party-card space-y-4">

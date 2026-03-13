@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPrincipal } from "@/lib/authz";
 import { findShowEpisodeByProjectAndSlug } from "@/lib/showEpisodes";
+import { listDerivedShortDrafts } from "@/lib/showShortDrafts";
 import { listShowScenes } from "@/lib/showScenes";
 import { canManageAllShowProjects, findShowProjectWithOwnerBySlug } from "@/lib/showProjects";
 import ShowEpisodeSceneEditor from "./components/ShowEpisodeSceneEditor";
@@ -44,6 +45,7 @@ export default async function StudioShowEpisodeDetailPage({
   }
 
   const scenes = await listShowScenes(episode.id);
+  const shortDrafts = await listDerivedShortDrafts(episode.id);
   const serializedEpisode = {
     ...episode,
     createdAt: episode.createdAt.toISOString(),
@@ -53,6 +55,11 @@ export default async function StudioShowEpisodeDetailPage({
     ...scene,
     createdAt: scene.createdAt.toISOString(),
     updatedAt: scene.updatedAt.toISOString()
+  }));
+  const serializedShortDrafts = shortDrafts.map((draft) => ({
+    ...draft,
+    createdAt: draft.createdAt.toISOString(),
+    updatedAt: draft.updatedAt.toISOString()
   }));
 
   return (
@@ -65,7 +72,11 @@ export default async function StudioShowEpisodeDetailPage({
           Back to project
         </Link>
       </div>
-      <ShowEpisodeSceneEditor episode={serializedEpisode} initialScenes={serializedScenes} />
+      <ShowEpisodeSceneEditor
+        episode={serializedEpisode}
+        initialScenes={serializedScenes}
+        initialShortDrafts={serializedShortDrafts}
+      />
     </div>
   );
 }
