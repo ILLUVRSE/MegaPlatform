@@ -14,6 +14,7 @@ type ShortPostItem = {
   isPremium: boolean;
   price?: number | null;
   createdAt: string;
+  sourceWatchHref?: string | null;
 };
 
 export default function ShortFeed({ items }: { items: ShortPostItem[] }) {

@@ -4,6 +4,7 @@ import type { PlatformSessionState } from "@illuvrse/world-state";
 import { scoreCandidatesForEntity, type Candidate } from "@/lib/intelligence/candidateService";
 import { getPersonalizationState, setPersonalizationState } from "@/lib/intelligence/personalizationCache";
 import { applyRankingPolicy, DEFAULT_RANKING_POLICY } from "@/lib/intelligence/rankingPolicy";
+import { listPublicRecommendationShows } from "@/lib/watchRights";
 
 export async function getPlatformRecommendations(input: {
   identity: Pick<IdentityContext, "userId" | "anonId" | "profileId">;
@@ -25,7 +26,7 @@ export async function getPlatformRecommendations(input: {
   setPersonalizationState(cacheKey, personalization);
 
   const [shows, shorts, templates] = await Promise.all([
-    prisma.show.findMany({ orderBy: [{ featured: "desc" }, { updatedAt: "desc" }], take: 4 }),
+    listPublicRecommendationShows(4),
     prisma.shortPost.findMany({ orderBy: { publishedAt: "desc" }, take: 4 }),
     prisma.studioTemplate.findMany({ where: { isPublished: true }, orderBy: { updatedAt: "desc" }, take: 4 })
   ]);

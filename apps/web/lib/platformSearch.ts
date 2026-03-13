@@ -1,6 +1,7 @@
 import { prisma } from "@illuvrse/db";
 import { getPlatformDirectoryEntries } from "@/lib/platformApps";
 import { scoreCandidatesForEntity, type Candidate } from "@/lib/intelligence/candidateService";
+import { searchPublicShowsByTitle } from "@/lib/watchRights";
 
 export type PlatformSearchResult = {
   id: string;
@@ -29,10 +30,7 @@ export async function searchPlatform(query: string) {
   if (!trimmed) return [];
 
   const [shows, creators, templates, parties] = await Promise.all([
-    prisma.show.findMany({
-      where: { title: { contains: trimmed, mode: "insensitive" } },
-      take: 5
-    }),
+    searchPublicShowsByTitle(trimmed, 5),
     prisma.creatorProfile.findMany({
       where: {
         OR: [

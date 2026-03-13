@@ -9,6 +9,14 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@illuvrse/db";
 import { scoreShort, shouldHideShortByModeration } from "@/lib/shortsRanking";
+import { resolveShortSourceWatchLinks } from "@/lib/shortSourceWatchLink";
+
+type ShortPostSourceFields = {
+  sourceShowId: string | null;
+  sourceEpisodeId: string | null;
+  sourceSceneId: string | null;
+  sourceTimestampSeconds: number | null;
+};
 
 const querySchema = z.object({
   cursor: z.string().optional(),
@@ -90,6 +98,7 @@ export async function GET(request: Request) {
 
   const visible = posts
     .map((post) => {
+      const shortPost = post as typeof post & ShortPostSourceFields;
       const feedPost = post.feedPosts[0];
       const unresolvedReports = feedPost?.reports.length ?? 0;
       const blockedByModeration = shouldHideShortByModeration({
@@ -121,6 +130,10 @@ export async function GET(request: Request) {
         price: post.price,
         createdAt: post.createdAt.toISOString(),
         publishedAt: post.publishedAt.toISOString(),
+        sourceShowId: shortPost.sourceShowId,
+        sourceEpisodeId: shortPost.sourceEpisodeId,
+        sourceSceneId: shortPost.sourceSceneId,
+        sourceTimestampSeconds: shortPost.sourceTimestampSeconds,
         rankScore: score,
         stats: {
           likes: feedPost?.likeCount ?? 0,
@@ -134,11 +147,25 @@ export async function GET(request: Request) {
     .sort((a, b) => b.rankScore - a.rankScore || b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, take);
 
+  const sourceWatchLinks = await resolveShortSourceWatchLinks(
+    visible.map((item) => ({
+      id: item.id,
+      sourceShowId: item.sourceShowId,
+      sourceEpisodeId: item.sourceEpisodeId,
+      sourceTimestampSeconds: item.sourceTimestampSeconds
+    }))
+  );
+
+  const responsePosts = visible.map(({ rankScore: _rankScore, ...item }) => ({
+    ...item,
+    sourceWatchHref: sourceWatchLinks.get(item.id)?.href ?? null
+  }));
+
   const lastRaw = posts[posts.length - 1];
   const nextCursor = posts.length === candidateTake && lastRaw ? encodeCursor(lastRaw.publishedAt, lastRaw.id) : null;
 
   return NextResponse.json({
-    posts: visible,
+    posts: responsePosts,
     nextCursor
   });
 }

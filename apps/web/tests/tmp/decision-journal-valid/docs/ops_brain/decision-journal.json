@@ -1,7 +1,7 @@
 [
   {
-    "id": "decision-5e6ee7da-c8fc-4541-83f5-87fb0bc989c8",
-    "createdAt": "2026-03-13T13:58:39.474Z",
+    "id": "decision-4ba06a9c-c4a7-491f-88c1-5912a4bf6d7a",
+    "createdAt": "2026-03-13T22:31:37.420Z",
     "agentRole": "director",
     "decisionType": "roadmap_reprioritization",
     "rationale": "SLO breach trend requires queue hardening first",

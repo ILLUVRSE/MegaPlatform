@@ -15,6 +15,7 @@ type HeroItem = {
   heroUrl?: string | null;
   posterUrl?: string | null;
   featuredEpisodeId?: string | null;
+  statusLabel?: string | null;
 };
 
 export default function HeroCarousel({ items }: { items: HeroItem[] }) {
@@ -54,7 +55,9 @@ export default function HeroCarousel({ items }: { items: HeroItem[] }) {
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end gap-4 p-8">
         <div className="max-w-xl space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/80">Featured</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-white/80">
+            {current.statusLabel ?? "Featured"}
+          </p>
           <h1 className="text-3xl font-semibold md:text-4xl">{current.title}</h1>
           <p className="text-sm text-white/82 line-clamp-3">{current.description}</p>
         </div>

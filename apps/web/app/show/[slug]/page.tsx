@@ -6,8 +6,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@illuvrse/db";
+import InteractiveExtrasPanel from "@/app/watch/components/InteractiveExtrasPanel";
+import { listPublishedInteractiveExtrasForShowByProjectSlug } from "@/lib/interactiveExtras";
+import { listPublishedShowExtrasForWatchByProjectSlug } from "@/lib/showExtras";
 
 export default async function ShowPage({ params }: { params: { slug: string } }) {
+  const now = new Date();
   const show = await prisma.show.findUnique({
     where: { slug: params.slug },
     include: {
@@ -21,6 +25,9 @@ export default async function ShowPage({ params }: { params: { slug: string } })
   });
 
   if (!show) return notFound();
+
+  const extras = await listPublishedShowExtrasForWatchByProjectSlug(show.slug, now);
+  const interactiveExtras = await listPublishedInteractiveExtrasForShowByProjectSlug(show.slug);
 
   return (
     <div className="space-y-6">
@@ -72,6 +79,41 @@ export default async function ShowPage({ params }: { params: { slug: string } })
                   ))}
                 </div>
               </div>
+            ))}
+          </div>
+        )}
+      </section>
+      {interactiveExtras.length > 0 ? (
+        <section className="party-card space-y-4">
+          <InteractiveExtrasPanel
+            extras={interactiveExtras.map((extra) => ({
+              id: extra.id,
+              type: extra.type,
+              title: extra.title,
+              payload: extra.payload
+            }))}
+            title="Interactive Extras"
+          />
+        </section>
+      ) : null}
+      <section className="party-card space-y-4">
+        <h2 className="text-xl font-semibold">Extras</h2>
+        {extras.length === 0 ? (
+          <p className="text-sm text-illuvrse-muted">No extras published yet.</p>
+        ) : (
+          <div className="grid gap-3 md:grid-cols-2">
+            {extras.map((extra) => (
+              <a
+                key={extra.id}
+                href={extra.assetUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl border border-illuvrse-border p-3 transition hover:border-cyan-300/40"
+              >
+                <p className="text-xs uppercase tracking-[0.22em] text-illuvrse-muted">{extra.type}</p>
+                <p className="mt-2 font-semibold">{extra.title}</p>
+                <p className="mt-1 text-xs text-illuvrse-muted">{extra.description}</p>
+              </a>
             ))}
           </div>
         )}

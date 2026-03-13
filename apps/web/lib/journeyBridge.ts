@@ -1,6 +1,9 @@
+import { buildWatchPartyLaunchHref, type PartyLaunchMode } from "@/lib/watchParty";
+
 type WatchBridgeInput = {
   showSlug: string;
   episodeId?: string | null;
+  partyMode?: PartyLaunchMode | null;
 };
 
 function buildQuery(params: Record<string, string | undefined | null>) {
@@ -14,7 +17,7 @@ function buildQuery(params: Record<string, string | undefined | null>) {
 }
 
 export function buildWatchToPartyHref(input: WatchBridgeInput) {
-  return `/party/create${buildQuery({ source: "watch", show: input.showSlug, episodeId: input.episodeId })}`;
+  return buildWatchPartyLaunchHref(input);
 }
 
 export function buildWatchToStudioHref(input: WatchBridgeInput) {

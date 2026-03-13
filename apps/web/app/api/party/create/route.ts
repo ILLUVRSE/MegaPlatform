@@ -15,7 +15,8 @@ import { checkRateLimit, resolveClientKey } from "@/lib/rateLimit";
 const createSchema = z.object({
   name: z.string().min(2).max(80),
   seatCount: z.number().min(6).max(24),
-  isPublic: z.boolean().default(true)
+  isPublic: z.boolean().default(true),
+  episodeId: z.string().min(2).optional()
 });
 
 const CODE_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -68,12 +69,35 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unable to generate party code" }, { status: 500 });
   }
 
+  const watchEpisode = parsed.data.episodeId
+    ? await prisma.episode.findUnique({
+        where: { id: parsed.data.episodeId },
+        select: { id: true, assetUrl: true }
+      })
+    : null;
+
+  if (parsed.data.episodeId && !watchEpisode) {
+    return NextResponse.json({ error: "Episode not found" }, { status: 404 });
+  }
+
   const party = await prisma.party.create({
     data: {
       code,
       name: parsed.data.name,
       isPublic: parsed.data.isPublic,
       hostId: principal.userId,
+      playlist:
+        watchEpisode
+          ? {
+              create: [
+                {
+                  order: 0,
+                  episodeId: watchEpisode.id,
+                  assetUrl: watchEpisode.assetUrl
+                }
+              ]
+            }
+          : undefined,
       seats: {
         create: Array.from({ length: parsed.data.seatCount }, (_, idx) => ({
           seatIndex: idx + 1

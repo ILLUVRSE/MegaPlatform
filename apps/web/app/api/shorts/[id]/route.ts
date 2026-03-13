@@ -10,8 +10,16 @@ import { prisma } from "@illuvrse/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { shouldHideShortByModeration } from "@/lib/shortsRanking";
+import { resolveShortSourceWatchLinks } from "@/lib/shortSourceWatchLink";
 
 const ANON_COOKIE = "ILLUVRSE_ANON_ID";
+
+type ShortPostSourceFields = {
+  sourceShowId: string | null;
+  sourceEpisodeId: string | null;
+  sourceSceneId: string | null;
+  sourceTimestampSeconds: number | null;
+};
 
 export async function GET(
   request: Request,
@@ -43,6 +51,7 @@ export async function GET(
   if (!post) {
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
   }
+  const shortPost = post as typeof post & ShortPostSourceFields;
 
   const feedPost = post.feedPosts[0];
   const unresolvedReports = feedPost?.reports.length ?? 0;
@@ -82,6 +91,15 @@ export async function GET(
     }
   }
 
+  const sourceWatchLinks = await resolveShortSourceWatchLinks([
+    {
+      id: post.id,
+      sourceShowId: shortPost.sourceShowId,
+      sourceEpisodeId: shortPost.sourceEpisodeId,
+      sourceTimestampSeconds: shortPost.sourceTimestampSeconds
+    }
+  ]);
+
   return NextResponse.json({
     post: {
       id: post.id,
@@ -93,7 +111,12 @@ export async function GET(
       isPremium: post.isPremium,
       price: post.price,
       createdAt: post.createdAt.toISOString(),
-      publishedAt: post.publishedAt.toISOString()
+      publishedAt: post.publishedAt.toISOString(),
+      sourceShowId: shortPost.sourceShowId,
+      sourceEpisodeId: shortPost.sourceEpisodeId,
+      sourceSceneId: shortPost.sourceSceneId,
+      sourceTimestampSeconds: shortPost.sourceTimestampSeconds,
+      sourceWatchHref: sourceWatchLinks.get(post.id)?.href ?? null
     },
     access: {
       hasAccess,

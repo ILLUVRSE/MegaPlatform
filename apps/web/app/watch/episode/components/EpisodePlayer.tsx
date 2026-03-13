@@ -5,7 +5,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import VideoPlayer from "@/components/VideoPlayer";
+import { buildWatchToPartyHref } from "@/lib/journeyBridge";
+import {
+  buildEpisodePartyRoomName,
+  getPartyLaunchModeLabel,
+  type PartyLaunchMode
+} from "@/lib/watchParty";
+import { formatWatchPrice, getWatchMonetizationLabel, type WatchMonetizationMode } from "@/lib/watchMonetization";
+import type { WatchChapterMarker } from "@/lib/watchChapterMarkers";
+import { setHostForCode } from "@/app/party/lib/storage";
+import InteractiveExtrasPanel from "../../components/InteractiveExtrasPanel";
+import ChapterMarkers from "../../components/ChapterMarkers";
 import PosterCard from "../../components/PosterCard";
 
 const STORAGE_KEY = "illuvrse_watch_progress";
@@ -14,10 +26,14 @@ export default function EpisodePlayer({
   episode,
   show,
   season,
+  chapterMarkers,
   nextEpisodes,
   initialPositionSec,
   enableDbProgress,
-  access
+  access,
+  premiere,
+  interactiveExtras,
+  routePartyCode
 }: {
   episode: {
     id: string;
@@ -25,25 +41,73 @@ export default function EpisodePlayer({
     description?: string | null;
     lengthSeconds: number;
     assetUrl: string;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
+    partyEnabled: boolean;
+    defaultPartyMode: PartyLaunchMode;
   };
   show: {
     title: string;
     slug: string;
     posterUrl?: string | null;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+    adsEnabled: boolean;
   };
   season: {
     number: number;
     title: string;
   };
-  nextEpisodes: Array<{ id: string; title: string; description?: string | null }>;
+  chapterMarkers: WatchChapterMarker[];
+  nextEpisodes: Array<{
+    id: string;
+    title: string;
+    description?: string | null;
+    monetizationMode: WatchMonetizationMode;
+    priceCents: number | null;
+    currency: string | null;
+  }>;
   initialPositionSec?: number | null;
   enableDbProgress: boolean;
-  access: { allowed: boolean; reason: "ok" | "sign_in_required" | "kids_restricted" };
+  access: {
+    allowed: boolean;
+    reason:
+      | "ok"
+      | "sign_in_required"
+      | "kids_restricted"
+      | "private"
+      | "unlisted"
+      | "region_restricted"
+      | "entitlement_required";
+  };
+  premiere: {
+    state: "VOD" | "UPCOMING" | "LIVE";
+    isPremiereEnabled: boolean;
+    startsAt: string | null;
+    effectiveEndsAt: string | null;
+    chatEnabled: boolean;
+  };
+  interactiveExtras: Array<{
+    id: string;
+    type: "POLL" | "CALLOUT";
+    title: string;
+    payload: Record<string, unknown>;
+  }>;
+  routePartyCode?: string | null;
 }) {
+  const router = useRouter();
   const [progress, setProgress] = useState<{ currentTime: number; duration: number } | null>(null);
   const [localResumeSec, setLocalResumeSec] = useState<number | null>(null);
+  const [timeRemainingLabel, setTimeRemainingLabel] = useState<string | null>(null);
+  const [sessionPartyCode, setSessionPartyCode] = useState<string | null>(null);
+  const [creatingParty, setCreatingParty] = useState(false);
+  const [partyError, setPartyError] = useState<string | null>(null);
   const lastSavedAt = useRef(0);
   const resumeSec = initialPositionSec ?? localResumeSec;
+  const shouldShowVodPlayer = premiere.state === "VOD";
 
   useEffect(() => {
     if (enableDbProgress) return;
@@ -60,6 +124,26 @@ export default function EpisodePlayer({
       // ignore
     }
   }, [episode.id, enableDbProgress]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadSession = async () => {
+      const response = await fetch("/api/platform/session");
+      if (!response.ok) return;
+      const payload = (await response.json().catch(() => null)) as
+        | { session?: { partyCode?: string | null; state?: Record<string, unknown> | null } }
+        | null;
+      if (cancelled) return;
+      const activeEpisodeId =
+        typeof payload?.session?.state?.partyEpisodeId === "string" ? payload.session.state.partyEpisodeId : null;
+      setSessionPartyCode(activeEpisodeId === episode.id ? payload?.session?.partyCode ?? null : null);
+    };
+
+    void loadSession();
+    return () => {
+      cancelled = true;
+    };
+  }, [episode.id]);
 
   useEffect(() => {
     if (!progress) return;
@@ -103,9 +187,107 @@ export default function EpisodePlayer({
     }
   }, [progress, episode.id, episode.title, show.slug, show.title, show.posterUrl]);
 
+  useEffect(() => {
+    if (premiere.state !== "UPCOMING" || !premiere.startsAt) {
+      setTimeRemainingLabel(null);
+      return;
+    }
+
+    const startsAt = premiere.startsAt;
+    const update = () => {
+      const deltaMs = new Date(startsAt).getTime() - Date.now();
+      if (deltaMs <= 0) {
+        setTimeRemainingLabel("Starting now");
+        return;
+      }
+
+      const totalSeconds = Math.floor(deltaMs / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      const parts = [
+        days > 0 ? `${days}d` : null,
+        hours > 0 || days > 0 ? `${hours}h` : null,
+        `${minutes}m`,
+        `${seconds}s`
+      ].filter(Boolean);
+      setTimeRemainingLabel(parts.join(" "));
+    };
+
+    update();
+    const interval = window.setInterval(update, 1000);
+    return () => window.clearInterval(interval);
+  }, [premiere.startsAt, premiere.state]);
+
+  const premierePartyHref = buildWatchToPartyHref({
+    showSlug: show.slug,
+    episodeId: episode.id,
+    partyMode: episode.defaultPartyMode
+  });
+  const premiereEndsAtText = premiere.effectiveEndsAt ? new Date(premiere.effectiveEndsAt).toLocaleString() : null;
+  const joinPartyCode = routePartyCode ?? sessionPartyCode;
+
+  const handleStartParty = async () => {
+    setCreatingParty(true);
+    setPartyError(null);
+
+    const response = await fetch("/api/party/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: buildEpisodePartyRoomName(episode.title, episode.defaultPartyMode),
+        seatCount: 12,
+        isPublic: true,
+        episodeId: episode.id
+      })
+    });
+
+    const payload = (await response.json().catch(() => ({}))) as {
+      code?: string;
+      partyId?: string;
+      hostId?: string;
+      error?: string;
+    };
+
+    setCreatingParty(false);
+
+    if (!response.ok || !payload.code || !payload.hostId) {
+      setPartyError(payload.error ?? "Unable to start party.");
+      return;
+    }
+
+    setHostForCode(payload.code, payload.hostId);
+    router.push(`/party/${payload.code}/host`);
+  };
+
   return (
     <div className="space-y-6">
-      {access.allowed && episode.assetUrl ? (
+      {episode.partyEnabled ? (
+        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-3">
+          <button
+            type="button"
+            onClick={handleStartParty}
+            disabled={creatingParty}
+            className="rounded-full bg-cyan-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 disabled:opacity-60"
+          >
+            {creatingParty ? "Starting..." : "Start Party"}
+          </button>
+          {joinPartyCode ? (
+            <Link
+              href={`/party/${joinPartyCode}`}
+              className="rounded-full border border-cyan-200/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100"
+            >
+              Join Party
+            </Link>
+          ) : null}
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-100/75">
+            {getPartyLaunchModeLabel(episode.defaultPartyMode)} launch default
+          </p>
+          {partyError ? <p className="text-sm text-rose-200">{partyError}</p> : null}
+        </div>
+      ) : null}
+      {shouldShowVodPlayer && access.allowed && episode.assetUrl ? (
         <VideoPlayer
           src={episode.assetUrl}
           controls
@@ -114,24 +296,94 @@ export default function EpisodePlayer({
         />
       ) : (
         <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-3xl border border-white/10 bg-white/5 text-sm text-white/60">
-          <p>
-            {access.reason === "sign_in_required"
-              ? "Sign in to watch this premium episode."
-              : access.reason === "kids_restricted"
-                ? "This title is restricted on the selected kids profile."
-                : "Content not available yet."}
-          </p>
-          {access.reason === "sign_in_required" ? (
-            <Link
-              href="/auth/signin?callbackUrl=/watch"
-              className="rounded-full border border-white/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white"
-            >
-              Sign In
-            </Link>
-          ) : null}
+          {premiere.state === "UPCOMING" ? (
+            <>
+              <span className="rounded-full border border-amber-300/40 bg-amber-300/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-100">
+                Premiere Soon
+              </span>
+              <p className="text-center text-base text-white">
+                This episode premieres {premiere.startsAt ? new Date(premiere.startsAt).toLocaleString() : "soon"}.
+              </p>
+              <p className="text-xs uppercase tracking-[0.24em] text-amber-100/80">
+                Countdown {timeRemainingLabel ?? "calculating"}
+              </p>
+              {premiere.chatEnabled ? (
+                <Link
+                  href={premierePartyHref}
+                  className="rounded-full border border-cyan-200/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100"
+                >
+                  Open Premiere Party
+                </Link>
+              ) : null}
+            </>
+          ) : premiere.state === "LIVE" ? (
+            <>
+              <span className="rounded-full border border-rose-300/40 bg-rose-300/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-rose-100">
+                Premiere Live
+              </span>
+              <p className="max-w-xl text-center text-base text-white">
+                The live premiere shell is active. Video-on-demand playback unlocks after the premiere window closes.
+              </p>
+              {premiereEndsAtText ? (
+                <p className="text-xs uppercase tracking-[0.24em] text-rose-100/80">VOD unlocks {premiereEndsAtText}</p>
+              ) : null}
+              <div className="flex flex-wrap justify-center gap-3">
+                {premiere.chatEnabled ? (
+                  <Link
+                    href={premierePartyHref}
+                    className="rounded-full border border-cyan-200/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100"
+                  >
+                    Join Premiere Party
+                  </Link>
+                ) : null}
+                <Link
+                  href={`/watch/show/${show.slug}`}
+                  className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white"
+                >
+                  Back to Show
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              <p>
+                {access.reason === "sign_in_required"
+                  ? episode.monetizationMode === "TICKETED"
+                    ? "Sign in to unlock this ticketed episode."
+                    : "Sign in to watch this premium episode."
+                  : access.reason === "kids_restricted"
+                    ? "This title is restricted on the selected kids profile."
+                    : access.reason === "entitlement_required"
+                      ? episode.monetizationMode === "TICKETED"
+                        ? "This ticketed episode requires a matching entitlement before playback."
+                        : "This episode requires a matching entitlement before playback."
+                      : access.reason === "region_restricted"
+                        ? "This episode is not available in your current region."
+                        : "Content not available yet."}
+              </p>
+              {access.reason === "sign_in_required" ? (
+                <Link
+                  href="/auth/signin?callbackUrl=/watch"
+                  className="rounded-full border border-white/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white"
+                >
+                  Sign In
+                </Link>
+              ) : null}
+            </>
+          )}
         </div>
       )}
       <div className="space-y-2">
+        <div className="flex flex-wrap gap-2">
+          <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-white/75">
+            {getWatchMonetizationLabel(episode)}
+          </span>
+          {formatWatchPrice(episode.priceCents, episode.currency) ? (
+            <span className="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-cyan-100">
+              {formatWatchPrice(episode.priceCents, episode.currency)}
+            </span>
+          ) : null}
+        </div>
         {resumeSec && resumeSec > 0 ? (
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">
             Resuming at {Math.floor(resumeSec / 60)}:{`${Math.floor(resumeSec % 60)}`.padStart(2, "0")}
@@ -140,11 +392,41 @@ export default function EpisodePlayer({
         <p className="text-xs uppercase tracking-[0.3em] text-white/60">
           Season {season.number}
         </p>
+        {premiere.isPremiereEnabled ? (
+          <div className="flex flex-wrap gap-2">
+            <span
+              className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${
+                premiere.state === "LIVE"
+                  ? "border border-rose-300/40 bg-rose-300/12 text-rose-100"
+                  : premiere.state === "UPCOMING"
+                    ? "border border-amber-300/40 bg-amber-300/12 text-amber-100"
+                    : "border border-cyan-300/30 bg-cyan-300/10 text-cyan-100"
+              }`}
+            >
+              {premiere.state === "LIVE" ? "Premiere Live" : premiere.state === "UPCOMING" ? "Premiere Scheduled" : "Premiere Replay"}
+            </span>
+            {premiere.startsAt ? (
+              <span className="text-xs uppercase tracking-[0.24em] text-white/45">
+                Starts {new Date(premiere.startsAt).toLocaleString()}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
         <h1 className="text-2xl font-semibold text-white">{episode.title}</h1>
         <p className="text-sm text-white/70">{episode.description}</p>
       </div>
 
-      {nextEpisodes.length > 0 ? (
+      {shouldShowVodPlayer ? <ChapterMarkers markers={chapterMarkers} /> : null}
+
+      {interactiveExtras.length > 0 ? (
+        <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/70">
+          Interactive extras available below playback.
+        </p>
+      ) : null}
+
+      <InteractiveExtrasPanel extras={interactiveExtras} title="Episode Interactives" />
+
+      {shouldShowVodPlayer && nextEpisodes.length > 0 ? (
         <div className="space-y-3">
           <h2 className="text-lg font-semibold text-white">Up Next</h2>
           <div className="no-scrollbar flex gap-4 overflow-x-auto pb-3">
@@ -152,7 +434,7 @@ export default function EpisodePlayer({
               <PosterCard
                 key={item.id}
                 title={show.title}
-                subtitle={item.title}
+                subtitle={`${item.title}${formatWatchPrice(item.priceCents, item.currency) ? ` · ${formatWatchPrice(item.priceCents, item.currency)}` : item.monetizationMode !== "FREE" ? ` · ${item.monetizationMode}` : ""}`}
                 imageUrl={show.posterUrl}
                 href={`/watch/episode/${item.id}`}
               />

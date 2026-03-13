@@ -45,6 +45,11 @@ export default function PlaylistEditor({ code, initialItems, onChange }: Playlis
   }, [code]);
 
   useEffect(() => {
+    if (code) return;
+    setItems(initialItems ?? []);
+  }, [code, initialItems]);
+
+  useEffect(() => {
     if (onChange) onChange(items);
   }, [items, onChange]);
 
