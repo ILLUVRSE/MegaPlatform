@@ -29,7 +29,7 @@
     "security:supply-chain:check": "node scripts/supply-chain-check.mjs",
     "platform:runtime:check": "node scripts/check-platform-runtime-readiness.mjs",
     "design:tokens:generate": "node scripts/generate-design-tokens.mjs",
-    "db:migrations:lint": "node scripts/check-db-migrations.mjs",
+    "db:migrations:lint": "node scripts/db/migrations-lint.mjs",
     "db:safety": "pnpm db:migrations:lint && pnpm prisma:validate",
     "ops:director": "pnpm --filter @illuvrse/watch-scheduler director",
     "ops:director:once": "pnpm --filter @illuvrse/watch-scheduler director:once",
