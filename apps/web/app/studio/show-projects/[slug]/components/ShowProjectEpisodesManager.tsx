@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type ProjectRecord = {
@@ -276,6 +277,15 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes }:
                 <p className="mt-4 text-sm text-white/70">
                   {episode.synopsis || "No structure notes yet."}
                 </p>
+
+                <div className="mt-4">
+                  <Link
+                    href={`/studio/show-projects/${project.slug}/episodes/${episode.slug}`}
+                    className="interactive-focus inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white"
+                  >
+                    Open Script Editor
+                  </Link>
+                </div>
               </article>
             ))}
           </div>

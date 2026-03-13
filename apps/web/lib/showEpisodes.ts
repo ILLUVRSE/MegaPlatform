@@ -109,6 +109,31 @@ export async function findShowEpisodeById(id: string) {
   return rows[0] ?? null;
 }
 
+export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slug: string) {
+  const rows = await prisma.$queryRaw<(ShowEpisodeRecord & { ownerId: string })[]>`
+    SELECT
+      episode."id",
+      episode."showProjectId",
+      episode."seasonNumber",
+      episode."episodeNumber",
+      episode."title",
+      episode."slug",
+      episode."synopsis",
+      episode."runtimeSeconds",
+      episode."status"::text AS "status",
+      episode."templateType"::text AS "templateType",
+      episode."createdAt",
+      episode."updatedAt",
+      project."ownerId"
+    FROM "ShowEpisode" episode
+    INNER JOIN "ShowProject" project ON project."id" = episode."showProjectId"
+    WHERE episode."showProjectId" = ${showProjectId} AND episode."slug" = ${slug}
+    LIMIT 1
+  `;
+
+  return rows[0] ?? null;
+}
+
 type TemplateDefaults = {
   titlePrefix: string;
   synopsis: string;

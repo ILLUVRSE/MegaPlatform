@@ -389,10 +389,29 @@ model ShowEpisode {
   createdAt      DateTime                @default(now())
   updatedAt      DateTime                @updatedAt
   showProject    ShowProject             @relation(fields: [showProjectId], references: [id], onDelete: Cascade)
+  scenes         ShowScene[]
 
   @@unique([showProjectId, slug])
   @@index([showProjectId, createdAt])
   @@index([showProjectId, status, updatedAt])
+}
+
+model ShowScene {
+  id                 String      @id @default(cuid())
+  showEpisodeId      String
+  sceneNumber        Int
+  title              String
+  scriptText         String
+  startIntentSeconds Int?
+  endIntentSeconds   Int?
+  tags               Json?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  showEpisode        ShowEpisode @relation(fields: [showEpisodeId], references: [id], onDelete: Cascade)
+
+  @@unique([showEpisodeId, sceneNumber])
+  @@index([showEpisodeId, createdAt])
+  @@index([showEpisodeId, updatedAt])
 }
 
 model CreatorProfile {
