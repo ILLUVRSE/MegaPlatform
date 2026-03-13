@@ -534,6 +534,10 @@ model DerivedShortDraft {
   id               String      @id @default(cuid())
   showEpisodeId    String
   showSceneId      String
+  sourceShowId     String
+  sourceEpisodeId  String
+  sourceSceneId    String?
+  sourceTimestampSeconds Int?
   title            String
   clipStartSeconds Int
   clipEndSeconds   Int
@@ -817,24 +821,30 @@ model DistributionAction {
 }
 
 model ShortPost {
-  id          String          @id @default(cuid())
-  projectId   String?         @unique
-  title       String
-  caption     String
-  mediaUrl    String
-  mediaType   ShortMediaType
-  isPremium   Boolean         @default(false)
-  price       Int?
-  createdById String?
-  createdAt   DateTime        @default(now())
-  publishedAt DateTime        @default(now())
-  project     StudioProject?  @relation(fields: [projectId], references: [id])
-  createdBy   User?           @relation(fields: [createdById], references: [id])
-  purchases   ShortPurchase[]
-  feedPosts   FeedPost[]
+  id                     String          @id @default(cuid())
+  projectId              String?         @unique
+  sourceShowId           String?
+  sourceEpisodeId        String?
+  sourceSceneId          String?
+  sourceTimestampSeconds Int?
+  title                  String
+  caption                String
+  mediaUrl               String
+  mediaType              ShortMediaType
+  isPremium              Boolean         @default(false)
+  price                  Int?
+  createdById            String?
+  createdAt              DateTime        @default(now())
+  publishedAt            DateTime        @default(now())
+  project                StudioProject?  @relation(fields: [projectId], references: [id])
+  createdBy              User?           @relation(fields: [createdById], references: [id])
+  purchases              ShortPurchase[]
+  feedPosts              FeedPost[]
 
   @@index([createdById, publishedAt])
   @@index([mediaType, publishedAt])
+  @@index([sourceShowId])
+  @@index([sourceEpisodeId])
 }
 
 model ShortPurchase {

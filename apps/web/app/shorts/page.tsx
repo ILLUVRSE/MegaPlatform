@@ -6,6 +6,13 @@
 import ShortFeed from "./components/ShortFeed";
 import { prisma } from "@illuvrse/db";
 import { scoreShort, shouldHideShortByModeration } from "@/lib/shortsRanking";
+import { resolveShortSourceWatchLinks } from "@/lib/shortSourceWatchLink";
+
+type ShortPostSourceFields = {
+  sourceShowId: string | null;
+  sourceEpisodeId: string | null;
+  sourceTimestampSeconds: number | null;
+};
 
 export default async function ShortsPage() {
   const posts = await prisma.shortPost.findMany({
@@ -38,6 +45,7 @@ export default async function ShortsPage() {
 
   const items = posts
     .map((post) => {
+      const shortPost = post as typeof post & ShortPostSourceFields;
       const feedPost = post.feedPosts[0];
       const unresolvedReports = feedPost?.reports.length ?? 0;
       if (
@@ -58,6 +66,9 @@ export default async function ShortsPage() {
         isPremium: post.isPremium,
         price: post.price,
         createdAt: post.createdAt.toISOString(),
+        sourceShowId: shortPost.sourceShowId,
+        sourceEpisodeId: shortPost.sourceEpisodeId,
+        sourceTimestampSeconds: shortPost.sourceTimestampSeconds,
         rankScore: scoreShort({
           publishedAt: post.publishedAt,
           likeCount: feedPost?.likeCount ?? 0,
@@ -72,8 +83,29 @@ export default async function ShortsPage() {
     })
     .filter((item): item is NonNullable<typeof item> => item !== null)
     .sort((a, b) => b.rankScore - a.rankScore)
-    .slice(0, 30)
-    .map(({ rankScore: _rankScore, ...item }) => item);
+    .slice(0, 30);
+
+  const sourceWatchLinks = await resolveShortSourceWatchLinks(
+    items.map((item) => ({
+      id: item.id,
+      sourceShowId: item.sourceShowId,
+      sourceEpisodeId: item.sourceEpisodeId,
+      sourceTimestampSeconds: item.sourceTimestampSeconds
+    }))
+  );
+
+  const feedItems = items.map(
+    ({
+      rankScore: _rankScore,
+      sourceShowId: _sourceShowId,
+      sourceEpisodeId: _sourceEpisodeId,
+      sourceTimestampSeconds: _sourceTimestampSeconds,
+      ...item
+    }) => ({
+      ...item,
+      sourceWatchHref: sourceWatchLinks.get(item.id)?.href ?? null
+    })
+  );
 
   return (
     <div className="space-y-4">
@@ -84,7 +116,7 @@ export default async function ShortsPage() {
           Vertical, immersive, and continuous. Scroll to move forward through the current ILLUVRSE short stack.
         </p>
       </header>
-      <ShortFeed items={items} />
+      <ShortFeed items={feedItems} />
     </div>
   );
 }

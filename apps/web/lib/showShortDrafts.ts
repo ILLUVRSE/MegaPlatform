@@ -7,6 +7,10 @@ export type DerivedShortDraftRecord = {
   id: string;
   showEpisodeId: string;
   showSceneId: string;
+  sourceShowId: string;
+  sourceEpisodeId: string;
+  sourceSceneId: string | null;
+  sourceTimestampSeconds: number | null;
   title: string;
   clipStartSeconds: number;
   clipEndSeconds: number;
@@ -23,6 +27,10 @@ type DerivedShortDraftRow = {
   id: string;
   showEpisodeId: string;
   showSceneId: string;
+  sourceShowId: string;
+  sourceEpisodeId: string;
+  sourceSceneId: string | null;
+  sourceTimestampSeconds: number | null;
   title: string;
   clipStartSeconds: number;
   clipEndSeconds: number;
@@ -62,6 +70,10 @@ export async function listDerivedShortDrafts(showEpisodeId: string) {
       draft."id",
       draft."showEpisodeId",
       draft."showSceneId",
+      draft."sourceShowId",
+      draft."sourceEpisodeId",
+      draft."sourceSceneId",
+      draft."sourceTimestampSeconds",
       draft."title",
       draft."clipStartSeconds",
       draft."clipEndSeconds",
@@ -101,6 +113,7 @@ export async function generateDerivedShortDrafts(episode: ShowEpisodeRecord) {
   await prisma.$transaction(async (tx) => {
     for (const scene of scenes) {
       const { clipStartSeconds, clipEndSeconds } = deriveClipWindow(scene);
+      const sourceTimestampSeconds = scene.startIntentSeconds ?? clipStartSeconds ?? null;
       const title = buildDraftTitle(episode, scene);
       const notes = JSON.stringify({
         sourceType: "SHOW_SCENE",
@@ -113,6 +126,10 @@ export async function generateDerivedShortDrafts(episode: ShowEpisodeRecord) {
           "id",
           "showEpisodeId",
           "showSceneId",
+          "sourceShowId",
+          "sourceEpisodeId",
+          "sourceSceneId",
+          "sourceTimestampSeconds",
           "title",
           "clipStartSeconds",
           "clipEndSeconds",
@@ -124,6 +141,10 @@ export async function generateDerivedShortDrafts(episode: ShowEpisodeRecord) {
           ${randomUUID()},
           ${episode.id},
           ${scene.id},
+          ${episode.showProjectId},
+          ${episode.id},
+          ${scene.id},
+          ${sourceTimestampSeconds},
           ${title},
           ${clipStartSeconds},
           ${clipEndSeconds},
@@ -133,6 +154,10 @@ export async function generateDerivedShortDrafts(episode: ShowEpisodeRecord) {
         )
         ON CONFLICT ("showEpisodeId", "showSceneId")
         DO UPDATE SET
+          "sourceShowId" = EXCLUDED."sourceShowId",
+          "sourceEpisodeId" = EXCLUDED."sourceEpisodeId",
+          "sourceSceneId" = EXCLUDED."sourceSceneId",
+          "sourceTimestampSeconds" = EXCLUDED."sourceTimestampSeconds",
           "title" = EXCLUDED."title",
           "clipStartSeconds" = EXCLUDED."clipStartSeconds",
           "clipEndSeconds" = EXCLUDED."clipEndSeconds",

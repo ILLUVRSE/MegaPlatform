@@ -36,6 +36,10 @@ type ShortDraftRecord = {
   id: string;
   showEpisodeId: string;
   showSceneId: string;
+  sourceShowId: string;
+  sourceEpisodeId: string;
+  sourceSceneId: string | null;
+  sourceTimestampSeconds: number | null;
   title: string;
   clipStartSeconds: number;
   clipEndSeconds: number;
@@ -589,6 +593,12 @@ export default function ShowEpisodeSceneEditor({
                     {formatClipTimestamp(draft.clipStartSeconds)} - {formatClipTimestamp(draft.clipEndSeconds)}
                   </div>
                 </div>
+                <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/45">
+                  Source link ready: show {draft.sourceShowId.slice(0, 8)} · episode {draft.sourceEpisodeId.slice(0, 8)}
+                  {draft.sourceTimestampSeconds !== null
+                    ? ` · ${formatClipTimestamp(draft.sourceTimestampSeconds)}`
+                    : ""}
+                </p>
               </article>
             ))}
           </div>

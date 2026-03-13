@@ -19,8 +19,27 @@ import { resolveWatchRequestRegion } from "@/lib/watchRequestContext";
 import { listWatchEpisodeRights, listWatchShowRights, mergeWatchVisibility } from "@/lib/watchRights";
 import EpisodePlayer from "../components/EpisodePlayer";
 
-export default async function WatchEpisodePage({ params }: { params: Promise<{ id: string }> }) {
+function parseStartTime(value: string | string[] | undefined) {
+  const raw = Array.isArray(value) ? value[0] : value;
+  if (!raw) {
+    return null;
+  }
+  const parsed = Number.parseInt(raw, 10);
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    return null;
+  }
+  return parsed;
+}
+
+export default async function WatchEpisodePage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ t?: string | string[] }>;
+}) {
   const { id } = await params;
+  const { t } = await searchParams;
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const headerStore = await headers();
@@ -53,7 +72,8 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
     notFound();
   }
 
-  let initialPositionSec: number | null = null;
+  const requestedStartTime = parseStartTime(t);
+  let initialPositionSec: number | null = requestedStartTime;
   let enableDbProgress = false;
   let isKidsProfile = false;
   if (session?.user?.id && profileId) {
@@ -66,7 +86,7 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
       const progress = await prisma.watchProgress.findUnique({
         where: { profileId_episodeId: { profileId: profile.id, episodeId: episode.id } }
       });
-      initialPositionSec = progress?.positionSec ?? null;
+      initialPositionSec = requestedStartTime ?? progress?.positionSec ?? null;
     }
   }
 

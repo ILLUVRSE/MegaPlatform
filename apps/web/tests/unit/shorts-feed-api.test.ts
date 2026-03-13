@@ -11,6 +11,7 @@ const prismaMock = vi.hoisted(() => ({
 }));
 
 const getServerSessionMock = vi.hoisted(() => vi.fn());
+const resolveShortSourceWatchLinksMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@illuvrse/db", () => ({
   prisma: prismaMock
@@ -18,6 +19,10 @@ vi.mock("@illuvrse/db", () => ({
 
 vi.mock("next-auth", () => ({
   getServerSession: getServerSessionMock
+}));
+
+vi.mock("@/lib/shortSourceWatchLink", () => ({
+  resolveShortSourceWatchLinks: resolveShortSourceWatchLinksMock
 }));
 
 import { GET as listShorts } from "@/app/api/shorts/route";
@@ -28,6 +33,7 @@ describe("shorts feed APIs", () => {
     vi.resetAllMocks();
     getServerSessionMock.mockResolvedValue(null);
     prismaMock.shortPurchase.findFirst.mockResolvedValue(null);
+    resolveShortSourceWatchLinksMock.mockResolvedValue(new Map());
   });
 
   it("sorts shorts by computed score and excludes moderated entries", async () => {
@@ -162,4 +168,3 @@ describe("shorts feed APIs", () => {
     expect(response.status).toBe(404);
   });
 });
-

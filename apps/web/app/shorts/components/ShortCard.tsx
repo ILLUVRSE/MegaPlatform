@@ -18,6 +18,7 @@ type ShortPostItem = {
   isPremium: boolean;
   price?: number | null;
   createdAt: string;
+  sourceWatchHref?: string | null;
 };
 
 export default function ShortCard({ item }: { item: ShortPostItem }) {
@@ -152,6 +153,14 @@ export default function ShortCard({ item }: { item: ShortPostItem }) {
           <Link href={`/shorts/${item.id}`} className="rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white">
             Comment
           </Link>
+          {item.sourceWatchHref ? (
+            <Link
+              href={item.sourceWatchHref}
+              className="rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100"
+            >
+              Watch full episode
+            </Link>
+          ) : null}
           <button
             type="button"
             onClick={() => {
