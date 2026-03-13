@@ -162,6 +162,18 @@ enum ShowProjectStatus {
   PUBLISHED
 }
 
+enum ShowEpisodeStatus {
+  DRAFT
+  READY
+  PUBLISHED
+}
+
+enum ShowEpisodeTemplateType {
+  STANDARD_EPISODE
+  COLD_OPEN_EPISODE
+  MOVIE_CHAPTER
+}
+
 enum AgentJobType {
   SHORT_SCRIPT
   SHORT_SCENES
@@ -357,9 +369,30 @@ model ShowProject {
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
   owner          User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  episodes       ShowEpisode[]
 
   @@index([ownerId, createdAt])
   @@index([status, updatedAt])
+}
+
+model ShowEpisode {
+  id             String                  @id @default(cuid())
+  showProjectId  String
+  seasonNumber   Int?
+  episodeNumber  Int?
+  title          String
+  slug           String
+  synopsis       String?
+  runtimeSeconds Int?
+  status         ShowEpisodeStatus       @default(DRAFT)
+  templateType   ShowEpisodeTemplateType
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+  showProject    ShowProject             @relation(fields: [showProjectId], references: [id], onDelete: Cascade)
+
+  @@unique([showProjectId, slug])
+  @@index([showProjectId, createdAt])
+  @@index([showProjectId, status, updatedAt])
 }
 
 model CreatorProfile {
