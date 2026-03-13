@@ -4,14 +4,16 @@ import { NextResponse } from "next/server";
 import { prisma } from "@illuvrse/db";
 import { requireAdmin } from "@/lib/rbac";
 import { buildServiceDependencyHealth, buildSloStatus } from "@/lib/platformGovernance";
+import { buildPartyVoiceObservabilityCard } from "@/lib/partyVoicePerf";
 
 export async function GET() {
   const auth = await requireAdmin();
   if (!auth.ok) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const [snapshot, dependencyHealth] = await Promise.all([
+  const [snapshot, dependencyHealth, partyVoice] = await Promise.all([
     buildSloStatus(prisma),
-    buildServiceDependencyHealth(prisma)
+    buildServiceDependencyHealth(prisma),
+    buildPartyVoiceObservabilityCard()
   ]);
   return NextResponse.json({
     ok: true,
@@ -20,6 +22,7 @@ export async function GET() {
     sloSummaries: snapshot.slos,
     serviceHealth: dependencyHealth.dependencies,
     serviceHealthSummary: dependencyHealth.summary,
+    partyVoice,
     ...snapshot,
     dependencyHealth
   });

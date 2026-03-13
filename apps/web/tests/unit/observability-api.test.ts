@@ -3,12 +3,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const requireAdminMock = vi.hoisted(() => vi.fn());
 const buildSloStatusMock = vi.hoisted(() => vi.fn());
 const buildServiceDependencyHealthMock = vi.hoisted(() => vi.fn());
+const buildPartyVoiceObservabilityCardMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@illuvrse/db", () => ({ prisma: { $queryRaw: vi.fn() } }));
 vi.mock("@/lib/rbac", () => ({ requireAdmin: requireAdminMock }));
 vi.mock("@/lib/platformGovernance", () => ({
   buildSloStatus: buildSloStatusMock,
   buildServiceDependencyHealth: buildServiceDependencyHealthMock
+}));
+vi.mock("@/lib/partyVoicePerf", () => ({
+  buildPartyVoiceObservabilityCard: buildPartyVoiceObservabilityCardMock
 }));
 
 import { GET } from "@/app/api/admin/observability/summary/route";
@@ -49,6 +53,19 @@ describe("observability summary api", () => {
       summary: { critical: 1, high: 0, medium: 0, low: 0, unhealthy: 0, degraded: 0 },
       generatedAt: "2026-03-11T00:00:00.000Z"
     });
+    buildPartyVoiceObservabilityCardMock.mockResolvedValue({
+      available: true,
+      status: "pass",
+      generatedAt: "2026-03-11T00:00:00.000Z",
+      headline: {
+        connectP95Ms: 700,
+        connectSuccessRatioUnder1s: 1,
+        medianJitterMs: 22,
+        packetLossRatio: 0.01,
+        medianReconnectMs: 250
+      },
+      slos: []
+    });
 
     const response = await GET();
     const payload = await response.json();
@@ -59,5 +76,7 @@ describe("observability summary api", () => {
     expect(payload.sloSummaries).toHaveLength(1);
     expect(payload.serviceHealth).toHaveLength(1);
     expect(payload.serviceHealthSummary.unhealthy).toBe(0);
+    expect(payload.partyVoice.status).toBe("pass");
+    expect(payload.partyVoice.headline.medianReconnectMs).toBe(250);
   });
 });
