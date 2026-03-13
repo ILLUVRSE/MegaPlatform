@@ -500,6 +500,7 @@ model ShowEpisode {
   showProject    ShowProject             @relation(fields: [showProjectId], references: [id], onDelete: Cascade)
   scenes         ShowScene[]
   shortDrafts    DerivedShortDraft[]
+  shotlistSuggestions ShotlistSuggestion[]
 
   @@unique([showProjectId, slug])
   @@index([showProjectId, createdAt])
@@ -522,6 +523,7 @@ model ShowScene {
   updatedAt          DateTime    @updatedAt
   showEpisode        ShowEpisode @relation(fields: [showEpisodeId], references: [id], onDelete: Cascade)
   shortDrafts        DerivedShortDraft[]
+  shotlistSuggestions ShotlistSuggestion[]
 
   @@unique([showEpisodeId, sceneNumber])
   @@index([showEpisodeId, createdAt])
@@ -544,6 +546,28 @@ model DerivedShortDraft {
   @@unique([showEpisodeId, showSceneId])
   @@index([showEpisodeId, createdAt])
   @@index([showSceneId])
+}
+
+model ShotlistSuggestion {
+  id              String      @id @default(cuid())
+  showEpisodeId   String
+  showSceneId     String?
+  shotNumber      Int
+  title           String
+  framing         String
+  cameraMotion    String
+  lens            String?
+  durationSeconds Int
+  rationale       String?
+  isDraft         Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  showEpisode     ShowEpisode @relation(fields: [showEpisodeId], references: [id], onDelete: Cascade)
+  showScene       ShowScene?  @relation(fields: [showSceneId], references: [id], onDelete: Cascade)
+
+  @@unique([showEpisodeId, showSceneId, shotNumber])
+  @@index([showEpisodeId, createdAt])
+  @@index([showSceneId, shotNumber])
 }
 
 model CreatorProfile {

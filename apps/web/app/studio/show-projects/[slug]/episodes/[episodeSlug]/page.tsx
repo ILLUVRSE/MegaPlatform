@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPrincipal } from "@/lib/authz";
 import { findShowEpisodeByProjectAndSlug } from "@/lib/showEpisodes";
+import { listShotlistSuggestions } from "@/lib/showShotlistSuggestions";
 import { listDerivedShortDrafts } from "@/lib/showShortDrafts";
 import { listShowScenes } from "@/lib/showScenes";
 import { findShowProjectWithOwnerBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
@@ -47,6 +48,7 @@ export default async function StudioShowEpisodeDetailPage({
 
   const scenes = await listShowScenes(episode.id);
   const shortDrafts = await listDerivedShortDrafts(episode.id);
+  const shotlistSuggestions = await listShotlistSuggestions(episode.id);
   const serializedEpisode = {
     ...episode,
     publishedAt: episode.publishedAt?.toISOString() ?? null,
@@ -63,6 +65,11 @@ export default async function StudioShowEpisodeDetailPage({
     createdAt: draft.createdAt.toISOString(),
     updatedAt: draft.updatedAt.toISOString()
   }));
+  const serializedShotlistSuggestions = shotlistSuggestions.map((suggestion) => ({
+    ...suggestion,
+    createdAt: suggestion.createdAt.toISOString(),
+    updatedAt: suggestion.updatedAt.toISOString()
+  }));
 
   return (
     <div className="space-y-4">
@@ -78,6 +85,7 @@ export default async function StudioShowEpisodeDetailPage({
         episode={serializedEpisode}
         initialScenes={serializedScenes}
         initialShortDrafts={serializedShortDrafts}
+        initialShotlistSuggestions={serializedShotlistSuggestions}
         permissions={access.permissions}
       />
     </div>

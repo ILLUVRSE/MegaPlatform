@@ -47,10 +47,29 @@ type ShortDraftRecord = {
   sourceSceneTitle: string;
 };
 
+type ShotlistSuggestionRecord = {
+  id: string;
+  showEpisodeId: string;
+  showSceneId: string | null;
+  shotNumber: number;
+  title: string;
+  framing: string;
+  cameraMotion: string;
+  lens: string | null;
+  durationSeconds: number;
+  rationale: string | null;
+  isDraft: boolean;
+  createdAt: string;
+  updatedAt: string;
+  sourceSceneNumber: number | null;
+  sourceSceneTitle: string | null;
+};
+
 type Props = {
   episode: EpisodeRecord;
   initialScenes: SceneRecord[];
   initialShortDrafts: ShortDraftRecord[];
+  initialShotlistSuggestions: ShotlistSuggestionRecord[];
   permissions: {
     read: boolean;
     editProject: boolean;
@@ -94,18 +113,30 @@ function formatClipTimestamp(value: number) {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
-export default function ShowEpisodeSceneEditor({ episode, initialScenes, initialShortDrafts, permissions }: Props) {
+export default function ShowEpisodeSceneEditor({
+  episode,
+  initialScenes,
+  initialShortDrafts,
+  initialShotlistSuggestions,
+  permissions
+}: Props) {
   const [episodeState, setEpisodeState] = useState(episode);
   const [scenes, setScenes] = useState(initialScenes);
   const [shortDrafts, setShortDrafts] = useState(initialShortDrafts);
+  const [shotlistSuggestions, setShotlistSuggestions] = useState(initialShotlistSuggestions);
   const [isCreating, setIsCreating] = useState(false);
   const [isGeneratingDrafts, setIsGeneratingDrafts] = useState(false);
+  const [isGeneratingShotlist, setIsGeneratingShotlist] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [activeSceneId, setActiveSceneId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const canEditScenes = permissions.editScenes;
   const canPublish = permissions.publish;
+  const shotlistSuggestionsByScene = scenes.map((scene) => ({
+    scene,
+    suggestions: shotlistSuggestions.filter((suggestion) => suggestion.showSceneId === scene.id)
+  }));
 
   async function handleCreateScene() {
     setIsCreating(true);
@@ -198,6 +229,38 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
     setShortDrafts(payload.drafts);
     setNotice(
       `Generated shorts drafts: ${payload.counts.created} new, ${payload.counts.updated} refreshed, ${payload.counts.total} total.`
+    );
+  }
+
+  async function handleGenerateShotlist() {
+    setIsGeneratingShotlist(true);
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/episodes/${episodeState.id}/generate-shotlist`, {
+      method: "POST"
+    });
+
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      suggestions?: ShotlistSuggestionRecord[];
+      counts?: {
+        scenes: number;
+        suggestions: number;
+        replaced: number;
+      };
+    };
+
+    setIsGeneratingShotlist(false);
+
+    if (!response.ok || !payload.suggestions || !payload.counts) {
+      setError(payload.error ?? "Unable to generate draft shotlist.");
+      return;
+    }
+
+    setShotlistSuggestions(payload.suggestions);
+    setNotice(
+      `Generated ${payload.counts.suggestions} draft shot suggestions across ${payload.counts.scenes} scenes.`
     );
   }
 
@@ -329,6 +392,85 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
 
         {error ? <p className="text-sm text-rose-300">{error}</p> : null}
         {notice ? <p className="text-sm text-emerald-300">{notice}</p> : null}
+      </section>
+
+      <section className="party-card space-y-4">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Shotlist Assistant</p>
+            <h2 className="text-xl font-semibold">Draft shotlist</h2>
+            <p className="mt-2 max-w-3xl text-sm text-white/70">
+              Deterministic draft coverage suggestions derived from scene text length, tags, and local defaults.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleGenerateShotlist}
+            disabled={!canEditScenes || isGeneratingShotlist || scenes.length === 0}
+            className="interactive-focus rounded-full border border-amber-300/40 bg-amber-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100 disabled:opacity-40"
+          >
+            {isGeneratingShotlist ? "Generating" : "Generate Draft Shotlist"}
+          </button>
+        </div>
+
+        <p className="text-xs uppercase tracking-[0.2em] text-amber-100/70">
+          All suggestions are marked draft and should be reviewed before production planning.
+        </p>
+
+        {shotlistSuggestions.length === 0 ? (
+          <div className="rounded-[28px] border border-dashed border-white/10 bg-white/[0.03] p-6 text-sm text-illuvrse-muted">
+            No shotlist suggestions generated yet.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {shotlistSuggestionsByScene.map(({ scene, suggestions }) => (
+              <article key={scene.id} className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.24em] text-amber-100/80">Scene {scene.sceneNumber}</p>
+                    <h3 className="mt-2 text-lg font-semibold text-white">{scene.title}</h3>
+                  </div>
+                  <div className="rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-100">
+                    Draft suggestions
+                  </div>
+                </div>
+
+                {suggestions.length === 0 ? (
+                  <p className="mt-4 text-sm text-illuvrse-muted">No draft suggestions for this scene yet.</p>
+                ) : (
+                  <div className="mt-4 grid gap-3">
+                    {suggestions.map((suggestion) => (
+                      <div key={suggestion.id} className="rounded-[24px] border border-white/10 bg-slate-950/30 p-4">
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <div>
+                            <p className="text-xs uppercase tracking-[0.24em] text-amber-100/80">
+                              Shot {suggestion.shotNumber} · Draft
+                            </p>
+                            <h4 className="mt-2 text-base font-semibold text-white">{suggestion.title}</h4>
+                          </div>
+                          <div className="text-right text-xs uppercase tracking-[0.2em] text-white/55">
+                            <p>{suggestion.framing}</p>
+                            <p className="mt-1">{suggestion.cameraMotion}</p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 grid gap-3 text-sm text-white/70 md:grid-cols-3">
+                          <p>Lens: {suggestion.lens ?? "Default"}</p>
+                          <p>Duration: {suggestion.durationSeconds}s</p>
+                          <p>Status: {suggestion.isDraft ? "Draft" : "Locked"}</p>
+                        </div>
+
+                        {suggestion.rationale ? (
+                          <p className="mt-4 text-sm text-white/65">{suggestion.rationale}</p>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="party-card space-y-4">
