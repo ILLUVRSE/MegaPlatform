@@ -1,5 +1,10 @@
 import { randomUUID } from "node:crypto";
 import { Prisma, prisma } from "@illuvrse/db";
+import {
+  ReleaseScheduleError,
+  type PremiereType,
+  normalizeReleaseSchedule
+} from "@/lib/releaseScheduling";
 
 const WATCH_PLACEHOLDER_ASSET_URL = "https://cdn.illuvrse.dev/assets/placeholder-episode.mp4";
 const DEFAULT_EPISODE_RUNTIME_SECONDS = 60;
@@ -12,6 +17,8 @@ type PublishableShowProject = {
   format: "SERIES" | "MOVIE";
   status: "DRAFT" | "IN_PRODUCTION" | "READY_TO_PUBLISH" | "PUBLISHED";
   publishedAt: Date | null;
+  premiereType: PremiereType;
+  releaseAt: Date | null;
   posterImageUrl: string | null;
   bannerImageUrl: string | null;
 };
@@ -27,6 +34,8 @@ type PublishableShowEpisode = {
   runtimeSeconds: number | null;
   status: "DRAFT" | "READY" | "PUBLISHED";
   publishedAt: Date | null;
+  premiereType: PremiereType;
+  releaseAt: Date | null;
   templateType: "STANDARD_EPISODE" | "COLD_OPEN_EPISODE" | "MOVIE_CHAPTER";
 };
 
@@ -60,6 +69,11 @@ function requirePublishTitle(title: string | null | undefined, kind: "show" | "e
   }
 }
 
+type PublishScheduleInput = {
+  premiereType?: PremiereType | null;
+  releaseAt?: Date | null;
+};
+
 function buildSeasonTitle(project: PublishableShowProject, seasonNumber: number) {
   return project.format === "MOVIE" ? "Movie" : `Season ${seasonNumber}`;
 }
@@ -77,6 +91,8 @@ async function findProjectForPublish(
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "posterImageUrl",
       "bannerImageUrl"
     FROM "ShowProject"
@@ -103,6 +119,8 @@ async function findEpisodeForPublish(
       episode."runtimeSeconds",
       episode."status"::text AS "status",
       episode."publishedAt",
+      episode."premiereType"::text AS "premiereType",
+      episode."releaseAt",
       episode."templateType"::text AS "templateType"
     FROM "ShowEpisode" episode
     WHERE episode."id" = ${id}
@@ -112,12 +130,22 @@ async function findEpisodeForPublish(
   return rows[0] ?? null;
 }
 
-async function markProjectPublished(tx: Prisma.TransactionClient, projectId: string, publishedAt: Date) {
+async function markProjectPublished(
+  tx: Prisma.TransactionClient,
+  projectId: string,
+  input: {
+    publishedAt: Date;
+    premiereType: PremiereType;
+    releaseAt: Date | null;
+  }
+) {
   const rows = await tx.$queryRaw<PublishableShowProject[]>`
     UPDATE "ShowProject"
     SET
       "status" = 'PUBLISHED'::"ShowProjectStatus",
-      "publishedAt" = COALESCE("publishedAt", ${publishedAt}),
+      "publishedAt" = COALESCE("publishedAt", ${input.publishedAt}),
+      "premiereType" = ${input.premiereType}::"PremiereType",
+      "releaseAt" = ${input.releaseAt},
       "updatedAt" = NOW()
     WHERE "id" = ${projectId}
     RETURNING
@@ -128,6 +156,8 @@ async function markProjectPublished(tx: Prisma.TransactionClient, projectId: str
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "posterImageUrl",
       "bannerImageUrl"
   `;
@@ -135,12 +165,22 @@ async function markProjectPublished(tx: Prisma.TransactionClient, projectId: str
   return rows[0] ?? null;
 }
 
-async function markEpisodePublished(tx: Prisma.TransactionClient, episodeId: string, publishedAt: Date) {
+async function markEpisodePublished(
+  tx: Prisma.TransactionClient,
+  episodeId: string,
+  input: {
+    publishedAt: Date;
+    premiereType: PremiereType;
+    releaseAt: Date | null;
+  }
+) {
   const rows = await tx.$queryRaw<PublishableShowEpisode[]>`
     UPDATE "ShowEpisode"
     SET
       "status" = 'PUBLISHED'::"ShowEpisodeStatus",
-      "publishedAt" = COALESCE("publishedAt", ${publishedAt}),
+      "publishedAt" = COALESCE("publishedAt", ${input.publishedAt}),
+      "premiereType" = ${input.premiereType}::"PremiereType",
+      "releaseAt" = ${input.releaseAt},
       "updatedAt" = NOW()
     WHERE "id" = ${episodeId}
     RETURNING
@@ -154,6 +194,8 @@ async function markEpisodePublished(tx: Prisma.TransactionClient, episodeId: str
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "templateType"::text AS "templateType"
   `;
 
@@ -180,6 +222,8 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
         "description" = ${project.description},
         "posterUrl" = ${project.posterImageUrl},
         "heroUrl" = ${project.bannerImageUrl},
+        "premiereType" = ${project.premiereType}::"PremiereType",
+        "releaseAt" = ${project.releaseAt},
         "updatedAt" = NOW()
       WHERE "id" = ${existing.id}
       RETURNING "id", "slug"
@@ -197,6 +241,8 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
       "description",
       "posterUrl",
       "heroUrl",
+      "premiereType",
+      "releaseAt",
       "createdAt",
       "updatedAt"
     )
@@ -208,6 +254,8 @@ async function upsertWatchShow(tx: Prisma.TransactionClient, project: Publishabl
       ${project.description},
       ${project.posterImageUrl},
       ${project.bannerImageUrl},
+      ${project.premiereType}::"PremiereType",
+      ${project.releaseAt},
       NOW(),
       NOW()
     )
@@ -294,6 +342,8 @@ async function upsertWatchEpisode(
         "title" = ${episode.title},
         "description" = ${episode.synopsis},
         "lengthSeconds" = ${lengthSeconds},
+        "premiereType" = ${episode.premiereType}::"PremiereType",
+        "releaseAt" = ${episode.releaseAt},
         "assetUrl" = CASE
           WHEN "assetUrl" = '' THEN ${WATCH_PLACEHOLDER_ASSET_URL}
           ELSE "assetUrl"
@@ -315,6 +365,8 @@ async function upsertWatchEpisode(
       "description",
       "lengthSeconds",
       "assetUrl",
+      "premiereType",
+      "releaseAt",
       "createdAt",
       "updatedAt"
     )
@@ -326,6 +378,8 @@ async function upsertWatchEpisode(
       ${episode.synopsis},
       ${episode.runtimeSeconds ?? DEFAULT_EPISODE_RUNTIME_SECONDS},
       ${WATCH_PLACEHOLDER_ASSET_URL},
+      ${episode.premiereType}::"PremiereType",
+      ${episode.releaseAt},
       NOW(),
       NOW()
     )
@@ -335,7 +389,7 @@ async function upsertWatchEpisode(
   return insertedRows[0] ?? null;
 }
 
-export async function publishShowProjectToWatch(slugOrId: string) {
+export async function publishShowProjectToWatch(slugOrId: string, publishInput?: PublishScheduleInput) {
   return prisma.$transaction(async (tx) => {
     const currentProject = await findProjectForPublish(tx, slugOrId);
     if (!currentProject) {
@@ -345,7 +399,25 @@ export async function publishShowProjectToWatch(slugOrId: string) {
     requirePublishTitle(currentProject.title, "show");
 
     const publishedAt = currentProject.publishedAt ?? new Date();
-    const project = await markProjectPublished(tx, currentProject.id, publishedAt);
+    let releaseSchedule;
+    try {
+      releaseSchedule = normalizeReleaseSchedule(
+        publishInput ?? {
+          premiereType: currentProject.premiereType,
+          releaseAt: currentProject.releaseAt
+        }
+      );
+    } catch (error) {
+      if (error instanceof ReleaseScheduleError) {
+        throw new StudioPublishError(error.message, 400);
+      }
+      throw error;
+    }
+
+    const project = await markProjectPublished(tx, currentProject.id, {
+      publishedAt,
+      ...releaseSchedule
+    });
     if (!project) {
       throw new StudioPublishError("Unable to publish show project.", 500);
     }
@@ -362,7 +434,7 @@ export async function publishShowProjectToWatch(slugOrId: string) {
   });
 }
 
-export async function publishShowEpisodeToWatch(id: string) {
+export async function publishShowEpisodeToWatch(id: string, publishInput?: PublishScheduleInput) {
   return prisma.$transaction(async (tx) => {
     const currentEpisode = await findEpisodeForPublish(tx, id);
     if (!currentEpisode) {
@@ -382,12 +454,34 @@ export async function publishShowEpisodeToWatch(id: string) {
     requirePublishTitle(currentProject.title, "show");
 
     const publishedAt = currentEpisode.publishedAt ?? new Date();
-    const project = await markProjectPublished(tx, currentProject.id, publishedAt);
+    let releaseSchedule;
+    try {
+      releaseSchedule = normalizeReleaseSchedule(
+        publishInput ?? {
+          premiereType: currentEpisode.premiereType,
+          releaseAt: currentEpisode.releaseAt
+        }
+      );
+    } catch (error) {
+      if (error instanceof ReleaseScheduleError) {
+        throw new StudioPublishError(error.message, 400);
+      }
+      throw error;
+    }
+
+    const project = await markProjectPublished(tx, currentProject.id, {
+      publishedAt,
+      premiereType: currentProject.premiereType,
+      releaseAt: currentProject.releaseAt
+    });
     if (!project) {
       throw new StudioPublishError("Unable to publish parent show.", 500);
     }
 
-    const episode = await markEpisodePublished(tx, currentEpisode.id, publishedAt);
+    const episode = await markEpisodePublished(tx, currentEpisode.id, {
+      publishedAt,
+      ...releaseSchedule
+    });
     if (!episode) {
       throw new StudioPublishError("Unable to publish episode.", 500);
     }

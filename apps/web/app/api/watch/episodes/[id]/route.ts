@@ -10,6 +10,7 @@ import { prisma } from "@illuvrse/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
+import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
 import { canAccessShow } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 
@@ -18,6 +19,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const now = new Date();
   const episode = await prisma.episode.findUnique({
     where: { id },
     include: {
@@ -34,8 +36,12 @@ export async function GET(
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
 
+  if (!evaluateReleaseSchedule(episode, now).isReleased) {
+    return NextResponse.json({ error: "Episode not found" }, { status: 404 });
+  }
+
   const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
-  const nextEpisodes = episode.season.episodes;
+  const nextEpisodes = episode.season.episodes.filter((item) => evaluateReleaseSchedule(item, now).isReleased);
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
     {
       id: episode.id,

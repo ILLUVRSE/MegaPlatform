@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { Prisma, prisma } from "@illuvrse/db";
 import { z } from "zod";
 import type { Principal } from "@/lib/authz";
+import type { PremiereType } from "@/lib/releaseScheduling";
 import { canManageAllShowProjects, type ShowProjectFormat, type ShowProjectRecord } from "@/lib/showProjects";
 
 export const SHOW_EPISODE_STATUSES = ["DRAFT", "READY", "PUBLISHED"] as const;
@@ -25,6 +26,8 @@ export type ShowEpisodeRecord = {
   runtimeSeconds: number | null;
   status: ShowEpisodeStatus;
   publishedAt: Date | null;
+  premiereType: PremiereType;
+  releaseAt: Date | null;
   templateType: ShowEpisodeTemplateType;
   createdAt: Date;
   updatedAt: Date;
@@ -74,6 +77,8 @@ export async function listShowEpisodes(showProjectId: string) {
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -99,6 +104,8 @@ export async function findShowEpisodeById(id: string) {
       episode."runtimeSeconds",
       episode."status"::text AS "status",
       episode."publishedAt",
+      episode."premiereType"::text AS "premiereType",
+      episode."releaseAt",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -125,6 +132,8 @@ export async function findShowEpisodeByProjectAndSlug(showProjectId: string, slu
       episode."runtimeSeconds",
       episode."status"::text AS "status",
       episode."publishedAt",
+      episode."premiereType"::text AS "premiereType",
+      episode."releaseAt",
       episode."templateType"::text AS "templateType",
       episode."createdAt",
       episode."updatedAt",
@@ -227,6 +236,8 @@ export async function createShowEpisode(input: {
       "runtimeSeconds",
       "status",
       "publishedAt",
+      "premiereType",
+      "releaseAt",
       "templateType",
       "createdAt",
       "updatedAt"
@@ -241,6 +252,8 @@ export async function createShowEpisode(input: {
       ${defaults.synopsis},
       NULL,
       'DRAFT'::"ShowEpisodeStatus",
+      NULL,
+      'IMMEDIATE'::"PremiereType",
       NULL,
       ${input.templateType}::"ShowEpisodeTemplateType",
       NOW(),
@@ -257,6 +270,8 @@ export async function createShowEpisode(input: {
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"
@@ -314,6 +329,8 @@ export async function updateShowEpisode(
       "runtimeSeconds",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "templateType"::text AS "templateType",
       "createdAt",
       "updatedAt"

@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { Prisma, prisma } from "@illuvrse/db";
 import type { Principal } from "@/lib/authz";
+import type { PremiereType } from "@/lib/releaseScheduling";
 
 export type ShowProjectFormat = "SERIES" | "MOVIE";
 export type ShowProjectStatus = "DRAFT" | "IN_PRODUCTION" | "READY_TO_PUBLISH" | "PUBLISHED";
@@ -13,6 +14,8 @@ export type ShowProjectRecord = {
   format: ShowProjectFormat;
   status: ShowProjectStatus;
   publishedAt: Date | null;
+  premiereType: PremiereType;
+  releaseAt: Date | null;
   ownerId: string;
   posterImageUrl: string | null;
   bannerImageUrl: string | null;
@@ -47,6 +50,8 @@ export async function findShowProjectBySlug(slug: string) {
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",
@@ -70,6 +75,8 @@ export async function findShowProjectWithOwnerBySlug(slug: string) {
       project."format"::text AS "format",
       project."status"::text AS "status",
       project."publishedAt",
+      project."premiereType"::text AS "premiereType",
+      project."releaseAt",
       project."ownerId",
       project."posterImageUrl",
       project."bannerImageUrl",
@@ -118,6 +125,8 @@ export async function listShowProjects(
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",
@@ -162,6 +171,8 @@ export async function createShowProject(input: {
       "format",
       "status",
       "publishedAt",
+      "premiereType",
+      "releaseAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",
@@ -175,6 +186,8 @@ export async function createShowProject(input: {
       ${input.description ?? null},
       ${input.format}::"ShowProjectFormat",
       'DRAFT'::"ShowProjectStatus",
+      NULL,
+      'IMMEDIATE'::"PremiereType",
       NULL,
       ${input.ownerId},
       ${input.posterImageUrl ?? null},
@@ -190,6 +203,8 @@ export async function createShowProject(input: {
       "format"::text AS "format",
       "status"::text AS "status",
       "publishedAt",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
       "ownerId",
       "posterImageUrl",
       "bannerImageUrl",

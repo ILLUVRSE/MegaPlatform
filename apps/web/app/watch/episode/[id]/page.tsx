@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
+import { evaluateReleaseSchedule } from "@/lib/releaseScheduling";
 import { canAccessShow } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 import EpisodePlayer from "../components/EpisodePlayer";
@@ -16,6 +17,7 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
+  const now = new Date();
   const episode = await prisma.episode.findUnique({
     where: { id },
     include: {
@@ -32,8 +34,14 @@ export default async function WatchEpisodePage({ params }: { params: Promise<{ i
     notFound();
   }
 
+  if (!evaluateReleaseSchedule(episode, now).isReleased) {
+    notFound();
+  }
+
   const episodeNumber = episode.season.episodes.findIndex((item) => item.id === episode.id) + 1;
-  const nextEpisodes = episode.season.episodes.filter((item) => item.id !== episode.id).slice(0, 6);
+  const nextEpisodes = episode.season.episodes
+    .filter((item) => item.id !== episode.id && evaluateReleaseSchedule(item, now).isReleased)
+    .slice(0, 6);
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(episode.season.show.slug, [
     {
       id: episode.id,

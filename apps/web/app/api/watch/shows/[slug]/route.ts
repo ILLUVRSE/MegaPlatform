@@ -10,6 +10,7 @@ import { prisma } from "@illuvrse/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getProfileIdFromCookie } from "@/lib/watchProfiles";
+import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { canAccessShow } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode } from "@/lib/watchChapterMarkers";
 
@@ -18,6 +19,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  const now = new Date();
   const show = await prisma.show.findUnique({
     where: { slug },
     include: {
@@ -59,26 +61,37 @@ export async function GET(
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
     show.slug,
     show.seasons.flatMap((season) =>
-      season.episodes.map((episode, index) => ({
-        id: episode.id,
-        title: episode.title,
-        seasonNumber: season.number,
-        episodeNumber: index + 1
-      }))
+      season.episodes
+        .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
+        .map((episode, index) => ({
+          id: episode.id,
+          title: episode.title,
+          seasonNumber: season.number,
+          episodeNumber: index + 1
+        }))
     )
   );
 
   const episodesBySeason: Record<string, unknown> = {};
   show.seasons.forEach((season) => {
-    episodesBySeason[season.id] = season.episodes.map((episode) => ({
-      id: episode.id,
-      title: episode.title,
-      description: episode.description,
-      lengthSeconds: episode.lengthSeconds,
-      assetUrl: access.allowed ? episode.assetUrl : null,
-      chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
-    }));
+    episodesBySeason[season.id] = season.episodes
+      .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
+      .map((episode) => ({
+        id: episode.id,
+        title: episode.title,
+        description: episode.description,
+        lengthSeconds: episode.lengthSeconds,
+        assetUrl: access.allowed ? episode.assetUrl : null,
+        chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
+      }));
   });
+
+  const showRelease = evaluateReleaseSchedule(show, now);
+  const comingSoonAt =
+    getEarliestUpcomingRelease(
+      show.seasons.flatMap((season) => season.episodes),
+      now
+    ) ?? (showRelease.isComingSoon ? showRelease.releaseAt : null);
 
   return NextResponse.json({
     show: {
@@ -93,6 +106,7 @@ export async function GET(
       maturityRating: show.maturityRating
     },
     access,
+    comingSoonAt: comingSoonAt?.toISOString() ?? null,
     seasons: show.seasons.map((season) => ({
       id: season.id,
       number: season.number,

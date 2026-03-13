@@ -15,11 +15,13 @@ import ChannelTile from "./components/ChannelTile";
 import ContinueWatchingRail from "./components/ContinueWatchingRail";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
 import { WATCH_LOCAL_NAV } from "@/lib/navigation";
+import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 
 export default async function WatchPage() {
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
+  const now = new Date();
   const shows = await prisma.show.findMany({
     orderBy: [{ watchOrder: "asc" }, { createdAt: "desc" }],
     include: { seasons: { include: { episodes: { orderBy: { createdAt: "asc" } } } } },
@@ -37,7 +39,14 @@ export default async function WatchPage() {
   const heroSource = (heroPool.length > 0 ? heroPool : sortedForHero).slice(0, 4);
 
   const heroShows = heroSource.map((show) => {
-    const episode = show.seasons[0]?.episodes[0] ?? null;
+    const allEpisodes = show.seasons.flatMap((season) => season.episodes);
+    const releasedEpisode = allEpisodes.find((episode) => evaluateReleaseSchedule(episode, now).isReleased) ?? null;
+    const showRelease = evaluateReleaseSchedule(show, now);
+    const upcomingReleaseAt =
+      releasedEpisode === null
+        ? getEarliestUpcomingRelease(allEpisodes, now) ??
+          (showRelease.isComingSoon ? showRelease.releaseAt : null)
+        : null;
     return {
       id: show.id,
       title: show.title,
@@ -45,18 +54,30 @@ export default async function WatchPage() {
       description: show.description,
       heroUrl: show.heroUrl,
       posterUrl: show.posterUrl,
-      featuredEpisodeId: episode?.id ?? null
+      featuredEpisodeId: releasedEpisode?.id ?? null,
+      statusLabel: upcomingReleaseAt ? `Coming Soon · ${upcomingReleaseAt.toLocaleDateString()}` : null
     };
   });
 
-  const baseItems = shows.map((show) => ({
-    id: show.id,
-    title: show.title,
-    slug: show.slug,
-    posterUrl: show.posterUrl,
-    heroUrl: show.heroUrl,
-    description: show.description
-  }));
+  const baseItems = shows.map((show) => {
+    const allEpisodes = show.seasons.flatMap((season) => season.episodes);
+    const hasReleasedEpisode = allEpisodes.some((episode) => evaluateReleaseSchedule(episode, now).isReleased);
+    const showRelease = evaluateReleaseSchedule(show, now);
+    const upcomingReleaseAt = hasReleasedEpisode
+      ? null
+      : getEarliestUpcomingRelease(allEpisodes, now) ??
+        (showRelease.isComingSoon ? showRelease.releaseAt : null);
+
+    return {
+      id: show.id,
+      title: show.title,
+      slug: show.slug,
+      posterUrl: show.posterUrl,
+      heroUrl: show.heroUrl,
+      description: show.description,
+      subtitle: upcomingReleaseAt ? `Coming Soon · ${upcomingReleaseAt.toLocaleDateString()}` : undefined
+    };
+  });
 
   const byId = new Map(baseItems.map((item) => [item.id, item]));
   const trendingIds = shows.filter((item) => item.trending).map((item) => item.id);
@@ -116,7 +137,6 @@ export default async function WatchPage() {
     if (rail.items.length > 0) rails.push(rail);
   }
 
-  const now = new Date();
   const channels = await prisma.liveChannel.findMany({
     where: { isActive: true },
     orderBy: { createdAt: "asc" }
@@ -226,6 +246,7 @@ export default async function WatchPage() {
                 <PosterCard
                   key={item.id}
                   title={item.title}
+                  subtitle={item.subtitle}
                   imageUrl={item.posterUrl}
                   href={`/watch/show/${item.slug}`}
                   showId={item.id}

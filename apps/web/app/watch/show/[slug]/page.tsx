@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { PROFILE_COOKIE } from "@/lib/watchProfiles";
+import { evaluateReleaseSchedule, getEarliestUpcomingRelease } from "@/lib/releaseScheduling";
 import { canAccessShow } from "@/lib/watchEntitlements";
 import { listWatchChapterMarkersByEpisode, type WatchChapterMarker } from "@/lib/watchChapterMarkers";
 import ShowDetailClient from "../components/ShowDetailClient";
@@ -22,6 +23,7 @@ type ShowEpisode = {
 
 export default async function WatchShowPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const now = new Date();
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const profileId = cookieStore.get(PROFILE_COOKIE)?.value ?? null;
@@ -42,26 +44,40 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
   const chapterMarkersByEpisode = await listWatchChapterMarkersByEpisode(
     show.slug,
     show.seasons.flatMap((season) =>
-      season.episodes.map((episode, index) => ({
-        id: episode.id,
-        title: episode.title,
-        seasonNumber: season.number,
-        episodeNumber: index + 1
-      }))
+      season.episodes
+        .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
+        .map((episode, index) => ({
+          id: episode.id,
+          title: episode.title,
+          seasonNumber: season.number,
+          episodeNumber: index + 1
+        }))
     )
   );
 
   const episodesBySeason = show.seasons.reduce((acc, season) => {
-    acc[season.id] = season.episodes.map((episode) => ({
-      id: episode.id,
-      title: episode.title,
-      description: episode.description,
-      lengthSeconds: episode.lengthSeconds,
-      assetUrl: episode.assetUrl,
-      chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
-    }));
+    acc[season.id] = season.episodes
+      .filter((episode) => evaluateReleaseSchedule(episode, now).isReleased)
+      .map((episode) => ({
+        id: episode.id,
+        title: episode.title,
+        description: episode.description,
+        lengthSeconds: episode.lengthSeconds,
+        assetUrl: episode.assetUrl,
+        chapterMarkers: chapterMarkersByEpisode[episode.id] ?? []
+      }));
     return acc;
   }, {} as Record<string, ShowEpisode[]>);
+  const showRelease = evaluateReleaseSchedule(show, now);
+  const comingSoonAt =
+    getEarliestUpcomingRelease(
+      show.seasons.flatMap((season) => season.episodes),
+      now
+    ) ?? (showRelease.isComingSoon ? showRelease.releaseAt : null);
+  const comingSoonText =
+    Object.values(episodesBySeason).every((episodes) => episodes.length === 0) && comingSoonAt
+      ? `Coming Soon: premieres ${comingSoonAt.toLocaleString()}`
+      : null;
 
   let isSaved = false;
   let resumeText: string | null = null;
@@ -147,6 +163,7 @@ export default async function WatchShowPage({ params }: { params: Promise<{ slug
         resumeText={resumeText}
         canSave={Boolean(session?.user?.id && profileId)}
         access={access}
+        comingSoonText={comingSoonText}
       />
     </div>
   );

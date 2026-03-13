@@ -1,10 +1,17 @@
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { AuthzError, requireSession } from "@/lib/authz";
+import { PREMIERE_TYPES } from "@/lib/releaseScheduling";
 import { canManageShowProject } from "@/lib/showEpisodes";
 import { findShowProjectBySlug } from "@/lib/showProjects";
 import { publishShowProjectToWatch, StudioPublishError } from "@/lib/studioShowPublish";
+
+const publishProjectSchema = z.object({
+  premiereType: z.enum(PREMIERE_TYPES).optional(),
+  releaseAt: z.string().datetime().nullable().optional()
+});
 
 export async function POST(
   request: Request,
@@ -29,8 +36,16 @@ export async function POST(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
+  const parsed = publishProjectSchema.safeParse(await request.json().catch(() => ({})));
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid publish schedule" }, { status: 400 });
+  }
+
   try {
-    const result = await publishShowProjectToWatch(project.id);
+    const result = await publishShowProjectToWatch(project.id, {
+      premiereType: parsed.data.premiereType,
+      releaseAt: parsed.data.releaseAt ? new Date(parsed.data.releaseAt) : null
+    });
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof StudioPublishError) {

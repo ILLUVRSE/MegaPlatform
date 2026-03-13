@@ -40,6 +40,7 @@ type ShowDetailClientProps = {
   resumeText: string | null;
   canSave: boolean;
   access: { allowed: boolean; reason: "ok" | "sign_in_required" | "kids_restricted" };
+  comingSoonText: string | null;
 };
 
 export default function ShowDetailClient({
@@ -49,7 +50,8 @@ export default function ShowDetailClient({
   isSaved,
   resumeText,
   canSave,
-  access
+  access,
+  comingSoonText
 }: ShowDetailClientProps) {
   const [selectedSeasonId, setSelectedSeasonId] = useState(seasons[0]?.id ?? "");
   const [saved, setSaved] = useState(isSaved);
@@ -85,6 +87,11 @@ export default function ShowDetailClient({
           {access.reason === "sign_in_required"
             ? "Sign in to watch premium episodes on this show."
             : "This title is restricted on the selected kids profile."}
+        </div>
+      ) : null}
+      {comingSoonText ? (
+        <div className="rounded-2xl border border-cyan-200/30 bg-cyan-300/10 px-4 py-3 text-sm text-cyan-100">
+          {comingSoonText}
         </div>
       ) : null}
       <div className="flex flex-wrap gap-3">
