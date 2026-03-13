@@ -3,7 +3,11 @@ import { notFound } from "next/navigation";
 import { getPrincipal } from "@/lib/authz";
 import { listShowEpisodes } from "@/lib/showEpisodes";
 import { listShowExtras } from "@/lib/showExtras";
-import { canManageAllShowProjects, findShowProjectWithOwnerBySlug } from "@/lib/showProjects";
+import {
+  findShowProjectWithOwnerBySlug,
+  getShowProjectAccessForUser,
+  listShowProjectCollaborators
+} from "@/lib/showProjects";
 import ShowProjectEpisodesManager from "./components/ShowProjectEpisodesManager";
 
 export default async function StudioShowProjectDetailPage({
@@ -34,12 +38,16 @@ export default async function StudioShowProjectDetailPage({
     notFound();
   }
 
-  if (!canManageAllShowProjects(principal) && project.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, project.id);
+  if (!access.permissions.read) {
     notFound();
   }
 
-  const episodes = await listShowEpisodes(project.id);
-  const extras = await listShowExtras(project.id);
+  const [episodes, extras, collaborators] = await Promise.all([
+    listShowEpisodes(project.id),
+    listShowExtras(project.id),
+    listShowProjectCollaborators(project.id)
+  ]);
   const serializedProject = {
     ...project,
     publishedAt: project.publishedAt?.toISOString() ?? null,
@@ -63,6 +71,11 @@ export default async function StudioShowProjectDetailPage({
     createdAt: extra.createdAt.toISOString(),
     updatedAt: extra.updatedAt.toISOString()
   }));
+  const serializedCollaborators = collaborators.map((collaborator) => ({
+    ...collaborator,
+    createdAt: collaborator.createdAt.toISOString(),
+    updatedAt: collaborator.updatedAt.toISOString()
+  }));
 
   return (
     <div className="space-y-4">
@@ -78,6 +91,9 @@ export default async function StudioShowProjectDetailPage({
         project={serializedProject}
         initialEpisodes={serializedEpisodes}
         initialExtras={serializedExtras}
+        collaborators={serializedCollaborators}
+        currentUserRole={access.role}
+        permissions={access.permissions}
       />
     </div>
   );

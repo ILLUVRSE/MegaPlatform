@@ -4,8 +4,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { PREMIERE_TYPES } from "@/lib/releaseScheduling";
-import { canManageShowProject } from "@/lib/showEpisodes";
-import { findShowProjectBySlug } from "@/lib/showProjects";
+import { findShowProjectBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 import { publishShowProjectToWatch, StudioPublishError } from "@/lib/studioShowPublish";
 
 const publishProjectSchema = z.object({
@@ -32,7 +31,8 @@ export async function POST(
   if (!project) {
     return NextResponse.json({ error: "Show project not found" }, { status: 404 });
   }
-  if (!canManageShowProject(principal, project)) {
+  const access = await getShowProjectAccessForUser(principal, project.id);
+  if (!access.permissions.publish) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

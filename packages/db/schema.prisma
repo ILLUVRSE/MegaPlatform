@@ -29,6 +29,7 @@ model User {
   contentTransitions ContentStateTransition[] @relation("ContentTransitionActor")
   creatorProfile     CreatorProfile?
   showProjects       ShowProject[]
+  showProjectCollaborations ShowProjectCollaborator[]
 }
 
 model Role {
@@ -175,6 +176,14 @@ enum ShowProjectStatus {
   IN_PRODUCTION
   READY_TO_PUBLISH
   PUBLISHED
+}
+
+enum ShowProjectCollaboratorRole {
+  OWNER
+  EDITOR
+  WRITER
+  PRODUCER
+  VIEWER
 }
 
 enum ShowEpisodeStatus {
@@ -406,11 +415,27 @@ model ShowProject {
   owner          User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   episodes       ShowEpisode[]
   extras         ShowExtra[]
+  collaborators  ShowProjectCollaborator[]
 
   @@index([ownerId, createdAt])
   @@index([status, updatedAt])
   @@index([status, publishedAt])
   @@index([status, premiereType, releaseAt])
+}
+
+model ShowProjectCollaborator {
+  id            String                      @id @default(cuid())
+  showProjectId String
+  userId        String
+  role          ShowProjectCollaboratorRole
+  createdAt     DateTime                    @default(now())
+  updatedAt     DateTime                    @updatedAt
+  showProject   ShowProject                 @relation(fields: [showProjectId], references: [id], onDelete: Cascade)
+  user          User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([showProjectId, userId])
+  @@index([userId, createdAt])
+  @@index([showProjectId, role, createdAt])
 }
 
 model ShowExtra {

@@ -5,10 +5,9 @@ import { AuthzError, requireSession } from "@/lib/authz";
 import {
   createShowEpisode,
   createShowEpisodeSchema,
-  canManageShowProject,
   listShowEpisodes
 } from "@/lib/showEpisodes";
-import { findShowProjectBySlug } from "@/lib/showProjects";
+import { findShowProjectBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 
 export async function GET(
   request: Request,
@@ -29,7 +28,8 @@ export async function GET(
   if (!project) {
     return NextResponse.json({ error: "Show project not found" }, { status: 404 });
   }
-  if (!canManageShowProject(principal, project)) {
+  const access = await getShowProjectAccessForUser(principal, project.id);
+  if (!access.permissions.read) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -56,7 +56,8 @@ export async function POST(
   if (!project) {
     return NextResponse.json({ error: "Show project not found" }, { status: 404 });
   }
-  if (!canManageShowProject(principal, project)) {
+  const access = await getShowProjectAccessForUser(principal, project.id);
+  if (!access.permissions.editEpisodes) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

@@ -7,7 +7,7 @@ import {
   updateShowEpisode,
   updateShowEpisodeSchema
 } from "@/lib/showEpisodes";
-import { canManageAllShowProjects } from "@/lib/showProjects";
+import { getShowProjectAccessForUser } from "@/lib/showProjects";
 
 export async function GET(
   request: Request,
@@ -28,7 +28,8 @@ export async function GET(
   if (!episode) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
-  if (!canManageAllShowProjects(principal) && episode.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, episode.showProjectId);
+  if (!access.permissions.read) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -54,7 +55,8 @@ export async function PATCH(
   if (!current) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
-  if (!canManageAllShowProjects(principal) && current.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, current.showProjectId);
+  if (!access.permissions.editEpisodes) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

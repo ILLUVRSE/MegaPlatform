@@ -2,8 +2,7 @@ import { randomUUID } from "node:crypto";
 import { Prisma, prisma } from "@illuvrse/db";
 import { z } from "zod";
 import { evaluateReleaseSchedule, type PremiereType } from "@/lib/releaseScheduling";
-import type { Principal } from "@/lib/authz";
-import { canManageAllShowProjects, type ShowProjectRecord } from "@/lib/showProjects";
+import type { ShowProjectRecord } from "@/lib/showProjects";
 
 export const SHOW_EXTRA_TYPES = ["BEHIND_THE_SCENES", "COMMENTARY", "BONUS_CLIP", "TRAILER"] as const;
 export const SHOW_EXTRA_STATUSES = ["DRAFT", "PUBLISHED"] as const;
@@ -74,10 +73,6 @@ function selectShowExtraFields(alias?: string) {
     ${table}"createdAt",
     ${table}"updatedAt"
   `;
-}
-
-export function canManageShowExtra(principal: Principal, project: ShowProjectRecord) {
-  return canManageAllShowProjects(principal) || project.ownerId === principal.userId;
 }
 
 export async function listShowExtras(showProjectId: string) {

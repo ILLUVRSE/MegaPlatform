@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { AuthzError, requireSession } from "@/lib/authz";
-import { canManageAllShowProjects, findShowProjectBySlug } from "@/lib/showProjects";
+import { findShowProjectBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 
 export async function GET(
   request: Request,
@@ -25,9 +25,10 @@ export async function GET(
     return NextResponse.json({ error: "Show project not found" }, { status: 404 });
   }
 
-  if (!canManageAllShowProjects(principal) && project.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, project.id);
+  if (!access.permissions.read) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  return NextResponse.json({ project });
+  return NextResponse.json({ project, access });
 }

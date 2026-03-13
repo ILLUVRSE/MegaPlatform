@@ -61,6 +61,27 @@ type ShowExtraRecord = {
   updatedAt: string;
 };
 
+type CollaboratorRecord = {
+  id: string;
+  showProjectId: string;
+  userId: string;
+  role: "OWNER" | "EDITOR" | "WRITER" | "PRODUCER" | "VIEWER";
+  name: string | null;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ShowProjectPermissions = {
+  read: boolean;
+  editProject: boolean;
+  editEpisodes: boolean;
+  editScenes: boolean;
+  editExtras: boolean;
+  publish: boolean;
+  manageCollaborators: boolean;
+};
+
 type PublishFormState = {
   premiereType: "IMMEDIATE" | "SCHEDULED";
   releaseAt: string;
@@ -88,6 +109,9 @@ type Props = {
   project: ProjectRecord;
   initialEpisodes: EpisodeRecord[];
   initialExtras: ShowExtraRecord[];
+  collaborators: CollaboratorRecord[];
+  currentUserRole: CollaboratorRecord["role"] | null;
+  permissions: ShowProjectPermissions;
 };
 
 const templateOptions: Array<{
@@ -143,6 +167,14 @@ const statusLabel: Record<EpisodeRecord["status"], string> = {
   DRAFT: "Draft",
   READY: "Ready",
   PUBLISHED: "Published"
+};
+
+const collaboratorRoleLabel: Record<CollaboratorRecord["role"], string> = {
+  OWNER: "Owner",
+  EDITOR: "Editor",
+  WRITER: "Writer",
+  PRODUCER: "Producer",
+  VIEWER: "Viewer"
 };
 
 function formatTemplate(templateType: EpisodeRecord["templateType"]) {
@@ -265,11 +297,19 @@ function buildExtraPayload(form: ExtraFormState) {
   };
 }
 
-export default function ShowProjectEpisodesManager({ project, initialEpisodes, initialExtras }: Props) {
+export default function ShowProjectEpisodesManager({
+  project,
+  initialEpisodes,
+  initialExtras,
+  collaborators: initialCollaborators,
+  currentUserRole,
+  permissions
+}: Props) {
   const router = useRouter();
   const [projectState, setProjectState] = useState(project);
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [extras, setExtras] = useState(initialExtras);
+  const [collaborators, setCollaborators] = useState(initialCollaborators);
   const [projectPublishForm, setProjectPublishForm] = useState<PublishFormState>(() => createPublishFormState(project));
   const [episodePublishForms, setEpisodePublishForms] = useState<Record<string, EpisodePublishFormState>>(() =>
     Object.fromEntries(initialEpisodes.map((episode) => [episode.id, createEpisodePublishFormState(episode)]))
@@ -290,7 +330,14 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
   const [notice, setNotice] = useState<string | null>(null);
   const [publishTarget, setPublishTarget] = useState<string | null>(null);
   const [extraSaveTarget, setExtraSaveTarget] = useState<string | null>(null);
+  const [collaboratorEmail, setCollaboratorEmail] = useState("");
+  const [collaboratorRole, setCollaboratorRole] = useState<CollaboratorRecord["role"]>("VIEWER");
+  const [collaboratorTarget, setCollaboratorTarget] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const canPublish = permissions.publish;
+  const canEditEpisodes = permissions.editEpisodes;
+  const canEditExtras = permissions.editExtras;
+  const canManageCollaborators = permissions.manageCollaborators;
 
   async function handleCreateEpisode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -501,6 +548,97 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
     });
   }
 
+  async function handleAddCollaborator(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setCollaboratorTarget("new");
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/show-projects/${projectState.slug}/collaborators`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: collaboratorEmail,
+        role: collaboratorRole
+      })
+    });
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      collaborator?: CollaboratorRecord;
+    };
+
+    setCollaboratorTarget(null);
+
+    if (!response.ok || !payload.collaborator) {
+      setError(payload.error ?? "Unable to add collaborator.");
+      return;
+    }
+
+    const collaborator = payload.collaborator;
+    setCollaborators((current) => {
+      const next = current.filter((entry) => entry.id !== collaborator.id);
+      return [...next, collaborator].sort((left, right) => left.email.localeCompare(right.email));
+    });
+    setCollaboratorEmail("");
+    setCollaboratorRole("VIEWER");
+    setNotice(`Collaborator access saved for ${collaborator.email}.`);
+    startTransition(() => {
+      router.refresh();
+    });
+  }
+
+  async function handleUpdateCollaboratorRole(collaboratorId: string, role: CollaboratorRecord["role"]) {
+    setCollaboratorTarget(collaboratorId);
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/show-projects/${projectState.slug}/collaborators/${collaboratorId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role })
+    });
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      collaborator?: CollaboratorRecord;
+    };
+
+    setCollaboratorTarget(null);
+
+    if (!response.ok || !payload.collaborator) {
+      setError(payload.error ?? "Unable to update collaborator.");
+      return;
+    }
+
+    setCollaborators((current) =>
+      current.map((entry) => (entry.id === payload.collaborator?.id ? payload.collaborator : entry))
+    );
+    setNotice(`Updated ${payload.collaborator.email} to ${collaboratorRoleLabel[payload.collaborator.role]}.`);
+  }
+
+  async function handleRemoveCollaborator(collaboratorId: string) {
+    setCollaboratorTarget(collaboratorId);
+    setError(null);
+    setNotice(null);
+
+    const response = await fetch(`/api/studio/show-projects/${projectState.slug}/collaborators/${collaboratorId}`, {
+      method: "DELETE"
+    });
+    const payload = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      collaborator?: CollaboratorRecord;
+    };
+
+    setCollaboratorTarget(null);
+
+    if (!response.ok || !payload.collaborator) {
+      setError(payload.error ?? "Unable to remove collaborator.");
+      return;
+    }
+
+    setCollaborators((current) => current.filter((entry) => entry.id !== collaboratorId));
+    setNotice(`Removed ${payload.collaborator.email} from this show project.`);
+  }
+
   return (
     <div className="space-y-4">
       <section className="party-card space-y-4">
@@ -516,7 +654,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
             <button
               type="button"
               onClick={handlePublishProject}
-              disabled={publishTarget !== null}
+              disabled={!canPublish || publishTarget !== null}
               className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-50"
             >
               {publishTarget === "project" ? "Publishing" : "Publish to Watch"}
@@ -524,6 +662,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
             <button
               type="button"
               onClick={() => setIsExtraComposerOpen((current) => !current)}
+              disabled={!canEditExtras}
               className="interactive-focus rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white"
             >
               Add Extra
@@ -531,6 +670,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
             <button
               type="button"
               onClick={() => setIsComposerOpen((current) => !current)}
+              disabled={!canEditEpisodes}
               className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950"
             >
               Create Episode
@@ -556,8 +696,127 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
             <p className="mt-2 text-lg font-semibold text-white">
               {projectState.ownerName || projectState.ownerEmail || projectState.ownerId}
             </p>
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-white/45">
+              Your role: {currentUserRole ? collaboratorRoleLabel[currentUserRole] : "Admin"}
+            </p>
           </div>
         </div>
+
+        <section className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.24em] text-illuvrse-muted">Collaborators</p>
+              <h2 className="mt-1 text-xl font-semibold text-white">Project access</h2>
+              <p className="mt-2 text-sm text-white/70">
+                Owners can manage collaborators. Editors can edit and publish. Writers can work on episodes and scenes.
+                Producers can manage release-facing project work. Viewers are read-only.
+              </p>
+            </div>
+            <p className="text-sm text-white/55">{collaborators.length + 1} people with access</p>
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-2">
+            <article className="rounded-[24px] border border-cyan-300/20 bg-cyan-400/5 p-4">
+              <p className="text-xs uppercase tracking-[0.22em] text-cyan-100/80">Project Owner</p>
+              <h3 className="mt-2 text-lg font-semibold text-white">
+                {projectState.ownerName || projectState.ownerEmail || projectState.ownerId}
+              </h3>
+              <p className="mt-2 text-sm text-white/70">{projectState.ownerEmail || "Owner email unavailable"}</p>
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/45">Owner access cannot be removed here.</p>
+            </article>
+            {collaborators.map((collaborator) => (
+              <article key={collaborator.id} className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.22em] text-white/55">Collaborator</p>
+                    <h3 className="mt-2 text-lg font-semibold text-white">
+                      {collaborator.name || collaborator.email}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/70">{collaborator.email}</p>
+                  </div>
+                  {canManageCollaborators ? (
+                    <select
+                      value={collaborator.role}
+                      onChange={(event) =>
+                        handleUpdateCollaboratorRole(
+                          collaborator.id,
+                          event.target.value as CollaboratorRecord["role"]
+                        )
+                      }
+                      disabled={collaboratorTarget === collaborator.id}
+                      className="rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:opacity-50"
+                    >
+                      <option value="OWNER">Owner</option>
+                      <option value="EDITOR">Editor</option>
+                      <option value="WRITER">Writer</option>
+                      <option value="PRODUCER">Producer</option>
+                      <option value="VIEWER">Viewer</option>
+                    </select>
+                  ) : (
+                    <span className="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-white/75">
+                      {collaboratorRoleLabel[collaborator.role]}
+                    </span>
+                  )}
+                </div>
+                {canManageCollaborators ? (
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveCollaborator(collaborator.id)}
+                      disabled={collaboratorTarget === collaborator.id}
+                      className="interactive-focus rounded-full border border-rose-300/30 bg-rose-400/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-rose-100 disabled:opacity-50"
+                    >
+                      {collaboratorTarget === collaborator.id ? "Saving" : "Remove"}
+                    </button>
+                  </div>
+                ) : null}
+              </article>
+            ))}
+          </div>
+
+          {canManageCollaborators ? (
+            <form onSubmit={handleAddCollaborator} className="mt-4 grid gap-3 rounded-[24px] border border-white/10 bg-black/20 p-4 md:grid-cols-[1.4fr_0.8fr_auto]">
+              <label className="space-y-2">
+                <span className="text-xs uppercase tracking-[0.22em] text-white/60">User Email</span>
+                <input
+                  type="email"
+                  required
+                  value={collaboratorEmail}
+                  onChange={(event) => setCollaboratorEmail(event.target.value)}
+                  className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+                  placeholder="creator@illuvrse.com"
+                />
+              </label>
+              <label className="space-y-2">
+                <span className="text-xs uppercase tracking-[0.22em] text-white/60">Role</span>
+                <select
+                  value={collaboratorRole}
+                  onChange={(event) => setCollaboratorRole(event.target.value as CollaboratorRecord["role"])}
+                  className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
+                >
+                  <option value="OWNER">Owner</option>
+                  <option value="EDITOR">Editor</option>
+                  <option value="WRITER">Writer</option>
+                  <option value="PRODUCER">Producer</option>
+                  <option value="VIEWER">Viewer</option>
+                </select>
+              </label>
+              <div className="flex items-end">
+                <button
+                  type="submit"
+                  disabled={collaboratorTarget === "new"}
+                  className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-50"
+                >
+                  {collaboratorTarget === "new" ? "Saving" : "Add Collaborator"}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/45">
+              You can view collaborators, but only owners can change project access.
+            </p>
+          )}
+        </section>
 
         <div className="grid gap-3 md:grid-cols-2">
           <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
@@ -588,6 +847,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                   premiereType: event.target.value as PublishFormState["premiereType"]
                 }))
               }
+              disabled={!canPublish}
               className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
             >
               <option value="IMMEDIATE">Publish immediately</option>
@@ -605,7 +865,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                   releaseAt: event.target.value
                 }))
               }
-              disabled={projectPublishForm.premiereType !== "SCHEDULED"}
+              disabled={!canPublish || projectPublishForm.premiereType !== "SCHEDULED"}
               className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
             />
           </label>
@@ -645,6 +905,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                     value={option.value}
                     checked={newExtraForm.type === option.value}
                     onChange={() => setNewExtraForm((current) => ({ ...current, type: option.value }))}
+                    disabled={!canEditExtras}
                     className="sr-only"
                   />
                   <p className="text-sm font-semibold text-white">{option.label}</p>
@@ -659,6 +920,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                 <input
                   value={newExtraForm.title}
                   onChange={(event) => setNewExtraForm((current) => ({ ...current, title: event.target.value }))}
+                  disabled={!canEditExtras}
                   className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                   placeholder="Creator commentary cut"
                 />
@@ -668,6 +930,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                 <input
                   value={newExtraForm.assetUrl}
                   onChange={(event) => setNewExtraForm((current) => ({ ...current, assetUrl: event.target.value }))}
+                  disabled={!canEditExtras}
                   className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                   placeholder="https://cdn.example.com/show-extra.mp4"
                 />
@@ -679,6 +942,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
               <textarea
                 value={newExtraForm.description}
                 onChange={(event) => setNewExtraForm((current) => ({ ...current, description: event.target.value }))}
+                disabled={!canEditExtras}
                 className="min-h-28 w-full rounded-3xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                 placeholder="Optional context for why this extra matters."
               />
@@ -694,6 +958,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                   onChange={(event) =>
                     setNewExtraForm((current) => ({ ...current, runtimeSeconds: event.target.value }))
                   }
+                  disabled={!canEditExtras}
                   className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                   placeholder="180"
                 />
@@ -708,6 +973,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                       status: event.target.value as ShowExtraRecord["status"]
                     }))
                   }
+                  disabled={!canEditExtras}
                   className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                 >
                   <option value="DRAFT">Draft</option>
@@ -724,6 +990,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                       premiereType: event.target.value as ExtraFormState["premiereType"]
                     }))
                   }
+                  disabled={!canEditExtras}
                   className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                 >
                   <option value="IMMEDIATE">Immediate</option>
@@ -736,7 +1003,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                   type="datetime-local"
                   value={newExtraForm.releaseAt}
                   onChange={(event) => setNewExtraForm((current) => ({ ...current, releaseAt: event.target.value }))}
-                  disabled={newExtraForm.premiereType !== "SCHEDULED"}
+                  disabled={!canEditExtras || newExtraForm.premiereType !== "SCHEDULED"}
                   className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </label>
@@ -745,7 +1012,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
             <div className="flex flex-wrap items-center gap-3">
               <button
                 type="submit"
-                disabled={extraSaveTarget === "new"}
+                disabled={!canEditExtras || extraSaveTarget === "new"}
                 className="interactive-focus rounded-full bg-cyan-300 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-60"
               >
                 {extraSaveTarget === "new" ? "Saving" : "Save Extra"}
@@ -789,6 +1056,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                     value={option.value}
                     checked={templateType === option.value}
                     onChange={() => setTemplateType(option.value)}
+                    disabled={!canEditEpisodes}
                     className="sr-only"
                   />
                   <p className="text-sm font-semibold text-white">{option.label}</p>
@@ -800,7 +1068,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
             <div className="flex flex-wrap items-center gap-3">
               <button
                 type="submit"
-                disabled={isPending}
+                disabled={!canEditEpisodes || isPending}
                 className="interactive-focus rounded-full bg-cyan-300 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-60"
               >
                 {isPending ? "Creating" : "Create Episode"}
@@ -877,6 +1145,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canPublish}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       >
                         <option value="IMMEDIATE">Immediate</option>
@@ -898,6 +1167,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                           }))
                         }
                         disabled={
+                          !canPublish ||
                           (episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).premiereType !==
                           "SCHEDULED"
                         }
@@ -922,6 +1192,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canPublish}
                       />
                       Enable live premiere shell on Watch
                     </label>
@@ -938,7 +1209,10 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
-                        disabled={!(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                        disabled={
+                          !canPublish ||
+                          !(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled
+                        }
                       />
                       Show party chat link
                     </label>
@@ -959,7 +1233,10 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
-                        disabled={!(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                        disabled={
+                          !canPublish ||
+                          !(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled
+                        }
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
                       />
                     </label>
@@ -979,7 +1256,10 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
-                        disabled={!(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled}
+                        disabled={
+                          !canPublish ||
+                          !(episodePublishForms[episode.id] ?? createEpisodePublishFormState(episode)).isPremiereEnabled
+                        }
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
                       />
                     </label>
@@ -996,7 +1276,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                   <button
                     type="button"
                     onClick={() => handlePublishEpisode(episode.id)}
-                    disabled={publishTarget !== null}
+                    disabled={!canPublish || publishTarget !== null}
                     className="interactive-focus inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100 disabled:opacity-50"
                   >
                     {publishTarget === episode.id ? "Publishing" : "Publish to Watch"}
@@ -1060,6 +1340,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canEditExtras}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       >
                         {extraTypeOptions.map((option) => (
@@ -1082,6 +1363,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canEditExtras}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       />
                     </label>
@@ -1101,6 +1383,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canEditExtras}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       />
                     </label>
@@ -1119,6 +1402,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canEditExtras}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       />
                     </label>
@@ -1137,6 +1421,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                           }
                         }))
                       }
+                      disabled={!canEditExtras}
                       className="min-h-24 w-full rounded-3xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                     />
                   </label>
@@ -1155,6 +1440,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canEditExtras}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       >
                         <option value="DRAFT">Draft</option>
@@ -1174,6 +1460,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
+                        disabled={!canEditExtras}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white"
                       >
                         <option value="IMMEDIATE">Immediate</option>
@@ -1194,7 +1481,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                             }
                           }))
                         }
-                        disabled={form.premiereType !== "SCHEDULED"}
+                        disabled={!canEditExtras || form.premiereType !== "SCHEDULED"}
                         className="w-full rounded-2xl border border-white/15 bg-slate-950/60 px-4 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
                       />
                     </label>
@@ -1202,7 +1489,7 @@ export default function ShowProjectEpisodesManager({ project, initialEpisodes, i
                       <button
                         type="button"
                         onClick={() => handleSaveExtra(extra.id)}
-                        disabled={extraSaveTarget !== null}
+                        disabled={!canEditExtras || extraSaveTarget !== null}
                         className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100 disabled:opacity-50"
                       >
                         {extraSaveTarget === extra.id ? "Saving" : "Save Extra"}

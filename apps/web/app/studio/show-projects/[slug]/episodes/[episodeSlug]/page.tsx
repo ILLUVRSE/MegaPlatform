@@ -4,7 +4,7 @@ import { getPrincipal } from "@/lib/authz";
 import { findShowEpisodeByProjectAndSlug } from "@/lib/showEpisodes";
 import { listDerivedShortDrafts } from "@/lib/showShortDrafts";
 import { listShowScenes } from "@/lib/showScenes";
-import { canManageAllShowProjects, findShowProjectWithOwnerBySlug } from "@/lib/showProjects";
+import { findShowProjectWithOwnerBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
 import ShowEpisodeSceneEditor from "./components/ShowEpisodeSceneEditor";
 
 export default async function StudioShowEpisodeDetailPage({
@@ -35,7 +35,8 @@ export default async function StudioShowEpisodeDetailPage({
     notFound();
   }
 
-  if (!canManageAllShowProjects(principal) && project.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, project.id);
+  if (!access.permissions.read) {
     notFound();
   }
 
@@ -77,6 +78,7 @@ export default async function StudioShowEpisodeDetailPage({
         episode={serializedEpisode}
         initialScenes={serializedScenes}
         initialShortDrafts={serializedShortDrafts}
+        permissions={access.permissions}
       />
     </div>
   );

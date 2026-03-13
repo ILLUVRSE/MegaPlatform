@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { findShowSceneById, updateShowScene, updateShowSceneSchema } from "@/lib/showScenes";
-import { canManageAllShowProjects } from "@/lib/showProjects";
+import { getShowProjectAccessForUser } from "@/lib/showProjects";
 
 export async function PATCH(
   request: Request,
@@ -24,7 +24,8 @@ export async function PATCH(
   if (!current) {
     return NextResponse.json({ error: "Scene not found" }, { status: 404 });
   }
-  if (!canManageAllShowProjects(principal) && current.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, current.showProjectId);
+  if (!access.permissions.editScenes) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

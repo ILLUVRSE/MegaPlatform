@@ -11,6 +11,7 @@ type ShowProjectRecord = {
   description: string | null;
   format: "SERIES" | "MOVIE";
   status: "DRAFT" | "IN_PRODUCTION" | "READY_TO_PUBLISH" | "PUBLISHED";
+  currentUserRole: "OWNER" | "EDITOR" | "WRITER" | "PRODUCER" | "VIEWER" | null;
   posterImageUrl: string | null;
   bannerImageUrl: string | null;
   createdAt: string;
@@ -26,6 +27,14 @@ const statusLabel: Record<ShowProjectRecord["status"], string> = {
   IN_PRODUCTION: "In production",
   READY_TO_PUBLISH: "Ready to publish",
   PUBLISHED: "Published"
+};
+
+const roleLabel: Record<NonNullable<ShowProjectRecord["currentUserRole"]>, string> = {
+  OWNER: "Owner",
+  EDITOR: "Editor",
+  WRITER: "Writer",
+  PRODUCER: "Producer",
+  VIEWER: "Viewer"
 };
 
 export default function ShowProjectsManager({ initialProjects }: Props) {
@@ -176,7 +185,7 @@ export default function ShowProjectsManager({ initialProjects }: Props) {
                   {project.description || "No description yet."}
                 </p>
                 <div className="mt-4 flex items-center justify-between text-xs text-white/50">
-                  <span>{project.slug}</span>
+                  <span>{project.currentUserRole ? roleLabel[project.currentUserRole] : project.slug}</span>
                   <span>{new Date(project.updatedAt).toLocaleDateString()}</span>
                 </div>
               </Link>

@@ -5,7 +5,7 @@ import { z } from "zod";
 import { AuthzError, requireSession } from "@/lib/authz";
 import { PREMIERE_TYPES } from "@/lib/releaseScheduling";
 import { findShowEpisodeById } from "@/lib/showEpisodes";
-import { canManageAllShowProjects } from "@/lib/showProjects";
+import { getShowProjectAccessForUser } from "@/lib/showProjects";
 import { publishShowEpisodeToWatch, StudioPublishError } from "@/lib/studioShowPublish";
 
 const publishEpisodeSchema = z.object({
@@ -36,7 +36,8 @@ export async function POST(
   if (!episode) {
     return NextResponse.json({ error: "Episode not found" }, { status: 404 });
   }
-  if (!canManageAllShowProjects(principal) && episode.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, episode.showProjectId);
+  if (!access.permissions.publish) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

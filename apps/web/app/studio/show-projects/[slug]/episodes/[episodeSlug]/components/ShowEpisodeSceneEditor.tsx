@@ -51,6 +51,15 @@ type Props = {
   episode: EpisodeRecord;
   initialScenes: SceneRecord[];
   initialShortDrafts: ShortDraftRecord[];
+  permissions: {
+    read: boolean;
+    editProject: boolean;
+    editEpisodes: boolean;
+    editScenes: boolean;
+    editExtras: boolean;
+    publish: boolean;
+    manageCollaborators: boolean;
+  };
 };
 
 function formatEpisodeCode(episode: EpisodeRecord) {
@@ -85,7 +94,7 @@ function formatClipTimestamp(value: number) {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
-export default function ShowEpisodeSceneEditor({ episode, initialScenes, initialShortDrafts }: Props) {
+export default function ShowEpisodeSceneEditor({ episode, initialScenes, initialShortDrafts, permissions }: Props) {
   const [episodeState, setEpisodeState] = useState(episode);
   const [scenes, setScenes] = useState(initialScenes);
   const [shortDrafts, setShortDrafts] = useState(initialShortDrafts);
@@ -95,6 +104,8 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
   const [activeSceneId, setActiveSceneId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const canEditScenes = permissions.editScenes;
+  const canPublish = permissions.publish;
 
   async function handleCreateScene() {
     setIsCreating(true);
@@ -270,7 +281,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
             <button
               type="button"
               onClick={handlePublishEpisode}
-              disabled={isPublishing}
+              disabled={!canPublish || isPublishing}
               className="interactive-focus rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 disabled:opacity-50"
             >
               {isPublishing ? "Publishing" : "Publish to Watch"}
@@ -278,7 +289,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
             <button
               type="button"
               onClick={handleCreateScene}
-              disabled={isCreating}
+              disabled={!canEditScenes || isCreating}
               className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950 disabled:opacity-60"
             >
               {isCreating ? "Creating" : "Create Scene"}
@@ -333,6 +344,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
             type="button"
             onClick={handleGenerateShortDrafts}
             disabled={
+              !canEditScenes ||
               isGeneratingDrafts ||
               scenes.length === 0 ||
               (episodeState.status !== "READY" && episodeState.status !== "PUBLISHED")
@@ -411,6 +423,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                           )
                         )
                       }
+                      disabled={!canEditScenes}
                       className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-lg font-semibold text-white outline-none transition focus:border-cyan-300/60"
                     />
                   </div>
@@ -418,7 +431,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                     <button
                       type="button"
                       onClick={() => handleReorder(scene.id, -1)}
-                      disabled={index === 0 || activeSceneId === scene.id}
+                      disabled={!canEditScenes || index === 0 || activeSceneId === scene.id}
                       className="interactive-focus rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white disabled:opacity-40"
                     >
                       Up
@@ -426,7 +439,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                     <button
                       type="button"
                       onClick={() => handleReorder(scene.id, 1)}
-                      disabled={index === scenes.length - 1 || activeSceneId === scene.id}
+                      disabled={!canEditScenes || index === scenes.length - 1 || activeSceneId === scene.id}
                       className="interactive-focus rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white disabled:opacity-40"
                     >
                       Down
@@ -434,7 +447,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                     <button
                       type="button"
                       onClick={() => handleSaveScene(scene)}
-                      disabled={activeSceneId === scene.id}
+                      disabled={!canEditScenes || activeSceneId === scene.id}
                       className="interactive-focus rounded-full bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-950 disabled:opacity-40"
                     >
                       {activeSceneId === scene.id ? "Saving" : "Save Scene"}
@@ -462,6 +475,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                           )
                         )
                       }
+                      disabled={!canEditScenes}
                       className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60"
                     />
                   </label>
@@ -484,6 +498,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                           )
                         )
                       }
+                      disabled={!canEditScenes}
                       className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60"
                     />
                   </label>
@@ -499,6 +514,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                           )
                         )
                       }
+                      disabled={!canEditScenes}
                       className="w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60"
                       placeholder="intro, dialogue, transition"
                     />
@@ -516,6 +532,7 @@ export default function ShowEpisodeSceneEditor({ episode, initialScenes, initial
                         )
                       )
                     }
+                    disabled={!canEditScenes}
                     className="min-h-48 w-full rounded-3xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-white outline-none transition focus:border-cyan-300/60"
                     placeholder="Write the scene action, dialogue, and production notes here."
                   />

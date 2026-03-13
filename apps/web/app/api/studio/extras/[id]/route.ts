@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { AuthzError, requireSession } from "@/lib/authz";
-import { canManageAllShowProjects } from "@/lib/showProjects";
+import { getShowProjectAccessForUser } from "@/lib/showProjects";
 import { findShowExtraById, updateShowExtra, updateShowExtraSchema } from "@/lib/showExtras";
 
 export async function GET(
@@ -24,7 +24,8 @@ export async function GET(
   if (!extra) {
     return NextResponse.json({ error: "Extra not found" }, { status: 404 });
   }
-  if (!canManageAllShowProjects(principal) && extra.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, extra.showProjectId);
+  if (!access.permissions.read) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -50,7 +51,8 @@ export async function PATCH(
   if (!current) {
     return NextResponse.json({ error: "Extra not found" }, { status: 404 });
   }
-  if (!canManageAllShowProjects(principal) && current.ownerId !== principal.userId) {
+  const access = await getShowProjectAccessForUser(principal, current.showProjectId);
+  if (!access.permissions.editExtras) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

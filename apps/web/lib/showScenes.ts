@@ -130,6 +130,7 @@ export async function findShowSceneById(id: string) {
   const rows = await prisma.$queryRaw<
     Array<{
       id: string;
+      showProjectId: string;
       showEpisodeId: string;
       sceneNumber: number;
       title: string;
@@ -144,6 +145,7 @@ export async function findShowSceneById(id: string) {
   >`
     SELECT
       scene."id",
+      episode."showProjectId",
       scene."showEpisodeId",
       scene."sceneNumber",
       scene."title",
@@ -162,7 +164,7 @@ export async function findShowSceneById(id: string) {
   `;
 
   const row = rows[0];
-  return row ? { ...mapShowSceneRecord(row), ownerId: row.ownerId } : null;
+  return row ? { ...mapShowSceneRecord(row), showProjectId: row.showProjectId, ownerId: row.ownerId } : null;
 }
 
 export async function createShowScene(

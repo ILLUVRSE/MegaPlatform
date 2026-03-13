@@ -1,9 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { Prisma, prisma } from "@illuvrse/db";
 import { z } from "zod";
-import type { Principal } from "@/lib/authz";
 import type { PremiereType } from "@/lib/releaseScheduling";
-import { canManageAllShowProjects, type ShowProjectFormat, type ShowProjectRecord } from "@/lib/showProjects";
+import type { ShowProjectFormat, ShowProjectRecord } from "@/lib/showProjects";
 
 export const SHOW_EPISODE_STATUSES = ["DRAFT", "READY", "PUBLISHED"] as const;
 export const SHOW_EPISODE_TEMPLATE_TYPES = [
@@ -62,10 +61,6 @@ export function normalizeShowEpisodeSlug(value: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 64);
-}
-
-export function canManageShowProject(principal: Principal, project: ShowProjectRecord) {
-  return canManageAllShowProjects(principal) || project.ownerId === principal.userId;
 }
 
 export async function listShowEpisodes(showProjectId: string) {

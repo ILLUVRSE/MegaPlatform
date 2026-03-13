@@ -1,14 +1,20 @@
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { AuthzError, requireSession } from "@/lib/authz";
 import {
-  createShowExtra,
-  createShowExtraSchema,
-  listShowExtras
-} from "@/lib/showExtras";
-import { normalizeReleaseSchedule, ReleaseScheduleError } from "@/lib/releaseScheduling";
-import { findShowProjectBySlug, getShowProjectAccessForUser } from "@/lib/showProjects";
+  SHOW_PROJECT_COLLABORATOR_ROLES,
+  addShowProjectCollaborator,
+  findShowProjectBySlug,
+  getShowProjectAccessForUser,
+  listShowProjectCollaborators
+} from "@/lib/showProjects";
+
+const collaboratorSchema = z.object({
+  email: z.string().trim().email().max(320),
+  role: z.enum(SHOW_PROJECT_COLLABORATOR_ROLES)
+});
 
 export async function GET(
   request: Request,
@@ -29,13 +35,14 @@ export async function GET(
   if (!project) {
     return NextResponse.json({ error: "Show project not found" }, { status: 404 });
   }
+
   const access = await getShowProjectAccessForUser(principal, project.id);
   if (!access.permissions.read) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const extras = await listShowExtras(project.id);
-  return NextResponse.json({ project, extras });
+  const collaborators = await listShowProjectCollaborators(project.id);
+  return NextResponse.json({ collaborators, access });
 }
 
 export async function POST(
@@ -57,37 +64,29 @@ export async function POST(
   if (!project) {
     return NextResponse.json({ error: "Show project not found" }, { status: 404 });
   }
+
   const access = await getShowProjectAccessForUser(principal, project.id);
-  if (!access.permissions.editExtras) {
+  if (!access.permissions.manageCollaborators) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const parsed = createShowExtraSchema.safeParse(await request.json().catch(() => ({})));
+  const parsed = collaboratorSchema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid payload", issues: parsed.error.issues }, { status: 400 });
   }
 
   try {
-    const schedule = normalizeReleaseSchedule({
-      premiereType: parsed.data.premiereType,
-      releaseAt: parsed.data.releaseAt ? new Date(parsed.data.releaseAt) : null
-    });
-    const extra = await createShowExtra({
-      project,
-      type: parsed.data.type,
-      title: parsed.data.title,
-      description: parsed.data.description ?? null,
-      assetUrl: parsed.data.assetUrl,
-      runtimeSeconds: parsed.data.runtimeSeconds ?? null,
-      status: parsed.data.status,
-      ...schedule
+    const collaborator = await addShowProjectCollaborator({
+      showProjectId: project.id,
+      email: parsed.data.email,
+      role: parsed.data.role
     });
 
-    return NextResponse.json({ extra }, { status: 201 });
+    return NextResponse.json({ collaborator }, { status: 201 });
   } catch (error) {
-    if (error instanceof ReleaseScheduleError) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-    throw error;
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Unable to add collaborator" },
+      { status: 400 }
+    );
   }
 }
