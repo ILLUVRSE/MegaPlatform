@@ -30,6 +30,7 @@ model User {
   creatorProfile     CreatorProfile?
   showProjects       ShowProject[]
   showProjectCollaborations ShowProjectCollaborator[]
+  showTemplates      ShowTemplate[]
 }
 
 model Role {
@@ -454,11 +455,31 @@ model ShowProject {
   extras         ShowExtra[]
   interactiveExtras InteractiveExtra[]
   collaborators  ShowProjectCollaborator[]
+  templates      ShowTemplate[]
 
   @@index([ownerId, createdAt])
   @@index([status, updatedAt])
   @@index([status, publishedAt])
   @@index([status, premiereType, releaseAt])
+}
+
+model ShowTemplate {
+  id                 String            @id @default(cuid())
+  title              String
+  description        String?
+  templateType       ShowProjectFormat
+  createdById        String
+  sourceShowProjectId String?
+  visibility         ContentVisibility @default(PRIVATE)
+  serializedDefaults Json
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  createdBy          User              @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  sourceShowProject  ShowProject?      @relation(fields: [sourceShowProjectId], references: [id], onDelete: SetNull)
+
+  @@index([createdById, createdAt])
+  @@index([templateType, visibility, createdAt])
+  @@index([sourceShowProjectId, createdAt])
 }
 
 model ShowProjectCollaborator {

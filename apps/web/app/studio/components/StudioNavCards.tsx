@@ -13,6 +13,11 @@ export default function StudioNavCards() {
         <h3 className="text-xl font-semibold">Manage series and movies</h3>
         <p className="text-sm text-illuvrse-muted">Create, track, and open long-form projects.</p>
       </Link>
+      <Link href="/studio/show-projects#templates" className="party-card space-y-2">
+        <p className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Template Library</p>
+        <h3 className="text-xl font-semibold">Reuse show scaffolds</h3>
+        <p className="text-sm text-illuvrse-muted">Browse internal templates and spin up a draft from them.</p>
+      </Link>
       <Link href="/studio/short" className="party-card space-y-2">
         <p className="text-xs uppercase tracking-[0.3em] text-illuvrse-muted">Short Generator</p>
         <h3 className="text-xl font-semibold">Generate a short-form video</h3>

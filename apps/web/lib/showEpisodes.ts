@@ -345,6 +345,98 @@ export async function createShowEpisode(input: {
   return rows[0] ?? null;
 }
 
+export async function createShowEpisodeFromTemplate(input: {
+  project: ShowProjectRecord;
+  templateType: ShowEpisodeTemplateType;
+  title: string;
+  synopsis?: string | null;
+  seasonNumber?: number | null;
+  episodeNumber?: number | null;
+  runtimeSeconds?: number | null;
+}) {
+  const slug = await buildUniqueShowEpisodeSlug(input.project.id, input.title);
+
+  const rows = await prisma.$queryRaw<ShowEpisodeRecord[]>`
+    INSERT INTO "ShowEpisode" (
+      "id",
+      "showProjectId",
+      "seasonNumber",
+      "episodeNumber",
+      "title",
+      "slug",
+      "synopsis",
+      "runtimeSeconds",
+      "status",
+      "publishedAt",
+      "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
+      "premiereType",
+      "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
+      "templateType",
+      "createdAt",
+      "updatedAt"
+    )
+    VALUES (
+      ${randomUUID()},
+      ${input.project.id},
+      ${input.seasonNumber ?? null},
+      ${input.episodeNumber ?? null},
+      ${input.title},
+      ${slug},
+      ${input.synopsis ?? null},
+      ${input.runtimeSeconds ?? null},
+      'DRAFT'::"ShowEpisodeStatus",
+      NULL,
+      'PUBLIC'::"ContentVisibility",
+      ARRAY[]::TEXT[],
+      false,
+      'IMMEDIATE'::"PremiereType",
+      NULL,
+      false,
+      NULL,
+      NULL,
+      false,
+      ${input.templateType}::"ShowEpisodeTemplateType",
+      NOW(),
+      NOW()
+    )
+    RETURNING
+      "id",
+      "showProjectId",
+      "seasonNumber",
+      "episodeNumber",
+      "title",
+      "slug",
+      "synopsis",
+      "runtimeSeconds",
+      "status"::text AS "status",
+      "publishedAt",
+      "visibility"::text AS "visibility",
+      "allowedRegions",
+      "requiresEntitlement",
+      "monetizationMode"::text AS "monetizationMode",
+      "priceCents",
+      "currency",
+      "adsEnabled",
+      "premiereType"::text AS "premiereType",
+      "releaseAt",
+      "isPremiereEnabled",
+      "premiereStartsAt",
+      "premiereEndsAt",
+      "chatEnabled",
+      "templateType"::text AS "templateType",
+      "createdAt",
+      "updatedAt"
+  `;
+
+  return rows[0] ?? null;
+}
+
 export async function updateShowEpisode(
   current: ShowEpisodeRecord,
   input: z.infer<typeof updateShowEpisodeSchema>

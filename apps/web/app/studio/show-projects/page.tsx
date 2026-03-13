@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPrincipal } from "@/lib/authz";
 import { listShowProjects } from "@/lib/showProjects";
+import { listShowTemplateSummaries } from "@/lib/showTemplates";
 import ShowProjectsManager from "./components/ShowProjectsManager";
 
 export default async function StudioShowProjectsPage() {
@@ -24,7 +25,7 @@ export default async function StudioShowProjectsPage() {
     );
   }
 
-  const projects = await listShowProjects(principal);
+  const [projects, templates] = await Promise.all([listShowProjects(principal), listShowTemplateSummaries(principal)]);
 
   return (
     <ShowProjectsManager
@@ -33,6 +34,12 @@ export default async function StudioShowProjectsPage() {
         createdAt: project.createdAt.toISOString(),
         updatedAt: project.updatedAt.toISOString()
       }))}
+      initialTemplates={templates.map((template) => ({
+        ...template,
+        createdAt: template.createdAt.toISOString(),
+        updatedAt: template.updatedAt.toISOString()
+      }))}
+      currentUserId={principal.userId}
     />
   );
 }

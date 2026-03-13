@@ -3,6 +3,7 @@
 import { type FormEvent, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import ShowTemplateLibrary from "./ShowTemplateLibrary";
 
 type ShowProjectRecord = {
   id: string;
@@ -20,6 +21,20 @@ type ShowProjectRecord = {
 
 type Props = {
   initialProjects: ShowProjectRecord[];
+  initialTemplates: Array<{
+    id: string;
+    title: string;
+    description: string | null;
+    templateType: "SERIES" | "MOVIE";
+    createdById: string;
+    createdByName: string | null;
+    visibility: "PUBLIC" | "PRIVATE" | "UNLISTED";
+    episodeCount: number;
+    extraCount: number;
+    createdAt: string;
+    updatedAt: string;
+  }>;
+  currentUserId: string;
 };
 
 const statusLabel: Record<ShowProjectRecord["status"], string> = {
@@ -37,7 +52,7 @@ const roleLabel: Record<NonNullable<ShowProjectRecord["currentUserRole"]>, strin
   VIEWER: "Viewer"
 };
 
-export default function ShowProjectsManager({ initialProjects }: Props) {
+export default function ShowProjectsManager({ initialProjects, initialTemplates, currentUserId }: Props) {
   const router = useRouter();
   const [isComposerOpen, setIsComposerOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -91,13 +106,21 @@ export default function ShowProjectsManager({ initialProjects }: Props) {
               Manage movies and series as first-class Studio projects.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => setIsComposerOpen((current) => !current)}
-            className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950"
-          >
-            Create Show Project
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href="#templates"
+              className="interactive-focus rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white"
+            >
+              Browse Templates
+            </a>
+            <button
+              type="button"
+              onClick={() => setIsComposerOpen((current) => !current)}
+              className="interactive-focus rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-950"
+            >
+              Create Show Project
+            </button>
+          </div>
         </div>
         {isComposerOpen ? (
           <form onSubmit={handleCreate} className="grid gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 md:grid-cols-2">
@@ -153,6 +176,8 @@ export default function ShowProjectsManager({ initialProjects }: Props) {
           </form>
         ) : null}
       </section>
+
+      <ShowTemplateLibrary initialTemplates={initialTemplates} currentUserId={currentUserId} />
 
       <section className="party-card space-y-4">
         <div className="flex items-center justify-between gap-4">

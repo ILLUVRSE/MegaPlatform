@@ -13,6 +13,7 @@ import { getShowEpisodePublishQc, getShowProjectPublishQc } from "@/lib/studioPu
 import { getStudioShowWatchAnalytics } from "@/lib/studioWatchAnalytics";
 import InteractiveExtrasEditor from "../components/InteractiveExtrasEditor";
 import StudioWatchAnalyticsPanel from "../components/StudioWatchAnalyticsPanel";
+import SaveShowTemplateCard from "../components/SaveShowTemplateCard";
 import ShowProjectEpisodesManager from "./components/ShowProjectEpisodesManager";
 
 export default async function StudioShowProjectDetailPage({
@@ -103,6 +104,15 @@ export default async function StudioShowProjectDetailPage({
           Back to projects
         </Link>
       </div>
+      <SaveShowTemplateCard
+        project={{
+          slug: project.slug,
+          title: project.title,
+          description: project.description,
+          format: project.format
+        }}
+        canSave={access.permissions.editProject}
+      />
       <ShowProjectEpisodesManager
         project={serializedProject}
         initialProjectQc={projectQc}
